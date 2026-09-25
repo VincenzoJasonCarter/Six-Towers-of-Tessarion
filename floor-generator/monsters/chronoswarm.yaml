@@ -1,0 +1,35 @@
+# Swarm/fodder support of Thal'Vireth's common-mob roster (see
+# generate_encounter() in monster.py) - a mass of tiny temporal
+# creatures, individually disposable, threat is purely numbers.
+# "group_size" (see monster.py's generate_monster_group()/
+# generate_encounter()) makes this spawn as several independent
+# bodies, each with its own tiny HP pool, instead of one.
+
+name: a Chronoswarm creature
+type: Aberration (Temporal Swarm)
+challenge_rating: 1  # per member - the swarm is fought together, not one at a time
+role: swarm
+group_size: [3, 6]
+
+base_scores:
+  STR: 6
+  DEX: 14
+  CON: 8
+  INT: 3
+  WIS: 6
+  CHA: 3
+
+hit_dice: 1  # 1d8 - dies in a single hit almost every time
+ac_base: 12  # + max(0, DEX modifier) - small and quick, not armored
+speed: 9     # meters (30 ft)
+proficiency_bonus: 2
+
+traits: []
+
+attacks:
+  - name: Swarming Bite
+    kind: melee
+    ability: DEX
+    damage_dice: 1d4
+    damage_type: piercing
+    range: 1.5

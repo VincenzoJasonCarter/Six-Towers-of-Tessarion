@@ -1,0 +1,38 @@
+# Slow, high-HP swarm-flavored brawler. No Flicker Step - it doesn't
+# teleport, it just grinds forward and lands one hard, echo-doubled hit.
+#
+# STR trimmed from 14 to 12 and Claw's damage die from 1d8 to 1d6 in a
+# balance pass against Pijo's AC 12 (attack_bonus was landing 60-65%
+# to hit) - see the other templates for the same pass.
+
+name: the Stuttering Choir
+type: Aberration (Timeline Echo)
+challenge_rating: 1
+
+base_scores:
+  STR: 12
+  DEX: 12
+  CON: 16
+  INT: 4
+  WIS: 8
+  CHA: 6
+
+hit_dice: 8  # 8d8
+ac_base: 11  # + max(0, DEX modifier)
+speed: 6     # meters (20 ft) - shuffles, out of sync with itself
+proficiency_bonus: 2
+
+traits:
+  - name: Discordant Chorus
+    description: >
+      Whenever the creature takes damage, roll a d4; on a 4 it echoes
+      the blow back as thunder damage equal to the roll against a
+      creature of its choice within 3 m.
+
+attacks:
+  - name: Claw
+    kind: melee
+    ability: STR
+    damage_dice: 1d6
+    damage_type: bludgeoning
+    range: 1.5

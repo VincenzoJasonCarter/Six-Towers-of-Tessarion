@@ -1,0 +1,46 @@
+# Baseline corrupted-timeline skirmisher. Melee claw, closes gaps with
+# Flicker Step. This is the original "Timeline Echo" stat block - kept
+# as the generalist of the roster.
+#
+# STR trimmed from 12 to 10 in a balance pass against Pijo's AC 12
+# (attack_bonus was landing 55-60% to hit) - see the other templates
+# for the same pass.
+
+name: the Unbound Hour
+type: Aberration (Timeline Echo)
+challenge_rating: 1
+
+base_scores:
+  STR: 10
+  DEX: 16
+  CON: 14
+  INT: 6
+  WIS: 12
+  CHA: 10
+
+hit_dice: 6  # 6d8
+ac_base: 13  # + max(0, DEX modifier)
+speed: 9     # meters (30 ft)
+proficiency_bonus: 2
+
+traits:
+  - name: Stopped Echo
+    description: >
+      While it has not moved since the start of its last turn, the
+      creature has resistance to nonmagical bludgeoning, piercing, and
+      slashing damage.
+  - name: Flicker Step
+    mechanic: flicker_step
+    description: >
+      (Recharge 5-6) As a bonus action, the creature vanishes and
+      reappears up to 9 m away.
+    recharge: [5, 6]
+    range: 9
+
+attacks:
+  - name: Claw
+    kind: melee
+    ability: STR
+    damage_dice: 1d6
+    damage_type: slashing
+    range: 1.5

@@ -1,0 +1,31 @@
+# Backline-physical support of Thal'Vireth's common-mob roster (see
+# generate_encounter() in monster.py) - a longbow archer harassing
+# from range while the Gladiators hold the front.
+
+name: a Temporal Ranger
+type: Humanoid (Elf)
+challenge_rating: 1
+role: backline_physical
+
+base_scores:
+  STR: 10
+  DEX: 15
+  CON: 12
+  INT: 10
+  WIS: 13
+  CHA: 8
+
+hit_dice: 4  # 4d8
+ac_base: 12  # + max(0, DEX modifier) - light armor
+speed: 9     # meters (30 ft)
+proficiency_bonus: 2
+
+traits: []
+
+attacks:
+  - name: Longbow
+    kind: ranged
+    ability: DEX
+    damage_dice: 1d8
+    damage_type: piercing
+    range: 12

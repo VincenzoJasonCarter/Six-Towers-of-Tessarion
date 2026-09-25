@@ -1,0 +1,35 @@
+# Frontline anchor of Thal'Vireth's common-mob roster (see
+# generate_encounter() in monster.py) - a lightly armored elven
+# guard, sword and shield, meant to be the thing a fight's other
+# roles (Arcanist, Ranger, Chronoswarm) stand behind. "role" (not a
+# field the combat engine itself reads - only generate_encounter()
+# does) is what makes this template eligible for that composition at
+# all; a template without one is never picked there.
+
+name: a Temporal Gladiator
+type: Humanoid (Elf)
+challenge_rating: 1
+role: frontline
+
+base_scores:
+  STR: 14
+  DEX: 12
+  CON: 13
+  INT: 10
+  WIS: 10
+  CHA: 10
+
+hit_dice: 5  # 5d8
+ac_base: 15  # + max(0, DEX modifier) - sword and shield
+speed: 9     # meters (30 ft)
+proficiency_bonus: 2
+
+traits: []
+
+attacks:
+  - name: Sword Slash
+    kind: melee
+    ability: STR
+    damage_dice: 1d8
+    damage_type: slashing
+    range: 1.5

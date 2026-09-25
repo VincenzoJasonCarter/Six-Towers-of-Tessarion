@@ -1,0 +1,31 @@
+# Backline-magic support of Thal'Vireth's common-mob roster (see
+# generate_encounter() in monster.py) - a low-ranking spellcaster
+# deployed behind the Gladiators, not built to take a hit itself.
+
+name: a Temporal Arcanist
+type: Humanoid (Elf)
+challenge_rating: 1
+role: backline_magic
+
+base_scores:
+  STR: 8
+  DEX: 12
+  CON: 10
+  INT: 15
+  WIS: 12
+  CHA: 10
+
+hit_dice: 3  # 3d8 - fragile, meant to be kept out of melee, not tanked
+ac_base: 11  # + max(0, DEX modifier) - robes, no real armor
+speed: 9     # meters (30 ft)
+proficiency_bonus: 2
+
+traits: []
+
+attacks:
+  - name: Temporal Bolt
+    kind: ranged_spell
+    ability: INT
+    damage_dice: 1d6
+    damage_type: force
+    range: 9

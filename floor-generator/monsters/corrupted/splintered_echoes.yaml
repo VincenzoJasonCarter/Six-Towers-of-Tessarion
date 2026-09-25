@@ -1,0 +1,36 @@
+# A swarm, not a single monster - "group_size" (see monster.py's
+# generate_monster_group()) makes this template spawn as several
+# independent bodies instead of one, each with its own HP pool. Individually
+# fragile (2d8, no armor, no traits) by design - the swarm's threat is
+# numbers, and it exists specifically to make an AoE like Create
+# Bonfire (see characters/pijo.yaml) actually matter: a single 5x5
+# zone can catch several of them at once, unlike every other 1-on-1
+# template in this roster.
+
+name: a Splintered Echo
+type: Aberration (Timeline Echo)
+challenge_rating: 1  # per member - the group is fought together, not one at a time
+group_size: [3, 7]
+
+base_scores:
+  STR: 8
+  DEX: 12
+  CON: 8
+  INT: 4
+  WIS: 8
+  CHA: 4
+
+hit_dice: 2  # 2d8 - dies fast, especially to an AoE tick
+ac_base: 10
+speed: 9     # meters (30 ft)
+proficiency_bonus: 2
+
+traits: []   # no Flicker Step, no Stopped Echo - no tricks, just numbers
+
+attacks:
+  - name: Grasp
+    kind: melee
+    ability: STR
+    damage_dice: 1d4
+    damage_type: bludgeoning
+    range: 1.5

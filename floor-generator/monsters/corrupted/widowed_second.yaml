@@ -1,0 +1,40 @@
+# Time-Stop-flavored bruiser. Heavily armored, slow, hits hard, and
+# actually benefits from standing still - the mechanical opposite of
+# Echo-of-Vex. Highest CR of the roster.
+#
+# STR trimmed from 18 to 15 and Slam's damage from 2d6 to 1d10 in a
+# balance pass against Pijo's AC 12 (attack_bonus was landing 70-75%
+# to hit, for up to 12 damage on a normal hit) - see the other
+# templates for the same pass.
+
+name: the Widowed Second
+type: Aberration (Timeline Echo)
+challenge_rating: 2
+
+base_scores:
+  STR: 15
+  DEX: 8
+  CON: 16
+  INT: 8
+  WIS: 14
+  CHA: 10
+
+hit_dice: 8  # 8d8
+ac_base: 15  # + max(0, DEX modifier)
+speed: 6     # meters (20 ft) - it plants itself
+proficiency_bonus: 2
+
+traits:
+  - name: Stopped Echo
+    description: >
+      While it has not moved since the start of its last turn, the
+      creature has resistance to nonmagical bludgeoning, piercing, and
+      slashing damage.
+
+attacks:
+  - name: Slam
+    kind: melee
+    ability: STR
+    damage_dice: 1d10
+    damage_type: bludgeoning
+    range: 1.5
