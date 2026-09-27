@@ -6,9 +6,16 @@
 
 No crown stands alone. In **Crownweave**, that saying is not a proverb—it’s law, history, and threat.
 
-Perched on a broad hill where caravan-roads and river-trade knot together, Crownweave serves as the de facto capital of humankind in Tessarion. Here, banners from half a hundred realms hang over the same streets, and the clatter of markets never truly sleeps.
+Crownweave is two things at once. It is a **city**—The Crown and its walled Weaves, perched on a broad hill where roads and river-trade knot together above the Meridian Spire. And it is a **Union**: the whole island on which that city stands, set in the middle sea at the centre of Tessarion, with the five Tower-nations ranged around it across the water. When a Crownweaver says “the city,” they mean the walls. When they say “Crownweave,” they usually mean everything.
 
-**Population:** \~80,000 souls (swelling to well over 120,000 in the height of the trade season)
+Either way, it serves as the de facto capital of humankind in Tessarion. Here, banners from half a hundred realms hang over the same streets, and the clatter of markets never truly sleeps.
+
+**Population:**
+
+* **The city:** \~80,000 souls within the walls (swelling to well over 120,000 in the height of the trade season)
+* **The Union:** several hundred thousand more across the island’s prefectures—more people in The Iron Crucible and its highlands alone, some say, than in the whole of The Crown, though The Crown’s census-takers dispute this annually.
+
+The figures that follow describe the city unless otherwise noted.
 
 * **Humans (\~55%)**  
    The beating heart of Crownweave. Humans fill the city’s markets, barracks, counting-houses and council chambers. Most merchants, stewards, petty nobles and street rabble share one thing in common: mortal, short-lived, and utterly convinced the city belongs to *them*.
@@ -32,11 +39,13 @@ Perched on a broad hill where caravan-roads and river-trade knot together, Crown
 
 Generations ago, the lands of men were torn apart by the **War of Split Banners**. No lord could claim a clear victory; winter famines and empty coffers did what swords could not.
 
-On a modest hill-town by a deep river crossing, the warring rulers gathered for one last parley. Before witness and steel, they swore the **Weaving Oath**:
+The island had an older name then—**Hexaspire**, after the six Towers that can be felt, if not seen, from its central basin—and it was held to be poor, unsettled country, good for little but the crossing. On a modest hill-town by a deep river crossing at the basin’s heart, directly above the Meridian Spire, the warring rulers gathered for one last parley. Before witness and steel, they swore the **Weaving Oath**:
 
 *“Let no crown stand alone. May our strength be woven, not broken.”*
 
 The town was renamed **Crownweave**, and its hilltop hall declared neutral ground. Since that day, each human realm maintains a seat there—some honored, some merely tolerated, none forgotten.
+
+The old name did not die. Storytellers, priests, and scholars of the Towers still speak of **Hexaspire** when they mean the basin, the Spire beneath it, or the island as it was before the Oath. In the taverns of the lower Weaves, “Hexaspire” is what you call the place when you want to sound as though you remember something the Council does not.
 
 ## **The Crown**
 
@@ -46,18 +55,32 @@ At the city’s heart rises **The Crown**, a ring of ancient stone walls and ste
    A great chamber of carved pillars and inlaid floors where the **Council of Crowns** convenes. Seats wait for each sovereign or their envoy; a few remain empty, their realms lost, fallen… or whispered to endure in shadow.  
 * **The Old Loom**  
    Labyrinthine offices, archive-vaults, and counting houses where scribes, advocates, and clerks spin law and coin into power. It is said that more wars have been averted—or quietly arranged—within these walls than on any battlefield.
+* **The Spire Corridors**
+   Beneath The Crown, sealed transit halls lead down toward the approved observation levels of the Meridian Spire. Most citizens will never walk them. All of them live on top of them.
+
+### **The Crownlands and the Everstorm**
+
+Around the walls lie the **Crownlands**—marked on Loom Council charts, with bureaucratic flatness, as the prefecture of *Central City*. It is farmland, orchard, and estate, without a single chartered town: by old law, nothing within the Crownlands may be chartered but The Crown itself.
+
+Over the Crownlands hangs the **Everstorm**: a slow, silent ring of churning cloud that encircles the heart of the island and has never, in recorded memory, dispersed. It brings no lightning and little rain. It simply turns. The Loomwardens of Skyloom keep it from drifting; scholars of the Collegium hold that it marks the line at which the Meridian Spire’s mediation of the Outer Towers’ pressures is strongest, though every such paper is careful to say *appears to mark*. The great roads pass beneath it through the **stormgates**, and travellers arriving from the Weaves speak of the moment the light changes overhead as the moment they truly arrived.
+
+### **A Capital of Record**
+
+By an old quirk of maritime law, foreign charters and ships’ papers name **Caer Veyn**, the harbor city of Stormwake, as the Union’s seat rather than The Crown. The Crown finds this convenient. It means that foreign disputes arrive in Caer Veyn first, and are frequently settled there before anyone in the Hall of the Woven Crown has to hear of them.
 
 ## **The Weaves**
 
-Beyond the old walls, Crownweave spreads in concentric rings of districts called **Weaves**. Each Weave reflects a distant land, its people, and its trade flowing into the city.
+Beyond the old walls, the city spreads in concentric rings of districts called **Weaves**. Each Weave began as a gate-quarter facing a distant land, its people, and its trade flowing into the city.
 
-Example Weaves (lo bisa ganti/extend sesuka lo):
+As the Union grew, each Weave’s name stretched outward along its roads until it covered not just the quarter within the walls but a whole **prefecture** of the island beyond them. Today a Weave is both: a crowded ring of streets inside the city, and a province of towns, forts, and harbors outside it, governed from its own seat and answering to the Loom Council through its Warden.
 
-* **Northreach Weave** – Stone longhouses, smoke-stained beams, and forges ringing day and night. Furs, iron, and hardy mercenaries from the cold reaches call this place home.  
-* **Emberweave** – Canvas awnings in bright colors shade spice stalls and hookah dens. Traders from hot deserts and sun-baked plains bargain in a dozen tongues.  
-* **Stormwake Weave** – Salty air, shipwright yards, and shrines to sea-gods. Captains and navigators from far coasts study charts in lantern-lit rooms.  
-* **Skyloom** – Slim towers and observatories pierce the skyline. Arcanists, star-readers, and cabals of mages maintain chapterhouses here.  
-* **Underweave** – The city’s underside: vaulted under-bridges, half-flooded alleys, and forgotten arches. Thieves’ guilds, smugglers, and those who “slip between the threads” make their lives in the dim light.
+* **Skyloom** *(the west)* – Within the walls, slim towers and observatories at the foot of the Skyward Towers. Beyond them, the green western hill-country beneath the floating Loom, facing the sea toward Thal’Vireth, governed from **Central District**. Arcanists, star-readers, Loomwardens, and winged folk. *See: Of Skyloom, the Loom Above.*
+* **Northreach Weave** *(the north)* – Within the walls, stone longhouses, smoke-stained beams, and forges ringing day and night. Beyond them, the cold northern highlands facing Khazrund and the Obsidian Crown across the water, governed from **The Iron Crucible**. Iron, artifice, Hearthmark coin, and hardy dwarven clans. *See: Of Northreach Weave, the Iron Threshold.*
+* **Stormwake Weave** *(the east)* – Within the walls, salty air, shipping offices, and shrines to sea-gods. Beyond them, the great eastern bay of the Wakewater and the peninsula called the Hook, governed from the harbor city of **Caer Veyn**. Captains, factors, and every foreign coin in Tessarion. *See: Of Stormwake, the Open Harbor of the East.*
+* **Emberweave** *(the south)* – Within the walls, canvas awnings in bright colors shading spice stalls and hookah dens. Beyond them, the broad, dry, thinly settled south, facing the Iron Hordes across the water. Traders from hot deserts and sun-baked plains bargain in a dozen tongues. *See: Of Emberweave, the Burning Gate of the South.*
+* **Underweave** *(beneath)* – The one Weave with no land beyond the walls. The city’s underside: vaulted under-bridges, half-flooded alleys, and forgotten arches. Thieves’ guilds, smugglers, and those who “slip between the threads” make their lives in the dim light. It has no prefecture, no seat, and—officially—no Warden worth the name.
+
+At the centre of them all lie the Crownlands, which belong to no Weave and to The Crown alone.
 
 As new alliances are forged, new Weaves are raised. When ties are broken, a Weave can wither into ruin—or be claimed by darker powers.
 
@@ -135,10 +158,10 @@ Elite soldiers sworn to defend The Crown, the Hall of the Woven Crown, and high 
 
 #### **Weave Wardens & City Watch**
 
-Each major Weave is assigned a **Warden**, overseeing a mixed force of watchmen.
+Each major Weave is assigned a **Warden**, overseeing a mixed force of watchmen in both its city quarter and its prefecture. Wardens hold court at their Weave’s seat—Central District, The Iron Crucible, Caer Veyn—and keep a deputy within the walls.
 
-* **Variation.**  
-   Law in Northreach is stern and methodical; in Emberweave, noisy and flexible; in Underweave, selective at best.  
+* **Variation.**
+   Law in Northreach is stern and methodical; in Skyloom, quiet and precise; in Stormwake, light-handed and selective; in Emberweave, noisy and flexible; in Underweave, selective at best.    
 * **Practice.**  
    Public violence is suppressed quickly, especially near trade arteries. Crime that learns to keep quiet—and pay its share—often survives.
 
@@ -232,7 +255,7 @@ A stone gate at the Quarter’s main entrance bears the inscription:
 Though each embassy speaks for its people, their citizens are scattered throughout every Weave:
 
 * Elves favor Skyloom’s towers and quiet gardens.  
-* Dwarves cluster near forges and stoneworks in Northreach and beyond.  
+* Dwarves cluster near forges and stoneworks in Northreach and beyond, and keep Stormwake’s bonded vaults.    
 * Orcs fill barracks, caravan yards, and docks across multiple districts.  
 * Tieflings appear anywhere knowledge, coin, or secrets flow.  
 * Sangrith sanctums hide in back alleys and near shrines in many Weaves.  

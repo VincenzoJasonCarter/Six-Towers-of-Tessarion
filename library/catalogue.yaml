@@ -1,0 +1,110 @@
+# The Threadmint Library: which shelf each lore-book chapter sits on.
+#
+# A book is bound in its shelf's colour, so the colour of a spine tells you
+# what the volume is about. Books are named by their lore-book filename
+# without the number and .md: lore-book/17-thalvireth.md -> thalvireth.
+# A chapter left out of every shelf still shows up, in plain cloth, on an
+# "Uncatalogued" shelf.
+#
+# Shelf fields:
+#   name      shown on the legend and the shelf's nameplate
+#   blurb     one line, shown when you hover the legend
+#   colour    the cloth colour of every book on the shelf
+#   part_of   (optional) another shelf id; this shelf's books stand on that
+#             shelf's plank and carry its colour as a band on the spine
+#   plank     (optional) nameplate text when other shelves are part_of this one
+#   books     book names, in any order (the library sorts by chapter number)
+
+shelves:
+  - id: world
+    name: The World & the Towers
+    blurb: Histories and studies that reach across all of Tessarion.
+    colour: "#2e3a66"
+    books:
+      - prelude
+      - regarding-the-countries
+      - regarding-the-towers
+      - on-the-phenomenon-of-spire-confluence
+
+  - id: ascension
+    name: Rites of Ascension
+    blurb: How power grows in Tessarion, from levels and classes to crystals and subclasses.
+    colour: "#5b3478"
+    books:
+      - leveling-up
+      - classes
+      - crystals
+      - subclasses-skill
+
+  - id: soulforge
+    name: The Soulforge & the Market
+    blurb: The crafting codices, and the market that prices what they make.
+    colour: "#6a4a2c"
+    books:
+      - the-soulforge-codex
+      - crafting-book
+      - on-resonant-crafting
+      - economy-of-tessarion
+      - official-tessarion-market-value
+
+  - id: crownweave
+    name: Crownweave
+    plank: Crownweave & the Weaves
+    blurb: The island union at the heart of the world, and the Spire it grew around.
+    colour: "#b08a2e"
+    books:
+      - crownweave
+      - the-meridian-spire
+
+  - id: skyloom
+    name: Skyloom
+    part_of: crownweave
+    blurb: The western Weave, held above the land it governs.
+    colour: "#3d7bb0"
+    books:
+      - of-skyloom-the-loom-above
+
+  - id: northreach
+    name: Northreach
+    part_of: crownweave
+    blurb: The northern highlands, where magic is processed rather than invoked.
+    colour: "#4f5963"
+    books:
+      - of-northreach-weave-the-iron-threshold
+
+  - id: emberweave
+    name: Emberweave
+    part_of: crownweave
+    blurb: The scorched southern approaches, where the city's weave frays into road.
+    colour: "#a63a22"
+    books:
+      - of-emberweave-the-burning-gate-of-the-south
+
+  - id: stormwake
+    name: Stormwake
+    part_of: crownweave
+    blurb: The eastern harbour prefecture, open to the outside world.
+    colour: "#1f7473"
+    books:
+      - of-stormwake-the-open-harbor-of-the-east
+
+  - id: thalvireth
+    name: Thal'vireth
+    blurb: The realm that farms time, and the Verdant Tower at its roots.
+    colour: "#2f6e3c"
+    books:
+      - thalvireth
+      - of-the-white-road
+      - of-the-structure-known-as-the-verdant-tower
+      - artifacts-phenomenon
+
+# Shorter titles for spines where the full one will not fit. The full title
+# is still used everywhere else.
+spine_titles:
+  of-skyloom-the-loom-above: Skyloom
+  of-northreach-weave-the-iron-threshold: Northreach Weave
+  of-emberweave-the-burning-gate-of-the-south: Emberweave
+  of-stormwake-the-open-harbor-of-the-east: Stormwake
+  of-the-structure-known-as-the-verdant-tower: The Verdant Tower
+  on-the-phenomenon-of-spire-confluence: Spire Confluence
+  official-tessarion-market-value: Market Value

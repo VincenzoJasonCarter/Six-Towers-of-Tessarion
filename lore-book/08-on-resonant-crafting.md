@@ -317,8 +317,8 @@ Power Rating defines the ceiling of what you are asking the world to allow. No o
 | 2 | Uncommon (Refined) | 55 |
 | 3 | Rare | 65 |
 | 4 | Epic | 80 |
-|  |  |  |
-|  |  |  |
+| 5 | Legendary | 100 |
+| 6 | Mythic | 125 |
 
 The DC is not difficulty. It is permission. The world does not grade you on a curve.
 
@@ -341,7 +341,7 @@ The Resonance roll is not a single die. It is a pool, assembled from contributin
 | Relevant tool proficiency | \+5 |
 | Expert-grade tools (masterwork smith's kit, etc.) | \+3 |
 | Crafting in a location with high ambient resonance (near a Tower, in a crystal vein) | \+5 to \+15 (DM's discretion) |
-| Each previous successful resonant craft with this Posture | \+1 (max \+5) |
+| Each previous resonant craft with this Posture that reached Dim Resonance or better (Rejection does not count) | \+1 (max \+5) |
 | Soulstone is native to the Posture declared (e.g., Crimson Warshard for Predatory) | \+5 |
 | Soulstone is *off-native* but compatible | \+0 |
 | Soulstone is actively hostile to the Posture (DM's discretion) | −10 |
@@ -470,7 +470,7 @@ A Fracture Identity does not have to be permanent.
      □ Single Posture: −5 to Resonance roll, deepened effects  
      □ Dual Posture: \+1 Stability Threshold, safer  
 □ 4\. Choose Power Rating (1–6), sets Resonance DC  
-□ 5\. Build Resonance Pool (2d20 take higher \+ modifiers)  
+□ 5\. Build Resonance Pool ((PR+1) × d20, summed \+ modifiers)  
 □ 6\. Compare roll to DC → consult Outcome Band  
 □ 7\. Apply rarity tier properties  
 □ 8\. If Apex or Epic+, determine Echo Trait with DM  

@@ -1,0 +1,22 @@
+[project]
+name = "crafting-dashboard"
+version = "0.1.0"
+description = "Browser-based crafting simulator for Tessarion: craft Ch.7 items, buy materials (Ch.9/10), roll Resonant Crafting (Ch.8)."
+readme = "README.md"
+authors = [
+    { name = "VincenzoJasonCarter" }
+]
+requires-python = ">=3.11"
+dependencies = [
+    "pyyaml>=6.0.3",
+]
+
+[project.scripts]
+crafting-dashboard = "crafting_dashboard.cli:main"
+
+[tool.uv.build-backend]
+module-root = "src"
+
+[build-system]
+requires = ["uv_build>=0.12.13,<0.13.0"]
+build-backend = "uv_build"

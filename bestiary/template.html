@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Threadmint Bestiary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f3ede1;
+  --panel: #fbf8f1;
+  --ink: #2a241d;
+  --muted: #6f6557;
+  --rule: #d8cdb8;
+  --accent: #8c2f23;
+  --accent-soft: #f1ddd5;
+  --dm-bg: #ece5d6;
+  --dm-edge: #b9a98c;
+  --stat-rule: #9b3a26;
+  --redact: #2a241d;
+  --serif: "EB Garamond", Georgia, "Times New Roman", serif;
+  --display: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
+    --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520;
+    --dm-bg: #211d17; --dm-edge: #4a4134; --stat-rule: #c9644c; --redact: #e9e1d0;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
+  --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520;
+  --dm-bg: #211d17; --dm-edge: #4a4134; --stat-rule: #c9644c; --redact: #e9e1d0;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font: 18px/1.6 var(--serif);
+}
+a { color: var(--accent); }
+button, input { font: inherit; color: inherit; }
+
+/* ---------- top bar ---------- */
+.top {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px;
+  padding: 12px 24px; background: var(--panel); border-bottom: 1px solid var(--rule);
+}
+.brand { text-decoration: none; color: var(--ink); margin-right: auto; }
+.brand b { font: 700 26px/1 var(--display); letter-spacing: .01em; }
+.brand span { display: block; font-size: 13px; color: var(--muted); font-style: italic; }
+.search {
+  width: min(320px, 100%); padding: 7px 12px; border: 1px solid var(--rule);
+  border-radius: 6px; background: var(--bg); font: 15px var(--sans);
+}
+.switch { display: flex; align-items: center; gap: 8px; font: 14px var(--sans); color: var(--muted); cursor: pointer; user-select: none; }
+.switch input { accent-color: var(--accent); width: 16px; height: 16px; }
+
+/* ---------- layout ---------- */
+.layout { display: grid; grid-template-columns: 290px minmax(0, 1fr); min-height: calc(100vh - 66px); }
+.side {
+  border-right: 1px solid var(--rule); padding: 16px 0 40px;
+  position: sticky; top: 66px; height: calc(100vh - 66px); overflow-y: auto;
+}
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 0 16px 12px; }
+.tabs button {
+  border: 1px solid var(--rule); background: transparent; border-radius: 999px;
+  padding: 3px 11px; font: 13px var(--sans); cursor: pointer; color: var(--muted);
+}
+.tabs button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+.side h3 {
+  margin: 14px 16px 4px; font: 600 12px var(--sans); letter-spacing: .08em;
+  text-transform: uppercase; color: var(--muted);
+}
+.side a {
+  display: block; padding: 5px 16px 5px 20px; text-decoration: none; color: var(--ink);
+  border-left: 3px solid transparent; line-height: 1.3;
+}
+.side a small { display: block; font: 12px var(--sans); color: var(--muted); }
+.side a:hover { background: var(--accent-soft); }
+.side a[aria-current="page"] { border-left-color: var(--accent); background: var(--accent-soft); }
+.empty { padding: 8px 20px; color: var(--muted); font-style: italic; }
+main { padding: 32px 48px 80px; min-width: 0; }
+
+/* ---------- home ---------- */
+body.home .layout { display: block; }
+body.home .side { display: none; }
+.front { max-width: 1200px; margin: 0 auto; }
+.front .intro { max-width: 760px; }
+.front .tier { font: 13px var(--sans); color: var(--muted); letter-spacing: .04em; }
+h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
+.front .tabs { padding: 8px 0 0; }
+.front h2 { font: 700 28px var(--display); margin: 36px 0 14px; border-bottom: 1px solid var(--rule); padding-bottom: 4px; }
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
+.card {
+  display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden;
+  background: var(--panel); text-decoration: none; color: var(--ink);
+  transition: border-color .15s, transform .15s;
+}
+.card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.card .avatar { border-radius: 0; }
+.card .body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 3px; flex: 1; }
+.card b { font: 700 20px/1.15 var(--display); }
+.card small { font: 12.5px/1.4 var(--sans); color: var(--muted); }
+.card .chip { align-self: flex-start; margin-top: auto; font-size: 11.5px; padding: 1px 8px; }
+
+/* Placeholder portrait: tinted by region until images/<id>.png exists. */
+.avatar {
+  position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden;
+  display: grid; place-items: center;
+  background: radial-gradient(circle at 50% 38%, hsl(var(--h) 42% 44%), hsl(var(--h) 38% 16%) 78%);
+}
+.avatar::before, .avatar::after {
+  content: ""; position: absolute; border-radius: 50%;
+  border: 1px solid hsl(var(--h) 60% 85% / .22);
+}
+.avatar::before { inset: 16%; }
+.avatar::after { inset: 27%; border-style: dashed; }
+.avatar span { position: relative; font: 700 44px/1 var(--display); color: hsl(var(--h) 55% 92%); letter-spacing: .03em; }
+.avatar.rumour span::after { content: "?"; font-size: .55em; vertical-align: super; opacity: .7; }
+.avatar img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
+.error {
+  max-width: 1200px; margin: 0 auto 24px; padding: 12px 16px; border: 1px solid var(--accent);
+  border-radius: 8px; background: var(--accent-soft); font: 14px/1.5 var(--sans); white-space: pre-wrap;
+}
+
+/* ---------- entry ---------- */
+.entry { max-width: 760px; }
+.entry-head { display: flex; gap: 20px; align-items: flex-start; }
+.entry-head > div { flex: 1; min-width: 0; }
+.entry-head .avatar { width: 128px; flex: none; margin-top: 6px; }
+.entry-head .avatar span { font-size: 40px; }
+.back { display: inline-block; font: 14px var(--sans); text-decoration: none; margin-bottom: 12px; }
+.kicker { font: 600 13px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0; }
+.aka { margin: 0 0 6px; color: var(--muted); }
+.meta { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 18px; }
+.chip {
+  font: 13px var(--sans); padding: 2px 10px; border-radius: 999px;
+  border: 1px solid var(--rule); color: var(--muted); background: var(--panel);
+}
+.chip.cat { border-color: var(--accent); color: var(--accent); }
+.habitat { font-style: italic; color: var(--muted); border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); padding: 8px 0; margin: 0 0 20px; }
+.habitat b { font-style: normal; font: 600 12px var(--sans); letter-spacing: .08em; text-transform: uppercase; margin-right: 6px; }
+.lore p { margin: 0 0 1em; }
+.lore p:first-child::first-letter {
+  float: left; font: 700 3.4em/.8 var(--display); padding: 6px 8px 0 0; color: var(--accent);
+}
+.redact { background: var(--redact); color: transparent; border-radius: 2px; user-select: none; }
+blockquote.note {
+  margin: 20px 0; padding: 4px 0 4px 18px; border-left: 3px solid var(--accent);
+  font-size: 20px; font-style: italic;
+}
+blockquote.note cite { display: block; font: 14px var(--sans); color: var(--muted); font-style: normal; margin-top: 4px; }
+.pager { display: flex; justify-content: space-between; gap: 12px; margin-top: 40px; font: 14px var(--sans); }
+.pager a { text-decoration: none; }
+
+/* ---------- DM panel ---------- */
+.dm {
+  margin-top: 36px; background: var(--dm-bg); border: 1px solid var(--dm-edge);
+  border-radius: 10px; padding: 18px 22px; font: 15px/1.55 var(--sans);
+}
+body:not(.dm-on) .dm, body:not(.dm-on) .chip.cat { display: none; }
+.dm > h2 { font: 700 24px var(--display); margin: 0 0 4px; }
+.dm h4 { font: 700 13px var(--sans); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); margin: 20px 0 6px; }
+.dm p { margin: 0 0 8px; }
+.dm ul { margin: 0 0 8px; padding-left: 20px; }
+.dm li { margin-bottom: 4px; }
+.dm .flag { color: var(--accent); }
+dl.kv { margin: 0; display: grid; grid-template-columns: max-content 1fr; gap: 2px 12px; }
+dl.kv dt { font-weight: 600; }
+dl.kv dd { margin: 0; }
+.vtabs { display: flex; flex-wrap: wrap; gap: 4px; margin: 8px 0 0; }
+.vtabs button {
+  border: 1px solid var(--dm-edge); border-bottom: none; background: transparent;
+  padding: 5px 12px; border-radius: 6px 6px 0 0; font: 13px var(--sans); cursor: pointer; color: var(--muted);
+}
+.vtabs button[aria-selected="true"] { background: var(--panel); color: var(--ink); font-weight: 600; }
+.statblock {
+  background: var(--panel); border-top: 3px solid var(--stat-rule); border-bottom: 3px solid var(--stat-rule);
+  padding: 12px 16px; border-radius: 0 6px 6px 6px;
+}
+.statblock[hidden] { display: none; }
+.statblock .src { font-size: 12px; color: var(--muted); font-style: italic; margin-bottom: 6px; }
+.statblock hr { border: 0; border-top: 2px solid var(--stat-rule); opacity: .6; margin: 10px 0; }
+.statblock .row { margin: 2px 0; }
+.statblock .row b { color: var(--stat-rule); }
+.abil { display: grid; grid-template-columns: repeat(6, 1fr); text-align: center; gap: 4px; }
+.abil b { display: block; color: var(--stat-rule); font-size: 12px; }
+.statblock h5 { font: 600 16px var(--display); font-size: 19px; color: var(--stat-rule); border-bottom: 1px solid var(--stat-rule); margin: 12px 0 6px; }
+.statblock .act { margin: 0 0 8px; }
+
+/* ---------- narrow screens ---------- */
+@media (max-width: 900px) {
+  .layout { display: block; }
+  .side { display: none; }
+  main { padding: 20px 16px 60px; }
+  .top { padding: 10px 16px; position: static; }
+  .search { width: 100%; }
+  h1 { font-size: 36px; }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .card b { font-size: 17px; }
+  .avatar span { font-size: 34px; }
+  .entry-head { gap: 14px; }
+  .entry-head .avatar { width: 84px; }
+  .entry-head .avatar span { font-size: 28px; }
+  .dm { padding: 14px; }
+  .abil { grid-template-columns: repeat(3, 1fr); }
+  dl.kv { grid-template-columns: 1fr; }
+  dl.kv dd { margin-bottom: 4px; }
+}
+</style>
+</head>
+<body class="dm-on home">
+<header class="top">
+  <a class="brand" href="#"><b>The Threadmint Bestiary</b><span>A Register of Hostile Things Within the Union</span></a>
+  <input class="search" id="q" type="search" placeholder="Search names, places, lore…" aria-label="Search the bestiary">
+  <label class="switch"><input type="checkbox" id="dm" checked> DM material</label>
+</header>
+<div class="layout">
+  <nav class="side" aria-label="Entries">
+    <div class="tabs"></div>
+    <div id="list"></div>
+  </nav>
+  <main id="main"></main>
+</div>
+
+<script>
+const DATA = /*__BESTIARY_DATA__*/null;
+const LIVE = /*__BESTIARY_LIVE__*/false;  // true when served by serve.py
+
+const KINDS = { all: "All", creature: "Creatures", rumour: "Rumoured", figure: "Factions & Figures" };
+const CATEGORY = {
+  minion: "Minion", elite: "Elite", brute: "Brute", boss: "Boss", mini_boss: "Mini-boss",
+  legendary_boss: "Legendary", hazard_unit: "Hazard unit", encounter_mechanic: "Encounter hazard",
+  obstacle: "Obstacle",
+};
+const ATTACK = {
+  melee_weapon: "Melee Weapon Attack", ranged_weapon: "Ranged Weapon Attack",
+  ranged_spell: "Ranged Spell Attack", ranged: "Ranged Attack", melee_unarmed: "Melee Unarmed Attack",
+};
+const ABILS = ["str", "dex", "con", "int", "wis", "cha"];
+
+const entries = DATA.entries;
+const byId = Object.fromEntries(entries.map(e => [e.id, e]));
+const state = { q: "", kind: "all" };
+
+/* ---------- helpers ---------- */
+const esc = s => String(s).replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const text = s => esc(s).replace(/█+/g, m => `<span class="redact" title="Redacted">${m}</span>`);
+const label = k => k.replace(/_/g, " ").replace(/^\w/, c => c.toUpperCase());
+const cap = s => String(s).charAt(0).toUpperCase() + String(s).slice(1);
+const signed = n => (typeof n === "number" && n >= 0 ? "+" : "") + n;
+const mod = score => signed(Math.floor((score - 10) / 2));
+const REGION_HUE = { Crownweave: 38, Skyloom: 205, Northreach: 12, Emberweave: 28, Stormwake: 185, "Thal'vireth": 140 };
+const regionTop = e => (e.region || "Unplaced").split("·")[0].trim();
+const regionSub = e => (e.region || "").split("·").slice(1).join("·").trim();
+const paras = s => String(s || "").split(/\n+/).filter(Boolean);
+
+function value(v) {
+  if (v == null) return '<span class="muted">—</span>';
+  if (Array.isArray(v)) return v.length ? `<ul>${v.map(x => `<li>${value(x)}</li>`).join("")}</ul>` : "none";
+  if (typeof v === "object")
+    return `<dl class="kv">${Object.entries(v).map(([k, x]) => `<dt>${esc(label(k))}</dt><dd>${value(x)}</dd>`).join("")}</dl>`;
+  if (typeof v === "string" && byId[v] && v.includes("_")) return link(v);
+  return text(v);
+}
+const link = id => byId[id] ? `<a href="#${esc(id)}">${esc(byId[id].name)}</a>` : esc(id);
+const section = (title, body) => body ? `<h4>${esc(title)}</h4>${body}` : "";
+const listOf = arr => arr && arr.length ? `<ul>${arr.map(x => `<li>${value(x)}</li>`).join("")}</ul>` : "";
+
+function storage(key, val) {
+  try {
+    if (val === undefined) return localStorage.getItem(key);
+    localStorage.setItem(key, val);
+  } catch (_) { return null; }
+}
+
+/* ---------- search + list ---------- */
+function haystack(e) {
+  const l = e.lore || {};
+  return [e.name, e.local_name, ...(e.aliases || []), e.region, e.faction, e.type,
+    l.classification, l.habitat, l.entry, ...(l.field_notes || [])].filter(Boolean).join(" ").toLowerCase();
+}
+entries.forEach(e => { e._hay = haystack(e); });
+
+function visible() {
+  const words = state.q.toLowerCase().split(/\s+/).filter(Boolean);
+  return entries.filter(e => (state.kind === "all" || e.kind === state.kind) && words.every(w => e._hay.includes(w)));
+}
+
+function grouped(list) {
+  const groups = new Map();
+  for (const e of list) {
+    const r = regionTop(e);
+    if (!groups.has(r)) groups.set(r, []);
+    groups.get(r).push(e);
+  }
+  return groups;
+}
+
+const tabs = () => Object.entries(KINDS)
+  .map(([k, v]) => `<button type="button" data-kind="${k}" aria-pressed="${state.kind === k}">${v}</button>`).join("");
+
+function initials(name) {
+  const core = name.split(/:\s*/).pop().split(/\s*[,/]\s*/)[0].replace(/^The\s+/i, "");
+  return core.split(/[\s-]+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
+}
+
+function hue(e) {
+  const r = regionTop(e);
+  if (r in REGION_HUE) return REGION_HUE[r];
+  return [...r].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 0);
+}
+
+// images/<id>.png (or .jpg/.webp/...) replaces the placeholder automatically.
+function avatar(e) {
+  const inner = e.image
+    ? `<img src="${esc(e.image)}" alt="" loading="lazy">`
+    : `<span aria-hidden="true">${esc(initials(e.name))}</span>`;
+  return `<div class="avatar ${e.kind}" style="--h:${hue(e)}">${inner}</div>`;
+}
+
+function renderList() {
+  document.querySelector(".side .tabs").innerHTML = tabs();
+  const current = location.hash.slice(1);
+  const list = visible();
+  let h = "";
+  for (const [region, items] of grouped(list)) {
+    h += `<h3>${esc(region)}</h3>`;
+    h += items.map(e => `<a href="#${esc(e.id)}"${e.id === current ? ' aria-current="page"' : ""}>${esc(e.name)}<small>${esc(regionSub(e) || (e.lore || {}).classification || "")}</small></a>`).join("");
+  }
+  document.getElementById("list").innerHTML = h || '<p class="empty">Nothing in the register matches.</p>';
+}
+
+/* ---------- front page ---------- */
+function renderFront() {
+  const list = visible();
+  const counts = Object.keys(KINDS).slice(1).map(k => `${entries.filter(e => e.kind === k).length} ${KINDS[k].toLowerCase()}`).join(" · ");
+  let h = `<div class="front"><div class="intro">
+    <p class="tier">THREADMINT LIBRARY · ACCESS TIER: RESTRICTED</p>
+    <h1>A Register of Hostile Things</h1>
+    <p>Compiled from Watch reports, Loomwarden incident summaries, Crucible filings and the testimony of those who lived to give it.
+    Entries marked <i>Rumoured</i> rest on accounts the Library has been unable to confirm. Where the record has been redacted, the redaction is preserved.</p>
+    <p class="tier">${counts}</p></div>
+    <div class="tabs">${tabs()}</div>`;
+  for (const [region, items] of grouped(list)) {
+    h += `<h2>${esc(region)}</h2><div class="cards">`;
+    h += items.map(e => `<a class="card" href="#${esc(e.id)}">${avatar(e)}<div class="body">
+      <b>${esc(e.name)}</b><small>${esc((e.lore || {}).classification || "")}</small>
+      ${e.category ? `<span class="chip cat">${esc(CATEGORY[e.category] || label(e.category))}</span>` : ""}
+      ${e.kind === "rumour" ? `<span class="chip">Rumoured</span>` : ""}</div></a>`).join("");
+    h += `</div>`;
+  }
+  if (!list.length) h += '<p class="empty">Nothing in the register matches.</p>';
+  return h + "</div>";
+}
+
+/* ---------- stat blocks ---------- */
+function speed(s) {
+  if (s == null || typeof s !== "object") return text(s);
+  return Object.entries(s).filter(([k]) => k !== "hover")
+    .map(([k, v]) => (k === "walk" ? "" : k + " ") + v + " ft." + (k === "fly" && s.hover ? " (hover)" : "")).join(", ");
+}
+const saves = o => Object.entries(o).map(([k, v]) => `${cap(k)} ${signed(v)}`).join(", ");
+const dc = o => typeof o === "object" ? `DC ${o.dc} ${cap(o.ability)}` : text(o);
+
+function damage(d) {
+  if (typeof d === "object") return Object.entries(d).map(([k, v]) => `${esc(label(k))}: ${esc(v)}`).join("; ");
+  return esc(d);
+}
+
+function action(a) {
+  let h = `<p class="act"><b><i>${esc(a.name)}</i>${a.recharge ? ` (Recharge ${esc(a.recharge)})` : ""}.</b> `;
+  const bits = [];
+  if (a.to_hit != null) bits.push(`${signed(a.to_hit)} to hit`);
+  if (a.reach_ft != null) bits.push(`reach ${esc(a.reach_ft)} ft.`);
+  if (a.range_ft != null) bits.push(`range ${esc(a.range_ft)} ft.`);
+  if (a.targets != null) bits.push(a.targets === 1 ? "one target" : esc(a.targets) + (typeof a.targets === "number" ? " targets" : ""));
+  if (a.kind) h += `<i>${esc(ATTACK[a.kind] || label(a.kind))}:</i> `;
+  if (bits.length) h += bits.join(", ").replace(/\.?$/, ". ");
+  if (a.area) h += `<i>Area:</i> ${esc(a.area)}. `;
+  if (a.damage) h += `<i>Hit:</i> ${damage(a.damage)}${a.damage_type ? " " + esc(a.damage_type) + " damage" : ""}. `;
+  if (a.save) h += `${dc(a.save)} saving throw. `;
+  for (const [k, t] of [["on_fail", "On a failure"], ["on_success", "On a success"], ["effect", ""], ["description", ""], ["note", "Note"]])
+    if (a[k]) h += (t ? `<i>${t}:</i> ` : "") + text(a[k]) + " ";
+  return h + "</p>";
+}
+
+const V_DONE = new Set(["label", "source", "count", "role", "ac", "ac_note", "hp", "hp_note", "hit_dice", "speed",
+  "abilities", "saving_throws", "damage_vulnerabilities", "damage_resistances", "weaknesses", "vulnerabilities_note",
+  "attack_bonus", "save_dc", "primary_weapon", "position", "items", "combat_objective", "traits", "actions",
+  "reactions", "special_mechanic", "phases", "tactics", "dm_tips"]);
+
+function statBlock(v) {
+  const row = (k, val) => !val ? "" : `<p class="row"><b>${k}</b> ${val}</p>`;
+  let h = v.source ? `<p class="src">${esc(v.source)}</p>` : "";
+  h += row("Role", v.role && text(v.role));
+  h += row("Count", v.count != null && esc(v.count));
+  h += row("Armor Class", v.ac != null && esc(v.ac) + (v.ac_note ? ` (${esc(v.ac_note)})` : ""));
+  h += row("Hit Points", v.hp != null ? esc(v.hp) + (v.hit_dice ? ` (${esc(v.hit_dice)})` : "") : v.hp_note && text(v.hp_note));
+  h += row("Speed", v.speed != null && speed(v.speed));
+  if (v.abilities) {
+    h += `<hr><div class="abil">${ABILS.map(a => `<div><b>${a.toUpperCase()}</b>${v.abilities[a] ?? "—"}${v.abilities[a] != null ? ` (${mod(v.abilities[a])})` : ""}</div>`).join("")}</div><hr>`;
+  }
+  h += row("Saving Throws", v.saving_throws && saves(v.saving_throws));
+  h += row("Damage Vulnerabilities", v.damage_vulnerabilities?.length && esc(v.damage_vulnerabilities.join(", ")));
+  h += row("Damage Resistances", v.damage_resistances?.length && esc(v.damage_resistances.join(", ")));
+  h += row("Weaknesses", v.weaknesses && text(v.weaknesses));
+  h += row("Vulnerability", v.vulnerabilities_note && text(v.vulnerabilities_note));
+  h += row("Attack Bonus", v.attack_bonus != null && signed(v.attack_bonus));
+  h += row("Save DC", v.save_dc && dc(v.save_dc));
+  h += row("Primary Weapon", v.primary_weapon && text(v.primary_weapon));
+  h += row("Position", v.position && text(v.position));
+  h += row("Items", v.items && esc(v.items.join(", ")));
+  h += row("Objective", v.combat_objective && text(v.combat_objective));
+  if (v.traits?.length) h += `<h5>Traits</h5>` + v.traits.map(t => `<p class="act"><b><i>${esc(t.name)}.</i></b> ${t.description ? text(t.description) : ""}</p>`).join("");
+  if (v.actions?.length) h += `<h5>Actions</h5>` + v.actions.map(action).join("");
+  if (v.reactions?.length) h += `<h5>Reactions</h5>` + v.reactions.map(r => `<p class="act"><b><i>${esc(r.name)}.</i></b> ${r.trigger ? `<i>Trigger:</i> ${text(r.trigger)} ` : ""}${text(r.effect || "")}</p>`).join("");
+  if (v.special_mechanic) {
+    const m = v.special_mechanic, o = m.objects;
+    h += `<h5>${esc(m.name || "Special Mechanic")}</h5><p class="act">${o ? `<i>${esc(o.count)} object${o.count === 1 ? "" : "s"}, AC ${esc(o.ac)}, HP ${esc(o.hp)}.</i> ` : ""}${text(m.effect || "")}</p>`;
+  }
+  if (v.phases?.length) h += `<h5>Phases</h5>` + v.phases.map(p => `<p class="act"><b><i>Phase ${esc(p.phase)}.</i></b> ${text(p.description)}</p>`).join("");
+  if (v.tactics) h += `<h5>Tactics</h5><p>${text(v.tactics)}</p>`;
+  if (v.dm_tips) h += `<h5>DM Tips</h5><p>${text(v.dm_tips)}</p>`;
+  for (const [k, x] of Object.entries(v)) if (!V_DONE.has(k)) h += `<h5>${esc(label(k))}</h5>${value(x)}`;
+  return h;
+}
+
+/* ---------- DM panel ---------- */
+const E_DONE = new Set(["kind", "_hay", "id", "name", "local_name", "aliases", "category", "faction", "type", "size",
+  "description", "region", "lore", "versions", "appearances", "dm_tips", "notes", "trivia", "loot", "theme",
+  "mechanics", "opening_line", "raw_note", "interpreted", "role", "race_class", "combat_notes", "quirks",
+  "applies_to", "see_also", "effect", "counterplay", "encounter_mechanics", "encounter_options_for_players",
+  "social_encounter", "offer"]);
+
+function dmPanel(e) {
+  let h = `<section class="dm" aria-label="DM material"><h2>For the DM</h2>`;
+  const facts = [e.type, e.size, e.race_class].filter(Boolean).map(esc).join(" · ");
+  if (facts) h += `<p><b>${facts}</b></p>`;
+  if (e.role) h += `<p><i>Role:</i> ${text(e.role)}</p>`;
+  if (e.theme) h += `<p><i>Theme:</i> ${text(e.theme)}</p>`;
+  h += section("At the table", e.description && `<p>${text(e.description)}</p>`);
+  h += section("Opening line", e.opening_line && `<p><i>${text(e.opening_line)}</i></p>`);
+  h += section("Combat", e.combat_notes && `<p>${text(e.combat_notes)}</p>`);
+  h += section("Effect", e.effect && `<p>${text(e.effect)}</p>`);
+  h += section("Applies to", e.applies_to && `<p>${e.applies_to.map(link).join(", ")}</p>`);
+  h += section("Mechanics", e.mechanics && e.mechanics.map(m => `<p><b>${esc(m.name)}.</b> ${text(m.description || "")}</p>`).join(""));
+  h += section("Original note", e.raw_note && `<p><i>${text(e.raw_note)}</i></p>`);
+  h += section("Read as", listOf(e.interpreted));
+  h += section("Offer", e.offer && `<p>${text(e.offer)}</p>`);
+  h += section("Quirks", listOf(e.quirks));
+
+  if (e.versions?.length) {
+    const vtabs = e.versions.map((v, i) => `<button type="button" role="tab" data-v="${i}" aria-selected="${i === 0}">${esc(v.label || "Version " + (i + 1))}</button>`).join("");
+    const blocks = e.versions.map((v, i) => `<div class="statblock" role="tabpanel" data-v="${i}"${i ? " hidden" : ""}>${statBlock(v)}</div>`).join("");
+    h += `<h4>Stat block${e.versions.length > 1 ? "s" : ""}</h4>`;
+    h += e.versions.length > 1 ? `<div class="vtabs" role="tablist">${vtabs}</div>${blocks}` : blocks.replace('class="statblock"', 'class="statblock" style="border-radius:6px"');
+  }
+
+  h += section("DM tips", e.dm_tips && `<p>${text(e.dm_tips)}</p>`);
+  h += section("Encounter mechanics", e.encounter_mechanics && value(e.encounter_mechanics));
+  h += section("Player options", listOf(e.encounter_options_for_players));
+  h += section("Counterplay", listOf(e.counterplay));
+  h += section("Social encounter", listOf(e.social_encounter));
+  h += section("Loot", e.loot && value(e.loot));
+  h += section("Trivia", listOf(e.trivia));
+  h += section("See also", e.see_also && `<p>${link(e.see_also)}</p>`);
+  for (const [k, x] of Object.entries(e)) if (!E_DONE.has(k)) h += section(label(k), value(x));
+  h += section("Notes & source contradictions", e.notes?.length && `<ul>${e.notes.map(n => `<li class="flag">${text(n)}</li>`).join("")}</ul>`);
+  return h + "</section>";
+}
+
+/* ---------- entry ---------- */
+function renderEntry(e) {
+  const l = e.lore || {};
+  const alt = [e.local_name, ...(e.aliases || [])].filter(a => a && a !== e.name);
+  let h = `<article class="entry"><a class="back" href="#">← All entries</a>`;
+  h += `<div class="entry-head">${avatar(e)}<div>`;
+  h += `<p class="kicker">${esc(e.region || "Unplaced")}</p><h1>${esc(e.name)}</h1>`;
+  if (alt.length) h += `<p class="aka">Also called ${alt.map(a => `<i>${esc(a)}</i>`).join(", ")}</p>`;
+  h += `<div class="meta">`;
+  if (l.classification) h += `<span class="chip">${esc(l.classification)}</span>`;
+  if (e.kind === "rumour") h += `<span class="chip">Rumoured</span>`;
+  if (e.faction) h += `<span class="chip">${esc(e.faction)}</span>`;
+  if (e.category) h += `<span class="chip cat">${esc(CATEGORY[e.category] || label(e.category))}</span>`;
+  h += `</div></div></div>`;
+  if (l.habitat) h += `<p class="habitat"><b>Found</b>${text(l.habitat)}</p>`;
+  h += l.entry
+    ? `<div class="lore">${paras(l.entry).map(p => `<p>${text(p)}</p>`).join("")}</div>`
+    : `<p class="empty">The Library holds no account of this entry yet.</p>`;
+  for (const n of l.field_notes || []) {
+    const cut = n.lastIndexOf(" — ");
+    const [q, who] = cut > 0 ? [n.slice(0, cut), n.slice(cut + 3)] : [n, ""];
+    h += `<blockquote class="note">${text(q)}${who ? `<cite>— ${text(who)}</cite>` : ""}</blockquote>`;
+  }
+  h += dmPanel(e);
+
+  const list = visible().some(x => x.id === e.id) ? visible() : entries;
+  const i = list.findIndex(x => x.id === e.id);
+  const prev = list[i - 1], next = list[i + 1];
+  h += `<nav class="pager">${prev ? `<a href="#${esc(prev.id)}">← ${esc(prev.name)}</a>` : "<span></span>"}${next ? `<a href="#${esc(next.id)}">${esc(next.name)} →</a>` : ""}</nav>`;
+  return h + "</article>";
+}
+
+/* ---------- routing ---------- */
+const currentEntry = () => byId[decodeURIComponent(location.hash.slice(1))];
+const errorBanner = () => DATA.error ? `<div class="error">${esc(DATA.error)}\n\nFix the file and save; this page reloads itself.</div>` : "";
+
+function render() {
+  const e = currentEntry();
+  document.body.classList.toggle("home", !e);
+  document.getElementById("main").innerHTML = errorBanner() + (e ? renderEntry(e) : renderFront());
+  document.title = e ? `${e.name} · Threadmint Bestiary` : "Threadmint Bestiary";
+  renderList();
+}
+
+window.addEventListener("hashchange", () => { render(); window.scrollTo(0, 0); });
+const qBox = document.getElementById("q");
+qBox.addEventListener("input", () => {
+  state.q = qBox.value;
+  if (currentEntry()) renderList();
+  else render();
+});
+document.addEventListener("click", ev => {
+  const b = ev.target.closest(".tabs button[data-kind]");
+  if (!b) return;
+  state.kind = b.dataset.kind;
+  render();
+});
+document.getElementById("main").addEventListener("click", ev => {
+  const b = ev.target.closest(".vtabs button");
+  if (!b) return;
+  const dm = b.closest(".dm");
+  dm.querySelectorAll(".vtabs button").forEach(x => x.setAttribute("aria-selected", x === b));
+  dm.querySelectorAll(".statblock").forEach(x => { x.hidden = x.dataset.v !== b.dataset.v; });
+});
+const dmBox = document.getElementById("dm");
+dmBox.checked = storage("bestiary.dm") !== "off";
+document.body.classList.toggle("dm-on", dmBox.checked);
+dmBox.addEventListener("change", () => {
+  document.body.classList.toggle("dm-on", dmBox.checked);
+  storage("bestiary.dm", dmBox.checked ? "on" : "off");
+});
+
+// Live mode: reload when enemies.yaml / template / images change, keeping
+// the search, tab and scroll position across the reload.
+let place = null;
+try {
+  place = JSON.parse(sessionStorage.getItem("bestiary.place"));
+  sessionStorage.removeItem("bestiary.place");
+} catch (_) {}
+if (place) {
+  state.q = qBox.value = place.q || "";
+  state.kind = place.kind in KINDS ? place.kind : "all";
+}
+render();
+if (place) window.scrollTo(0, place.y || 0);
+
+if (LIVE) {
+  setInterval(async () => {
+    try {
+      const { version } = await (await fetch("/version", { cache: "no-store" })).json();
+      if (version === DATA.version) return;
+      try { sessionStorage.setItem("bestiary.place", JSON.stringify({ q: state.q, kind: state.kind, y: window.scrollY })); } catch (_) {}
+      location.reload();
+    } catch (_) { /* server stopped or restarting; try again next tick */ }
+  }, 1500);
+}
+</script>
+</body>
+</html>

@@ -11,3 +11,6 @@ wheels/
 
 # Generated floor output
 floor-generator/output/
+
+# Crafting simulator
+crafting-dashboard/.venv

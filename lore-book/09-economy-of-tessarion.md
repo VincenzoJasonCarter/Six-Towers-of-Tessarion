@@ -91,11 +91,13 @@ All purchases use **OTMV** with **standardized rounding**.
 2. Apply rounding:  
    * **Below 0.5 → round down**  
    * **0.5 or above → round up**
+3. **Minimum charge:** every purchase costs **at least 1 CB**, whatever the rounded total.
 
 **Examples:**
 
 * 2.4 CB → **2 CB**  
-* 2.5 CB → **3 CB**
+* 2.5 CB → **3 CB**  
+* 0.2 CB → **1 CB** *(minimum charge)*
 
 > *Guild doctrine:*  
 >  Volume, predictability, and ledger accuracy matter more than individual margins.

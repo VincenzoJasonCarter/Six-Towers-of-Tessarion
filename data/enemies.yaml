@@ -1,0 +1,1640 @@
+# =============================================================================
+# Enemies extracted from "DND DM Campaign" (Google Doc)
+# Setting: Tessarion / Crownweave / Skyloom / Northreach
+#
+# Structure
+#   enemies:              every hostile creature with stats or a combat role
+#     versions:           the doc sometimes gives the same enemy different stats
+#                         in different tabs; each version is kept separately
+#                         and labelled with the tab it came from
+#     appearances:        where the enemy is used in the sessions
+#   enemy_concepts:       boss ideas from the "Enemy Concepts" tab (mechanics only)
+#   unstatted_opposition: named antagonists / forces with no combat stats
+#
+# Every entry also carries:
+#   region:               where it is found, as "Weave/Country · Place"
+#   lore:                 in-world encyclopedia text (classification,
+#                         habitat, entry paragraphs, field_notes quotes).
+#                         `description` stays the DM's at-the-table look.
+#   Entries without `lore` are left out of the bestiary.
+#   Browse it live with `make bestiary` (uv run bestiary/serve.py).
+#
+# Descriptions were translated to English from the Indonesian sections.
+# Anything the doc contradicts itself on is flagged under `notes`.
+# =============================================================================
+
+source_document: "DND DM Campaign"
+
+enemies:
+
+  # ---------------------------------------------------------------------------
+  # SESSION 2 - Crownweave: The Thread of the Forgotten
+  # ---------------------------------------------------------------------------
+  - id: street_thug
+    name: Street Thug
+    category: minion
+    type: Humanoid (human / half-orc)
+    description: >-
+      Wiry humans (maybe a scrappy half-orc) in patched leather and roughspun
+      linen, smelling of cheap liquor and damp Underweave stone. Fight with
+      desperate, messy swings using makeshift clubs.
+    region: Crownweave · Underweave
+    lore:
+      classification: Hireling — Underweave muscle
+      habitat: >-
+        The under-bridges, half-flooded alleys and forgotten arches of the
+        Underweave.
+      entry: >-
+        The Underweave has no prefecture, no seat and—officially—no Warden
+        worth the name. What it has instead is labour, and the cheapest labour
+        it sells is the kind that swings a club. Street thugs are hired by the
+        hour and by the knot: three or four at a time, gathered in a tavern
+        doorway with nothing more than a name, a place, and half their pay in
+        clipped Crownsblood.
+
+        Most are human; a fair number are half-orcs pushed out of the caravan
+        yards for drink or temper. They wear what the damp has left
+        them—patched leather, roughspun linen, a borrowed knife—and fight the
+        way desperate people fight: messily, briefly, and with one eye on the
+        nearest alley. They are loyal neither to their employers nor to each
+        other. When two of them go down, the rest remember that the other half
+        of their pay was never guaranteed.
+
+        The Watch rarely pursues them. Crime in Crownweave survives so long as
+        it keeps quiet and pays its share; a street thug is simply the part of
+        that arrangement that occasionally makes noise.
+      field_notes:
+        - >-
+          “Never fight a knot of Underweave hirelings for their pride. They
+          haven’t got any. Make the job cost more than it pays, and they’ll
+          leave on their own.” — a Stormwake caravan-guard
+    appearances:
+      - session: "Session 2 - Part 1, Scene 2: The Underweave Exchange"
+        count: 3
+        tactics: Focus fire, then flee if two are defeated.
+      - session: "Session 2 - Part 3, Scene 5: The Unsafe Exchange (ambush)"
+        count: 2
+        tactics: >-
+          Flank and try to disarm Citizen 0 (DC 13 Strength check).
+    versions:
+      - label: Standard
+        source: "Tab: Session2"
+        ac: 10
+        hp: 5
+        actions:
+          - name: Attack
+            kind: melee_weapon
+            to_hit: 2
+            damage: "1d4+1"
+
+  - id: guard_leader
+    name: Guard Leader
+    category: elite
+    type: Humanoid (orc or human mercenary)
+    description: >-
+      A heavily muscled orc or seasoned human mercenary in a stolen breastplate
+      and scarred leather helmet, carrying a broadsword. Possibly wearing a
+      discarded noble-house uniform. Focused on finishing the contract.
+    region: Crownweave · Underweave
+    lore:
+      classification: Hireling — mercenary captain
+      habitat: >-
+        Wherever an Underweave contract needs finishing: exchanges, handoffs,
+        ambush points.
+      entry: >-
+        Every knot of hired muscle needs someone to count the coin and point
+        at the target. In the Underweave that someone is usually a sellsword
+        who once held a better post: an orc caravan-captain let go after a
+        lost cargo, or a human sergeant from a house that no longer exists.
+
+        The second kind is common enough to have its own tell. A few chairs in
+        the Hall of the Woven Crown have sat empty for generations, their
+        realms lost or fallen, and the soldiers of those realms did not vanish
+        with them. Neither did their liveries. Faded noble-house tabards and
+        breastplates bearing crests no herald still recognises turn up in the
+        Underweave’s pawn-stalls, and on the backs of captains like this one.
+
+        Unlike the thugs they command, guard leaders take the contract
+        seriously. The Merchants’ Loom is known to fund “independent”
+        mercenary actions when its interests require, and a captain with a
+        reputation for finishing jobs can expect to be hired again. They
+        strike first at whoever looks least armoured. It saves time.
+      field_notes:
+        - >-
+          “Look at the crest on the breastplate. If you can’t name the house,
+          neither can anyone who’d come looking for him.” — an Underweave
+          pawn-broker
+    appearances:
+      - session: "Session 2 - Part 3, Scene 5: The Unsafe Exchange (ambush)"
+        count: 1
+        tactics: Commands the thugs; targets the lowest-AC character (Citizen 0).
+    versions:
+      - label: Standard
+        source: "Tab: Session2"
+        ac: 13
+        hp: 18
+        actions:
+          - name: Broadsword
+            kind: melee_weapon
+            to_hit: 4
+            damage: "1d6+2"
+
+  # ---------------------------------------------------------------------------
+  # PROLOGUE (Citizen 0) - The Roots of the Sky / The Weight of the Unseen
+  # ---------------------------------------------------------------------------
+  - id: audit_drone
+    name: Audit Drone
+    local_name: Drone Pengaudit
+    category: hazard_unit
+    type: Construct
+    size: Tiny
+    description: >-
+      Small winged metal sphere that once scanned cargo. Now malfunctioning,
+      it treats the players as "organic waste" and fires painful "correction"
+      beams. Annoying but fragile.
+    region: Skyloom · Skyward Towers
+    lore:
+      classification: Construct — cargo-audit apparatus (Glass Circuitry)
+      habitat: >-
+        The weighing-halls, cargo lifts and maintenance shafts beneath the
+        Skyward Towers.
+      entry: >-
+        Everything the Loom eats, burns or wears is gathered in Central
+        District and sent up—and everything sent up must first be weighed. The
+        lift-wards of the Skyward Towers tolerate only so much mass per
+        ascent, and the harassed clerks who keep them have long relied on
+        small automated auditors to count what the manifests forget.
+
+        The Audit Drone is one of these: a winged metal sphere barely larger
+        than a fist, built around a core of Northreach Glass Circuitry, with a
+        single lens for reading seals and a focusing coil for “corrections”—a
+        sting of radiant light meant to mark contraband and startle pilferers.
+        Glass Circuitry was designed to run without a mage watching over it,
+        and drones left running too long in the lower shafts do exactly that.
+        They keep auditing.
+
+        A drone that has lost its manifest cannot tell cargo from anything
+        else. It classifies whatever moves without a seal as unregistered
+        mass—“organic waste,” in the phrasing of its own record-chirps—and
+        moves to correct it. Individually they are fragile and easily swatted.
+        The blinding flash they emit when threatened is not.
+      field_notes:
+        - >-
+          “If one of the little ones starts chirping at you, show it a seal.
+          If you haven’t got a seal, show it the back of a shield.” — a
+          Central District lift-porter
+    appearances:
+      - session: "Prologue - Act 3: The Descent (Maintenance Area / engine room)"
+        count: 2
+    versions:
+      - label: Detailed stat block
+        source: "Tab: Enemy"
+        ac: 7
+        hp: 4
+        speed: { walk: 0, fly: 30, hover: true }
+        abilities: { str: 4, dex: 14, con: 10, int: 10, wis: 10, cha: 1 }
+        actions:
+          - name: Correction Beam
+            kind: ranged_weapon
+            to_hit: 4
+            range_ft: "30/60"
+            targets: 1
+            damage: "1d4+1"
+            damage_type: radiant
+          - name: Flash Protocol
+            recharge: "5-6"
+            area: "10 ft radius around the drone"
+            save: { ability: con, dc: 11 }
+            on_fail: Blinded until the end of the target's next turn.
+    dm_tips: >-
+      Use them to push players toward thrown daggers or tactical movement.
+    notes:
+      - The doc says AC 7 is "equal to the player's AC", but Citizen 0 has AC 13.
+
+  - id: weight_echo
+    name: Weight Echo
+    local_name: Gema Berat
+    category: minion
+    type: Construct / Undead
+    size: Medium
+    description: >-
+      Black-dust silhouettes of dead workers who were crushed by loads
+      ("miscalculated" weight). Jerky movements; slow but hit abnormally hard.
+    region: Skyloom · Skyward Towers
+    lore:
+      classification: Echo — residual death-memory (not true undead)
+      habitat: >-
+        Gravity corridors, lift-shafts and loading floors where workers died
+        beneath miscalculated loads.
+      entry: >-
+        It is an old observation, older than coin, that where the dead lie
+        thick, the ground remembers. Most of that memory sinks, slowly, and
+        hardens into soulstone. Some of it does not sink far enough.
+
+        Weight Echoes are the silhouettes of labourers crushed beneath loads
+        that were weighed wrong—a digit dropped in a ledger, a ward set for
+        the manifest instead of the cargo. They gather out of black dust along
+        the lines where the load came down, and move with the stiff, hitching
+        gait of someone still bracing to lift. They are slow. They strike with
+        the full weight that killed them, and those they strike find their own
+        limbs suddenly, briefly, too heavy to move.
+
+        Collegium scholars decline to call them undead, preferring “residual
+        echo”: a memory that has been given mass, rather than a soul given a
+        body. Lift-porters are less precise but have learned the same lesson.
+        Blades pass through dust; a hammer or a falling crate breaks it apart.
+        What killed them once is what puts them down. Some collapse into a
+        last burst of heavy dust that drags nearby feet to the floor.
+      field_notes:
+        - >-
+          “Don’t hate them. They’re only finishing the lift.” — a lift-porter,
+          of a shaft sealed after a collapse
+    appearances:
+      - session: "Prologue - Act 3: The Descent (gravity corridor)"
+      - session: "Prologue alt. - Encounter 1: The Gravity Slips (combat tutorial)"
+        count: "number of players - 1"
+    versions:
+      - label: Detailed stat block
+        source: "Tab: Enemy"
+        ac: 11
+        hp: 7
+        speed: { walk: 25 }
+        abilities: { str: 14, dex: 10, con: 12, int: 4, wis: 8, cha: 1 }
+        damage_vulnerabilities: [bludgeoning]
+        actions:
+          - name: Heavy Slam
+            kind: melee_weapon
+            to_hit: 3
+            reach_ft: 5
+            targets: 1
+            damage: "1d4+2"
+            damage_type: bludgeoning
+            effect: >-
+              Target must succeed on a DC 10 Strength save or have its speed
+              reduced by 10 ft until its next turn.
+        dm_tips: >-
+          Use them to surround the players. With +4 to hit, players land
+          ~65-70% of attacks, which makes them feel competent.
+      - label: Simplified tutorial version
+        source: "Tab: Detail Situation"
+        ac: 10
+        hp: 6
+        actions:
+          - name: Slam
+            kind: melee_weapon
+            to_hit: 3
+            damage: "1d4"
+            damage_type: bludgeoning
+        traits:
+          - name: Heavy Dust Burst
+            description: >-
+              On death the body bursts into heavy dust. Creatures within 5 ft
+              must succeed on a DC 10 Strength save or fall Prone.
+
+  - id: resonance_construct
+    name: The Resonance Construct
+    local_name: Konstruk Resonansi
+    category: boss
+    type: Construct
+    size: Large
+    description: >-
+      A 3-meter faceless being made of snapped lift chains, iron ledger books
+      and vibrating purple energy - the physical manifestation of instability
+      leaking from the not-yet-arrived Scroll. Tries to "rewrite" the
+      characters' weight. On defeat it unravels into a gust of wind that rushes
+      back up to the sky (or collapses into scrap iron).
+    region: Skyloom · Skyward Towers
+    lore:
+      classification: Anomaly — load-bearing resonance manifestation
+      habitat: >-
+        Recorded once, at the base of Lift K-9, during an anchor breach.
+      entry: >-
+        The following is drawn from a Loomwarden incident summary, lightly
+        edited for public circulation.
+
+        At the base of Lift K-9, during what the report terms an “anchor
+        breach,” the snapped lift-chains, fallen iron ledgers and loose
+        ironwork of the lower shaft drew together into a single standing form
+        roughly three metres tall. It had no face. Its joints were bound in a
+        vibrating violet light that the attending warden describes as
+        “resonance with nowhere to go.” It did not behave like a construct
+        built for a purpose. It behaved like a correction, trying to rewrite
+        the weight of every living body in the chamber toward its own.
+
+        The breach coincided with the approach of an object the report
+        designates only as ████████, not yet arrived at the lift-house but
+        already, in the warden’s words, “leaning on the anchors.” The
+        construct is understood as the physical overflow of that pressure. It
+        could be harmed directly, but poorly: the anchor-stabilizers set about
+        the chamber were feeding it their strain, and each one destroyed cost
+        it both substance and protection.
+
+        Witnesses disagree on what they saw when it fell. Some describe a heap
+        of scrap iron. Others insist the whole mass came apart into a gust of
+        wind that rushed straight up the shaft toward the Loom, as if
+        returning something it had borrowed.
+      field_notes:
+        - >-
+          “Recommendation: stabilizer pillars in all lower shafts to be
+          re-rated. Recommendation: object ████████ not to be received at K-9
+          again.” — closing lines of the incident summary
+    appearances:
+      - session: "Prologue - Act 4: Anchor Breach (bottom of Lift K-9)"
+      - session: "Prologue alt. - Climax: The Loom Backlash"
+    versions:
+      - label: Detailed stat block
+        source: "Tab: Enemy"
+        ac: 12
+        hp: 20
+        speed: { walk: 20 }
+        abilities: { str: 16, dex: 8, con: 14, int: 6, wis: 10, cha: 5 }
+        saving_throws: { str: 5, con: 4 }
+        actions:
+          - name: Ledger Crush
+            kind: melee_weapon
+            to_hit: 5
+            reach_ft: 10
+            targets: 1
+            damage: "1d6+3"
+            damage_type: bludgeoning
+          - name: Gravity Well
+            recharge: "5-6"
+            area: "15 ft around the boss"
+            save: { ability: str, dc: 12 }
+            on_fail: Knocked Prone and pulled 5 ft toward the boss.
+            on_success: Stays in place.
+        special_mechanic:
+          name: The Stabilizers
+          objects: { count: 1, ac: 10, hp: 5 }
+          effect: >-
+            Each time a Stabilizer pillar is destroyed, the boss automatically
+            loses 5 HP and loses Resistance to all damage until the start of
+            its next turn.
+        dm_tips: >-
+          Discourage direct tanking (+5 to hit easily beats AC 13). Steer
+          players toward the pillars first.
+      - label: Story-flow version
+        source: "Tab: Sesi 1 Austin Andre Story"
+        phases:
+          - phase: 1
+            description: >-
+              Boss is immune / very tough. Some players distract (tank/kite)
+              while others attack 3 Stabilizer pillars in the room corners.
+          - phase: 2
+            description: >-
+              After the pillars are destroyed, the boss becomes Vulnerable.
+      - label: Alternate prologue version
+        source: "Tab: Detail Situation"
+        ac: 12
+        hp: 25
+        speed: { walk: 20 }
+        actions:
+          - name: Ledger Smash
+            kind: melee_weapon
+            to_hit: 4
+            damage: "1d6+2"
+            damage_type: bludgeoning
+          - name: Gravity Well
+            recharge: "5-6"
+            area: "10 ft around the boss"
+            save: { ability: str, dc: 11 }
+            on_fail: Pulled onto the boss's body and Restrained.
+        special_mechanic:
+          name: Stabilizer Pillars
+          objects: { count: 3, ac: 10, hp: 5 }
+          effect: Boss becomes Vulnerable to damage once all 3 pillars are destroyed.
+    notes:
+      - Pillar count differs between tabs (1 in "Enemy", 3 in the other two).
+
+  # ---------------------------------------------------------------------------
+  # SESSION 3 / 4 - The Union of Threads (Valerius escort)
+  # ---------------------------------------------------------------------------
+  - id: scavenger_leader
+    name: Scavenger Leader / Scavenger Brute
+    faction: The Arcane Scavengers (tech-thief gang)
+    category: elite
+    type: Humanoid
+    region: Skyloom · Luminous Ward
+    lore:
+      classification: Faction — The Arcane Scavengers (field captain)
+      habitat: >-
+        The alleys between the Luminous Ward and the Windspire Lift; anywhere
+        valuable devices travel with too few guards.
+      entry: >-
+        The Arcane Scavengers are a tech-thief gang who live off the movement
+        of devices: glass circuits, cased crystals, resonators, prototype
+        tools—anything built by someone clever and carried by someone who is
+        not a soldier. Their take ends up in Underweave pawn-stalls, in quiet
+        workshops in Durdenbeck, and now and then back in the hands of the
+        people it was stolen from, at a markup.
+
+        In the field they are led by bruisers like this one: big, armoured in
+        whatever scrap they have stripped, and inclined to open an ambush by
+        charging whoever looks most like a wall. Some carry a greataxe; the
+        cannier ones carry an old iron door as well, and lift it whenever the
+        arrows start. Their job is to pin the defenders in place so the
+        shooters on the rooftops can work.
+
+        Northreach takes a particular interest in the gang. Under the Code of
+        the Gear, unauthorized replication or distribution of artificer
+        schematics is a threat to Union continuity, and the Scavengers have
+        stolen more than a few schematics. Brass Guard bounties on known
+        Scavenger captains are said to be generous, and to specify no
+        condition of delivery.
+      field_notes:
+        - >-
+          “They don’t want you. They want what’s in the case. That’s the only
+          mercy you’ll get from them, so use it.” — a Skyloom wing-guard
+    appearances:
+      - session: "Session 3 - Act 3: The Alley Ambush (Luminous Ward -> Windspire Lift)"
+        count: 1
+    versions:
+      - label: Scavenger Leader (Veteran - tanky)
+        source: "Tab: Sesi 3"
+        ac: 15
+        ac_note: Chain Shirt + Shield
+        hp: 30
+        actions:
+          - name: Multiattack
+            description: Two Greataxe attacks.
+          - name: Greataxe
+            kind: melee_weapon
+            to_hit: 4
+            damage: "1d8+2"
+        tactics: >-
+          Rushes forward to pin the party's melee member so his shooters are free.
+      - label: Scavenger Brute (revised for 6-player party)
+        source: "Tab: Battke"
+        ac: 13
+        ac_note: Scrap armor
+        hp: 35
+        reactions:
+          - name: Scrap Shield
+            trigger: Hit by a ranged attack.
+            effect: +2 AC (uses an old iron door as a shield).
+        tactics: Rushes straight at the party's Tanker.
+
+  - id: roof_sniper
+    name: Roof-Top Sniper
+    faction: The Arcane Scavengers
+    category: minion
+    type: Humanoid (crossbowman)
+    region: Skyloom · Luminous Ward
+    lore:
+      classification: Faction — The Arcane Scavengers (rooftop crossbow)
+      habitat: >-
+        Rooftops and chimney-stacks overlooking narrow streets.
+      entry: >-
+        Scavenger shooters work from above. Crouched behind the chimneys of
+        the Luminous Ward, where glass roofs and angled light-panels turn
+        every upward glance into a squint, they wait for the bruisers below to
+        pin a target and then put heavy crossbow bolts into whoever tries to
+        help.
+
+        The gang’s more seasoned shooters have learned to open a fight with
+        smoke rather than steel. A bomb or two lobbed into the middle of a
+        street leaves defenders blind and archers useless, and gives the
+        gang’s knife-runners the cover they need. Scavenger smoke-bombs are
+        crude things packed with powder of uncertain origin; Northreach
+        inspectors have more than once traced it to lots that were meant to
+        have been destroyed at Flint-and-Steel.
+      field_notes:
+        - >-
+          “When the smoke goes up, watch the chimneys, not the smoke.” — a
+          Skyloom wing-guard
+    appearances:
+      - session: "Session 3 - Act 3: The Alley Ambush"
+        count: 2
+    versions:
+      - label: Crossbowman
+        source: "Tab: Sesi 3"
+        ac: 12
+        hp: 12
+        position: On the rooftops, 20 ft up.
+        actions:
+          - name: Heavy Crossbow
+            kind: ranged_weapon
+            to_hit: 3
+            damage: "1d10"
+        tactics: Duels the Ranger(s).
+      - label: Counter-Ranger (revised)
+        source: "Tab: Battke"
+        ac: 10
+        ac_note: Hides behind chimneys for half cover (+2 AC)
+        hp: 8
+        position: Rooftops left and right, behind chimneys.
+        items: [Smoke Bomb]
+        tactics: >-
+          Round 1: throw smoke bombs into the middle of the street. The area
+          becomes Heavily Obscured; Rangers shooting through the smoke have
+          Disadvantage.
+
+  - id: gutter_rat
+    name: Gutter-Rat
+    faction: The Arcane Scavengers
+    category: minion
+    type: Humanoid (melee rogue)
+    region: Skyloom · Luminous Ward
+    lore:
+      classification: Faction — The Arcane Scavengers (knife-runner)
+      habitat: >-
+        Doorways, crates and blind corners at the edges of an ambush.
+      entry: >-
+        The youngest and quickest of the Scavengers are recruited out of the
+        Underweave, where slipping between the threads is a skill learned
+        before letters. The Watch calls them gutter-rats. So do they.
+
+        Gutter-rats do not fight fair and do not fight long. They wait hidden
+        until the smoke goes up, come out of it behind the mage, the scholar
+        or whoever is carrying the case, and try to be gone again before
+        anyone has turned around. Knock over their crates and they have
+        nowhere to hide; clear the smoke and they have nowhere to come from.
+    appearances:
+      - session: "Session 3 - Act 3: The Alley Ambush (revised)"
+        count: 2
+    versions:
+      - label: Standard
+        source: "Tab: Battke"
+        ac: 11
+        hp: 10
+        tactics: >-
+          Start in Stealth, then leap out to attack the Mage or Valerius from
+          behind once the smoke goes up.
+    encounter_options_for_players:
+      - "Clear the Air: a Mage waves a sack/cloak to remove smoke in one area."
+      - "Topple Crates: DC 10 Athletics to knock Gutter-Rats down or give Valerius cover."
+
+  - id: mana_mite_swarm
+    name: Mana-Mite Swarm
+    category: minion
+    type: Swarm of tiny insects
+    description: >-
+      Transparent insects that feed on pure energy, drawn by the leaking
+      Resonator in Valerius's case. Arrows pass through without killing many.
+    region: Skyloom · The Loom
+    lore:
+      classification: Vermin — resonance-feeding swarm
+      habitat: >-
+        The thin air around the Loom, the Windspire Lift, and anywhere
+        resonance leaks.
+      entry: >-
+        Mana-mites are small enough, and clear enough, that most people bitten
+        by one never saw it. Individually they are transparent insects the
+        size of a grain of rice, visible only as a faint shimmer in bright
+        light. They feed on raw resonance the way midges feed on blood, and
+        they are drawn to it from remarkable distances.
+
+        In ordinary times they are a nuisance of the Aerialring and the Loft
+        Market, where vials of stored weather and poorly cased instruments
+        leak just enough to keep them fed. Loomwardens treat them as a sign
+        rather than a threat: mites gathering where they should not means
+        something nearby has a crack in its casing.
+
+        When a real leak occurs—an uncased crystal, a failing resonator—they
+        come in their thousands, and they do not stop at the casing. A feeding
+        swarm bites with a sting of pure force and can briefly smother a
+        caster’s voice. Arrows and blades pass through doing little harm; fire
+        and blast scatter them. They do not seem to care what they eat, only
+        that it is humming.
+      field_notes:
+        - >-
+          “Patch the leak first. You can swat mites until the Everstorm clears
+          and there will still be more coming.” — marginal note in a
+          Loomwarden’s maintenance manual
+    appearances:
+      - session: "Session 3/4 - Act 4: The Zero-G Ambush (inside the Windspire Lift)"
+        tactics: >-
+          Swarm Valerius and his case. Revised version: 2 swarms attack the
+          Tanker, 2 try to eat Valerius's case.
+    versions:
+      - label: Full stat block
+        source: "Tabs: Union of Threads and Fate / Lanjutan Sesi 4"
+        count: 4
+        ac: 12
+        hp: 20
+        speed: { walk: 0, fly: 30, hover: true }
+        damage_resistances: [bludgeoning, piercing, slashing]
+        weaknesses: Area-of-effect spells (Burning Hands, Thunderwave) deal normal/extra damage.
+        actions:
+          - name: Mana Bite
+            kind: melee_weapon
+            to_hit: 4
+            reach_ft: 0
+            targets: "1 creature in the swarm's space"
+            damage: "2d6"
+            damage_type: force
+          - name: Surge
+            recharge: "5-6"
+            area: "5 ft"
+            save: { ability: con, dc: 11 }
+            on_fail: Silenced (can't cast verbal spells) until the end of its next turn.
+      - label: Session 3 draft
+        source: "Tab: Sesi 3"
+        count: 3
+        hp: 20
+        damage_resistances: [piercing, slashing]
+      - label: Session 3 draft (Tab 16 copy)
+        source: "Tab: Tab 16"
+        count: 3
+        ac: 7
+        hp: 20
+        damage_resistances: [piercing, slashing]
+      - label: Anti-Ranger (revised for 6-player party)
+        source: "Tab: Battke"
+        count: 4
+        hp: 25
+        damage_resistances: [piercing, slashing]
+    encounter_mechanics:
+      - >-
+        Zero gravity: characters without a fly speed can only move by pushing
+        off objects/walls (Athletics).
+      - >-
+        Turbulent lift (if the party failed with Loomwarden Iylara): DC 12 Dex
+        save at the start of each turn or be flung 10 ft in a random direction.
+      - >-
+        Valerius's case has 3 "stability HP"; if the swarms hit it 3 times it
+        explodes (big party damage, non-lethal; quest continues with less reward).
+      - "Human Torpedo: a Mage can use their action to launch the Tanker at an enemy."
+      - "Patch Up: a Mage can use their action to patch the leak so no more mites arrive."
+
+  - id: alpha_mite
+    name: Alpha Mite
+    category: mini_boss
+    type: Monstrosity (mana-mite)
+    region: Skyloom · The Loom
+    lore:
+      classification: Vermin — swarm alpha
+      habitat: >-
+        Always behind its swarm.
+      entry: >-
+        Given enough to eat, a mana-mite never stops growing. Most never get
+        the chance; the swarm shares what it finds. Occasionally one does, and
+        becomes what the Loomwardens call an alpha: a mite the size of a
+        hound, glass-bodied, crackling with static drawn from everything it
+        has eaten.
+
+        An alpha leads by staying behind. It keeps its swarm between itself
+        and any threat like a living screen, and throws chains of lightning
+        over them at whoever comes close. It has no resistance to arrows—its
+        body is glass and charge, not cloud—but getting a clear shot past the
+        swarm is the whole trick. When an alpha dies, whatever holds the swarm
+        together goes with it, and the mites scatter.
+      field_notes:
+        - >-
+          “Kill the big one. The little ones only stay because it does.” — a
+          Windperch flight instructor
+    appearances:
+      - session: "Session 3/4 - Act 4: The Zero-G Ascent"
+        count: 1
+    versions:
+      - label: Mini-boss
+        source: "Tabs: Sesi 3 / Tab 16"
+        ac: 13
+        hp: 40
+        damage_resistances: []
+        weaknesses: No physical resistance - arrows do full damage.
+        actions:
+          - name: Static Shock
+            kind: ranged
+            to_hit: 4
+            range_ft: 30
+            damage: "1d8"
+            damage_type: lightning
+        tactics: Zaps Valerius; Rangers should focus it down first.
+      - label: The Glass Cannon (revised)
+        source: "Tab: Battke"
+        ac: 13
+        hp: 50
+        traits:
+          - name: Magnetic Shield
+            description: >-
+              Always stays BEHIND the swarms. Rangers can't target it until the
+              swarm in front of it dies or moves.
+        actions:
+          - name: Static Chain
+            kind: ranged
+            description: Chain lightning that jumps between targets.
+            damage:
+              primary_target: "1d8"
+              secondary_target_nearest: "1d4"
+            damage_type: lightning
+        on_death: Remaining swarms flee.
+
+  # ---------------------------------------------------------------------------
+  # SESSION 4 / SESSION 6 - The Outskirts / Ash-Fields (Mana-Blight)
+  # ---------------------------------------------------------------------------
+  - id: flux_scarecrow
+    name: Flux-Scarecrow
+    category: brute
+    type: Construct / Plant
+    description: >-
+      Worn-out wooden scarecrows whose straw frames are possessed by writhing
+      purple roots infected with Mana-Blight. Eyes glow a cold purple. Slow,
+      limping walk.
+    region: Northreach · The Outskirts
+    lore:
+      classification: Blight-host — possessed field construct
+      habitat: >-
+        Farmland near ruptured Vessels and unsanctioned discharge.
+      entry: >-
+        Mana-Blight is what becomes of resonance with nowhere to go. The
+        Resonance Crucible studies it, grades it, and builds sinks to delay
+        it—“all delay; none absolve,” as the Crucible’s own literature admits.
+        What the Crucible does not do is farm. The people who farm near
+        Northreach’s outflow learn about Mana-Blight their own way.
+
+        A Flux-Scarecrow begins as an ordinary field-guard of wood and straw.
+        When blight seeps into the soil it sends up fine purple roots that
+        seek structure the way ivy seeks a wall, and a scarecrow standing in a
+        blighted field is the tallest structure for a mile. The roots climb
+        inside, knit through the straw, and stand it up.
+
+        It walks slowly and with a limp, its legs never having been meant to
+        carry anything, and lashes with long straw-bound arms from well beyond
+        arm’s reach. Its eyes glow a cold violet. When destroyed, the pressure
+        it has gathered vents all at once in a burst of force, and it
+        sometimes leaves behind a shard of corrupted mana—worth a little to
+        the right buyer, and a great deal more as evidence.
+      field_notes:
+        - >-
+          “If your scarecrow has moved, don’t go and put it back.” — an
+          Outskirts farmers’ saying, of recent origin
+    appearances:
+      - session: "Session 4 - Act 2: The Outskirts (The Blight in the Grain)"
+        count: 2
+      - session: "Session 6 - Act 4: The Frozen Outskirts (Blighted Guardians)"
+        count: 2
+    versions:
+      - label: Standard
+        source: "Tabs: Act 2 (Session 4) / Act 4 - S6"
+        ac: 11
+        hp: 22
+        speed: { walk: 20 }
+        actions:
+          - name: Straw Lash
+            kind: melee_weapon
+            to_hit: 4
+            reach_ft: 10
+            damage: "1d6+2"
+            damage_type: slashing
+        traits:
+          - name: Mana Burst
+            description: >-
+              When reduced to 0 HP it explodes. Creatures within 5 ft must
+              succeed on a DC 11 Dex save or take 1d6 force damage.
+        tactics: Uses its 10 ft reach to lash from behind the rats.
+    loot:
+      - item: Corrupted Mana-Shard
+        check: DC 12 Arcana (Int) or Nature (Wis)
+        value: 2 BloodCrown (sold to Old Kael) or kept as evidence
+    notes:
+      - The Session 4 overview version omits AC and the Mana Burst saving throw.
+
+  - id: corrupted_rat_swarm
+    name: Corrupted Rat Swarm
+    aliases: [Corrupted Rats]
+    category: minion
+    type: Swarm / Beast
+    description: >-
+      Large soot-covered field rats with glowing, pulsing violet tumors along
+      their spines.
+    region: Northreach · The Outskirts
+    lore:
+      classification: Blight-host — corrupted vermin
+      habitat: >-
+        Blighted fields, drainage ditches, and the undersides of leaking
+        Vessels.
+      entry: >-
+        The rats reach the blight first. They drink from the ditches beneath
+        leaking Vessels and nest in the warm earth around them, and within a
+        season they have changed: larger, soot-black, and ridged along the
+        spine with pulsing violet growths that farmers call tumours and
+        Crucible assayers call “nodules of saturation.”
+
+        Corrupted rats move in packs, go for whoever stands in front, and
+        carry a festering bite whose necrotic sting outlasts the wound. They
+        are drawn to pools of spilled blight as moths to lamps, and grow
+        bolder and harder to kill near one. Northreach bounties on them are
+        small and constant.
+    appearances:
+      - session: "Session 4 - Act 2: The Outskirts"
+        count: 3
+      - session: "Session 6 - Act 4: The Frozen Outskirts"
+        count: 3
+    versions:
+      - label: Standard
+        source: "Tabs: Act 2 (Session 4) / Act 4 - S6"
+        ac: 12
+        hp: 10
+        speed: { walk: 30 }
+        actions:
+          - name: Festering Bite
+            kind: melee_weapon
+            to_hit: 3
+            damage: "1d4 piercing + 1 necrotic"
+        tactics: Swarm the Tanker.
+      - label: Overview draft
+        source: "Tab: Sesi 4 Party 67"
+        hp: 8
+        actions:
+          - name: Bite
+            kind: melee_weapon
+            to_hit: 3
+            damage: "1d4 piercing + 1 necrotic"
+
+  # Shared encounter mechanic for the two Mana-Blight enemies above
+  - id: leaking_vessel_mechanic
+    name: "Encounter mechanic: The Leaking Vessel"
+    category: encounter_mechanic
+    applies_to: [flux_scarecrow, corrupted_rat_swarm]
+    description: >-
+      A ruptured Northreach waste pipe in the middle of the map pools glowing
+      purple liquid in a 10 ft radius.
+    region: Northreach · The Outskirts
+    lore:
+      classification: Hazard — ruptured Vessel
+      habitat: >-
+        Wherever a Vessel runs through ground that is inspected less often
+        than a street.
+      entry: >-
+        Beneath every sizeable Northreach town run the Vessels: copper and
+        glass-lined conduits carrying steam, waste heat and spent mana from
+        the deep forges toward sanctioned dispersal sinks. Beyond the towns
+        the Vessels cross farmland on their way to those sinks, and farmland
+        is not inspected as often as streets.
+
+        A ruptured Vessel bleeds spent mana as a glowing violet liquid that
+        pools around the break and burns the skin of anyone standing in it.
+        Everything blighted nearby is drawn to the pool and strengthened by
+        it. Under the Ventilation Act, pipe failure is treated as negligent
+        discharge, which means the first duty of any Northreach official on
+        the scene is to establish whose negligence it was. Closing the valve
+        comes somewhere after that.
+      field_notes:
+        - >-
+          “Close the valve. Argue about the paperwork later.” — handwritten on
+          a Brass Guard incident form
+    effect: >-
+      Any blighted enemy that starts (or ends) its turn within the pool / near
+      the pipe gains +3 temporary HP and Advantage on its next attack.
+    counterplay:
+      - "Shoot the valve handle: AC 12, HP 10 - at 0 HP the valve slams shut."
+      - >-
+        Turn the valve by hand: Action + DC 12 Athletics; standing in the pool
+        deals 1d4 acid damage at the start of the character's turn.
+
+  # ---------------------------------------------------------------------------
+  # SESSION 5 - The Hound and the Shadow (Deepdelve Faces)
+  # ---------------------------------------------------------------------------
+  - id: slag_ghoul
+    name: Slag-Ghoul
+    category: minion
+    type: Mutation / Undead
+    description: >-
+      Mine workers mutated by Red Mana radiation. Pale skin pierced by red
+      crystals growing from within their flesh; they crawl on all fours.
+      Feral, attracted to heat and magic.
+    region: Northreach · Deepdelve Faces
+    lore:
+      classification: Mutant — Red Mana saturation
+      habitat: >-
+        Abandoned galleries of the Deepdelve Faces, beneath The Iron Crucible.
+      entry: >-
+        In the Deepdelve habitats, controlled exposure to resonance is
+        considered a form of apprenticeship rather than a hazard. Slag-ghouls
+        are what the word “controlled” is there to prevent.
+
+        They were miners once, most of them from galleries where Red Mana was
+        stored, cut or carried before the Crucible learned to step it down
+        into battery-grade states. Raw Warshard resonance does not burn the
+        body so much as recruit it. Red crystal grows outward from the bones
+        and pierces pale skin in ridges along the arms and back. The mind goes
+        feral. The body learns to crawl.
+
+        Slag-ghouls are drawn to heat and to magic: a forge still warm, armour
+        fresh from the fire, a mage who has just cast. They go for whatever
+        most recently used power, with frenzied raking claws that tear
+        unarmoured flesh. They are, notably, afraid of certain weapons—old,
+        powerful things whose resonance outweighs their own—and flee from them
+        as animals flee fire.
+
+        The Brass Guard lists them as “collapsed-gallery casualties.” The
+        Deepdelve clans list them by name.
+      field_notes:
+        - >-
+          “Don’t cast in the dark down there. You’re lighting a lamp for
+          them.” — a Calylos stair-keeper
+    appearances:
+      - session: "Session 5 - Act 2: The Spiral Sword (Deepdelve ambush)"
+        count: 3
+    versions:
+      - label: Standard
+        source: "Tab: act2 s5"
+        ac: 11
+        hp: 16
+        hit_dice: "2d8+7"
+        speed: { walk: 30 }
+        actions:
+          - name: Crystal Claw
+            kind: melee_weapon
+            to_hit: 4
+            reach_ft: 5
+            damage: "1d6+2"
+            damage_type: slashing
+            effect: Small chance to cause Bleeding against an unarmored target.
+        traits:
+          - name: Mana-Frenzy
+            description: >-
+              Advantage on melee attacks against a target that used magic in
+              the previous round.
+        tactics: >-
+          Ignore the Rangers and pounce on the Tanker (armor still hot) or any
+          Mage who casts a spell. Flee in fear when Roich's spiral sword appears.
+    notes:
+      - Count is 3 in the stat table but 2 in the tactics bullet.
+
+  - id: iron_hound
+    name: Iron-Hound
+    faction: The Red Cattle
+    category: elite
+    type: Construct
+    description: >-
+      Wolf-sized, barrel-chested mechanical tracking dogs with glowing red eyes
+      and saw-blade jaws, sent down by the Red Cattle. They descend from the
+      ceiling on steel cables. Smart capture machines, not dumb beasts.
+    region: Northreach · Deepdelve Faces
+    lore:
+      classification: Construct — pursuit engine (Red Cattle)
+      habitat: >-
+        Wherever Lord Nessa’s quarry has fled.
+      entry: >-
+        Iron-Hounds are pursuit engines built for the Red Cattle, Lord Connor
+        mac Nessa’s executioners. Each is the size of a wolf, barrel-chested,
+        with saw-bladed jaws and eyes that glow the same red as the Bloodwell
+        runes on its handlers’ armour. They drop into tunnels and shafts on
+        steel cables, and they do not bark.
+
+        They are capture machines first and killers second. A pack opens by
+        pinning its quarry, firing spring-loaded wire nets at whoever is
+        shooting back to strip a group of its reach before the jaws close in.
+        Their workings are generally credited to the Infusion Forges and to
+        Glass Circuitry, whose automated arrays need no mage to guide them;
+        certainly no handler has ever been seen directing one.
+
+        Being metal through and through, they carry resonance poorly and
+        suffer badly from it. Mages who have faced them report that a
+        well-placed blast of raw resonance does more to an Iron-Hound than any
+        blade.
+      field_notes:
+        - >-
+          “They call themselves the Cattle and they send hounds. You’d laugh,
+          if the hounds weren’t so good at it.” — a Deepdelve miner
+    appearances:
+      - session: "Session 5 - Act 2: The Spiral Sword (Deepdelve ambush)"
+        count: 2
+    versions:
+      - label: Standard
+        source: "Tab: act2 s5"
+        ac: 14
+        hp: 22
+        hit_dice: "3d8+9"
+        speed: { walk: 40 }
+        actions:
+          - name: Saw Bite
+            kind: melee_weapon
+            to_hit: 4
+            reach_ft: 5
+            damage: "1d6+2"
+            damage_type: piercing
+          - name: Wire-Net
+            recharge: "5-6"
+            kind: ranged
+            range_ft: "15/30"
+            save: { ability: dex, dc: 12 }
+            on_fail: >-
+              Restrained (speed 0, disadvantage on attacks). Escape with an
+              action + DC 12 Strength check, or destroy the net (AC 10, HP 5).
+        tactics: >-
+          Round 1 they don't bite - they fire Wire-Nets at the ranged
+          attackers (Rangers/Mages) to shut down the party's damage.
+        vulnerabilities_note: >-
+          Resonance Blast (Mage cantrip) has Advantage against it (metal target).
+    notes:
+      - Count is 2 in the stat table but 3 in the tactics bullet.
+      - Net save DC is 12 in the table but 13 in the tactics bullet.
+      - Story-wise, Roich destroys them with Caladbolg after 1-2 rounds.
+
+  - id: setanta
+    name: Setanta, The Blue Hound
+    aliases: [The Hound, Setanta]
+    category: legendary_boss
+    faction: Lord Connor mac Nessa (bound by Geas)
+    type: Humanoid (Human, Heroic Lineage) - Fighter/Barbarian hybrid
+    description: >-
+      Wild young man with messy dark-blue hair, light flexible dark-blue armor,
+      slightly sharp canines and predator eyes. Carries a jagged blood-red
+      spear radiating killing intent (Gae Bolg). Battle-junkie who respects
+      strong opponents; relaxed out of combat, a cold-blooded killer when his
+      master's Geas is active. Foster son of Fergus mac Roich.
+    region: Northreach · In Lord Nessa’s service
+    lore:
+      classification: Individual — legendary warrior of heroic lineage
+      habitat: >-
+        Wherever his master’s geas sends him.
+      entry: >-
+        Setanta, called the Blue Hound, is the most dangerous single person
+        known to serve Lord Connor mac Nessa, and perhaps the most dangerous
+        known to walk the Union at all.
+
+        He is young, or looks it: messy dark-blue hair, light dark-blue armour
+        chosen for moving rather than for stopping blows, canines slightly too
+        sharp and a predator’s stillness in the eyes. He carries a jagged,
+        blood-red spear that witnesses name Gae Bolg, and which they describe,
+        with unsettling consistency, as breathing.
+
+        He comes of a heroic lineage and has been bound by a geas since birth.
+        Its best-known clause is that he may neither eat the flesh of a dog
+        nor harm an ordinary one. The clause that matters more binds him to
+        Lord Nessa; while it holds him, the easy, amused young man becomes a
+        cold-blooded killer. He is said to have been fostered by Fergus mac
+        Roich, bearer of the spiral sword Caladbolg.
+
+        Those who have fought Setanta and lived agree on two things. He fights
+        to find out what an opponent is made of, and is in no hurry to finish
+        them; he grows calmer, not wilder, as he grows serious. And no one has
+        ever made him stop. He leaves when he decides he is done.
+      field_notes:
+        - >-
+          “He can smell magic, and fear, from a mile off. Don’t bother hiding.
+          Bother running.” — a Northreach blockade soldier
+        - >-
+          “Toss him a good roast—not dog, never dog—and he might sit down and
+          eat it first. Might.” — tavern advice, of uncertain value
+    appearances:
+      - session: "Session 5 - Act 4: The Blue Hound (survive 3 rounds)"
+      - session: "Session 6 - Act 1: The Blue Hound (endurance battle, ~5 rounds)"
+    versions:
+      - label: Unwinnable endurance encounter
+        source: "Tabs: Act4 s5 / Act 1 - S6"
+        role: Legendary Warrior / Boss-Level Opponent
+        ac: "17-18"
+        hp: null
+        hp_note: Not used / never announced. Run by rounds, not by HP.
+        speed: Extremely high; uses Dash aggressively.
+        attack_bonus: 7
+        save_dc: { ability: str, dc: 14 }
+        primary_weapon: Gae Bolg (The Crimson Spear)
+        combat_objective: Test the party, not kill them as fast as possible.
+        traits:
+          - name: Anti-Ranged Pressure (Protection from Arrows)
+            description: >-
+              All physical ranged attacks against Setanta have Disadvantage.
+              Spells/magical attacks are NOT affected.
+          - name: Mage's Opening
+            description: >-
+              If a Mage lands significant magic damage (e.g. Resonance Blast),
+              Setanta takes notice and escalates the intensity.
+        actions:
+          - name: Heavy Kick
+            kind: melee_unarmed
+            to_hit: 7
+            damage: "1d8+4"
+            damage_type: bludgeoning
+            save: { ability: str, dc: 14 }
+            on_fail: Knocked back 10 ft and Prone.
+            note: Aimed at the Tanker's shield; he doesn't need the spear for this.
+          - name: Gae Bolg (Controlled Usage)
+            description: >-
+              Not used at full power early on. When the party impresses him,
+              he uses it more seriously. Its final strike is presented as
+              certain death (causality curse) and is always interrupted.
+        round_structure:
+          session_5: "Rounds 1-2 playful; Round 3 Gae Bolg charges and Roich intervenes."
+          session_6:
+            round_1_2: Testing the party.
+            round_3: Starts enjoying the fight, increases pressure.
+            round_4: Shows part of his true ability.
+            round_5: Ready to end it -> interrupted by Fergus (Caladbolg vs Gae Bolg).
+        personality_arc: "Playful -> Interested -> Serious -> Lethal (calmer when serious, never a rage monster)"
+        exit: >-
+          Withdraws on his own terms - not because he lost or because Nessa
+          ordered it. "You're not strong enough to be my opponents yet, but
+          you're interesting enough to remember."
+    trivia:
+      - Geas since birth - may not eat dog meat or harm ordinary dogs; offering it triggers lethal combat.
+      - Tossed a really good roast (not dog) before combat, he may sit and eat it first (delays the fight 1 minute).
+      - Tracks by smell (magic and fear) from a mile away; no Survival check needed.
+      - Sleeps with eyes half-open, spear always in hand; the spear breathes softly.
+
+  # ---------------------------------------------------------------------------
+  # SESSION 6 - Northreach escape
+  # ---------------------------------------------------------------------------
+  - id: smuggler_king_hydraform
+    name: The Smuggler-King Hydraform
+    aliases: [Sewer Hydraform]
+    category: boss
+    type: Monstrosity (mutated Underweave terror, amphibious)
+    description: >-
+      A mutated Underweave terror drawn by intense mana leakage, lurking in
+      knee-deep boiling coolant water with an iridescent purple sheen.
+      Completely unaffected by the Sovereign Press debuff.
+    region: Northreach · Drainage Sinks
+    lore:
+      classification: Monstrosity — mutated drain-dweller
+      habitat: >-
+        Flooded drainage chambers, boiling coolant sinks, the deep end of any
+        overflow.
+      entry: >-
+        Every sewer in the Union has its monster story. The Underweave’s is
+        about a smuggler-king—no two tellers agree on his name—who fled into
+        the drains with a hold full of uncased crystal rather than hand it to
+        the Watch. He was never found. Some years later something began taking
+        dockhands from the flood-channels, and the first time anyone saw it
+        clearly, it was wearing his rings.
+
+        Whether or not the story is true, the Hydraform is real, and it is no
+        longer confined to the Underweave. It follows mana leakage the way a
+        shark follows blood, and the drainage sinks where Northreach dumps its
+        coolant are, for such a creature, a feast. It is amphibious, heavily
+        scaled and fast in water; where the water runs deep it vanishes
+        beneath the coolant’s iridescent violet sheen and strikes from below.
+
+        Most notably, the Hydraform is entirely unaffected by the Sovereign
+        Press. Lord Nessa’s decree bears down on everything that lives beneath
+        his sigil. The Hydraform, it seems, does not recognise that it does.
+      field_notes:
+        - >-
+          “When the water’s above your knees, you’re in its house. Get out of
+          its house.” — a Northreach sink-worker
+    appearances:
+      - session: "Session 6 - Act 2, Scene 2.3: The Drainage Sinks & The Hydraform"
+        arena: Circular industrial drainage chamber, 40 ft diameter, with 5 ft scrap piles as high ground.
+    versions:
+      - label: Standard
+        source: "Tab: Act 2 - S6"
+        ac: 13
+        ac_note: Scaly hide
+        hp: 45
+        speed: { walk: 20, swim: 40 }
+        actions:
+          - name: Multiattack
+            description: Two Bite attacks.
+          - name: Bite
+            kind: melee_weapon
+            to_hit: 4
+            damage: "1d6+2"
+            damage_type: piercing
+        traits:
+          - name: Amphibious
+          - name: Sewer Camouflage
+            description: >-
+              While the water is at least 4 ft deep, it has Advantage on
+              Dex (Stealth) checks and can Hide as a bonus action.
+    encounter_mechanics:
+      rising_water_clock:
+        rule: Water rises 1 ft at the start of every round.
+        levels:
+          "1-3 ft": No movement penalty; heat gives Disadvantage on Dex (Stealth).
+          "4 ft": Difficult terrain - speed halved for creatures without a swim speed.
+          "6 ft": Disadvantage on all ranged attacks (except Seasoned Bow).
+          "8 ft": DC 12 Con save at the start of each turn or take 1d6 fire damage.
+      sovereign_press: The party suffers -4 to all d20 rolls during this fight.
+      escape: >-
+        Pull 2 rusted levers on the Stormgate Valve - Action + DC 12 Athletics
+        or DC 12 Tinker's Tools (each at -4).
+    notes:
+      - Originally pitched as concept "D" in the Enemy Concepts tab (terrain boss, flooded tunnels).
+
+  - id: blighted_audit_drone
+    name: Blighted Audit Drone
+    faction: Lord Connor mac Nessa (automated security)
+    category: elite
+    type: Construct
+    description: >-
+      Winged metal spheres the size of a human head, pulsing sickly violet
+      light from cracked optical lenses. Nessa's security units, warped and
+      overcharged by leaking Mana-Blight. Fast, evasive, disruptive to casters.
+    region: Northreach · Everstorm Gatehouse
+    lore:
+      classification: Construct — security drone (blight-overcharged)
+      habitat: >-
+        Gatehouses, checkpoints and sealed approaches under Lord Nessa’s
+        control.
+      entry: >-
+        The cargo-audit drones of the Skyward Towers are sold off when they
+        are retired. Northreach buys them. What Lord Connor mac Nessa’s
+        artificers do to them afterward is not recorded, but the results are
+        recognisable: the same winged spheres, grown to the size of a human
+        head, shelled in hardened brass and pulsing a sickly violet through
+        cracked lenses.
+
+        The violet is Mana-Blight. Whether the drones were deliberately
+        overcharged with it or have simply soaked it up from the Vessels they
+        guard is debated; the effect is the same. They are faster and tougher
+        than their predecessors, their correction beams burn harder, and they
+        project a field of disruptive resonance—“powder disruption,” in the
+        gatehouse manuals—that makes it hard for any caster nearby to hold a
+        spell together.
+
+        They still audit. Only the person they report to has changed.
+      field_notes:
+        - >-
+          “The old ones on the lifts would stop if you showed them a seal.
+          These ones check whose seal it is.” — a stormgate guard
+    appearances:
+      - session: "Session 6 - Act 5: The Threshold of the Void (Everstorm Gatehouse)"
+        count: 3
+    versions:
+      - label: Standard
+        source: "Tab: Act 5 - S6"
+        ac: 12
+        ac_note: Hardened brass shell
+        hp: 12
+        speed: { walk: 0, fly: 30, hover: true }
+        actions:
+          - name: Correction Beam
+            kind: ranged_spell
+            to_hit: 4
+            range_ft: 30
+            damage: "1d4+2"
+            damage_type: radiant/force
+          - name: Mana Flash
+            recharge: "5-6"
+            area: "10 ft radius"
+            save: { ability: con, dc: 11 }
+            on_fail: Blinded until the end of the target's next turn.
+        traits:
+          - name: Anti-Mage Aura (Powder Disruption)
+            description: >-
+              Anyone casting a 1st-level or higher spell within 10 ft of a drone
+              has Disadvantage on concentration checks.
+    encounter_mechanics:
+      - "Gate has 3 locking bars. Release one with: DC 13 Athletics at the wheel, or DC 12 Tinker's Tools/Arcana at a console."
+      - "A fire spell hitting AC 10 melts a bar's ice, giving Advantage on the next check for that bar."
+      - "End of Round 5: a Red Cattle enforcer squad arrives; if the gate isn't open, the party is captured."
+    notes:
+      - Upgraded version of the prologue's Audit Drone.
+
+  # ---------------------------------------------------------------------------
+  # Obstacle with stats (explicitly "not an enemy")
+  # ---------------------------------------------------------------------------
+  - id: weave_warden
+    name: Weave Warden
+    category: obstacle
+    type: Humanoid (Crown Guard / City Watch)
+    description: >-
+      Stands perfectly straight in clean city armor marked with the Loom
+      Council's symbol, carrying a tall spear. Cold and professional -
+      "law, not vengeance". The doc says: not an enemy, but an obstacle.
+    region: Crownweave · All Weaves
+    lore:
+      classification: Lawkeeper — City Watch (an obstacle, not a foe)
+      habitat: >-
+        Trade arteries, gates, and anywhere public violence might disturb
+        business.
+      entry: >-
+        Properly, the title of Weave Warden belongs to one person per Weave:
+        the official who governs its city quarter and prefecture and answers
+        to the Loom Council. On the street, the title long ago spread to
+        everyone wearing that official’s colours, and it is these wardens—the
+        sworn watch, in clean armour marked with the Loom Council’s symbol,
+        carrying the tall spear—that most travellers mean when they use it.
+
+        A warden is not an enemy, and treating one as such is the quickest way
+        to acquire several. They are trained to be cold and professional: law,
+        not vengeance. Public violence near the trade arteries is put down
+        quickly; crime that keeps quiet is not their first concern. They can
+        be persuaded by legitimate business, deceived with difficulty, and
+        bribed—occasionally, at a risk that varies a great deal from Weave to
+        Weave.
+      field_notes:
+        - >-
+          “Law in Northreach is stern and methodical; in Skyloom, quiet and
+          precise; in Stormwake, light-handed and selective; in Emberweave,
+          noisy and flexible; in Underweave, selective at best.” — The
+          Crownweave Compendium
+    appearances:
+      - session: "Session 2 - Part 2, Scene 4: Law in Play"
+    versions:
+      - label: Standard
+        source: "Tab: Session2"
+        ac: 15
+        hp: 15
+    social_encounter:
+      - DC 15 Persuasion (legit investigative work for a higher-up)
+      - DC 17 Deception (lie about involvement)
+      - Bribe - DC 13 Charisma save to see if accepted without consequence
+
+# =============================================================================
+# Boss concepts (from the "Enemy Concepts" tab) - mechanics only, no stat blocks
+# =============================================================================
+enemy_concepts:
+  - id: coin_mad_hoardwyrm
+    name: The Coin-Mad Hoardwyrm
+    theme: Greed Horror
+    description: Not a dragon - an Underweave sewer-serpent mutated by currency.
+    region: Crownweave · Underweave
+    lore:
+      classification: Unconfirmed — currency-mutated serpent
+      habitat: >-
+        The deepest sewer channels beneath the Underweave, by report.
+      entry: >-
+        Underweave sewer-workers speak of a serpent in the deep channels that
+        is not a dragon, whatever the ballads say, but something that began as
+        an ordinary drain-snake and fed on the wrong things. Blood coin
+        carries the essence of those whose blood was struck into it, and a
+        creature that swallows enough of it, the story goes, begins to want
+        more.
+
+        The Hoardwyrm is said to be plated so thickly in swallowed coin that
+        blows land on metal rather than scale, and when the plating finally
+        breaks, the coins fly like shrapnel. It is also said to be willing to
+        bargain. The stories disagree on whether paying it has ever saved
+        anyone twice.
+      field_notes:
+        - >-
+          “Drop your purse and run. If it stops to count, you’ve got a
+          chance.” — an Underweave saying
+    mechanics:
+      - name: Coin Armor
+        description: >-
+          Starts with 30 Coin Shields. Each hit removes shields first. When the
+          shields break, the coins explode (AoE slashing).
+      - name: Bribery Instinct
+        description: >-
+          Boss offers: "Drop 50 TU worth of coin." If the party pays, the boss
+          skips its next attack. Survival vs greed.
+
+  - id: threadkeeper_failed_prophet
+    name: The Threadkeeper Failed Prophet
+    theme: Fate Boss
+    description: A Threadkeeper who saw too much pattern - Underweave prophecy gone wrong.
+    region: Crownweave · Underweave
+    lore:
+      classification: Unconfirmed — a Threadkeeper the order no longer acknowledges
+      habitat: >-
+        The lower Weaves, by rumour.
+      entry: >-
+        The Threadkeepers hold that nothing is truly random, and that every
+        life is a thread in a design glimpsed only in fragments. It is
+        considered both a blessing and a curse to have one’s thread noticed by
+        the order. It is considered a good deal worse to be noticed by a
+        Threadkeeper the order no longer acknowledges.
+
+        Rumour in the lower Weaves tells of one who looked too long at the
+        pattern and saw too much of it: who now speaks the next moment aloud
+        before it happens, and grows stronger each time the world obliges.
+        Those who claim to have fought it describe the sensation of something
+        they had already done being quietly unmade.
+      field_notes:
+        - >-
+          “Don’t do what it says you’ll do.” “Easier said.” — overheard in an
+          Underweave tavern
+    mechanics:
+      - name: Predicted Actions
+        description: >-
+          At round start the boss declares a prediction (e.g. "The archer will
+          miss.", "Someone will fall."). If it comes true, the boss gains an
+          Echo Charge. At 3 charges it rewinds the last player action.
+
+  - id: smuggler_king_hydraform_concept
+    name: The Smuggler-King Hydraform (concept)
+    theme: Terrain Boss
+    see_also: smuggler_king_hydraform
+    description: Fights in flooded tunnels. Amphibious. Players must win quickly or drown slowly.
+    mechanics:
+      - name: Rising Water Clock
+        description: >-
+          Water rises 1 ft each round. 4 ft = difficult terrain; 6 ft = ranged
+          disadvantage; 8 ft = Constitution saves each turn.
+
+  - id: sangrith_debt_collector
+    name: Sangrith Debt-Collector
+    theme: Apex Boss ("capitalism-as-monster")
+    description: A horror in a Crimson Thread House offshoot (Six Towers of Tessarion).
+    region: Crownweave · Crimson Thread House
+    lore:
+      classification: Unconfirmed — Sangrith oath-enforcer
+      habitat: >-
+        An offshoot of the Crimson Thread House, by report.
+      entry: >-
+        Within the Crimson Thread House, Sangrith oath-keepers witness pacts
+        that even the Loom Council hesitates to overturn. Pacts, however, must
+        be enforced, and not every debtor comes willingly to the House.
+
+        Among the stories told in a lower voice is that of the Debt-Collector:
+        a horror kept by some offshoot of the House to recover what is owed.
+        It does not fight so much as audit. Those who face it find themselves
+        bound by clauses—do not heal, do not flee—and learn the price of
+        breaking them in blood and soul both. It is said always to greet its
+        debtors the same way.
+      field_notes:
+        - >-
+          “You entered owing nothing. You will leave owing blood.” — the
+          Debt-Collector’s greeting, as reported
+    opening_line: "You entered owing nothing. You will leave owing blood."
+    mechanics:
+      - name: Oath Contract
+        description: >-
+          Each player gains an Oath Clause, e.g. "Do not heal", "Do not flee",
+          "Do not cast twice". Breaking a clause triggers psychic damage, soul
+          tether drain, and exhaustion.
+
+  - id: windbound_educator
+    name: Windbound - Educator
+    theme: Unfinished note
+    raw_note: >-
+      Special zone, non-knockback. Windbound - Educator, Leboh dari 10 attack
+      jd 1 stack, leaf sentinels, minion kalau mati, boss dapet 1 AC
+    interpreted:
+      - Fight takes place in a special zone; no knockback.
+      - Every 10 attacks (or more) becomes 1 stack.
+      - Minions are Leaf Sentinels; when one dies, the boss gains +1 AC.
+
+# =============================================================================
+# Antagonists / hostile forces mentioned without combat stats
+# =============================================================================
+unstatted_opposition:
+  - id: connor_mac_nessa
+    name: Lord Connor mac Nessa
+    role: BBEG of the Northreach arc; High Forge-Lord and tyrant
+    race_class: Half-Elf / Aristocrat & Master Enchanter
+    combat_notes: >-
+      Never dirties his own hands. Fights with command magic (Command /
+      Dominate Person) or summons his troops. If struck, a magical protective
+      armor that absorbs damage (powered by the Sinks) activates. Can cast
+      "The Sovereign Press" (district-wide -4 to all d20 rolls, tracking
+      sigil, no Stealth in Northreach).
+    quirks:
+      - Rarely blinks; stares for minutes during negotiations.
+      - Obsessed with symmetry; orders "tidying up" (killing) of anyone visibly asymmetrical.
+    region: Northreach
+    lore:
+      classification: Individual — High Forge-Lord of Northreach
+      habitat: >-
+        The Iron Crucible, and every district that lies beneath his sigil.
+      entry: >-
+        Lord Connor mac Nessa, High Forge-Lord of Northreach, is a half-elf,
+        an aristocrat and a master enchanter, and he has never been seen to
+        strike a blow himself. He has no need to. His voice carries command
+        magic that has made more than one enemy his servant for the length of
+        a sentence; his Red Cattle go wherever he points; and the protective
+        armour he wears, drawing on the Crucible’s great sinks, is said to
+        swallow any blow that reaches him.
+
+        His most feared instrument is the Sovereign Press: a decree laid over
+        an entire district, under which every effort falters for those who
+        stand against him, a tracking sigil follows them, and nothing in
+        Northreach can stay hidden.
+
+        Those who have negotiated with him report that he rarely blinks, and
+        will hold a stare for minutes without apparent effort. They also
+        report an obsession with symmetry. It is whispered that the visibly
+        asymmetrical are sometimes “tidied up” on his order. The whisper is
+        not repeated in Northreach.
+  - id: red_cattle
+    name: The Red Cattle
+    role: Lord Nessa's elite executioner troops (Bloodwell Runes glow red in their armor)
+    region: Northreach
+    lore:
+      classification: Faction — Lord Nessa’s executioners
+      habitat: >-
+        Sieges, extractions and pursuits Lord Nessa wants ended rather than
+        solved.
+      entry: >-
+        The Red Cattle are Lord Nessa’s elite executioners: heavy troops whose
+        Bloodwell runes glow red through the seams of their armour. The runes
+        are the mark of Aegis Bonding as practised in the Infusion Forges,
+        where bonding failures are classified as structural incompatibilities,
+        surviving subjects are reassigned, and records do not follow them.
+
+        They are sent when a problem is to be ended rather than solved. They
+        do not negotiate, except through their envoys, and they do not
+        retreat, except on orders. Their pursuit engines, the Iron-Hounds,
+        usually arrive first.
+    appearances:
+      - "Session 5 - Act 1: The Siege (envoy negotiation, Mana-Blight gas grenade)"
+      - "Session 6 - Act 5: enforcer squad arrives at end of Round 5"
+  - id: red_cattle_envoy
+    name: Red Cattle Envoy
+    role: Polite, condescending negotiator at the siege of Valerius's workshop
+    offer: 100 BloodCrown per adventurer to hand over Valerius and the Forgotten Thread.
+    region: Northreach
+    lore:
+      classification: Individual — Red Cattle negotiator
+      habitat: >-
+        The front line of a siege, just before it becomes one.
+      entry: >-
+        When violence can be made cheaper, the Red Cattle send an envoy:
+        polite, condescending, precise. The offer is always generous by
+        Underweave standards—at the siege of Valerius’s workshop it was a
+        hundred Crownsblood for each adventurer willing to hand over the
+        artificer and what he carried—and it always leaves the alternative
+        implied.
+
+        At Valerius’s workshop, the alternative was not left implied for long.
+  - id: aegis_enforcers
+    name: Aegis Enforcers
+    role: Nessa's pursuit troops in Deepdelve / collapse the gantries in Session 6 Act 2
+    region: Northreach · Deepdelve Faces
+    lore:
+      classification: Faction — Lord Nessa’s pursuit troops
+      habitat: >-
+        Tunnels, gantries and escape routes out of the Deepdelve.
+      entry: >-
+        Where the Red Cattle end a problem, the Aegis Enforcers make sure it
+        cannot run first. They are Lord Nessa’s pursuit troops: Aegisbound in
+        bonded plate, trained less to fight in the Deepdelve than to close it,
+        collapsing gantries and sealing stairs behind their quarry until there
+        is nowhere left to go but toward them.
+  - id: silencers
+    name: The Silencers
+    role: Off-the-books Resonance Crucible unit sent to "clean up" Valerius (Session 4 cliffhanger)
+    region: Northreach · Resonance Crucible
+    lore:
+      classification: Faction — unacknowledged Crucible unit
+      habitat: >-
+        Wherever the Crucible has an artificer, a prototype or a witness it
+        would rather not have.
+      entry: >-
+        In the Infusion Forges, licensing is not a mark of trust but of
+        liability: to be certified is to accept that certain outcomes will not
+        be discussed, documented or denied. The Silencers are what that
+        sentence looks like in armour.
+
+        They are an off-the-books unit of the Resonance Crucible, sent to
+        “clean up” artificers who have taken their work somewhere the Crucible
+        cannot see it. The Crucible does not acknowledge them. Their name
+        comes from the few who have survived them.
+  - id: blue_armored_troops
+    name: Blue-armored Northreach troops
+    role: Military blockade around the Hidden Forge exit; follow Setanta, do not fight (Session 6 Act 1)
+    region: Northreach
+    lore:
+      classification: Faction — Northreach regulars in the Blue Hound’s wake
+      habitat: >-
+        Blockades and cordons around wherever Setanta has been sent.
+      entry: >-
+        Soldiers in blue-lacquered Northreach plate march where Setanta goes.
+        They are there to hold ground, not take it: to cordon the exits, close
+        the roads and wait. They do not join his fights, and those who have
+        watched one understand why. When the Blue Hound withdraws, so do they.
+  - id: brass_guard
+    name: Brass Guard
+    role: Northreach patrol (3 at the Flint-and-Steel checkpoint); roleplay/skill-check encounter
+    region: Northreach
+    lore:
+      classification: Lawkeeper — Northreach division of the City Watch
+      habitat: >-
+        Checkpoints, forges, Vessel junctions and the Flint-and-Steel market
+        in Cleoti.
+      entry: >-
+        The Brass Guard is Northreach’s specialised division of the City
+        Watch, trained to put safety, secrecy and continuity ahead of
+        interpretation. It answers to the Weave Warden of Northreach and
+        enforces the Code of the Gear: no unshielded resonance, no forge
+        without certified cooling, no unauthorized copying of a schematic.
+
+        Arrests are quiet. Trials are brief. A Brass Guard checkpoint is
+        rarely a fight, and anyone who makes it one has already lost the
+        argument that mattered. What a patrol wants is a reason to wave you
+        through that it can write down.
+      field_notes:
+        - >-
+          “If a Northreach smith tells you a device is within tolerance, ask
+          which one. There is more than one.” — from a caravan master’s ledger
+  - id: crown_guard
+    name: Crown Guard
+    role: Elite soldiers arriving after the Session 2 ambush (imminent threat, no fight described)
+    region: Crownweave · The Crown
+    lore:
+      classification: Lawkeeper — elite guard of The Crown
+      habitat: >-
+        The Crown, the Hall of the Woven Crown, and wherever high edicts must
+        be enforced.
+      entry: >-
+        Elite soldiers sworn to defend The Crown, the Hall of the Woven Crown
+        and the dignitaries within, and to enforce the high edicts of the
+        Council of Crowns and the Loom Council. Professional, disciplined and
+        grim; bribery among them is rare, though not extinguished.
+
+        Where the Weave wardens mean the Watch has noticed, the Crown Guard
+        means The Crown has. Few street quarrels survive their arrival.
+  - id: sangrith_envoy
+    name: Sangrith Envoy
+    role: Ultimate patron/antagonist offering a blood-oath at the end of Session 2
+    region: Crownweave · Crimson Thread House
+    lore:
+      classification: Individual — Sangrith emissary
+      habitat: >-
+        Wherever someone has just run out of other options.
+      entry: >-
+        The Sangrith are few in number and vast in influence, their long
+        fingers sunk into every war and every market, feeding on the quiet
+        arithmetic of blood. They do not recruit. They offer terms.
+
+        A Sangrith envoy comes when a debt is already large enough to be
+        interesting, and offers to take it over—in exchange for an oath sealed
+        in blood, witnessed at the Crimson Thread House, and binding in ways
+        the Loom Council hesitates to overturn. The envoy does not threaten.
+        The Sangrith have never needed to.

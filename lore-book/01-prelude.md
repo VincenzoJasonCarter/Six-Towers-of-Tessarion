@@ -4,19 +4,19 @@ Long before coin and contract ruled the roads, the world knew only towers.
 
 No one agrees who raised them. Some say the gods hammered them up from the bones of the earth. Others whisper they grew on their own, like stone teeth pushing through the skin of reality. What *is* known is this: when the first people opened their eyes, the Six Towers were already there, casting long shadows over the newborn world.
 
-At the center stood the **Meridian Spire**, where humans eventually gathered. They did not have the elves’ grace, nor the orcs’ strength, nor the dwarves’ craft, nor the tieflings’ dangerous charm, nor the Sangrith’s terrible hunger. What they had instead was restlessness—and an uncanny knack for talking to everyone without being entirely loved or entirely hated. Around the base of that central tower rose a crossroads of trade and rumor, the great city now called **Hexaspire**, heart of the world of **Tessarion**.
+At the center stood the **Meridian Spire**, where humans eventually gathered. They did not have the elves’ grace, nor the orcs’ strength, nor the dwarves’ craft, nor the tieflings’ dangerous charm, nor the Sangrith’s terrible hunger. What they had instead was restlessness—and an uncanny knack for talking to everyone without being entirely loved or entirely hated. Around the base of that central tower, on an island in the middle sea, rose a crossroads of trade and rumor that the old tales call **Hexaspire**—the land where Crownweave stands today, heart of the world of **Tessarion**.
 
-Around Hexaspire, like a tightening ring, the other peoples claimed their domains.
+Around Hexaspire, like a tightening ring across the water, the other peoples claimed their domains.
 
-To the green, whispering east, the **elves of Thal’vireth** wrapped their forests around the roots of the **Verdant Tower**, a spire swallowed by living wood and pale stone. They speak of memory like it is a weapon, and time like it is a road only they remember how to walk.
+To the green, whispering west, the **elves of Thal’vireth** wrapped their forests around the roots of the **Verdant Tower**, a spire swallowed by living wood and pale stone. They speak of memory like it is a weapon, and time like it is a road only they remember how to walk.
 
 To the harsh, ragged south, the **Iron Hordes of the orcs** raised war-camps in the shadow of the **Red Tower**, its stone stained like dried blood. They laugh loud, shout louder, and carve their history into scars and steel.
 
-To the jagged north, beneath mountains that never thaw, the **dwarves of Khazrund** tunneled under the **Deep Tower**, a column of black rock veined with gleaming ore. Their cities are stacked downward instead of upward; their prayers are spoken in the language of hammers.
+To the jagged north-east, beneath mountains that never thaw, the **dwarves of Khazrund** tunneled under the **Deep Tower**, a column of black rock veined with gleaming ore. Their cities are stacked downward instead of upward; their prayers are spoken in the language of hammers.
 
-To the west, where the land is cracked and kissed by ember-winds, the **tieflings of Emberfall** built tiered cities around the **Ashen Tower**. Here, deals are struck in whispers and ink, and truth is only one of many acceptable currencies.
+To the far east, where the land is cracked and kissed by ember-winds, the **tieflings of Emberfall** built tiered cities around the **Ashen Tower**. Here, deals are struck in whispers and ink, and truth is only one of many acceptable currencies.
 
-And high above them all, where clouds scrape exposed stone and even dragons grow wary, stands the **Obsidian Crown**—the sixth and highest tower. There dwells the **Sangrith**, the pale, patient apex of Tessarion. They are few in number and vast in influence, their long fingers sunk into every war and every market, feeding on the quiet arithmetic of blood.
+And to the north, high above them all, where clouds scrape exposed stone and even dragons grow wary, stands the **Obsidian Crown**—the sixth and highest tower. There dwells the **Sangrith**, the pale, patient apex of Tessarion. They are few in number and vast in influence, their long fingers sunk into every war and every market, feeding on the quiet arithmetic of blood.
 
 War came early.
 
