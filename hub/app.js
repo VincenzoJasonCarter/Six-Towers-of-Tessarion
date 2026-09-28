@@ -2,9 +2,7 @@ const $ = s => document.querySelector(s);
 const TOOLS = {
   library: { app: "library", name: "The Library" },
   bestiary: { app: "bestiary", name: "The Bestiary" },
-  // Charasheet (github.com/SonicRay241/charasheet), hosted by its author:
-  // there is no server of ours to start, so it is always open.
-  roster: { app: "roster", name: "The Roster", url: "https://charasheet.rayy.dev/" },
+  roster: { app: "roster", name: "The Roster" },
 };
 const STATE_TEXT = { ready: "Open", external: "Open", starting: "Lighting the lamps…", stopped: "Closed" };
 // Like the library's "Animate books": the hub's own setting, on unless it is
@@ -494,23 +492,16 @@ function renderStatus() {
   }
 }
 
-// Tools hosted elsewhere (a url in TOOLS) are always open; the hub server
-// knows nothing about them.
-function withExternal(s) {
-  for (const t of Object.values(TOOLS)) if (t.url) s.apps[t.app] = { state: "external", url: t.url };
-  return s;
-}
-
 async function poll() {
   if (HOSTED) {
-    status = withExternal({ apps: Object.fromEntries(Object.values(TOOLS).map(t => [t.app, { state: "ready", url: `${t.app}/` }])) });
+    status = { apps: Object.fromEntries(Object.values(TOOLS).map(t => [t.app, { state: "ready", url: `${t.app}/` }])) };
     renderStatus();
     render();
     preload();
     return;
   }
   try {
-    status = withExternal(await (await fetch("/api/status", { cache: "no-store" })).json());
+    status = await (await fetch("/api/status", { cache: "no-store" })).json();
     renderStatus();
     render();
     preload();
@@ -791,7 +782,7 @@ function ringBell() {
 $("#waitStart").addEventListener("click", async () => {
   const tool = TOOLS[currentView()];
   if (!tool) return;
-  status = await post("/api/start", { app: tool.app }).then(withExternal).catch(() => status);
+  status = await post("/api/start", { app: tool.app }).catch(() => status);
   renderStatus();
   render();
 });

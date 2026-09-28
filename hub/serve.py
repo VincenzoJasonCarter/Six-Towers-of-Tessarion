@@ -9,9 +9,9 @@ Usage, from the repo root:
     uv run hub/serve.py              # http://127.0.0.1:8760/
     uv run hub/serve.py --port 9000 --no-browser
 
-Starts the library and bestiary servers on their usual ports (or reuses one
-that is already running there) and shows them side by side in one tabbed
-page. Ctrl+C stops everything the hub started.
+Starts the library, bestiary and Roster servers on their usual ports (or
+reuses one that is already running there) and shows them side by side in one
+tabbed page. Ctrl+C stops everything the hub started.
 """
 import argparse
 import json
@@ -40,10 +40,14 @@ PAGE_FILES = {
     "/clerk.js": ("clerk.js", "text/javascript; charset=utf-8"),
 }
 
-# Same commands as the Makefile targets, minus the browser tab each one opens.
+# Same commands as the Makefile targets, minus the browser tab each one opens:
+# name -> (port, command, a path that must exist first and what to do if not).
 APPS = {
-    "library": (8767, ["run", "library/serve.py"]),
-    "bestiary": (8766, ["run", "bestiary/serve.py"]),
+    "library": (8767, ["uv", "run", "library/serve.py", "--no-browser", "--port", "8767"], None),
+    "bestiary": (8766, ["uv", "run", "bestiary/serve.py", "--no-browser", "--port", "8766"], None),
+    # charasheet's Vite dev server (it reloads on edits).
+    "roster": (8768, ["npm", "--prefix", "charasheet", "run", "dev", "--", "--host", HOST, "--port", "8768", "--strictPort"],
+               ("charasheet/node_modules", "Run `npm ci` in charasheet/ first (or `make web-build`, which does it).")),
 }
 
 
@@ -92,13 +96,13 @@ class Process:
 
 
 class Hub:
-    def __init__(self, uv):
-        self.uv = uv
+    def __init__(self):
         self.lock = threading.Lock()
         self.apps = {}  # name -> Process, only for apps the hub started itself
+        self.problems = {}  # name -> why it couldn't be started
 
     def start(self, name):
-        port, args = APPS[name]
+        port, args, needs = APPS[name]
         with self.lock:
             current = self.apps.get(name)
             if current and current.running():
@@ -106,10 +110,17 @@ class Hub:
             if port_open(port):
                 self.apps.pop(name, None)  # someone else's server already answers there
                 return
-            self.apps[name] = Process([self.uv, *args, "--no-browser", "--port", str(port)])
+            exe = shutil.which(args[0])
+            if not exe:
+                self.problems[name] = f"`{args[0]}` isn't on PATH."
+            elif needs and not (ROOT / needs[0]).exists():
+                self.problems[name] = needs[1]
+            else:
+                self.problems.pop(name, None)
+                self.apps[name] = Process([exe, *args[1:]])
 
     def app_status(self, name):
-        port, _ = APPS[name]
+        port = APPS[name][0]
         proc = self.apps.get(name)
         if port_open(port):
             state = "ready" if proc else "external"
@@ -118,7 +129,9 @@ class Hub:
         else:
             state = "stopped"
         info = {"state": state, "url": f"http://{HOST}:{port}/", "port": port}
-        if state == "stopped" and proc:
+        if state == "stopped" and name in self.problems:
+            info["log"] = [self.problems[name]]
+        elif state == "stopped" and proc:
             info["log"] = list(proc.log)
         return info
 
@@ -187,19 +200,15 @@ def main():
     parser.add_argument("--no-browser", action="store_true", help="Don't open a browser tab automatically.")
     args = parser.parse_args()
 
-    uv = shutil.which("uv")
-    if not uv:
-        raise SystemExit("The hub needs `uv` on PATH to start the other tools.")
-
-    hub = Hub(uv)
+    hub = Hub()
     for name in APPS:
         hub.start(name)
 
     httpd = ThreadingHTTPServer((HOST, args.port), make_handler(hub))
     url = f"http://{HOST}:{args.port}/"
     print(f"Threadmint campaign desk running at {url}")
-    for name, (port, _) in APPS.items():
-        print(f"  {name:<9} http://{HOST}:{port}/")
+    for name, (port, _, _) in APPS.items():
+        print(f"  {name:<9} http://{HOST}:{port}/" + (f"  ({hub.problems[name]})" if name in hub.problems else ""))
     print("Press Ctrl+C to stop the hub and everything it started.")
     if not args.no_browser:
         threading.Timer(0.6, webbrowser.open, [url]).start()

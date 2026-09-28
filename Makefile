@@ -29,16 +29,22 @@ library: ## Serve the lore library live at http://127.0.0.1:8767/ (reloads on ch
 library-build: ## Export a static site to library/site/ (ARGS="--single-file" for one library.html)
 	uv run library/build.py $(ARGS)
 
-# --- web (the library and bestiary as one static site, for Vercel or any static host) ---
+# --- roster (charasheet, the character sheets; a Vite app, so it needs Node) ---
+
+.PHONY: roster
+roster: ## Serve the character sheets live at http://127.0.0.1:8768/ (installs npm packages the first time)
+	cd charasheet && { test -d node_modules || npm ci --no-audit --no-fund; } && npm run dev -- --host 127.0.0.1 --port 8768 --strictPort $(ARGS)
+
+# --- web (the hub, library, bestiary and roster as one static site, for Vercel or any static host) ---
 
 .PHONY: web-build
-web-build: ## Build the public site (library + bestiary) to dist/
+web-build: ## Build the public site (hub + library + bestiary + roster) to dist/
 	uv run web/build.py
 
-# --- hub (one page for the library and bestiary) ---
+# --- hub (one page for all of them) ---
 
 .PHONY: hub
-hub: ## Open everything in one place at http://127.0.0.1:8760/ (starts the library and bestiary)
+hub: ## Open everything in one place at http://127.0.0.1:8760/ (starts the library, bestiary and roster)
 	uv run hub/serve.py $(ARGS)
 
 # --- misc ---

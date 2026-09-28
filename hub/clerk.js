@@ -92,7 +92,7 @@ const HALLS = {
   },
   roster: {
     name: "The Roster", app: "roster",
-    line: ["smug", "My records room, right behind me. One sheet per adventurer, filed wherever you filled it in: a sheet started at this desk stays at this desk. Keep your hit points honest."],
+    line: ["smug", "My records room, right behind me. One sheet per adventurer, kept in your own browser and nowhere else, so take a copy home. Keep your hit points honest."],
   },
   bestiary: {
     name: "The Bestiary", app: "bestiary",

@@ -4,8 +4,8 @@ One page for the Tessarion tools:
 
 - **Library**: the lore-book bookcase (`library/`)
 - **Bestiary**: the Threadmint Bestiary (`bestiary/`)
-- **Roster**: character sheets, from [charasheet](https://github.com/SonicRay241/charasheet),
-  loaded from its author's site at https://charasheet.rayy.dev/
+- **Roster**: character sheets, [charasheet](https://github.com/SonicRay241/charasheet)
+  by SonicRay241 (`charasheet/`)
 
 ## Running it
 
@@ -66,21 +66,17 @@ Options: `--port 9000`, `--no-browser`. Requires `uv` on PATH.
 
 ## The Roster
 
-The Roster isn't ours to run: it is charasheet as its author hosts it, shown
-in the desk's frame (its `url` in `TOOLS` in `app.js`). So its lamp is always
-lit, and serve.py knows nothing about it. It needs a network connection.
+The Roster is charasheet's Vite dev server (port 8768, as `make roster`
+runs it), so it needs Node, and `npm ci` run once in `charasheet/` (`make
+roster` and `make web-build` both do that). Without them its lamp stays out
+and the hall says why.
 
-Its sheets are kept in the browser, and a browser keeps a site's storage
-separately for each site that frames it. Sheets made in the Roster are
-therefore not the ones made at charasheet.rayy.dev directly, and the desk on
-127.0.0.1 and the public website each have their own set too. Google Drive
-sync would join them up, but Google's sign-in page won't open inside a
-frame: use **Open in its own tab** for that (and those sheets then live in
-the tab's set, not the desk's).
+Its sheets are kept in the browser, per site: the desk on 127.0.0.1 and the
+public website each have their own.
 
 The public website (`web/`) uses this same page as its front door, without
 serve.py: there every hall is always open, and the tools load from
-`library/` and `bestiary/` next to the page (the Roster from its own site).
+`library/`, `bestiary/` and `roster/` next to the page.
 
 ## Layout
 
