@@ -1,47 +1,13 @@
-# Six Towers of Tessarion — entry points for the three subprojects.
+# Six Towers of Tessarion — entry points for the subprojects (or `make hub` for all of them).
 #
 # Requires `uv` on PATH. Extra flags can be passed through ARGS, e.g.:
-#   make dnd-sim ARGS="--seed 7 --quiet"
-#   make map-segment ARGS="--zoom 6"
+#   make library ARGS="--port 9000 --no-browser"
 #
 # This Makefile assumes a POSIX-ish shell (Git Bash, MSYS, WSL) runs the
 # recipes, which is how `make` itself normally gets onto a Windows PATH.
 
 .DEFAULT_GOAL := help
 ARGS :=
-
-# --- floor-generator (the root uv project: temporal floors, combat sim, world map) ---
-
-.PHONY: sync
-sync: ## Install/update dependencies for both uv projects
-	uv sync
-	uv sync --project crafting-dashboard
-
-.PHONY: floor-generate
-floor-generate: ## Generate a Thal'Vireth temporal floor (renders to floor-generator/output/)
-	uv run floor-generator $(ARGS)
-
-.PHONY: dnd-sim
-dnd-sim: ## Simulate one 5e combat encounter on a temporal floor
-	uv run dnd-sim $(ARGS)
-
-.PHONY: dnd-gui
-dnd-gui: ## Play one combat encounter interactively (Pygame window)
-	uv run dnd-gui $(ARGS)
-
-.PHONY: dnd-run
-dnd-run: ## Run a full 10-floor tower climb
-	uv run dnd-run $(ARGS)
-
-.PHONY: map-segment
-map-segment: ## Split the latest Azgaar .map in map/ into per-state mini maps
-	uv run map-segmenter $(ARGS)
-
-# --- crafting-dashboard (browser GUI for Ch.7-9 crafting/economy) ---
-
-.PHONY: crafting-dashboard
-crafting-dashboard: ## Launch the crafting dashboard at http://127.0.0.1:8765/
-	uv run --project crafting-dashboard crafting-dashboard $(ARGS)
 
 # --- bestiary (Threadmint Bestiary encyclopedia, built from data/enemies.yaml) ---
 
@@ -60,8 +26,20 @@ library: ## Serve the lore library live at http://127.0.0.1:8767/ (reloads on ch
 	uv run library/serve.py $(ARGS)
 
 .PHONY: library-build
-library-build: ## Export a static snapshot to library/library.html
-	uv run library/build.py
+library-build: ## Export a static site to library/site/ (ARGS="--single-file" for one library.html)
+	uv run library/build.py $(ARGS)
+
+# --- web (the library and bestiary as one static site, for Vercel or any static host) ---
+
+.PHONY: web-build
+web-build: ## Build the public site (library + bestiary) to dist/
+	uv run web/build.py
+
+# --- hub (one page for the library and bestiary) ---
+
+.PHONY: hub
+hub: ## Open everything in one place at http://127.0.0.1:8760/ (starts the library and bestiary)
+	uv run hub/serve.py $(ARGS)
 
 # --- misc ---
 

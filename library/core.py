@@ -1,7 +1,9 @@
 """Shared by build.py and serve.py: lore-book/*.md -> library page."""
 import base64
 import html
+import io
 import json
+import math
 import re
 from pathlib import Path
 
@@ -12,6 +14,12 @@ HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parent / "lore-book"
 CATALOGUE = HERE / "catalogue.yaml"
 TEMPLATE = HERE / "template.html"
+STYLE = HERE / "style.css"
+SCRIPT = HERE / "app.js"
+# serve.py serves these next to the page; the static export inlines them.
+ASSETS = {"/style.css": (STYLE, "text/css; charset=utf-8"), "/app.js": (SCRIPT, "text/javascript; charset=utf-8")}
+STYLE_LINK = '<link rel="stylesheet" href="style.css">'
+SCRIPT_TAG = '<script src="app.js"></script>'
 DATA_MARK = "/*__LIBRARY_DATA__*/null"
 LIVE_MARK = "/*__LIBRARY_LIVE__*/false"
 UNCATALOGUED = {"id": "uncatalogued", "name": "Uncatalogued", "colour": "#7a7166",
@@ -143,16 +151,67 @@ def image(pool, ref):
     return base64.b64decode(data), head[len("data:"):].split(";")[0]
 
 
+# The export re-encodes the lore-book's PNGs as WebP, which is most of its size.
+# Opaque pictures get the lowest quality that still comes within TARGET_PSNR
+# of the original (40 dB is past what the eye can tell apart; a few painted
+# pictures stop just short of it even at the top quality, and get that).
+# Pictures with transparency, and any that lossless WebP stores smaller, are
+# stored losslessly; an image that WebP can't shrink stays as it was.
+TARGET_PSNR = 40
+QUALITIES = (86, 90, 93, 95, 97)
+
+
+def _psnr(a, b):
+    from PIL import ImageChops, ImageStat
+    diff = ImageChops.difference(a.convert("RGB"), b.convert("RGB"))
+    mse = sum(v * v for v in ImageStat.Stat(diff).rms) / 3
+    return float("inf") if mse == 0 else 20 * math.log10(255 / math.sqrt(mse))
+
+
+def _webp(data):
+    from PIL import Image  # only the export needs Pillow
+
+    def encode(img, **options):
+        out = io.BytesIO()
+        img.save(out, "WEBP", method=6, **options)
+        return out.getvalue()
+
+    img = Image.open(io.BytesIO(data))
+    img.load()
+    best = encode(img, lossless=True)
+    if not ("A" in img.getbands() or "transparency" in img.info):
+        for q in QUALITIES:
+            lossy = encode(img, quality=q)
+            if _psnr(img, Image.open(io.BytesIO(lossy))) >= TARGET_PSNR:
+                break
+        best = min(best, lossy, key=len)
+    return (best, "image/webp") if len(best) < len(data) else (data, None)
+
+
+def compress_images(pool):
+    """{ref: PNG data URI} -> {ref: (bytes, content type)}, WebP where smaller."""
+    out = {}
+    for ref in pool:
+        data, kind = image(pool, ref)
+        smaller, webp = _webp(data)
+        out[ref] = (smaller, webp or kind)
+    return out
+
+
 def version():
-    """Changes whenever a chapter, the catalogue or the template changes."""
-    paths = sorted(SOURCE.glob("*.md")) + [CATALOGUE, TEMPLATE]
+    """Changes whenever a chapter, the catalogue or the page's files change."""
+    paths = sorted(SOURCE.glob("*.md")) + [CATALOGUE, TEMPLATE, STYLE, SCRIPT]
     return "|".join(f"{p.name}:{p.stat().st_mtime_ns}" for p in paths if p.exists())
 
 
 def render(payload, live=False):
     data = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
     page = TEMPLATE.read_text(encoding="utf-8")
-    for mark in (DATA_MARK, LIVE_MARK):
+    for mark in (DATA_MARK, LIVE_MARK, STYLE_LINK, SCRIPT_TAG):
         if mark not in page:
             raise SystemExit(f"{TEMPLATE.name} is missing {mark}")
-    return page.replace(DATA_MARK, data).replace(LIVE_MARK, "true" if live else "false")
+    if not live:
+        # The export is one self-contained file, so its stylesheet and script go inline.
+        page = page.replace(STYLE_LINK, f"<style>\n{STYLE.read_text(encoding='utf-8')}</style>", 1)
+        page = page.replace(SCRIPT_TAG, f"<script>\n{SCRIPT.read_text(encoding='utf-8')}</script>", 1)
+    return page.replace(DATA_MARK, data, 1).replace(LIVE_MARK, "true" if live else "false", 1)

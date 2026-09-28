@@ -1,9 +1,12 @@
 # The Threadmint Bestiary
 
 An in-world encyclopedia of everything in `../data/enemies.yaml`. The home page
-is a grid of portraits; click one to open its entry, with lore, habitat and
-field notes on top and the DM material (stat blocks, tactics, loot, source
-contradictions) in a panel underneath.
+is a grid of portrait cards. Click one and it lifts out of the grid and flies to
+the middle of the screen, turning over as it goes: its back is the entry, with lore,
+habitat and field notes on top and the DM material (stat blocks, tactics,
+loot, source contradictions) in a panel underneath. Closing it (← All entries,
+Esc, a click outside it, or the browser's Back) turns it face up and flies it
+back into its gap.
 
 ## Running it
 
@@ -15,7 +18,8 @@ make bestiary                 # or: uv run bestiary/serve.py
 
 The bestiary starts on http://127.0.0.1:8766/ and opens it in your browser.
 It rereads `enemies.yaml` on every load, and an open page reloads itself
-when you save `enemies.yaml`, `template.html` or anything in `images/`. If
+when you save `enemies.yaml`, the page files (`template.html`, `style.css`,
+`app.js`) or anything in `images/`. If
 the YAML has an error, the page shows it in a banner until you fix it.
 Options: `--port 9000`, `--no-browser` (via `make bestiary ARGS="..."`).
 
@@ -35,7 +39,12 @@ command again after editing `enemies.yaml`.
   (`enemy_concepts`) and Factions & Figures (`unstatted_opposition`).
 - Untick **DM material** to hide stats, tactics and category badges before
   showing the screen to players. The page remembers the setting.
-- Every entry has its own link (`#setanta`).
+- On an open card, ‹ › (or ← / →) turn to the previous or next entry in
+  the grid.
+- Untick **Animate cards** to open and close cards without the flight and
+  the turn. The page remembers that too.
+- Every entry has its own link (`#setanta`); opening one lays its card
+  straight on the table.
 
 ## Portraits
 
@@ -73,7 +82,9 @@ the bestiary. `████` in any text is drawn as a redaction bar.
 serve.py        live server (stdlib http.server)
 build.py        static export to bestiary.html
 core.py         shared: reads enemies.yaml, finds images, fills the template
-template.html   page layout, styles and rendering script
+template.html   page markup; core.py fills in the data
+style.css       page styles
+app.js          rendering script
 images/         optional portraits, named <id>.<ext>
-bestiary.html   static export output
+bestiary.html   static export output (one file: styles and script inlined)
 ```

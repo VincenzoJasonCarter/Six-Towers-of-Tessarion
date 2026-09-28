@@ -10,8 +10,9 @@ Usage, from the repo root:
     uv run bestiary/serve.py --port 9000 --no-browser
 
 Every page load rereads enemies.yaml, and an open page reloads itself when
-enemies.yaml, template.html or anything in images/ changes. A YAML error
-shows up as a banner on the page instead of stopping the server.
+enemies.yaml, the page's files (template.html, style.css, app.js) or anything
+in images/ changes. A YAML error shows up as a banner on the page instead of
+stopping the server.
 """
 import argparse
 import json
@@ -22,7 +23,7 @@ from urllib.parse import unquote, urlparse
 
 import yaml
 
-from core import IMAGE_TYPES, IMAGES, images, load_entries, render, version
+from core import ASSETS, IMAGE_TYPES, IMAGES, images, load_entries, render, version
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -46,6 +47,9 @@ class Handler(BaseHTTPRequestHandler):
             except (yaml.YAMLError, OSError) as e:
                 payload = {"entries": [], "version": version(), "error": f"Could not read data/enemies.yaml:\n{e}"}
             self._send(200, render(payload, live=True).encode("utf-8"), "text/html; charset=utf-8")
+        elif path in ASSETS:
+            file, content_type = ASSETS[path]
+            self._send(200, file.read_bytes(), content_type)
         elif path == "/version":
             self._send(200, json.dumps({"version": version()}).encode("utf-8"), "application/json")
         elif path.startswith("/images/") and path[len("/images/"):] in images().values():

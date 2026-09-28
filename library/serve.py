@@ -10,8 +10,9 @@ Usage, from the repo root:
     uv run library/serve.py --port 9000 --no-browser
 
 Every page load rereads the chapters, and an open page reloads itself when a
-chapter, catalogue.yaml or template.html changes. A catalogue error shows up
-as a banner on the page instead of stopping the server.
+chapter, catalogue.yaml or the page's files (template.html, style.css, app.js)
+change. A catalogue error shows up as a banner on the page instead of stopping
+the server.
 """
 import argparse
 import json
@@ -22,7 +23,7 @@ from urllib.parse import unquote, urlparse
 
 import yaml
 
-from core import image, load, render, version
+from core import ASSETS, image, load, render, version
 
 # Chapter 23 alone is ~4 MB of base64 images, so parse once per version
 # instead of on every image request.
@@ -59,6 +60,9 @@ class Handler(BaseHTTPRequestHandler):
                 payload = {"books": [], "shelves": [], "images": {}, "version": version(),
                            "error": f"Could not read the lore-book or library/catalogue.yaml:\n{e}"}
             self._send(200, render(payload, live=True).encode("utf-8"), "text/html; charset=utf-8")
+        elif path in ASSETS:
+            file, content_type = ASSETS[path]
+            self._send(200, file.read_bytes(), content_type)
         elif path == "/version":
             self._send(200, json.dumps({"version": version()}).encode("utf-8"), "application/json")
         elif path.startswith("/images/"):

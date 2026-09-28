@@ -9,8 +9,5 @@ wheels/
 # Virtual environments
 .venv
 
-# Generated floor output
-floor-generator/output/
-
-# Crafting simulator
-crafting-dashboard/.venv
+# Library static site (make library-build)
+library/site/

@@ -1,0 +1,11 @@
+# Vercel only needs what web/build.py reads; everything else stays out of the upload.
+/*
+!/vercel.json
+!/web
+!/library
+!/bestiary
+!/lore-book
+!/data
+/library/site
+/library/library.html
+__pycache__
