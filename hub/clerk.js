@@ -90,9 +90,9 @@ const HALLS = {
     name: "The Library", app: "library",
     line: ["smile", "Every volume of the lore-book, shelved by subject, colour by colour. Pull one off the shelf and it opens for you. Please put it back."],
   },
-  roster: {
-    name: "The Roster", app: "roster",
-    line: ["smug", "My records room, right behind me. One sheet per adventurer, kept in your own browser and nowhere else, so take a copy home. Keep your hit points honest."],
+  barracks: {
+    name: "The Barracks", app: "barracks",
+    line: ["smug", "The barracks, right behind me. A bunk, a footlocker and a sheet per adventurer. The sheets stay in your own browser and nowhere else, so take a copy home. And keep your hit points honest."],
   },
   bestiary: {
     name: "The Bestiary", app: "bestiary",
@@ -145,7 +145,7 @@ const TALK = {
     replies: [["Take me there.", () => go("library")], MORE],
   },
   halls: {
-    line: ["flat", "Three halls. The Library on the left, the Roster behind me, the Bestiary on the right. Which one?"],
+    line: ["flat", "Three halls. The Library on the left, the barracks behind me, the Bestiary on the right. Which one?"],
     replies: () => [...Object.entries(HALLS).map(([id, h]) => [h.name + "?", "hall:" + id]), MORE],
   },
   restricted: { line: ["flat", "No."], replies: [["Please?", "restricted2"], ["Fair enough.", "menu"]] },
@@ -173,13 +173,14 @@ const BACK_FROM = {
     ["smile", "Find what you were looking for? Nobody ever finds exactly what they were looking for."]],
   bestiary: [["smile", "You're back. All your limbs? Good. It makes the paperwork easier."],
     ["flat", "Anything in there look at you funny? They all do. Don't take it personally."]],
-  roster: [["smug", "Back from the Roster. Did you level up, or did you just write that you did?"],
+  barracks: [["smug", "Back from the barracks. Did you level up, or did you just write that you did?"],
     ["flat", "Sheet in order? Good. Hit points are not a suggestion, whatever your cleric says."]],
 };
 
 const IDLE = bag([
   ["flat", "(Hessa turns a page of the ledger, reads it, and turns it back.)"],
   ["frown", "Someone's left the Bestiary door open again. I can hear it from here."],
+  ["flat", "Someone in the barracks is snoring. Through two walls. Impressive, really."],
   ["flat", "...four hundred and twelve. Four hundred and thirteen."],
   ["smile", "(She straightens the bell by about a millimetre.)"],
   ["flat", "If you're waiting for someone to tell you where to go: the doors. Any of them."],

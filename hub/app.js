@@ -2,7 +2,7 @@ const $ = s => document.querySelector(s);
 const TOOLS = {
   library: { app: "library", name: "The Library" },
   bestiary: { app: "bestiary", name: "The Bestiary" },
-  roster: { app: "roster", name: "The Roster" },
+  barracks: { app: "barracks", name: "The Barracks" },
 };
 const STATE_TEXT = { ready: "Open", external: "Open", starting: "Lighting the lamps…", stopped: "Closed" };
 // Like the library's "Animate books": the hub's own setting, on unless it is
@@ -182,41 +182,81 @@ const CORRIDORS = {
     farGlow(c);
   },
 
-  // The registrar's records room: panelled walls hung with framed character
-  // sheets, crystal lamps between them, banners overhead.
-  roster() {
-    const c = { wall: "#3b4058", wallFar: "#07080e", floor: "#3d3226", floorFar: "#0b0806", ceil: "#1c1f2e", far: "#0e1322", glow: "#a9c8ff", glowA: .45 };
+  // The barracks: bunks down both walls with a footlocker at the foot of
+  // each, spears racked between them, banners from the beams, lamps low.
+  barracks() {
+    const c = { wall: "#5f4b37", wallFar: "#120c07", floor: "#4f3a26", floorFar: "#0d0805", ceil: "#2a1d12", far: "#1d120a", glow: "#ff9a55", glowA: .5, glowY: 180 };
     shell(c);
-    polygon(end(-.34, .34, 0, 1.3), "#cfdcf5");
-    polygon(end(-.1, .1, 0, .5), "#2a2016");
-    polygon(flat(0.002, -.3, .3, 1, D), "#2a3f6e", .85);
+    polygon(end(-.3, .3, 0, 1.2), "#ffc27a");
+    polygon(end(-.34, .34, 1.2, 1.28), "#2e1f12");
+    for (let x = -.84; x < .9; x += .28) line(P(x, 0, from1()), P(x, 0, D), "#2a1b10", .9, { alpha: .6 });
     for (const X of [-1, 1]) {
-      for (let z = 1; z < D; z += .3) polygon(side(X * .995, z, Math.min(z + .3, D), 0, .62), "#4a3322", fade(z));
-      polygon(side(X * .99, 1, D, .6, .66), "#b8923f", .6);
-      for (const z of [1.3, 2, 2.7, 3.4]) {
-        polygon(side(X * .99, z, z + .44, .82, 1.58), "#b8923f", fade(z));
-        polygon(side(X * .985, z + .04, z + .4, .87, 1.53), "#ebe0c6", fade(z));
-        if (!seen(z + .08)) continue;
-        for (let y = 1.42; y > .95; y -= .09) {
-          line(P(X * .98, y, z + .08), P(X * .98, y, z + (y < 1.1 ? .24 : .34)), "#7a6a52", 1.1 * depth(z + .2), { alpha: fade(z) * .8 });
+      for (let z = 1; z < D; z += .7) polygon(side(X * .995, z, z + .06, 0, 2), "#2e1f12", fade(z));
+    }
+    // Solid things darken with distance rather than fading (they'd turn see-through).
+    const shade = (hex, f) => {
+      const n = parseInt(hex.slice(1), 16), k = v => Math.round(v * f).toString(16).padStart(2, "0");
+      return `#${k(n >> 16)}${k(n >> 8 & 255)}${k(n & 255)}`;
+    };
+    // Far to near, so the nearer bunks stand in front of the further ones.
+    const blankets = ["#7a2e24", "#3d4a5c", "#5d4d2c"];
+    const bunks = [1.2, 1.95, 2.7, 3.45];
+    for (let i = bunks.length - 1; i >= 0; i--) {
+      const z0 = bunks[i], z1 = z0 + .55, a = fade(z0);
+      for (const s of [-1, 1]) {
+        const inner = s * .6, blanket = blankets[(i + (s > 0 ? 1 : 0)) % blankets.length];
+        // the rack between this bunk and the one before it: two spears
+        const rz = z0 - .1;
+        if (seen(rz)) {
+          const d = depth(rz);
+          for (const dz of [-.03, .03]) {
+            line(P(s * .97, .02, rz + dz), P(s * .97, 1.5, rz + dz + .03), shade("#6b5a45", a), 1.6 * d);
+            line(P(s * .97, 1.5, rz + dz + .03), P(s * .97, 1.66, rz + dz + .035), shade("#c9ccd1", a), 2.2 * d);
+          }
         }
-        const [x, y] = P(X * .98, .96, z + .33);
-        ellipse(x, y, 4 * depth(z + .33), 5 * depth(z + .33), "#8c2f23", { alpha: fade(z) });
-      }
-      for (const z of [1.87, 2.57, 3.27]) {
-        if (!seen(z)) continue;
-        const d = depth(z);
-        const [x, y] = P(X * .95, 1.72, z);
-        glowAt(x, y, 20 * d, 20 * d, "#a9c8ff", .55, { cls: "flicker" });
-        ellipse(x, y, 3.5 * d, 6 * d, "#e6efff");
+        // a lamp on the wall above the bunk
+        const lz = z0 + .27;
+        if (seen(lz)) {
+          const d = depth(lz);
+          const [x, y] = P(s * .96, 1.5, lz);
+          glowAt(x, y, 22 * d, 22 * d, "#ffb870", .5, { cls: "flicker" });
+          ellipse(x, y, 3.2 * d, 4.6 * d, "#ffe2b0");
+        }
+        // lower bunk: dark underneath, the frame, the blanket on top, a pillow
+        polygon(side(inner, z0, z1, 0, .28), shade("#140d07", a));
+        polygon(end(Math.min(inner, s), Math.max(inner, s), .28, .4, z0), shade("#3a2414", a));
+        polygon(side(inner, z0, z1, .28, .4), shade("#4a2f1a", a));
+        polygon(flat(.4, s, inner, z0, z1), shade(blanket, a));
+        polygon(flat(.41, s * .97, s * .74, z1 - .15, z1 - .03), shade("#e8dcc2", a));
+        // upper bunk, level with the eye: only its side shows
+        polygon(side(inner, z0, z1, .93, 1), shade("#4a2f1a", a));
+        polygon(side(inner, z0, z1, 1, 1.1), shade(blanket, a * .9));
+        for (const z of [z0, z1]) {
+          if (seen(z)) line(P(inner, 0, z), P(inner, 1.25, z), shade("#3a2414", a), 2.4 * depth(z));
+        }
+        // the footlocker in the aisle, brass lock to the front
+        const f0 = z0 + .12, f1 = z0 + .43;
+        polygon(end(Math.min(inner, s * .48), Math.max(inner, s * .48), 0, .2, f0), shade("#5a3920", a));
+        polygon(side(s * .48, f0, f1, 0, .2), shade("#6b4526", a));
+        polygon(flat(.2, inner, s * .48, f0, f1), shade("#7d5431", a));
+        if (seen(f0)) {
+          const [x, y] = P(s * .48, .13, (f0 + f1) / 2);
+          ellipse(x, y, 2 * depth(f0), 2.4 * depth(f0), shade("#d9bb70", a));
+        }
       }
     }
-    // Far to near, so the nearer banners hang in front.
-    for (const z of [3, 2.3, 1.6]) {
-      if (!seen(z)) continue;
-      polygon([P(-.14, 2, z), P(.14, 2, z), P(.14, 1.6, z), P(0, 1.48, z), P(-.14, 1.6, z)], "#2d4d8a", fade(z));
-      line(P(-.14, 1.94, z), P(.14, 1.94, z), "#d9bb70", 1.4 * depth(z), { alpha: fade(z) });
-    }
+    // Beams across the ceiling, a banner on every other one; far to near again.
+    [3.8, 3.05, 2.3, 1.55].forEach((z, i) => {
+      if (!seen(z)) return;
+      const f = fade(z);
+      polygon(flat(1.9, -1, 1, z, z + .07), shade("#24170d", f));
+      polygon(end(-1, 1, 1.9, 2, z), shade("#2e1f12", f));
+      if (i % 2) return;
+      polygon([P(-.13, 1.9, z), P(.13, 1.9, z), P(.13, 1.46, z), P(0, 1.38, z), P(-.13, 1.46, z)], shade("#7a2e24", f));
+      line(P(-.13, 1.84, z), P(.13, 1.84, z), shade("#d9bb70", f), 1.4 * depth(z));
+      const [x, y] = P(0, 1.63, z);
+      ellipse(x, y, 5 * depth(z), 5 * depth(z), shade("#d9bb70", f));
+    });
     farGlow(c);
   },
 
@@ -527,7 +567,7 @@ async function poll() {
 // light hides that where a frozen stride would not. Walking out plays the
 // same path backwards. Every frame of a walk is drawn on a canvas; see toCanvas().
 
-const GLOW = { library: "#ffd98a", bestiary: "#57d19b", roster: "#a9c8ff" };
+const GLOW = { library: "#ffd98a", bestiary: "#57d19b", barracks: "#ff9a55" };
 const WALK_TO = 3.75;
 const WALK_MS = 1900;
 const REVEAL_MS = 420;  // the light fading into the tool (or back into the corridor)
@@ -575,7 +615,7 @@ function walker(view) {
   const dpr = devicePixelRatio || 1;
   let geo = measure(door);
   let doorway = null, tunnel = null;
-  // Which door, for style.css (Hessa stands in front of the Roster's).
+  // Which door, for style.css (Hessa stands in front of the Barracks').
   hall.dataset.walk = view;
 
   return {
