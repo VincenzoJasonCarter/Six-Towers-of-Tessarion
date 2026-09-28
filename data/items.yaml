@@ -1,0 +1,450 @@
+# Items of Tessarion: what a character can carry, craft, buy or sell.
+#
+# The source for the Barracks' item index (barracks/items.py turns it into
+# items.json for charasheet to offer in its Weapons and Equipment panels).
+# Entries come from lore-book/07-crafting-book.md (the craftable items, with
+# their recipes) and lore-book/10-official-tessarion-market-value.md (prices,
+# raw materials, utilities).
+#
+# id:           stable slug; charasheet may keep it, so don't change it once
+#               published (rename the name instead)
+# kind:         weapon | shield | armor | ammunition | material | utility
+# damage:       weapons only. dice, versatile (two-handed dice), bonus (flat,
+#               added to damage), type, ability (str | dex: the modifier added
+#               to attack and damage)
+# properties:   weapons only, as in the stat line
+# stat, power:  the rules text from Ch.7
+# materials:    recipe as [material name, quantity] pairs (names of entries
+#               below, kind: material); tools, craft_time_hrs likewise
+# market_value: OTMV in CB from Ch.10, or null where it lists none
+# hidden:       true keeps an entry out of items.json (not for players yet)
+
+- name: Crude Sword
+  id: crude-sword
+  kind: weapon
+  damage: {dice: 1d6, versatile: 1d8, type: slashing, ability: str}
+  properties: [melee, versatile]
+  emoji: "🗡️"
+  category: Tier 1 Weapon
+  stat: "Melee, Versatile · 1d6/1d8 + STR slashing"
+  power: "Poor Balance — natural 1 gives disadvantage on your next attack."
+  materials:
+    - [Impure Ingot, 2]
+    - [Wood Bundle, 0.5]
+    - [Cord Bundle, 0.2]
+  tools: "Smith's tools"
+  craft_time_hrs: 24
+  market_value: 1
+
+- name: Crude Bow
+  id: crude-bow
+  kind: weapon
+  damage: {dice: 1d6, type: piercing, ability: dex}
+  properties: [ranged, ammunition, two-handed]
+  emoji: "🏹"
+  category: Tier 1 Weapon
+  stat: "Ranged, Ammunition, 2H · 1d6 + DEX piercing"
+  power: "Inaccurate Limbs — disadvantage & no advantage beyond normal range; movement halved when attacking."
+  materials:
+    - [Wood Bundle, 1]
+    - [Cord Bundle, 0.5]
+  tools: "Carpenter's tools or Bowyer's kit"
+  craft_time_hrs: 24
+  market_value: 1
+
+- name: Arrow Bundle (10)
+  id: arrow-bundle
+  kind: ammunition
+  emoji: "🏹"
+  category: Tier 1 Weapon
+  stat: "Consumable ammunition · uses bow's attack bonus"
+  power: "Cheap Fletching — natural 1 breaks the arrow (remove from bundle)."
+  materials:
+    - [Wood Bundle, 0.3]
+    - [Impure Ingot, 0.1]
+    - [Cord Bundle, 0.1]
+  tools: "Fletcher's tools"
+  craft_time_hrs: 4
+  market_value: 1
+
+- name: Crude Greatsword
+  id: crude-greatsword
+  kind: weapon
+  damage: {dice: 2d6, type: slashing, ability: str}
+  properties: [melee, heavy, two-handed]
+  emoji: "⚔️"
+  category: Tier 1 Weapon
+  stat: "Melee, Heavy, 2H · 2d6 + STR slashing"
+  power: "Overweight Blade — miss by 5+ reduces speed by 10ft; no finesse ever."
+  materials:
+    - [Impure Ingot, 3]
+    - [Wood Bundle, 0.5]
+    - [Cord Bundle, 0.3]
+  tools: "Smith's tools"
+  craft_time_hrs: 48
+  market_value: 3
+
+- name: Rusty Shield
+  id: rusty-shield
+  kind: shield
+  emoji: "🛡️"
+  category: Tier 1 Weapon
+  stat: "Shield, +2 AC · bash 1d4 bludgeoning"
+  power: "Awkward Mass / Unreliable Guard — no Two-Weapon Fighting on bash; provides no AC vs a critical hit."
+  materials:
+    - [Impure Ingot, 2]
+    - [Wood Bundle, 0.5]
+  tools: "Smith's tools"
+  craft_time_hrs: 48
+  market_value: 1
+
+- name: Basic Dagger
+  id: basic-dagger
+  kind: weapon
+  damage: {dice: 1d4, type: piercing, ability: str}
+  properties: [simple, melee, light, thrown (20/60)]
+  emoji: "🔪"
+  category: Tier 1 Weapon
+  stat: "Simple Melee, Light, Thrown (20/60) · 1d4 + STR (no finesse)"
+  power: "Crude Construction — no STR on thrown damage, no finesse features. Utility: advantage on skinning/cutting checks."
+  materials:
+    - [Impure Ingot, 1]
+    - [Wood Bundle, 0.2]
+  tools: "Smith's tools"
+  craft_time_hrs: 6
+  market_value: 1
+
+- name: Quarterstaff Husk
+  id: quarterstaff-husk
+  kind: weapon
+  damage: {dice: 1d4, type: bludgeoning, ability: str}
+  properties: [melee, one-handed]
+  emoji: "🪵"
+  category: Tier 1 Weapon
+  stat: "Melee, 1H · 1d4 + STR bludgeoning"
+  power: "Hollow Core — hit forces DC 10 CON save or distracted (−1 next attack); 5+ dmg in one hit risks snapping (d6, 1 = destroyed)."
+  materials:
+    - [Wood Bundle, 1]
+    - [Cord Bundle, 0.5]
+  tools: "Carpenter's tools or Bowyer's kit"
+  craft_time_hrs: 4
+  market_value: null
+
+- name: Iron Sword
+  id: iron-sword
+  kind: weapon
+  damage: {dice: 1d6, versatile: 1d8, bonus: 1, type: slashing, ability: str}
+  properties: [melee, versatile]
+  emoji: "🗡️"
+  category: Tier 2 Weapon
+  upgrade_from: Crude Sword
+  stat: "Melee, Versatile · 1d6/1d8 + STR + 1 slashing"
+  power: "Minor Recovery — natural 1 only reduces speed by 5ft."
+  materials:
+    - [Iron Ingot, 2]
+    - [Seasoned Timber, 0.5]
+    - [Treated Leather Strip, 0.2]
+  tools: "Smith's tools"
+  craft_time_hrs: 24
+  market_value: 4
+
+- name: Seasoned Bow
+  id: seasoned-bow
+  kind: weapon
+  damage: {dice: 1d6, bonus: 1, type: piercing, ability: dex}
+  properties: [ranged, ammunition, two-handed]
+  emoji: "🏹"
+  category: Tier 2 Weapon
+  upgrade_from: Crude Bow
+  stat: "Ranged, Ammunition, 2H · 1d6 + DEX + 1 piercing"
+  power: "Taut Limbs — no disadvantage beyond range (still no advantage)."
+  materials:
+    - [Seasoned Timber, 1]
+    - [Treated Leather Strip, 0.5]
+  tools: "Carpenter's tools or Bowyer's kit"
+  craft_time_hrs: 24
+  market_value: 3
+
+- name: Iron Mace
+  id: iron-mace
+  kind: weapon
+  damage: {dice: 1d6, bonus: 1, type: bludgeoning, ability: str}
+  properties: [melee, martial]
+  emoji: "🔨"
+  category: Tier 2 Weapon
+  stat: "Melee, Martial · 1d6 + STR + 1 bludgeoning"
+  power: "Crushing Weight — +1 damage vs medium/heavy armor (or +2 AC natural armor)."
+  materials:
+    - [Iron Ingot, 1.5]
+    - [Seasoned Timber, 0.3]
+    - [Treated Leather Strip, 0.1]
+  tools: "Smith's tools"
+  craft_time_hrs: 24
+  market_value: 3
+
+- name: Iron Greatsword
+  id: iron-greatsword
+  kind: weapon
+  damage: {dice: 2d6, bonus: 1, type: slashing, ability: str}
+  properties: [melee, heavy, two-handed]
+  emoji: "⚔️"
+  category: Tier 2 Weapon
+  upgrade_from: Crude Greatsword
+  stat: "Melee, Heavy, 2H · 2d6 + STR + 1 slashing"
+  power: "Inertia Drag — miss by 5+ reduces speed by only 5ft."
+  materials:
+    - [Iron Ingot, 3]
+    - [Seasoned Timber, 0.5]
+    - [Treated Leather Strip, 0.3]
+  tools: "Smith's tools"
+  craft_time_hrs: 48
+  market_value: 6
+
+- name: Iron Shield
+  id: iron-shield
+  kind: shield
+  emoji: "🛡️"
+  category: Tier 2 Weapon
+  upgrade_from: Rusty Shield
+  stat: "Shield, +2 AC · bash 1d4 + 1 bludgeoning"
+  power: "Rigid Guard — still grants +1 AC against a critical hit."
+  materials:
+    - [Iron Ingot, 2]
+    - [Seasoned Timber, 0.5]
+    - [Treated Leather Strip, 0.2]
+  tools: "Smith's tools"
+  craft_time_hrs: 48
+  market_value: 4
+
+- name: Iron Battle Axe
+  id: iron-battle-axe
+  kind: weapon
+  damage: {dice: 1d8, bonus: 1, type: slashing, ability: str}
+  properties: [melee]
+  emoji: "🪓"
+  category: Tier 2 Weapon
+  upgrade_from: Crude Battle Axe
+  upgrade_gap: true
+  stat: "Melee · 1d8 + STR + 1 slashing"
+  power: "Head Pull — miss by 5+ reduces speed by 5ft."
+  materials:
+    - [Iron Ingot, 2]
+    - [Seasoned Timber, 0.4]
+    - [Treated Leather Strip, 0.2]
+  tools: "Smith's tools"
+  craft_time_hrs: 24
+  market_value: 4
+
+- name: Iron Dagger
+  id: iron-dagger
+  kind: weapon
+  damage: {dice: 1d4, bonus: 1, type: piercing, ability: str}
+  properties: [simple, melee, light, thrown (20/60)]
+  emoji: "🔪"
+  category: Tier 2 Weapon
+  upgrade_from: Basic Dagger
+  stat: "Simple Melee, Light, Thrown (20/60) · 1d4 + STR + 1"
+  power: "No power modifier — refined simplicity."
+  materials:
+    - [Iron Ingot, 1]
+    - [Seasoned Timber, 0.2]
+  tools: "Smith's tools"
+  craft_time_hrs: 6
+  market_value: 2
+
+- name: Quarterstaff
+  id: quarterstaff
+  kind: weapon
+  damage: {dice: 1d4, versatile: 1d6, bonus: 1, type: bludgeoning, ability: str}
+  properties: [melee, versatile]
+  emoji: "🪵"
+  category: Tier 2 Weapon
+  upgrade_from: Quarterstaff Husk
+  stat: "Melee, Versatile · 1d4/1d6 + STR + 1 bludgeoning"
+  power: "Solid Core — no snap risk; hit forces DC 11 CON save or distracted."
+  materials:
+    - [Seasoned Timber, 1]
+    - [Cord Bundle, 0.5]
+  tools: "Carpenter's tools or Bowyer's kit"
+  craft_time_hrs: 6
+  market_value: null
+
+- name: Iron-Shod Club
+  id: iron-shod-club
+  kind: weapon
+  damage: {dice: 1d4, bonus: 1, type: bludgeoning, ability: str}
+  properties: [simple, melee, light]
+  emoji: "🔨"
+  category: Tier 2 Weapon
+  stat: "Simple Melee, Light · 1d4 + STR + 1 bludgeoning"
+  power: "Reinforced Head — critical hit forces DC 10 CON save or knocked prone."
+  materials:
+    - [Seasoned Timber, 0.3]
+    - [Iron Ingot, 0.5]
+    - [Treated Leather Strip, 0.1]
+  tools: "Smith's tools or Carpenter's tools"
+  craft_time_hrs: 4
+  market_value: 2
+
+- name: Leather Tunic
+  id: leather-tunic
+  kind: armor
+  emoji: "🧥"
+  category: Tier 1 Armor
+  stat: "Light Armor (Body) · +1 AC base, +1 Dex scaling (max)"
+  power: "Core survivability gate — minimal but reliable protection."
+  materials:
+    - [Cured Hide, 2]
+    - [Binding Fiber, 1]
+    - [Animal Oil/Resin, 1]
+  tools: "Leatherworker's tools"
+  craft_time_hrs: 10
+  market_value: null
+
+- name: Leather Leggings
+  id: leather-leggings
+  kind: armor
+  emoji: "👖"
+  category: Tier 1 Armor
+  stat: "Light Armor (Legs) · +1 Dex Save OR +3ft move (choose on craft)"
+  power: "Utility-first — no AC, can be crafted before the Tunic."
+  materials:
+    - [Cured Hide, 1]
+    - [Binding Fiber, 1]
+  tools: "Leatherworker's tools"
+  craft_time_hrs: 6
+  market_value: null
+
+- name: Leather Hood
+  id: leather-hood
+  kind: armor
+  emoji: "🧢"
+  category: Tier 1 Armor
+  stat: "Light Armor (Head) · +1 Perception OR advantage vs ambush (choose on craft)"
+  power: "Awareness upgrade — improves encounter feel, no combat math change."
+  materials:
+    - [Cured Hide, 1]
+    - [Soft Lining, 1]
+  tools: "Leatherworker's tools"
+  craft_time_hrs: 4
+  market_value: null
+
+- name: Leather Boots
+  id: leather-boots
+  kind: armor
+  emoji: "👢"
+  category: Tier 1 Armor
+  stat: "Light Armor (Feet) · +5ft move OR advantage vs prone (choose on craft)"
+  power: "Completes the Tier 1 set — deliberately no AC bump, choice locked in permanently."
+  materials:
+    - [Cured Hide, 1]
+    - [Binding Fiber, 1]
+  tools: "Leatherworker's tools"
+  craft_time_hrs: 5
+  market_value: null
+
+# ---------- raw materials and utilities (Ch.10, and the materials Ch.7's
+# recipes call for without Ch.10 pricing them) ----------
+
+- name: Impure Ingot
+  id: impure-ingot
+  kind: material
+  category: Tier 1 Raw Item
+  stat: "150 g · low-grade smelt, high impurity"
+  market_value: 0.3
+
+- name: Fabric
+  id: fabric
+  kind: material
+  category: Tier 1 Raw Item
+  stat: "1 x 1.5 m · wearable-grade linen/wool, untreated"
+  market_value: 0.7
+
+- name: Wood Bundle
+  id: wood-bundle
+  kind: material
+  category: Tier 1 Raw Item
+  stat: "10 m · processed lumber sufficient for 10 stick handles"
+  market_value: 1
+
+- name: Cord Bundle
+  id: cord-bundle
+  kind: material
+  category: Tier 1 Raw Item
+  stat: "15 m · plant fiber, used to hold weapons together"
+  market_value: 0.2
+
+- name: Iron Ingot
+  id: iron-ingot
+  kind: material
+  category: Tier 2 Raw Item
+  stat: "150 g · pure iron ingot, industry standard"
+  market_value: 1.5
+
+- name: Cured Hide
+  id: cured-hide
+  kind: material
+  category: Tier 2 Raw Item
+  # Ch.10's description for this repeats Seasoned Timber's ("Kiln-dried and
+  # treated lumber..."), so there's none here until the book has its own.
+  market_value: 1
+
+- name: Seasoned Timber
+  id: seasoned-timber
+  kind: material
+  category: Tier 2 Raw Item
+  stat: "5 m · kiln-dried and treated lumber, cut to uniform lengths"
+  market_value: 1
+
+- name: Treated Leather Strip
+  id: treated-leather-strip
+  kind: material
+  category: Tier 2 Raw Item
+  stat: "5 m · processed leather, oil-treated and tension-set for flexible bindings and articulated joints"
+  market_value: 0.7
+
+- name: Iron Rivets
+  id: iron-rivets
+  kind: material
+  category: Tier 2 Raw Item
+  stat: "30 rivets · uniform steel rivets for precision fastening and secure joins"
+  market_value: 0.5
+
+- name: Binding Fiber
+  id: binding-fiber
+  kind: material
+  category: Material
+  market_value: null
+
+- name: Animal Oil/Resin
+  id: animal-oil-resin
+  kind: material
+  category: Material
+  market_value: null
+
+- name: Soft Lining
+  id: soft-lining
+  kind: material
+  category: Material
+  market_value: null
+
+- name: Rations
+  id: rations
+  kind: utility
+  category: Tier 1 Utility
+  stat: "2 uses · for when you're hungry on an adventure"
+  market_value: 1
+
+- name: Rope
+  id: rope
+  kind: utility
+  category: Tier 1 Utility
+  stat: "10 m · non-treated rope"
+  market_value: 0.8
+
+- name: Compression Lighter
+  id: compression-lighter
+  kind: utility
+  category: Tier 1 Utility
+  stat: "20 uses · handheld ignition device using a spring-loaded striker and volatile resin chamber"
+  market_value: 1

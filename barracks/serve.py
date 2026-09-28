@@ -1,6 +1,6 @@
 # /// script
 # requires-python = ">=3.11"
-# dependencies = []
+# dependencies = ["pyyaml>=6.0"]
 # ///
 """Serve the Barracks (charasheet, built) at /barracks/, the way the public site does.
 
@@ -12,7 +12,8 @@ Usage, from the repo root:
 Builds first if charasheet/ changed since the last build (see build.py; that
 needs Node), then serves charasheet/dist/ with the same fallback as
 vercel.json: a /barracks/ address that isn't a file gets index.html, so a
-sheet's own address works on reload. It serves what was built, so it starts
+sheet's own address works on reload. items.json (the item index) is made
+fresh from data/items.yaml on every request. It serves what was built, so it starts
 at once; to see edits to charasheet's code as you make them, use its Vite
 dev server instead (make barracks-dev).
 """
@@ -24,6 +25,7 @@ from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 from urllib.parse import unquote, urlparse
 
 from build import BASE, DIST, build, is_stale
+from items import items_json
 
 # Explicit, because Windows' registry can map .js to text/plain, which
 # browsers refuse for module scripts.
@@ -38,8 +40,10 @@ class Handler(BaseHTTPRequestHandler):
     def log_message(self, format, *args):
         pass
 
-    def _send(self, status, body, content_type):
+    def _send(self, status, body, content_type, cors=False):
         self.send_response(status)
+        if cors:  # the item index is for other sites' charasheets too
+            self.send_header("Access-Control-Allow-Origin", "*")
         self.send_header("Content-Type", content_type)
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-cache")
@@ -53,6 +57,12 @@ class Handler(BaseHTTPRequestHandler):
             self.send_header("Location", BASE)
             self.end_headers()
             return
+        if path == BASE + "items.json":
+            try:
+                body = items_json().encode("utf-8")
+            except Exception as e:  # a YAML slip shouldn't take the server down
+                return self._send(500, f"data/items.yaml: {e}".encode("utf-8"), "text/plain; charset=utf-8")
+            return self._send(200, body, TYPES[".json"], cors=True)
         file = (DIST / path[len(BASE):]).resolve()
         if not file.is_relative_to(DIST.resolve()) or not file.is_file():
             file = DIST / "index.html"

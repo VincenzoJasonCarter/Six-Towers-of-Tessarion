@@ -1,6 +1,6 @@
 # /// script
 # requires-python = ">=3.11"
-# dependencies = []
+# dependencies = ["pyyaml>=6.0"]
 # ///
 """Build the Barracks: charasheet/ for /barracks/, without Google Drive sync.
 
@@ -13,7 +13,8 @@ charasheet is a Vite app, so this needs Node (`npm ci` runs first whenever
 package-lock.json is newer than node_modules). The output is what
 web/build.py puts at /barracks/ on the public site and what serve.py serves
 locally. A build takes a few seconds, so it skips itself when nothing it
-reads has changed since the last one.
+reads has changed since the last one. The item index (items.json, from
+data/items.yaml; see items.py) is rewritten every time either way.
 """
 import argparse
 import os
@@ -21,6 +22,8 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+
+from items import items_json
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
@@ -70,6 +73,10 @@ def build():
     STAMP.write_text(BASE, encoding="utf-8")
 
 
+def write_items():
+    (DIST / "items.json").write_text(items_json(), encoding="utf-8")
+
+
 def main():
     parser = argparse.ArgumentParser(description="Build the Barracks (charasheet) for /barracks/.")
     parser.add_argument("--force", action="store_true", help="Rebuild even if nothing changed.")
@@ -79,6 +86,7 @@ def main():
         print(f"wrote {DIST.relative_to(ROOT)}/ for {BASE}")
     else:
         print(f"{DIST.relative_to(ROOT)}/ is up to date")
+    write_items()
 
 
 if __name__ == "__main__":

@@ -37,9 +37,25 @@ writes `charasheet/dist/` for `/barracks/`, without Google Drive sync, and
 does nothing if it is already up to date. `web/build.py` runs it and copies
 the result to `/barracks/` on the public site.
 
+## The item index
+
+`/barracks/items.json` lists the items of Tessarion for charasheet to offer
+in its Weapons and Equipment panels (charasheet looks for `items.json` next to
+itself). It's made from `data/items.yaml`: edit that, not the JSON. The build
+writes it into `charasheet/dist/` every time, and `serve.py` makes it fresh on
+each request, so an edit shows up on the next load. Entries marked
+`hidden: true` stay out.
+
+Its format is at the top of `items.py`. Two things other code relies on:
+ids never change once published, and damage dice carry no modifier (the
+wielder adds their `ability` modifier and the item's `bonus`). The file is
+served with `Access-Control-Allow-Origin: *` (vercel.json, and serve.py
+locally), so a charasheet hosted elsewhere can read it too.
+
 ## Files
 
 ```
-build.py     builds charasheet/ into charasheet/dist/ when it changed
-serve.py     serves that build at /barracks/, building first if needed (stdlib only)
+build.py     builds charasheet/ into charasheet/dist/ when it changed, and writes items.json
+serve.py     serves that build at /barracks/, building first if needed
+items.py     data/items.yaml as items.json (the format is described at the top)
 ```
