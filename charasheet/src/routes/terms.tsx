@@ -10,7 +10,7 @@ export const Route = createFileRoute("/terms")({
 // sync; see the note in privacy.tsx.
 function TermsOfService() {
   useEffect(() => {
-    document.title = "Terms of Service — The Roster";
+    document.title = "Terms of Service — The Barracks";
   }, []);
 
   return (
@@ -19,7 +19,7 @@ function TermsOfService() {
         to="/"
         className="terminal-label inline-block cursor-pointer text-xs"
       >
-        ← BACK TO THE ROSTER
+        ← BACK TO THE BARRACKS
       </Link>
       <Panel label="Terms of Service" className="mt-3">
         <div className="space-y-4 text-sm text-muted-foreground">
@@ -29,7 +29,7 @@ function TermsOfService() {
           </p>
           <section className="space-y-2">
             <p>
-              By using the Roster you agree to these terms. If you do not
+              By using the Barracks you agree to these terms. If you do not
               agree, do not use it.
             </p>
           </section>
@@ -39,7 +39,7 @@ function TermsOfService() {
               The service
             </h2>
             <p>
-              The Roster is a free, offline-first D&amp;D 5e character sheet
+              The Barracks is a free, offline-first D&amp;D 5e character sheet
               for the Six Towers of Tessarion campaign, built on{" "}
               <a
                 className="underline"
@@ -92,7 +92,7 @@ function TermsOfService() {
             <p>
               The app is provided "as is", without warranty of any kind. D&amp;D
               5e content, rules, and terminology are used as references for a
-              personal tool; the Roster is not affiliated with or endorsed by
+              personal tool; the Barracks is not affiliated with or endorsed by
               Wizards of the Coast.
             </p>
           </section>

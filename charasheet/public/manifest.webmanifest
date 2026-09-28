@@ -1,13 +1,13 @@
 {
-  "name": "Charasheet",
-  "short_name": "Charasheet",
+  "name": "The Barracks",
+  "short_name": "Barracks",
   "description": "Offline-first D&D 5e character sheet. Your data stays in your browser.",
   "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#1c1c1c",
-  "theme_color": "#1c1c1c",
+  "background_color": "#15120e",
+  "theme_color": "#15120e",
   "lang": "en",
   "categories": [
     "games",

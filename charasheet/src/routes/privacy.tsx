@@ -11,7 +11,7 @@ export const Route = createFileRoute("/privacy")({
 // see the upstream version (SonicRay241/charasheet) for the Drive sections.
 function PrivacyPolicy() {
   useEffect(() => {
-    document.title = "Privacy Policy — The Roster";
+    document.title = "Privacy Policy — The Barracks";
   }, []);
 
   return (
@@ -20,7 +20,7 @@ function PrivacyPolicy() {
         to="/"
         className="terminal-label inline-block cursor-pointer text-xs"
       >
-        ← BACK TO THE ROSTER
+        ← BACK TO THE BARRACKS
       </Link>
       <Panel label="Privacy Policy" className="mt-3">
         <div className="space-y-4 text-sm text-muted-foreground">
@@ -30,7 +30,7 @@ function PrivacyPolicy() {
           </p>
           <section className="space-y-2">
             <p>
-              The Roster is the character sheet of the Six Towers of Tessarion
+              The Barracks is the character sheet of the Six Towers of Tessarion
               campaign site, built on{" "}
               <a
                 className="underline"
