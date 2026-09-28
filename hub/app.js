@@ -7,6 +7,9 @@ const STATE_TEXT = { ready: "Open", external: "Open", starting: "Lighting the la
 // Like the library's "Animate books": the hub's own setting, on unless it is
 // switched off here, whatever the system's reduce-motion preference says.
 let motion = stored("hub.animate") !== "off";
+// On the public website (web/build.py) there is no hub server: the tools are
+// static pages next to this one, in library/ and bestiary/, and always open.
+const HOSTED = "hosted" in document.body.dataset;
 
 function stored(key, value) {
   try {
@@ -447,6 +450,13 @@ function renderStatus() {
 }
 
 async function poll() {
+  if (HOSTED) {
+    status = { apps: Object.fromEntries(Object.values(TOOLS).map(t => [t.app, { state: "ready", url: `${t.app}/` }])) };
+    renderStatus();
+    render();
+    preload();
+    return;
+  }
   try {
     status = await (await fetch("/api/status", { cache: "no-store" })).json();
     renderStatus();

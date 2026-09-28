@@ -62,8 +62,9 @@ running.
 
 Options: `--port 9000`, `--no-browser`. Requires `uv` on PATH.
 
-The desk is for running things locally. The public website (`web/`) serves
-the library and bestiary without it.
+The public website (`web/`) uses this same page as its front door, without
+serve.py: there both halls are always open, and the tools load from
+`library/` and `bestiary/` next to the page.
 
 ## Layout
 

@@ -2,10 +2,12 @@
 /*
 !/vercel.json
 !/web
+!/hub
 !/library
 !/bestiary
 !/lore-book
 !/data
 /library/site
 /library/library.html
+/hub/serve.py
 __pycache__

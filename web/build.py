@@ -2,16 +2,18 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Build the Threadmint's public website: the library and the bestiary as one static site.
+"""Build the Threadmint's public website: the hub, the library and the bestiary as one static site.
 
 Usage, from the repo root:
 
     uv run web/build.py      # -> dist/
 
-dist/ is index.html (the landing page, web/index.html), library/ (the output
-of library/build.py) and bestiary/ (bestiary.html as its index.html, plus
-bestiary/images/ if there is one). It is rebuilt from scratch every time.
-Upload it to any static host; vercel.json at the repo root does that on Vercel.
+dist/ is the hub's reception page at the root (index.html, style.css, app.js,
+clerk.js from hub/, with the page marked data-hosted so it needs no hub
+server), library/ (the output of library/build.py) and bestiary/
+(bestiary.html as its index.html, plus bestiary/images/ if there is one). It
+is rebuilt from scratch every time. Upload it to any static host; vercel.json
+at the repo root does that on Vercel.
 """
 import os
 import shutil
@@ -21,6 +23,7 @@ from pathlib import Path
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
+HUB = ROOT / "hub"
 DIST = ROOT / "dist"
 
 
@@ -44,7 +47,13 @@ def main():
     shutil.copy(ROOT / "bestiary" / "bestiary.html", DIST / "bestiary" / "index.html")
     if (ROOT / "bestiary" / "images").is_dir():
         shutil.copytree(ROOT / "bestiary" / "images", DIST / "bestiary" / "images")
-    shutil.copy(HERE / "index.html", DIST / "index.html")
+
+    page = (HUB / "index.html").read_text(encoding="utf-8")
+    if "<body>" not in page:
+        sys.exit("hub/index.html has no plain <body> tag to mark data-hosted")
+    (DIST / "index.html").write_text(page.replace("<body>", "<body data-hosted>", 1), encoding="utf-8")
+    for name in ("style.css", "app.js", "clerk.js"):
+        shutil.copy(HUB / name, DIST / name)
 
     size = sum(p.stat().st_size for p in DIST.rglob("*") if p.is_file())
     print(f"wrote {DIST.relative_to(ROOT)}/ ({size / 1e6:.1f} MB)")

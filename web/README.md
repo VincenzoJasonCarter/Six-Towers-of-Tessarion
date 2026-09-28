@@ -1,8 +1,7 @@
 # The Threadmint on the web
 
-The library and the bestiary as one static site: a landing page at `/`, the
-library at `/library/` and the bestiary at `/bestiary/`. The hub starts
-local servers, so it stays local.
+The hub, the library and the bestiary as one static site: the hub's reception
+hall at `/`, the library at `/library/` and the bestiary at `/bestiary/`.
 
 ## Building it
 
@@ -12,8 +11,11 @@ From the repo root:
 make web-build                # or: uv run web/build.py
 ```
 
-That runs `library/build.py` and `bestiary/build.py` and gathers their output
-into `dist/` (not committed). Like those two, it is a snapshot: rebuild after
+That runs `library/build.py` and `bestiary/build.py`, gathers their output
+into `dist/` (not committed) and copies the hub's page files to its root.
+The hub's page is marked `<body data-hosted>` there, so instead of asking
+`hub/serve.py` which tools are running it shows both halls as open and loads
+them from `library/` and `bestiary/`. Like those two, it is a snapshot: rebuild after
 editing the lore-book or `enemies.yaml`. It also rewrites
 `bestiary/bestiary.html`, the same as `make bestiary-build`.
 
@@ -32,7 +34,7 @@ defaults, since vercel.json overrides them. Every push to `main` then
 redeploys.
 
 `.vercelignore` limits the upload to what the build reads (`web/`,
-`library/`, `bestiary/`, `lore-book/`, `data/`). If the build starts reading
+`hub/`, `library/`, `bestiary/`, `lore-book/`, `data/`). If the build starts reading
 another folder, add it there too.
 
 Library images carry a hash of their contents in their names, so vercel.json
@@ -44,6 +46,5 @@ the bestiary's DM material (the **DM material** switch only hides it).
 ## Files
 
 ```
-build.py     runs both exports and assembles dist/
-index.html   the landing page, copied to dist/index.html
+build.py     runs both exports and assembles dist/ around the hub's page
 ```
