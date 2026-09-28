@@ -156,6 +156,7 @@ function banners() {
 function renderFront() {
   const subjects = new Set(books.map(b => (parentOf(shelfOf(b)) || shelfOf(b)).id)).size;
   return banners() + `<div class="front">
+    <div class="results" id="results">${results()}</div>
     <div class="intro">
       <p class="tier">THREADMINT LIBRARY · CROWNWEAVE · ACCESS TIER: PUBLIC</p>
       <h1>The Lore of Tessarion</h1>
@@ -174,7 +175,6 @@ function renderFront() {
       </div>
     </div>
     <div class="bookcase"><div class="crown"></div><div class="cases ${state.arrange}">${bookcases()}</div><div class="plinth"></div></div>
-    <div class="results" id="results">${results()}</div>
   </div>`;
 }
 
@@ -867,7 +867,19 @@ window.addEventListener("hashchange", () => {
 });
 
 const qBox = document.getElementById("q");
-qBox.addEventListener("input", () => { state.q = qBox.value; refreshFront(); });
+qBox.addEventListener("input", () => {
+  state.q = qBox.value;
+  refreshFront();
+  // The results sit above the shelves, so typing further down the page would
+  // otherwise fill in a list nobody can see.
+  const res = $("#results"), below = $(".top").getBoundingClientRect().bottom;
+  if (res.firstChild && res.getBoundingClientRect().top < below) window.scrollBy(0, res.getBoundingClientRect().top - Math.max(below, 0) - 16);
+});
+$("#q-clear").addEventListener("click", () => {
+  qBox.value = "";
+  qBox.dispatchEvent(new Event("input"));
+  qBox.focus();
+});
 
 document.addEventListener("click", ev => {
   const t = ev.target;

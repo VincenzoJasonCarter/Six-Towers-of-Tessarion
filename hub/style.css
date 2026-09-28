@@ -84,6 +84,10 @@ button, input, select { font: inherit; color: inherit; }
    its rendering skipped (content-visibility keeps its layout for a fast
    return). Tool pages and the other views sit over it as full-screen layers. */
 #view-desk.covered { content-visibility: hidden; }
+/* While a tool is open the page itself never scrolls or bounces, and a touch
+   on the bar can only pan the nav sideways (see applyView in app.js). */
+html.in-tool { overflow: hidden; overscroll-behavior: none; }
+html.in-tool .bar { touch-action: pan-x; }
 .frame {
   position: fixed; left: 0; top: var(--bar); z-index: 1; display: block;
   width: 100%; height: calc(100dvh - var(--bar)); border: 0; background: var(--bg);

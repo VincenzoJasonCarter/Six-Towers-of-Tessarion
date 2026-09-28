@@ -39,7 +39,7 @@ command again after editing `enemies.yaml`.
   (`enemy_concepts`) and Factions & Figures (`unstatted_opposition`).
 - Untick **DM material** to hide stats, tactics and category badges before
   showing the screen to players. The page remembers the setting.
-- On an open card, ‹ › (or ← / →) turn to the previous or next entry in
+- On an open card, ‹ › (or ← / →) slide to the previous or next entry in
   the grid.
 - Untick **Animate cards** to open and close cards without the flight and
   the turn. The page remembers that too.

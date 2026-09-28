@@ -260,9 +260,14 @@ function renderEntry(e) {
   return h + "</article>";
 }
 
+// Every entry in the order the grid shows them (all of them if e is filtered out).
+function gridOrder(e) {
+  return [...grouped(visible().some(x => x.id === e.id) ? visible() : entries).values()].flat();
+}
+
 // The entries either side of e, in the order the grid shows them.
 function neighbours(e) {
-  const list = [...grouped(visible().some(x => x.id === e.id) ? visible() : entries).values()].flat();
+  const list = gridOrder(e);
   const i = list.findIndex(x => x.id === e.id);
   return { prev: list[i - 1], next: list[i + 1] };
 }
@@ -439,14 +444,19 @@ async function closeCard() {
   if (card) card.focus({ preventScroll: true });
 }
 
-// Prev/next, or a link to another entry: turn the card over to the new one.
+// Prev/next, or a link to another entry: slide the card aside and the new one
+// in after it, like leafing along the grid. Later entries come in from the
+// right, earlier ones from the left.
 async function turnCard(e) {
+  const list = gridOrder(byId[openId]);
+  const dir = list.indexOf(e) >= 0 && list.indexOf(e) < list.indexOf(byId[openId]) ? -1 : 1;
   settle();
   const my = seq;
+  const d = dir * Math.min(rvCard.getBoundingClientRect().width * .45, 360);
   try {
-    if (motionOK()) await run(rvCard, [{ transform: P + "rotateY(0deg)" }, { transform: P + "rotateY(90deg)" }], 200, "cubic-bezier(.55, 0, 1, .45)");
+    if (motionOK()) await run(rvCard, [{ transform: "none", opacity: 1 }, { transform: `translateX(${-d}px)`, opacity: 0 }], 170, "cubic-bezier(.55, 0, 1, .45)");
     setOpen(e);
-    if (motionOK()) await run(rvCard, [{ transform: P + "rotateY(-90deg)" }, { transform: P + "rotateY(0deg)" }], 280, "cubic-bezier(0, .55, .45, 1)");
+    if (motionOK()) await run(rvCard, [{ transform: `translateX(${d}px)`, opacity: 0 }, { transform: "none", opacity: 1 }], 260, "cubic-bezier(0, .55, .45, 1)");
   } catch (_) {
     return;  // superseded
   }

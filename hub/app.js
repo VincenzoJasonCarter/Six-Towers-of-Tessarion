@@ -370,6 +370,10 @@ function applyView(view, fadeIn) {
   // Reception is never taken down, only covered: laying it out again (or a
   // tool's page, which shares this page's thread) would stall a walk.
   $("#view-desk").classList.toggle("covered", view !== "desk");
+  // With a tool open, this page must not scroll or bounce under it: on iOS
+  // Safari a touch on the bar that moved this page left the tool's frame
+  // unable to scroll.
+  document.documentElement.classList.toggle("in-tool", view !== "desk");
 
   const tool = TOOLS[view];
   const app = tool && status ? status.apps[tool.app] : null;
