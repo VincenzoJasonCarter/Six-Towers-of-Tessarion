@@ -90,6 +90,10 @@ const HALLS = {
     name: "The Library", app: "library",
     line: ["smile", "Every volume of the lore-book, shelved by subject, colour by colour. Pull one off the shelf and it opens for you. Please put it back."],
   },
+  roster: {
+    name: "The Roster", app: "roster",
+    line: ["smug", "My records room, right behind me. One sheet per adventurer, filed wherever you filled it in: a sheet started at this desk stays at this desk. Keep your hit points honest."],
+  },
   bestiary: {
     name: "The Bestiary", app: "bestiary",
     line: ["flat", "The register of hostile things. Portraits on cards; turn one over for the details. Some of the details are redacted for your safety. Some for ours."],
@@ -141,7 +145,7 @@ const TALK = {
     replies: [["Take me there.", () => go("library")], MORE],
   },
   halls: {
-    line: ["flat", "Two halls. The Library on the left, the Bestiary on the right. Which one?"],
+    line: ["flat", "Three halls. The Library on the left, the Roster behind me, the Bestiary on the right. Which one?"],
     replies: () => [...Object.entries(HALLS).map(([id, h]) => [h.name + "?", "hall:" + id]), MORE],
   },
   restricted: { line: ["flat", "No."], replies: [["Please?", "restricted2"], ["Fair enough.", "menu"]] },
@@ -169,6 +173,8 @@ const BACK_FROM = {
     ["smile", "Find what you were looking for? Nobody ever finds exactly what they were looking for."]],
   bestiary: [["smile", "You're back. All your limbs? Good. It makes the paperwork easier."],
     ["flat", "Anything in there look at you funny? They all do. Don't take it personally."]],
+  roster: [["smug", "Back from the Roster. Did you level up, or did you just write that you did?"],
+    ["flat", "Sheet in order? Good. Hit points are not a suggestion, whatever your cleric says."]],
 };
 
 const IDLE = bag([
@@ -311,9 +317,14 @@ document.addEventListener("keydown", ev => {
   }
 });
 
-// Her eyes follow whichever doorway you point at.
-document.querySelectorAll(".door").forEach((door, i, all) => {
-  door.addEventListener("pointerenter", () => { clerk.dataset.look = i < all.length / 2 ? "left" : "right"; });
+// Her eyes follow whichever doorway you point at (the one behind her, she ignores).
+document.querySelectorAll(".door").forEach(door => {
+  door.addEventListener("pointerenter", () => {
+    const d = door.getBoundingClientRect(), c = clerk.getBoundingClientRect();
+    const dx = d.left + d.width / 2 - (c.left + c.width / 2);
+    if (Math.abs(dx) < c.width / 2) delete clerk.dataset.look;
+    else clerk.dataset.look = dx < 0 ? "left" : "right";
+  });
   door.addEventListener("pointerleave", () => { delete clerk.dataset.look; });
 });
 

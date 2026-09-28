@@ -2,6 +2,9 @@ const $ = s => document.querySelector(s);
 const TOOLS = {
   library: { app: "library", name: "The Library" },
   bestiary: { app: "bestiary", name: "The Bestiary" },
+  // Charasheet (github.com/SonicRay241/charasheet), hosted by its author:
+  // there is no server of ours to start, so it is always open.
+  roster: { app: "roster", name: "The Roster", url: "https://charasheet.rayy.dev/" },
 };
 const STATE_TEXT = { ready: "Open", external: "Open", starting: "Lighting the lamps…", stopped: "Closed" };
 // Like the library's "Animate books": the hub's own setting, on unless it is
@@ -178,6 +181,44 @@ const CORRIDORS = {
       });
     }
     add({ t: "rect", x: 0, y: 200, w: 200, h: 120, fill: { lin: [0, 200, 0, 320], stops: [[0, "#9fd8c0", 0], [1, "#9fd8c0", .16]] } });
+    farGlow(c);
+  },
+
+  // The registrar's records room: panelled walls hung with framed character
+  // sheets, crystal lamps between them, banners overhead.
+  roster() {
+    const c = { wall: "#3b4058", wallFar: "#07080e", floor: "#3d3226", floorFar: "#0b0806", ceil: "#1c1f2e", far: "#0e1322", glow: "#a9c8ff", glowA: .45 };
+    shell(c);
+    polygon(end(-.34, .34, 0, 1.3), "#cfdcf5");
+    polygon(end(-.1, .1, 0, .5), "#2a2016");
+    polygon(flat(0.002, -.3, .3, 1, D), "#2a3f6e", .85);
+    for (const X of [-1, 1]) {
+      for (let z = 1; z < D; z += .3) polygon(side(X * .995, z, Math.min(z + .3, D), 0, .62), "#4a3322", fade(z));
+      polygon(side(X * .99, 1, D, .6, .66), "#b8923f", .6);
+      for (const z of [1.3, 2, 2.7, 3.4]) {
+        polygon(side(X * .99, z, z + .44, .82, 1.58), "#b8923f", fade(z));
+        polygon(side(X * .985, z + .04, z + .4, .87, 1.53), "#ebe0c6", fade(z));
+        if (!seen(z + .08)) continue;
+        for (let y = 1.42; y > .95; y -= .09) {
+          line(P(X * .98, y, z + .08), P(X * .98, y, z + (y < 1.1 ? .24 : .34)), "#7a6a52", 1.1 * depth(z + .2), { alpha: fade(z) * .8 });
+        }
+        const [x, y] = P(X * .98, .96, z + .33);
+        ellipse(x, y, 4 * depth(z + .33), 5 * depth(z + .33), "#8c2f23", { alpha: fade(z) });
+      }
+      for (const z of [1.87, 2.57, 3.27]) {
+        if (!seen(z)) continue;
+        const d = depth(z);
+        const [x, y] = P(X * .95, 1.72, z);
+        glowAt(x, y, 20 * d, 20 * d, "#a9c8ff", .55, { cls: "flicker" });
+        ellipse(x, y, 3.5 * d, 6 * d, "#e6efff");
+      }
+    }
+    // Far to near, so the nearer banners hang in front.
+    for (const z of [3, 2.3, 1.6]) {
+      if (!seen(z)) continue;
+      polygon([P(-.14, 2, z), P(.14, 2, z), P(.14, 1.6, z), P(0, 1.48, z), P(-.14, 1.6, z)], "#2d4d8a", fade(z));
+      line(P(-.14, 1.94, z), P(.14, 1.94, z), "#d9bb70", 1.4 * depth(z), { alpha: fade(z) });
+    }
     farGlow(c);
   },
 
@@ -453,16 +494,23 @@ function renderStatus() {
   }
 }
 
+// Tools hosted elsewhere (a url in TOOLS) are always open; the hub server
+// knows nothing about them.
+function withExternal(s) {
+  for (const t of Object.values(TOOLS)) if (t.url) s.apps[t.app] = { state: "external", url: t.url };
+  return s;
+}
+
 async function poll() {
   if (HOSTED) {
-    status = { apps: Object.fromEntries(Object.values(TOOLS).map(t => [t.app, { state: "ready", url: `${t.app}/` }])) };
+    status = withExternal({ apps: Object.fromEntries(Object.values(TOOLS).map(t => [t.app, { state: "ready", url: `${t.app}/` }])) });
     renderStatus();
     render();
     preload();
     return;
   }
   try {
-    status = await (await fetch("/api/status", { cache: "no-store" })).json();
+    status = withExternal(await (await fetch("/api/status", { cache: "no-store" })).json());
     renderStatus();
     render();
     preload();
@@ -488,7 +536,7 @@ async function poll() {
 // light hides that where a frozen stride would not. Walking out plays the
 // same path backwards. Every frame of a walk is drawn on a canvas; see toCanvas().
 
-const GLOW = { library: "#ffd98a", bestiary: "#57d19b" };
+const GLOW = { library: "#ffd98a", bestiary: "#57d19b", roster: "#a9c8ff" };
 const WALK_TO = 3.75;
 const WALK_MS = 1900;
 const REVEAL_MS = 420;  // the light fading into the tool (or back into the corridor)
@@ -536,6 +584,8 @@ function walker(view) {
   const dpr = devicePixelRatio || 1;
   let geo = measure(door);
   let doorway = null, tunnel = null;
+  // Which door, for style.css (Hessa stands in front of the Roster's).
+  hall.dataset.walk = view;
 
   return {
     ok: geo.ok,
@@ -584,6 +634,7 @@ function walker(view) {
     leaveHall() {
       this.resetHall();
       hall.classList.remove("walking");
+      delete hall.dataset.walk;
     },
 
     // The camera is through the doorway: draw the corridor full screen.
@@ -740,7 +791,7 @@ function ringBell() {
 $("#waitStart").addEventListener("click", async () => {
   const tool = TOOLS[currentView()];
   if (!tool) return;
-  status = await post("/api/start", { app: tool.app }).catch(() => status);
+  status = await post("/api/start", { app: tool.app }).then(withExternal).catch(() => status);
   renderStatus();
   render();
 });

@@ -4,6 +4,8 @@ One page for the Tessarion tools:
 
 - **Library**: the lore-book bookcase (`library/`)
 - **Bestiary**: the Threadmint Bestiary (`bestiary/`)
+- **Roster**: character sheets, from [charasheet](https://github.com/SonicRay241/charasheet),
+  loaded from its author's site at https://charasheet.rayy.dev/
 
 ## Running it
 
@@ -20,8 +22,8 @@ uv run hub/serve.py
 ```
 
 The desk opens at http://127.0.0.1:8760/ on a reception hall: a desk in
-front and two corridors behind it, one per tool (the Library's bookshelves,
-the Bestiary's dark stone). The lamp on each corridor's plaque shows whether
+front and three corridors behind it, one per tool (the Library's bookshelves,
+the Roster's framed sheets right behind the clerk, the Bestiary's dark stone). The lamp on each corridor's plaque shows whether
 that tool is running. Click a corridor and you walk into it: the camera
 crosses reception, passes through the doorway and goes down the corridor
 (redrawn in perspective as it moves) towards the light at the far end, which
@@ -62,9 +64,23 @@ running.
 
 Options: `--port 9000`, `--no-browser`. Requires `uv` on PATH.
 
+## The Roster
+
+The Roster isn't ours to run: it is charasheet as its author hosts it, shown
+in the desk's frame (its `url` in `TOOLS` in `app.js`). So its lamp is always
+lit, and serve.py knows nothing about it. It needs a network connection.
+
+Its sheets are kept in the browser, and a browser keeps a site's storage
+separately for each site that frames it. Sheets made in the Roster are
+therefore not the ones made at charasheet.rayy.dev directly, and the desk on
+127.0.0.1 and the public website each have their own set too. Google Drive
+sync would join them up, but Google's sign-in page won't open inside a
+frame: use **Open in its own tab** for that (and those sheets then live in
+the tab's set, not the desk's).
+
 The public website (`web/`) uses this same page as its front door, without
-serve.py: there both halls are always open, and the tools load from
-`library/` and `bestiary/` next to the page.
+serve.py: there every hall is always open, and the tools load from
+`library/` and `bestiary/` next to the page (the Roster from its own site).
 
 ## Layout
 
