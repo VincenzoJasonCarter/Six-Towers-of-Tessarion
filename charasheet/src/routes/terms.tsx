@@ -6,9 +6,11 @@ export const Route = createFileRoute("/terms")({
   component: TermsOfService,
 });
 
+// Written for the Threadmint deployment, which builds without Google Drive
+// sync; see the note in privacy.tsx.
 function TermsOfService() {
   useEffect(() => {
-    document.title = "Terms of Service — charasheet";
+    document.title = "Terms of Service — The Roster";
   }, []);
 
   return (
@@ -17,18 +19,18 @@ function TermsOfService() {
         to="/"
         className="terminal-label inline-block cursor-pointer text-xs"
       >
-        ← BACK TO CHARASHEET
+        ← BACK TO THE ROSTER
       </Link>
       <Panel label="Terms of Service" className="mt-3">
         <div className="space-y-4 text-sm text-muted-foreground">
           <p>
-            <span className="text-foreground">Last updated:</span> August 30,
-            2026
+            <span className="text-foreground">Last updated:</span> September
+            28, 2026
           </p>
           <section className="space-y-2">
             <p>
-              By using Charasheet you agree to these terms. If you do not
-              agree, do not use the app.
+              By using the Roster you agree to these terms. If you do not
+              agree, do not use it.
             </p>
           </section>
 
@@ -37,11 +39,18 @@ function TermsOfService() {
               The service
             </h2>
             <p>
-              Charasheet is a free, offline-first D&amp;D 5e character sheet
-              that runs in your browser. Character data is stored locally on
-              your device, and optionally in your own Google Drive via
-              bring-your-own-storage sync. There is no Charasheet server
-              holding your data.
+              The Roster is a free, offline-first D&amp;D 5e character sheet
+              for the Six Towers of Tessarion campaign, built on{" "}
+              <a
+                className="underline"
+                href="https://github.com/SonicRay241/charasheet"
+                target="_blank"
+                rel="noreferrer"
+              >
+                charasheet
+              </a>{" "}
+              by SonicRay241. It runs in your browser and stores character
+              data on your device only. There is no server holding your data.
             </p>
           </section>
 
@@ -51,13 +60,13 @@ function TermsOfService() {
             </h2>
             <ul className="list-inside list-disc space-y-1">
               <li>
-                Your characters live in your browser's local storage. Clearing
+                Your characters live in this browser's storage. Clearing
                 browser data, private browsing modes, or aggressive browser
                 settings can erase them.
               </li>
               <li>
-                Use Export to keep YAML backups. The cloud sync checkbox backs
-                up to your own Google Drive, not to us.
+                Characters don't follow you to another browser or device. Use
+                Export to keep YAML backups, and Import to bring them back.
               </li>
               <li>
                 We cannot recover lost characters. There is no server copy to
@@ -72,27 +81,7 @@ function TermsOfService() {
             </h2>
             <p>
               Don't misuse the service: no attempts to breach, overload, or
-              abuse the hosting, the OAuth token relay, or Google's APIs.
-            </p>
-          </section>
-
-          <section className="space-y-2">
-            <h2 className="text-xs uppercase tracking-widest text-primary">
-              Google Drive
-            </h2>
-            <p>
-              If you enable sync, you also agree to Google's Terms of
-              Service. Sync access is limited to files this app created
-              (drive.file scope). You can revoke access whenever at{" "}
-              <a
-                className="underline"
-                href="https://myaccount.google.com/permissions"
-                target="_blank"
-                rel="noreferrer"
-              >
-                myaccount.google.com/permissions
-              </a>
-              .
+              abuse the site or its hosting.
             </p>
           </section>
 
@@ -103,7 +92,7 @@ function TermsOfService() {
             <p>
               The app is provided "as is", without warranty of any kind. D&amp;D
               5e content, rules, and terminology are used as references for a
-              personal tool; Charasheet is not affiliated with or endorsed by
+              personal tool; the Roster is not affiliated with or endorsed by
               Wizards of the Coast.
             </p>
           </section>
@@ -138,7 +127,7 @@ function TermsOfService() {
               Questions about these terms?{" "}
               <a
                 className="underline"
-                href="https://github.com/SonicRay241/charasheet/issues"
+                href="https://github.com/VincenzoJasonCarter/Six-Towers-of-Tessarion/issues"
                 target="_blank"
                 rel="noreferrer"
               >

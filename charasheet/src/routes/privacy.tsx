@@ -6,9 +6,12 @@ export const Route = createFileRoute("/privacy")({
   component: PrivacyPolicy,
 });
 
+// Written for the Threadmint deployment, which builds without Google Drive
+// sync (no VITE_GDRIVE_CLIENT_ID). Turning sync on means rewriting this page:
+// see the upstream version (SonicRay241/charasheet) for the Drive sections.
 function PrivacyPolicy() {
   useEffect(() => {
-    document.title = "Privacy Policy — charasheet";
+    document.title = "Privacy Policy — The Roster";
   }, []);
 
   return (
@@ -17,19 +20,28 @@ function PrivacyPolicy() {
         to="/"
         className="terminal-label inline-block cursor-pointer text-xs"
       >
-        ← BACK TO CHARASHEET
+        ← BACK TO THE ROSTER
       </Link>
       <Panel label="Privacy Policy" className="mt-3">
         <div className="space-y-4 text-sm text-muted-foreground">
           <p>
-            <span className="text-foreground">Last updated:</span> August 30,
-            2026
+            <span className="text-foreground">Last updated:</span> September
+            28, 2026
           </p>
           <section className="space-y-2">
             <p>
-              Charasheet is an offline-first D&amp;D 5e character sheet. Your
-              data lives in your browser and, if you choose to enable Google
-              Drive sync, in your own Google Drive. We collect nothing.
+              The Roster is the character sheet of the Six Towers of Tessarion
+              campaign site, built on{" "}
+              <a
+                className="underline"
+                href="https://github.com/SonicRay241/charasheet"
+                target="_blank"
+                rel="noreferrer"
+              >
+                charasheet
+              </a>{" "}
+              by SonicRay241. It runs entirely in your browser. We collect
+              nothing.
             </p>
           </section>
 
@@ -40,61 +52,28 @@ function PrivacyPolicy() {
             <ul className="list-inside list-disc space-y-1">
               <li>
                 Character data (names, stats, notes, spells, everything) is
-                stored locally in your browser and never sent to us.
+                stored in your browser and never sent to us or anyone else.
               </li>
               <li>
                 No accounts. No analytics. No advertising. No tracking
                 pixels.
               </li>
               <li>
-                We do not read, scan, or index the contents of your Google
-                Drive. Sync operates only on files inside the{" "}
-                <span className="text-foreground">charasheet</span> folder
-                that this app created, using the{" "}
-                <span className="text-foreground">drive.file</span> scope —
-                the narrowest Google Drive scope available.
+                No cloud sync. This version doesn't connect to Google Drive or
+                any other storage service.
               </li>
             </ul>
           </section>
 
           <section className="space-y-2">
             <h2 className="text-xs uppercase tracking-widest text-primary">
-              Google Drive access
+              Local storage
             </h2>
             <p>
-              If you connect Google Drive, this app gains access limited to
-              files it created (scope{" "}
-              <span className="text-foreground">
-                https://www.googleapis.com/auth/drive.file
-              </span>
-              ). File contents are exchanged directly between your browser
-              and Google's servers. They are not routed through, stored on,
-              or accessible to our infrastructure.
-            </p>
-            <p>
-              You can revoke this access at any time at{" "}
-              <a
-                className="underline"
-                href="https://myaccount.google.com/permissions"
-                target="_blank"
-                rel="noreferrer"
-              >
-                myaccount.google.com/permissions
-              </a>
-              .
-            </p>
-          </section>
-
-          <section className="space-y-2">
-            <h2 className="text-xs uppercase tracking-widest text-primary">
-              Server-side token exchange
-            </h2>
-            <p>
-              To keep the OAuth client secret off your device, token
-              exchanges with Google are relayed through a small serverless
-              function. It sees your authorization code and access/refresh
-              tokens only to perform the exchange, does not log them, and
-              stores nothing.
+              Characters and preferences are stored in your browser's local
+              storage and IndexedDB. Clearing your browser data for this site
+              removes all of it, and nothing is kept anywhere else: use Export
+              to keep a copy.
             </p>
           </section>
 
@@ -103,23 +82,11 @@ function PrivacyPolicy() {
               Traffic and hosting
             </h2>
             <p>
-              This site is served via Vercel and Cloudflare. Like virtually
-              all websites, standard server infrastructure processes request
-              metadata (IP address, user agent, requested URL, timestamps)
-              for security and abuse prevention. This is standard network
-              traffic handled by the hosts' own privacy policies (Vercel and
-              Cloudflare) — not data we collect or control.
-            </p>
-          </section>
-
-          <section className="space-y-2">
-            <h2 className="text-xs uppercase tracking-widest text-primary">
-              Local storage
-            </h2>
-            <p>
-              Characters, preferences, and your Google OAuth token are stored
-              in your browser's local storage and IndexedDB. Clearing your
-              browser data for this site removes all of it.
+              This site is served by Vercel. Like virtually all websites, the
+              hosting infrastructure processes request metadata (IP address,
+              user agent, requested URL, timestamps) for security and abuse
+              prevention. That is handled under Vercel's own privacy policy,
+              not data we collect or control.
             </p>
           </section>
 
@@ -131,7 +98,7 @@ function PrivacyPolicy() {
               Questions about this policy?{" "}
               <a
                 className="underline"
-                href="https://github.com/SonicRay241/charasheet/issues"
+                href="https://github.com/VincenzoJasonCarter/Six-Towers-of-Tessarion/issues"
                 target="_blank"
                 rel="noreferrer"
               >
