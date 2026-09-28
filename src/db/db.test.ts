@@ -1,0 +1,468 @@
+// Loads fake-indexeddb before any Dexie import so tests run without a browser.
+import 'fake-indexeddb/auto'
+
+import { describe, expect, it, beforeEach } from 'vitest'
+import { db, type Character } from './db'
+import { addCharacter, createCharacter, deleteCharacter, listCharacters, updateCharacter } from './characters'
+import { addWeapon, deleteWeapon, updateWeapon } from './weapons'
+import { addEquipmentItem, deleteEquipmentItem, updateEquipmentItem } from './equipment'
+import { addSpell, deleteSpell, updateSpell } from './spells'
+import { abilityModifier, baseSavingThrowTotal, formatModifier, initiativeTotal, savingThrowTotal, skillTotal, SKILLS } from './derived'
+import { mergeCharacter } from '../sync/sync-engine'
+import { deserializeCharacter, parseCharacterData, serializeCharacter } from './transfer'
+import { characterPayload, sha256Hex } from '../sync/drive-store'
+
+const characterFromSheet = (): Character => {
+  const character = createCharacter('Thorin')
+  const abilities = {
+    strength: { score: 9, proficient: false, halfProficient: false },
+    dexterity: { score: 16, proficient: false, halfProficient: false },
+    constitution: { score: 15, proficient: false, halfProficient: false },
+    intelligence: { score: 11, proficient: false, halfProficient: false },
+    wisdom: { score: 14, proficient: false, halfProficient: false },
+    charisma: { score: 13, proficient: false, halfProficient: false },
+  }
+  character.abilities = abilities
+  character.proficiencyBonus = 2
+  character.skillProficiencies = { arcana: true, investigation: true, performance: true, survival: true }
+  character.hitPointMaximum = 12
+  character.currentHitPoints = 12
+  character.armorClass = 13
+  character.speed = 30
+  return character
+}
+
+describe('derived values', () => {
+  const character = characterFromSheet()
+
+  it('computes ability modifiers', () => {
+    expect(abilityModifier(9)).toBe(-1)
+    expect(abilityModifier(16)).toBe(+3)
+    expect(abilityModifier(15)).toBe(+2)
+    expect(abilityModifier(11)).toBe(0)
+    expect(abilityModifier(14)).toBe(+2)
+    expect(abilityModifier(13)).toBe(+1)
+    expect(abilityModifier(10)).toBe(0)
+    expect(abilityModifier(8)).toBe(-1)
+  })
+
+  it('formats modifiers with explicit sign', () => {
+    expect(formatModifier(-1)).toBe('-1')
+    expect(formatModifier(0)).toBe('+0')
+    expect(formatModifier(3)).toBe('+3')
+  })
+
+  it('derives saving throws with proficiency', () => {
+    expect(savingThrowTotal(character, 'strength')).toBe(-1)
+    const proficientWis = {
+      ...character,
+      abilities: {
+        ...character.abilities,
+        wisdom: { score: 14, proficient: true, halfProficient: false },
+      },
+    }
+    expect(savingThrowTotal(proficientWis, 'wisdom')).toBe(+4)
+  })
+
+  it('derives skill totals per 5e rules (prof = mod + profBonus)', () => {
+    // Note: the mock sheet image is internally inconsistent (e.g. Arcana +1
+    // with Int 11 and prof +2); these expectations follow the actual rules.
+    const byKey = new Map(SKILLS.map((skill) => [skill.key, skill]))
+    expect(skillTotal(character, byKey.get('arcana')!)).toBe(+2)
+    expect(skillTotal(character, byKey.get('investigation')!)).toBe(+2)
+    expect(skillTotal(character, byKey.get('performance')!)).toBe(+3)
+    expect(skillTotal(character, byKey.get('survival')!)).toBe(+4)
+    expect(skillTotal(character, byKey.get('acrobatics')!)).toBe(+3)
+    expect(skillTotal(character, byKey.get('animalHandling')!)).toBe(+2)
+  })
+
+  it('adds half proficiency (+1 at prof 2) via second checkbox', () => {
+    const half = {
+      ...character,
+      skillHalfProficiencies: { perception: true },
+      abilities: {
+        ...character.abilities,
+        wisdom: { score: 14, proficient: false, halfProficient: true },
+      },
+    }
+    const byKey = new Map(SKILLS.map((skill) => [skill.key, skill]))
+    // Perception: Wis +2, half prof +1 -> +3
+    expect(skillTotal(half, byKey.get('perception')!)).toBe(+3)
+
+    // Saving throw: Wis save +2, half prof +1 -> +3
+    expect(baseSavingThrowTotal(half, 'wisdom')).toBe(+3)
+
+    // Both checkboxes are independent bonuses: +2 mod +2 full +1 half = +5.
+    const both = {
+      ...half,
+      skillProficiencies: { perception: true },
+      abilities: {
+        ...half.abilities,
+        wisdom: { score: 14, proficient: true, halfProficient: true },
+      },
+    }
+    expect(skillTotal(both, byKey.get('perception')!)).toBe(+5)
+    expect(baseSavingThrowTotal(both, 'wisdom')).toBe(+5)
+  })
+
+  it('derives initiative from dex plus proficiency', () => {
+    expect(initiativeTotal(character)).toBe(+5)
+    expect(initiativeTotal({ ...character, initiativeOverride: 2 })).toBe(+2)
+  })
+
+  it('applies manual save deltas only when enabled', () => {
+    // Strength base: -1. A +2 homebrew delta results in +1.
+    const overridden = {
+      ...character,
+      saveOverridesEnabled: true,
+      savingThrowOverrides: { strength: 2 },
+    }
+    expect(savingThrowTotal(overridden, 'strength')).toBe(+1)
+    expect(savingThrowTotal(overridden, 'dexterity')).toBe(+3)
+    expect(savingThrowTotal({ ...overridden, saveOverridesEnabled: false }, 'strength')).toBe(-1)
+  })
+
+  it('applies manual skill deltas only when enabled', () => {
+    // Arcana base: Int 11 (+0) + prof 2 = +2. A -3 delta results in -1.
+    const overridden = {
+      ...character,
+      skillOverridesEnabled: true,
+      skillOverrides: { arcana: -3 },
+    }
+    const byKey = new Map(SKILLS.map((skill) => [skill.key, skill]))
+    expect(skillTotal(overridden, byKey.get('arcana')!)).toBe(-1)
+    expect(skillTotal(overridden, byKey.get('history')!)).toBe(0)
+    expect(skillTotal({ ...overridden, skillOverridesEnabled: false }, byKey.get('arcana')!)).toBe(+2)
+  })
+})
+
+/** Local-only JSON round-trip helper mirroring serializeCharacter's output. */
+function serializeLocalForTest(character: Character): string {
+  const {
+    id: _id,
+    createdAt: _createdAt,
+    updatedAt: _updatedAt,
+    cloudSynced: _cloudSynced,
+    cloudSyncedAt: _cloudSyncedAt,
+    ...rest
+  } = character
+  return JSON.stringify(rest)
+}
+
+describe('character store', () => {
+  beforeEach(async () => {
+    await db.characters.clear()
+  })
+
+  it('round-trips a character through IndexedDB', async () => {
+    const created = await addCharacter('Thorin')
+    const loaded = await db.characters.get(created.id)
+    expect(loaded?.name).toBe('Thorin')
+    expect(loaded?.abilities.dexterity.score).toBe(10)
+  })
+
+  it('lists multiple characters sorted by name', async () => {
+    await addCharacter('Zara')
+    await addCharacter('Bofur')
+    const names = (await listCharacters()).map((c) => c.name)
+    expect(names).toEqual(['Bofur', 'Zara'])
+  })
+
+  it('updates a character and bumps updatedAt', async () => {
+    const created = await addCharacter('Thorin')
+    await new Promise((r) => setTimeout(r, 5))
+    await updateCharacter(created.id, { currentHitPoints: 7 })
+    const loaded = await db.characters.get(created.id)
+    expect(loaded?.currentHitPoints).toBe(7)
+    expect(loaded!.updatedAt).toBeGreaterThan(created.updatedAt)
+  })
+
+  it('produces a stable hash for unchanged characters and a new hash on edits', async () => {
+    const created = await addCharacter('Thorin')
+    const before = await db.characters.get(created.id)
+    const hash1 = await sha256Hex(characterPayload(before!))
+
+    // Same content, fresh serialization — hash must be identical.
+    const reloaded = await db.characters.get(created.id)
+    const hash2 = await sha256Hex(characterPayload(reloaded!))
+    expect(hash2).toBe(hash1)
+
+    // Any edit changes the payload and therefore the hash.
+    await updateCharacter(created.id, { level: 3 })
+    const after = await db.characters.get(created.id)
+    const hash3 = await sha256Hex(characterPayload(after!))
+    expect(hash3).not.toBe(hash1)
+  })
+
+  it('persists cloudSynced flag and sync metadata tables', async () => {
+    const created = await addCharacter('Thorin')
+    await db.characters.update(created.id, { cloudSynced: true })
+    await db.characterSyncMeta.put({
+      id: created.id,
+      lastPushedHash: 'abc123',
+      fileId: 'drive-file-1',
+    })
+    await db.syncMeta.put({ key: 'index', fileId: 'index-1', lastSyncedAt: '2026-01-01T00:00:00Z' })
+
+    const loaded = await db.characters.get(created.id)
+    expect(loaded?.cloudSynced).toBe(true)
+    const meta = await db.characterSyncMeta.get(created.id)
+    expect(meta?.lastPushedHash).toBe('abc123')
+    expect(meta?.fileId).toBe('drive-file-1')
+    const syncMeta = await db.syncMeta.get('index')
+    expect(syncMeta?.fileId).toBe('index-1')
+  })
+
+  it('records a tombstone when a cloud-synced character is deleted', async () => {
+    const created = await addCharacter('Thorin')
+    await db.characters.update(created.id, { cloudSynced: true })
+    await deleteCharacter(created.id)
+
+    expect(await db.characters.get(created.id)).toBeUndefined()
+    const tombstone = await db.deletedCharacters.get(created.id)
+    expect(tombstone?.deletedAt).toBeGreaterThan(0)
+
+    // Non-cloud deletes leave no tombstone.
+    const local = await addCharacter('Bofur')
+    await db.characters.update(local.id, { cloudSynced: false })
+    await deleteCharacter(local.id)
+    expect(await db.deletedCharacters.get(local.id)).toBeUndefined()
+  })
+
+  it('merges diverged characters field-by-field with later timestamps winning', () => {
+    const base = createCharacter('Thorin')
+    const local: Character = {
+      ...base,
+      updatedAt: 1000,
+      level: 5,
+      armorClass: 14,
+      backstory: 'local story',
+      fieldTimestamps: { level: 1000, armorClass: 1000, backstory: 1000 },
+    }
+    const remote: Character = {
+      ...base,
+      updatedAt: 900,
+      level: 3,
+      armorClass: 16,
+      backstory: 'remote story',
+      fieldTimestamps: { level: 900, armorClass: 1200, backstory: 900 },
+    }
+    const merged = mergeCharacter(local, remote)
+    // Local level (1000) beats remote level (900).
+    expect(merged.level).toBe(5)
+    // Remote armorClass (1200) beats local (1000).
+    expect(merged.armorClass).toBe(16)
+    // Local backstory (1000) beats remote (900).
+    expect(merged.backstory).toBe('local story')
+    // Originals unchanged (pure function).
+    expect(local.armorClass).toBe(14)
+    expect(remote.level).toBe(3)
+  })
+
+  it('falls back to row updatedAt for fields without stamps', () => {
+    const base = createCharacter('Thorin')
+    const older: Character = { ...base, updatedAt: 500, speed: 30 }
+    const newer: Character = { ...base, updatedAt: 700, speed: 35 }
+    // No fieldTimestamps on either side -> whole-row fallback.
+    expect(mergeCharacter(older, newer).speed).toBe(35)
+    expect(mergeCharacter(newer, older).speed).toBe(35)
+  })
+
+  it('preserves merge metadata through the YAML round-trip', () => {
+    const base = createCharacter('Thorin')
+    const remote: Character = {
+      ...base,
+      level: 7,
+      armorClass: 18,
+      updatedAt: 999,
+      fieldTimestamps: { level: 2000, 'abilities.strength': 2000, armorClass: 1500 },
+    }
+    const local: Character = {
+      ...base,
+      level: 5,
+      armorClass: 10,
+      updatedAt: 1000,
+      fieldTimestamps: { level: 1000, 'abilities.strength': 1000, armorClass: 1400 },
+    }
+
+    // The exact path a remote row takes in reconcile: serialize payload ->
+    // parse -> hydrate with the index's updatedAt.
+    const parsed = parseCharacterData(JSON.parse(JSON.stringify({
+      ...JSON.parse(serializeLocalForTest(remote)),
+    })))
+    expect(parsed.fieldTimestamps).toEqual(remote.fieldTimestamps)
+
+    const hydrated = { ...parsed, id: remote.id, updatedAt: 999 }
+    const merged = mergeCharacter(local, hydrated)
+    // Remote level (2000) beats local (1000): fieldTimestamps must have
+    // survived, or remote falls back to row time and clobbers everything.
+    expect(merged.level).toBe(7)
+    // Local armorClass... remote stamp 1500 > local 1400, so remote wins.
+    expect(merged.armorClass).toBe(18)
+    // Ability-level stamps also survive.
+    expect(merged.abilities.strength).toEqual(remote.abilities.strength)
+  })
+
+  it('adds, updates, and deletes spells atomically', async () => {
+    const created = await addCharacter('Thorin')
+
+    const spell = await addSpell(created.id)
+    expect(spell.level).toBe(0)
+    let loaded = await db.characters.get(created.id)
+    expect(loaded?.spells).toHaveLength(1)
+
+    await updateSpell(created.id, spell.id, {
+      name: 'Mage Hand',
+      level: 0,
+      description: 'Spectral hand.',
+    })
+    loaded = await db.characters.get(created.id)
+    expect(loaded?.spells[0].name).toBe('Mage Hand')
+    expect(loaded?.spells[0].level).toBe(0)
+
+    await updateSpell(created.id, spell.id, { level: 1 })
+    loaded = await db.characters.get(created.id)
+    expect(loaded?.spells[0].level).toBe(1)
+
+    await addSpell(created.id)
+    await deleteSpell(created.id, spell.id)
+    loaded = await db.characters.get(created.id)
+    expect(loaded?.spells).toHaveLength(1)
+    expect(loaded?.spells[0].name).toBe('')
+  })
+
+  it('persists override enable flags and deltas', async () => {
+    const created = await addCharacter('Thorin')
+    await updateCharacter(created.id, {
+      saveOverridesEnabled: true,
+      savingThrowOverrides: { strength: 2 },
+      skillOverridesEnabled: true,
+      skillOverrides: { arcana: -3 },
+    })
+    const loaded = await db.characters.get(created.id)
+    expect(loaded?.saveOverridesEnabled).toBe(true)
+    expect(loaded?.savingThrowOverrides).toEqual({ strength: 2 })
+    expect(loaded?.skillOverridesEnabled).toBe(true)
+    expect(loaded?.skillOverrides).toEqual({ arcana: -3 })
+  })
+
+  it('applies functional updates transactionally', async () => {
+    const created = await addCharacter('Thorin')
+    await updateCharacter(created.id, (c) => ({
+      savingThrowOverrides: { ...c.savingThrowOverrides, wisdom: -1 },
+    }))
+    const loaded = await db.characters.get(created.id)
+    expect(loaded?.savingThrowOverrides).toEqual({ wisdom: -1 })
+  })
+
+  it('adds, updates, and deletes weapons atomically', async () => {
+    const created = await addCharacter('Thorin')
+
+    const weapon = await addWeapon(created.id)
+    expect(weapon.attackBonus).toBe('+0')
+    let loaded = await db.characters.get(created.id)
+    expect(loaded?.weapons).toHaveLength(1)
+
+    await updateWeapon(created.id, weapon.id, { name: 'Club', damage: '1d4+2/B' })
+    loaded = await db.characters.get(created.id)
+    expect(loaded?.weapons[0].name).toBe('Club')
+    expect(loaded?.weapons[0].damage).toBe('1d4+2/B')
+
+    await addWeapon(created.id)
+    await deleteWeapon(created.id, weapon.id)
+    loaded = await db.characters.get(created.id)
+    expect(loaded?.weapons).toHaveLength(1)
+    expect(loaded?.weapons[0].name).toBe('')
+  })
+
+  it('adds, updates, and deletes equipment atomically', async () => {
+    const created = await addCharacter('Thorin')
+
+    const item = await addEquipmentItem(created.id)
+    expect(item.amount).toBe(1)
+    let loaded = await db.characters.get(created.id)
+    expect(loaded?.equipment).toHaveLength(1)
+
+    await updateEquipmentItem(created.id, item.id, {
+      name: 'Rope',
+      amount: 50,
+      description: '50 ft. hempen rope',
+    })
+    loaded = await db.characters.get(created.id)
+    expect(loaded?.equipment[0].name).toBe('Rope')
+    expect(loaded?.equipment[0].amount).toBe(50)
+    expect(loaded?.equipment[0].description).toBe('50 ft. hempen rope')
+
+    await addEquipmentItem(created.id)
+    await deleteEquipmentItem(created.id, item.id)
+    loaded = await db.characters.get(created.id)
+    expect(loaded?.equipment).toHaveLength(1)
+  })
+
+  it('round-trips a character through YAML export/import', async () => {
+    const created = await addCharacter('Thorin')
+    await updateCharacter(created.id, {
+      className: 'Barbarian',
+      level: 5,
+      saveOverridesEnabled: true,
+      savingThrowOverrides: { strength: 2 },
+      skillProficiencies: { arcana: true, survival: true },
+      skillHalfProficiencies: { perception: true },
+      weapons: [{ id: crypto.randomUUID(), name: 'Greataxe', attackBonus: '+5', damage: '1d12+3/S' }],
+      equipment: [{ id: crypto.randomUUID(), name: 'Rope', amount: 50, description: '50 ft.' }],
+      backstory: 'Exiled prince.',
+    })
+    const stored = await db.characters.get(created.id)
+    expect(stored).toBeDefined()
+
+    const yaml = serializeCharacter(stored!)
+    const parsed = deserializeCharacter(yaml)
+    expect(parsed.name).toBe('Thorin')
+    expect(parsed.className).toBe('Barbarian')
+    expect(parsed.level).toBe(5)
+    expect(parsed.savingThrowOverrides).toEqual({ strength: 2 })
+    expect(parsed.skillProficiencies).toEqual({ arcana: true, survival: true })
+    expect(parsed.skillHalfProficiencies).toEqual({ perception: true })
+    expect(parsed.weapons[0].name).toBe('Greataxe')
+    expect(parsed.equipment[0].amount).toBe(50)
+    expect(parsed.backstory).toBe('Exiled prince.')
+    // Runtime fields are minted fresh, not carried over.
+    expect(parsed.id).not.toBe(created.id)
+  })
+
+  it('fills missing fields with creation defaults on partial import', () => {
+    const parsed = parseCharacterData({ name: 'Aria', abilities: { strength: { score: 16 } } })
+    expect(parsed.name).toBe('Aria')
+    expect(parsed.abilities.strength.score).toBe(16)
+    expect(parsed.abilities.strength.proficient).toBe(false)
+    expect(parsed.abilities.wisdom.score).toBe(10)
+    expect(parsed.level).toBe(1)
+    expect(parsed.proficiencyBonus).toBe(2)
+    expect(parsed.armorClass).toBe(10)
+    expect(parsed.speed).toBe(30)
+    expect(parsed.hitDiceTotal).toBe('1d6')
+    expect(parsed.savingThrowOverrides).toEqual({})
+    expect(parsed.weapons).toEqual([])
+    expect(parsed.backstory).toBe('')
+    expect(parsed.spells).toEqual([])
+  })
+
+  it('purges unknown keys and coerces bad field types on import', () => {
+    const parsed = parseCharacterData({
+      name: 'Bofur',
+      level: '3',
+      evil: true,
+      abilities: { strength: { score: 14, proficient: 'yes' } },
+      weapons: [{ name: 'Club' }],
+      spells: [{ name: 'Fireball', level: 3 }, { name: 'Prestidigitation' }, 'garbage'],
+    })
+    expect(parsed.level).toBe(3)
+    expect(parsed.weapons[0].name).toBe('Club')
+    expect(parsed.weapons[0].attackBonus).toBe('+0')
+    expect(parsed.spells[0].level).toBe(3)
+    expect(parsed.spells[1].level).toBe(0)
+    expect(parsed.spells[1].description).toBe('')
+    expect(parsed.spells[2].name).toBe('')
+    expect((parsed as unknown as Record<string, unknown>).evil).toBeUndefined()
+  })
+})
