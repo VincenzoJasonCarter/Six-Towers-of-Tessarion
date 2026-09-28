@@ -4,14 +4,14 @@
   "installCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh",
   "buildCommand": "$HOME/.local/bin/uv run web/build.py",
   "outputDirectory": "dist",
-  "rewrites": [{ "source": "/roster/(.*)", "destination": "/roster/index.html" }],
+  "rewrites": [{ "source": "/barracks/(.*)", "destination": "/barracks/index.html" }],
   "headers": [
     {
       "source": "/library/images/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     },
     {
-      "source": "/roster/assets/(.*)",
+      "source": "/barracks/assets/(.*)",
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     }
   ]

@@ -4,7 +4,7 @@ One page for the Tessarion tools:
 
 - **Library**: the lore-book bookcase (`library/`)
 - **Bestiary**: the Threadmint Bestiary (`bestiary/`)
-- **Roster**: character sheets, [charasheet](https://github.com/SonicRay241/charasheet)
+- **Barracks**: character sheets, [charasheet](https://github.com/SonicRay241/charasheet)
   by SonicRay241 (`charasheet/`)
 
 ## Running it
@@ -23,7 +23,7 @@ uv run hub/serve.py
 
 The desk opens at http://127.0.0.1:8760/ on a reception hall: a desk in
 front and three corridors behind it, one per tool (the Library's bookshelves,
-the Roster's framed sheets right behind the clerk, the Bestiary's dark stone). The lamp on each corridor's plaque shows whether
+the Barracks' bunks right behind the clerk, the Bestiary's dark stone). The lamp on each corridor's plaque shows whether
 that tool is running. Click a corridor and you walk into it: the camera
 crosses reception, passes through the doorway and goes down the corridor
 (redrawn in perspective as it moves) towards the light at the far end, which
@@ -64,19 +64,19 @@ running.
 
 Options: `--port 9000`, `--no-browser`. Requires `uv` on PATH.
 
-## The Roster
+## The Barracks
 
-The Roster is charasheet's Vite dev server (port 8768, as `make roster`
-runs it), so it needs Node, and `npm ci` run once in `charasheet/` (`make
-roster` and `make web-build` both do that). Without them its lamp stays out
-and the hall says why.
+The Barracks is `barracks/serve.py` (port 8768, as `make barracks` runs
+it): the last build of charasheet, so it opens as quickly as the other two.
+If charasheet/ changed since that build, it builds first, which needs Node
+and takes a few seconds, and its lamp stays lit amber meanwhile.
 
 Its sheets are kept in the browser, per site: the desk on 127.0.0.1 and the
 public website each have their own.
 
 The public website (`web/`) uses this same page as its front door, without
 serve.py: there every hall is always open, and the tools load from
-`library/`, `bestiary/` and `roster/` next to the page.
+`library/`, `bestiary/` and `barracks/` next to the page.
 
 ## Layout
 

@@ -29,22 +29,30 @@ library: ## Serve the lore library live at http://127.0.0.1:8767/ (reloads on ch
 library-build: ## Export a static site to library/site/ (ARGS="--single-file" for one library.html)
 	uv run library/build.py $(ARGS)
 
-# --- roster (charasheet, the character sheets; a Vite app, so it needs Node) ---
+# --- barracks (charasheet, the character sheets; building it needs Node) ---
 
-.PHONY: roster
-roster: ## Serve the character sheets live at http://127.0.0.1:8768/ (installs npm packages the first time)
-	cd charasheet && { test -d node_modules || npm ci --no-audit --no-fund; } && npm run dev -- --host 127.0.0.1 --port 8768 --strictPort $(ARGS)
+.PHONY: barracks
+barracks: ## Serve the character sheets at http://127.0.0.1:8768/barracks/ (rebuilds first if charasheet/ changed)
+	uv run barracks/serve.py $(ARGS)
 
-# --- web (the hub, library, bestiary and roster as one static site, for Vercel or any static host) ---
+.PHONY: barracks-build
+barracks-build: ## Build charasheet for /barracks/ into charasheet/dist/ (ARGS="--force" to rebuild regardless)
+	uv run barracks/build.py $(ARGS)
+
+.PHONY: barracks-dev
+barracks-dev: ## Work on charasheet's code: Vite's dev server with live reload at http://127.0.0.1:5173/
+	cd charasheet && { test -d node_modules || npm ci --no-audit --no-fund; } && npm run dev -- --host 127.0.0.1 $(ARGS)
+
+# --- web (the hub, library, bestiary and barracks as one static site, for Vercel or any static host) ---
 
 .PHONY: web-build
-web-build: ## Build the public site (hub + library + bestiary + roster) to dist/
+web-build: ## Build the public site (hub + library + bestiary + barracks) to dist/
 	uv run web/build.py
 
 # --- hub (one page for all of them) ---
 
 .PHONY: hub
-hub: ## Open everything in one place at http://127.0.0.1:8760/ (starts the library, bestiary and roster)
+hub: ## Open everything in one place at http://127.0.0.1:8760/ (starts the library, bestiary and barracks)
 	uv run hub/serve.py $(ARGS)
 
 # --- misc ---
