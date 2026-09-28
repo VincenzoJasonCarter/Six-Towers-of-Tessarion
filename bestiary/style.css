@@ -10,6 +10,15 @@
   --dm-edge: #b9a98c;
   --stat-rule: #9b3a26;
   --redact: #2a241d;
+  /* the vault: stone, iron, the dark inside the cells, lamplight */
+  --stone: #d6d1c3;
+  --lamp: rgb(255 232 180 / .5);
+  --vignette: rgb(40 36 28 / .28);
+  --iron: #3b3834;
+  --iron-hi: #6d675f;
+  --label: #f7f1e3;
+  --cell: #101310;
+  --stamp: #a3261c;
   --serif: "EB Garamond", Georgia, "Times New Roman", serif;
   --display: "Cormorant Garamond", "EB Garamond", Georgia, serif;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -19,19 +28,30 @@
     --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
     --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520;
     --dm-bg: #211d17; --dm-edge: #4a4134; --stat-rule: #c9644c; --redact: #e9e1d0;
+    --stone: #1b1d1a; --lamp: rgb(95 209 143 / .11); --vignette: rgb(0 0 0 / .6);
+    --iron: #4a4640; --iron-hi: #857d72; --label: #201d18; --cell: #060806; --stamp: #e0654f;
   }
 }
 :root[data-theme="dark"] {
   --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
   --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520;
   --dm-bg: #211d17; --dm-edge: #4a4134; --stat-rule: #c9644c; --redact: #e9e1d0;
+  --stone: #1b1d1a; --lamp: rgb(95 209 143 / .11); --vignette: rgb(0 0 0 / .6);
+  --iron: #4a4640; --iron-hi: #857d72; --label: #201d18; --cell: #060806; --stamp: #e0654f;
 }
 
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
+/* The vault wall: dressed stone, lit from above (lamplight by day, the
+   green of the cells by night), darker towards the edges. */
 body {
-  margin: 0; background: var(--bg); color: var(--ink);
+  margin: 0; color: var(--ink);
   font: 18px/1.6 var(--serif);
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 30%, transparent 55%, var(--vignette)) fixed,
+    radial-gradient(ellipse 70% 480px at 50% 0, var(--lamp), transparent 75%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='132'%3E%3Cg fill='%23000'%3E%3Crect x='0' y='0' width='120' height='44' fill-opacity='0.03'/%3E%3Crect x='120' y='0' width='120' height='44' fill-opacity='0.075'/%3E%3Crect x='0' y='44' width='60' height='44' fill-opacity='0.055'/%3E%3Crect x='60' y='44' width='120' height='44' fill-opacity='0.02'/%3E%3Crect x='180' y='44' width='60' height='44' fill-opacity='0.055'/%3E%3Crect x='0' y='88' width='120' height='44' fill-opacity='0.065'/%3E%3Crect x='120' y='88' width='120' height='44' fill-opacity='0.035'/%3E%3C/g%3E%3Cpath d='M0 .75H240M0 44.75H240M0 88.75H240M.75 0V44M120.75 0V44M60.75 44V88M180.75 44V88M.75 88V132M120.75 88V132' stroke='%23000' stroke-opacity='.15' stroke-width='1.5'/%3E%3Cpath d='M0 2.5H240M0 46.5H240M0 90.5H240' stroke='%23fff' stroke-opacity='.07'/%3E%3C/svg%3E") 0 0 / 240px 132px,
+    var(--stone);
 }
 a { color: var(--accent); }
 button, input { font: inherit; color: inherit; }
@@ -67,35 +87,125 @@ main { padding: 32px 48px 80px; min-width: 0; }
 .front .tier { font: 13px var(--sans); color: var(--muted); letter-spacing: .04em; }
 h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
 .front .tabs { padding: 8px 0 0; }
-.front h2 { font: 700 28px var(--display); margin: 36px 0 14px; border-bottom: 1px solid var(--rule); padding-bottom: 4px; }
-.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 16px; }
-.card {
-  display: flex; flex-direction: column; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden;
-  background: var(--panel); text-decoration: none; color: var(--ink);
-  transition: border-color .15s, transform .15s;
+/* Each region's block of cells: its name on a brass plaque bolted to an iron rail. */
+.front h2 { display: flex; align-items: center; gap: 14px; margin: 48px 0 22px; font: 700 21px/1 var(--display); }
+.front h2 span {
+  padding: 6px 16px 5px; border-radius: 3px; color: #3a2a10; letter-spacing: .03em; white-space: nowrap;
+  background: linear-gradient(180deg, #f0d997, #d9bb70 45%, #a9843a);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), inset 0 -1px 0 rgb(0 0 0 / .2), 0 2px 5px rgb(0 0 0 / .35);
 }
-.card:hover { border-color: var(--accent); transform: translateY(-2px); }
-.card .avatar { border-radius: 0; }
-.card .body { padding: 10px 12px 12px; display: flex; flex-direction: column; gap: 3px; flex: 1; }
+.front h2::after {
+  content: ""; flex: 1; height: 9px; border-radius: 2px;
+  background:
+    radial-gradient(circle, var(--iron-hi) 0 1.6px, transparent 2.2px) 0 50% / 36px 9px repeat-x,
+    linear-gradient(180deg, var(--iron-hi), var(--iron) 45%, #1d1b18);
+  box-shadow: 0 2px 4px rgb(0 0 0 / .3);
+}
+/* The cells: an iron-framed door each, its window barred, a registry label riveted below. */
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 26px; padding: 0 6px; }
+.card {
+  position: relative; display: flex; flex-direction: column; border-radius: 5px; overflow: hidden;
+  background: var(--label); text-decoration: none; color: var(--ink);
+  box-shadow: 0 0 0 5px var(--iron), 0 0 0 6px #14120f, 0 12px 24px -6px rgb(0 0 0 / .45);
+  transition: transform .2s, box-shadow .2s;
+}
+.card:hover { transform: translateY(-3px); box-shadow: 0 0 0 5px var(--iron), 0 0 0 6px var(--accent), 0 18px 30px -8px rgb(0 0 0 / .5); }
+.card .avatar { border-radius: 0; border-bottom: 5px solid var(--iron); }
+.card .body {
+  padding: 10px 14px 12px; display: flex; flex-direction: column; gap: 3px; flex: 1;
+  background:
+    radial-gradient(circle at 7px 7px, var(--iron-hi) 0 2px, transparent 2.6px),
+    radial-gradient(circle at calc(100% - 7px) 7px, var(--iron-hi) 0 2px, transparent 2.6px),
+    radial-gradient(circle at 7px calc(100% - 7px), var(--iron-hi) 0 2px, transparent 2.6px),
+    radial-gradient(circle at calc(100% - 7px) calc(100% - 7px), var(--iron-hi) 0 2px, transparent 2.6px);
+}
 .card b { font: 700 20px/1.15 var(--display); }
 .card small { font: 12.5px/1.4 var(--sans); color: var(--muted); }
 .card .chip { align-self: flex-start; margin-top: auto; font-size: 11.5px; padding: 1px 8px; }
 
-/* Placeholder portrait: tinted by region until images/<id>.png exists. */
+/* Portraits, until images/<id>.png exists. A creature's is the dark of its
+   cell, a pair of eyes in the region's colour (placed and timed per entry
+   by app.js), and bars over the lot, with its registry tag hung on them. */
 .avatar {
-  position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden;
-  display: grid; place-items: center;
-  background: radial-gradient(circle at 50% 38%, hsl(var(--h) 42% 44%), hsl(var(--h) 38% 16%) 78%);
+  position: relative; aspect-ratio: 1; border-radius: 10px; overflow: hidden; container-type: inline-size;
+  background:
+    radial-gradient(ellipse 55% 40% at var(--ex, 50%) var(--ey, 45%), hsl(var(--h) 70% 45% / .3), transparent 70%),
+    radial-gradient(ellipse 90% 50% at 50% 115%, hsl(var(--h) 35% 30% / .55), transparent 70%),
+    var(--cell);
 }
-.avatar::before, .avatar::after {
-  content: ""; position: absolute; border-radius: 50%;
-  border: 1px solid hsl(var(--h) 60% 85% / .22);
+.avatar .eyes {
+  position: absolute; z-index: 1; left: var(--ex, 50%); top: var(--ey, 45%); width: 30%; height: 7%; translate: -50% -50%;
+  background:
+    radial-gradient(closest-side, hsl(var(--h) 100% 80%), hsl(var(--h) 95% 58%) 55%, transparent) 0 50% / 32% 100% no-repeat,
+    radial-gradient(closest-side, hsl(var(--h) 100% 80%), hsl(var(--h) 95% 58%) 55%, transparent) 100% 50% / 32% 100% no-repeat;
+  filter: drop-shadow(0 0 4px hsl(var(--h) 95% 55%)) drop-shadow(0 0 12px hsl(var(--h) 95% 50% / .6));
+  animation: blink 6.5s var(--blink, 0s) infinite;
+  transition: scale .3s, filter .3s;
 }
-.avatar::before { inset: 16%; }
-.avatar::after { inset: 27%; border-style: dashed; }
-.avatar span { position: relative; font: 700 44px/1 var(--display); color: hsl(var(--h) 55% 92%); letter-spacing: .03em; }
-.avatar.rumour span::after { content: "?"; font-size: .55em; vertical-align: super; opacity: .7; }
+.card:hover .avatar .eyes { scale: 1.18; filter: drop-shadow(0 0 6px hsl(var(--h) 95% 60%)) drop-shadow(0 0 18px hsl(var(--h) 95% 55% / .8)) brightness(1.2); }
+@keyframes blink { 0%, 46%, 50%, 100% { transform: scaleY(1); } 48% { transform: scaleY(.08); } }
+.avatar.creature::after, .avatar.rumour::after {
+  content: ""; position: absolute; inset: 0; z-index: 2;
+  background:
+    linear-gradient(180deg, transparent 13%, #1d1b18 13% 14%, var(--iron-hi) 14% 15.5%, var(--iron) 15.5% 18%, transparent 18% 82%, #1d1b18 82% 83%, var(--iron-hi) 83% 84.5%, var(--iron) 84.5% 87%, transparent 87%),
+    repeating-linear-gradient(90deg, transparent 0 7.5%, #1d1b18 7.5% 8.5%, var(--iron-hi) 8.5% 10%, var(--iron) 10% 12.5%, transparent 12.5% 20%);
+}
+/* a rumour: the same cell, seen through fog, the eyes not quite certain */
+.avatar.rumour::before {
+  content: ""; position: absolute; inset: -20%; z-index: 1; pointer-events: none;
+  background:
+    radial-gradient(ellipse 40% 25% at 30% 65%, rgb(200 210 200 / .38), transparent 70%),
+    radial-gradient(ellipse 45% 22% at 72% 45%, rgb(200 210 200 / .3), transparent 70%),
+    radial-gradient(ellipse 60% 30% at 50% 85%, rgb(200 210 200 / .3), transparent 70%);
+  animation: fog 14s ease-in-out infinite alternate;
+}
+.avatar.rumour .eyes { opacity: .55; }
+@keyframes fog { to { transform: translate(8%, -4%) scale(1.08); } }
+/* a figure: a silhouette against a height chart */
+.avatar.figure {
+  background:
+    repeating-linear-gradient(180deg, transparent 0 calc(10% - 1px), rgb(255 255 255 / .16) calc(10% - 1px) 10%),
+    radial-gradient(ellipse 70% 60% at 50% 35%, hsl(var(--h) 30% 58%), hsl(var(--h) 25% 24%) 80%);
+}
+.avatar.figure::before {
+  content: ""; position: absolute; z-index: 1; left: 50%; bottom: 0; width: 72%; height: 80%; translate: -50% 0;
+  background:
+    radial-gradient(ellipse 18% 20% at 50% 26%, #0d0b09 0 97%, transparent 100%),
+    radial-gradient(ellipse 50% 44% at 50% 100%, #0d0b09 0 98%, transparent 100%);
+}
+/* the designation tag: brass, its number stamped in, hung from the lower
+   crossbar (a plate under the figure) */
+.avatar span {
+  position: absolute; z-index: 3; left: 50%; bottom: 6%; translate: -50% 0;
+  padding: .25em .6em .2em; border-radius: 2px; white-space: nowrap;
+  font: 700 7.6cqw/1 ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace; letter-spacing: .08em;
+  color: #3a2a10; text-shadow: 0 1px 0 rgb(255 240 200 / .6), 0 -1px 0 rgb(60 40 10 / .35);
+  background: linear-gradient(180deg, #f0d997, #d9bb70 45%, #a9843a);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), 0 2px 4px rgb(0 0 0 / .5);
+}
+.avatar.rumour span::after { content: "?"; margin-left: .15em; opacity: .75; }
 .avatar img { position: relative; z-index: 1; width: 100%; height: 100%; object-fit: cover; }
+.avatar.pictured::before { display: none; }
+
+/* The register's own furniture: the cage by the title, the stamp on it. */
+.front { position: relative; }
+.intro { position: relative; }
+.cage {
+  position: absolute; right: 3%; top: -34px; width: 150px; transform-origin: 50% 0;
+  animation: sway 7s ease-in-out infinite alternate; filter: drop-shadow(0 10px 12px rgb(0 0 0 / .35));
+}
+.cage-eyes { transform-box: fill-box; transform-origin: center; animation: blink 5.5s -2s infinite; }
+@keyframes sway { from { transform: rotate(-1.6deg); } to { transform: rotate(1.6deg); } }
+.stamp {
+  position: absolute; right: 0; top: 34px; transform: rotate(-9deg);
+  padding: 4px 14px 3px; border: 3px double var(--stamp); border-radius: 4px;
+  font: 700 17px/1.2 var(--sans); letter-spacing: .28em; text-transform: uppercase; color: var(--stamp);
+  opacity: .78; pointer-events: none;
+}
+.front .tabs button:not([aria-pressed="true"]) { background: var(--panel); }
+/* the Animate switch off: everything holds still */
+body.still .avatar .eyes, body.still .avatar.rumour::before, body.still .cage, body.still .cage-eyes { animation: none; }
+body.still .card, body.still .avatar .eyes { transition: none; }
 .error {
   max-width: 1200px; margin: 0 auto 24px; padding: 12px 16px; border: 1px solid var(--accent);
   border-radius: 8px; background: var(--accent-soft); font: 14px/1.5 var(--sans); white-space: pre-wrap;
@@ -106,8 +216,9 @@ h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
 .entry-head { display: flex; gap: 20px; align-items: flex-start; }
 .entry-head > div { flex: 1; min-width: 0; }
 .entry-head .avatar { width: 128px; flex: none; margin-top: 6px; }
-.entry-head .avatar span { font-size: 40px; }
 .kicker { font: 600 13px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0; }
+.designation { margin: -2px 0 4px; font: 12px var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.designation b { font: 700 13px ui-monospace, "Cascadia Mono", Consolas, monospace; letter-spacing: .08em; color: var(--ink); }
 .aka { margin: 0 0 6px; color: var(--muted); }
 .meta { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 18px; }
 .chip {
@@ -209,12 +320,13 @@ dl.kv dd { margin: 0; }
   .top { padding: 10px 16px; position: static; }
   .search { width: 100%; }
   h1 { font-size: 36px; }
-  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; }
+  .cage { display: none; }
+  .stamp { position: static; display: inline-block; transform: rotate(-4deg); margin: 8px 0 2px; font-size: 13px; }
   .card b { font-size: 17px; }
-  .avatar span { font-size: 34px; }
+  .front h2 span { white-space: normal; }
   .entry-head { gap: 14px; }
   .entry-head .avatar { width: 84px; }
-  .entry-head .avatar span { font-size: 28px; }
   .dm { padding: 14px; }
   .rv-card { width: calc(100vw - 16px); height: calc(100dvh - 16px); border-radius: 12px; }
   .rv-bar { padding: 8px 10px 8px 14px; gap: 6px 14px; }

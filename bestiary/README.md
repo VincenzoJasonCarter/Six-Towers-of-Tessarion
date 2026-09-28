@@ -1,7 +1,8 @@
 # The Threadmint Bestiary
 
-An in-world encyclopedia of everything in `../data/enemies.yaml`. The home page
-is a grid of portrait cards. Click one and it lifts out of the grid and flies to
+An in-world encyclopedia of everything in `../data/enemies.yaml`, kept like
+the vault under the Threadmint it is: the home page is a stone wall of iron
+cells, a block per region under a brass plaque. Click one and it lifts out of the grid and flies to
 the middle of the screen, turning over as it goes: its back is the entry, with lore,
 habitat and field notes on top and the DM material (stat blocks, tactics,
 loot, source contradictions) in a panel underneath. Closing it (← All entries,
@@ -48,11 +49,30 @@ command again after editing `enemies.yaml`.
 
 ## Portraits
 
-Until an entry has a picture, it shows a placeholder: its initials on a
-background tinted by region. To give it a real one, put an image named after
+Until an entry has a picture, it shows a placeholder in its cell. A
+creature is a pair of eyes in the dark behind bars, in its region's colour
+(each entry's sit and blink in their own place and time); a rumour is the
+same seen through drifting fog; a faction or figure is a silhouette against
+a height chart. Its designation hangs on a brass tag (see below). The
+**Animate cards** switch also stills the blinking, the fog and the cage by
+the title. To give it a real one, put an image named after
 its `id` in `images/`, e.g. `images/setanta.png`. PNG, JPG, WebP, GIF and
 SVG all work, and the live page picks it up without a restart. Square images
 look best.
+
+## Designations
+
+Every entry has a containment designation, SCP-fashion: its region's code
+(CRW Crownweave, SKL Skyloom, NRH Northreach, EMB Emberweave, STW Stormwake,
+THV Thal'vireth) and four digits, with `PoI-` (person of interest) in front
+for factions and figures: `NRH-0417`, `PoI-CRW-2281`. A rumour's tag carries
+a `?`. It's on the cell's tag and under the entry's name, and the search
+finds it.
+
+The digits come from the entry's `id`, so an entry keeps its designation as
+others are added or removed (it changes only if the `id` or region does). To
+choose one by hand, say because the lore names it, give the entry a
+`serial:`, e.g. `serial: NRH-0001`; that's used exactly as written.
 
 ## Adding an entry
 

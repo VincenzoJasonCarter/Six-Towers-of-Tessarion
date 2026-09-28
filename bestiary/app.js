@@ -24,6 +24,7 @@ const cap = s => String(s).charAt(0).toUpperCase() + String(s).slice(1);
 const signed = n => (typeof n === "number" && n >= 0 ? "+" : "") + n;
 const mod = score => signed(Math.floor((score - 10) / 2));
 const REGION_HUE = { Crownweave: 38, Skyloom: 205, Northreach: 12, Emberweave: 28, Stormwake: 185, "Thal'vireth": 140 };
+const REGION_CODE = { Crownweave: "CRW", Skyloom: "SKL", Northreach: "NRH", Emberweave: "EMB", Stormwake: "STW", "Thal'vireth": "THV" };
 const regionTop = e => (e.region || "Unplaced").split("·")[0].trim();
 const paras = s => String(s || "").split(/\n+/).filter(Boolean);
 
@@ -46,10 +47,33 @@ function storage(key, val) {
   } catch (_) { return null; }
 }
 
+/* ---------- designations ---------- */
+// Every entry's containment designation, stamped on its cell's tag: the
+// region's code and four digits, with PoI- (person of interest) for factions
+// and figures, e.g. NRH-0417, PoI-CRW-2281. The digits come from the entry's
+// id, so they never change as entries come and go; `serial:` in enemies.yaml
+// sets them by hand instead. Two ids landing on one number: the later id (in
+// sort order) takes the next free one.
+function designate() {
+  const taken = new Set();
+  const byIdOrder = [...entries].sort((a, b) => (a.id < b.id ? -1 : 1));
+  for (const e of byIdOrder.filter(e => e.serial)) taken.add(String(e.serial));
+  for (const e of byIdOrder) {
+    if (e.serial) { e._serial = String(e.serial); continue; }
+    const r = regionTop(e);
+    const code = (e.kind === "figure" ? "PoI-" : "") + (REGION_CODE[r] || r.replace(/[^A-Za-z]/g, "").slice(0, 3).toUpperCase() || "UNK");
+    let n = [...e.id].reduce((h, c) => (Math.imul(h, 16777619) ^ c.charCodeAt(0)) >>> 0, 2166136261) % 9000 + 1000;
+    while (taken.has(`${code}-${n}`)) n = n === 9999 ? 1000 : n + 1;
+    e._serial = `${code}-${n}`;
+    taken.add(e._serial);
+  }
+}
+designate();
+
 /* ---------- search + list ---------- */
 function haystack(e) {
   const l = e.lore || {};
-  return [e.name, e.local_name, ...(e.aliases || []), e.region, e.faction, e.type,
+  return [e._serial, e.name, e.local_name, ...(e.aliases || []), e.region, e.faction, e.type,
     l.classification, l.habitat, l.entry, ...(l.field_notes || [])].filter(Boolean).join(" ").toLowerCase();
 }
 entries.forEach(e => { e._hay = haystack(e); });
@@ -72,38 +96,66 @@ function grouped(list) {
 const tabs = () => Object.entries(KINDS)
   .map(([k, v]) => `<button type="button" data-kind="${k}" aria-pressed="${state.kind === k}">${v}</button>`).join("");
 
-function initials(name) {
-  const core = name.split(/:\s*/).pop().split(/\s*[,/]\s*/)[0].replace(/^The\s+/i, "");
-  return core.split(/[\s-]+/).filter(Boolean).slice(0, 2).map(w => w[0].toUpperCase()).join("");
-}
-
 function hue(e) {
   const r = regionTop(e);
   if (r in REGION_HUE) return REGION_HUE[r];
   return [...r].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 360, 0);
 }
 
-// images/<id>.png (or .jpg/.webp/...) replaces the placeholder automatically.
+// Where in its cell a creature's eyes are, and when they blink: its own,
+// from its id, so every cell differs and each keeps its look.
+function eyes(e) {
+  const n = [...e.id].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
+  return `--ex:${38 + n % 25}%;--ey:${34 + (n >>> 5) % 22}%;--blink:-${(n >>> 9) % 70 / 10}s`;
+}
+
+// A creature looks out from behind bars (a rumour through fog); a figure is
+// a silhouette against a height chart. Either way its designation hangs on
+// a brass tag. images/<id>.png (or .jpg/.webp/...)
+// replaces the placeholder automatically.
 function avatar(e) {
   const inner = e.image
     ? `<img src="${esc(e.image)}" alt="" loading="lazy">`
-    : `<span aria-hidden="true">${esc(initials(e.name))}</span>`;
-  return `<div class="avatar ${e.kind}" style="--h:${hue(e)}">${inner}</div>`;
+    : `${e.kind === "figure" ? "" : '<i class="eyes"></i>'}<span aria-hidden="true">${esc(e._serial)}</span>`;
+  return `<div class="avatar ${e.kind}${e.image ? " pictured" : ""}" style="--h:${hue(e)};${eyes(e)}">${inner}</div>`;
 }
+
+// Hanging by the register's title: an empty-looking cage that isn't.
+const CAGE = `<svg class="cage" viewBox="0 0 160 290" aria-hidden="true">
+  <g fill="none" stroke="#3a3632" stroke-width="3">
+    ${Array.from({ length: 9 }, (_, i) => i % 2
+      ? `<line x1="80" y1="${i * 10 + 2}" x2="80" y2="${i * 10 + 14}" stroke-width="4" stroke-linecap="round"/>`
+      : `<ellipse cx="80" cy="${i * 10 + 8}" rx="5" ry="7"/>`).join("")}
+    <circle cx="80" cy="101" r="7"/>
+  </g>
+  <defs><radialGradient id="cage-glow"><stop offset="0" stop-color="#5fd18f" stop-opacity=".45"/><stop offset="1" stop-color="#5fd18f" stop-opacity="0"/></radialGradient></defs>
+  <path d="M38 140 Q80 96 122 140 Z" fill="#0a0c0a"/>
+  <rect x="38" y="140" width="84" height="110" fill="#0a0c0a"/>
+  <ellipse cx="80" cy="190" rx="40" ry="46" fill="url(#cage-glow)"/>
+  <g class="cage-eyes"><ellipse cx="70" cy="184" rx="4.5" ry="2.6" fill="#ffcf4a"/><ellipse cx="89" cy="184" rx="4.5" ry="2.6" fill="#ffcf4a"/></g>
+  <g stroke="#3a3632" stroke-width="3.5" fill="none">
+    <path d="M38 140 Q80 96 122 140"/>
+    ${[38, 54, 70, 90, 106, 122].map(x => `<line x1="${x}" y1="140" x2="${x}" y2="250"/>`).join("")}
+    <path d="M80 108 V124" stroke-width="3"/>
+  </g>
+  <g stroke="#6d675f" stroke-width="1" opacity=".7">${[39.5, 55.5, 71.5, 91.5, 107.5].map(x => `<line x1="${x}" y1="142" x2="${x}" y2="248"/>`).join("")}</g>
+  <g fill="#3a3632"><rect x="34" y="136" width="92" height="7" rx="2"/><rect x="34" y="192" width="92" height="6" rx="2"/><rect x="32" y="247" width="96" height="9" rx="3"/></g>
+</svg>`;
 
 /* ---------- front page ---------- */
 function renderFront() {
   const list = visible();
   const counts = Object.keys(KINDS).slice(1).map(k => `${entries.filter(e => e.kind === k).length} ${KINDS[k].toLowerCase()}`).join(" · ");
-  let h = `<div class="front"><div class="intro">
+  let h = `<div class="front">${CAGE}<div class="intro">
     <p class="tier">THREADMINT LIBRARY · ACCESS TIER: RESTRICTED</p>
+    <span class="stamp" aria-hidden="true">Restricted</span>
     <h1>A Register of Hostile Things</h1>
     <p>Compiled from Watch reports, Loomwarden incident summaries, Crucible filings and the testimony of those who lived to give it.
     Entries marked <i>Rumoured</i> rest on accounts the Library has been unable to confirm. Where the record has been redacted, the redaction is preserved.</p>
     <p class="tier">${counts}</p></div>
     <div class="tabs">${tabs()}</div>`;
   for (const [region, items] of grouped(list)) {
-    h += `<h2>${esc(region)}</h2><div class="cards">`;
+    h += `<h2><span>${esc(region)}</span></h2><div class="cards">`;
     h += items.map(e => `<a class="card${e.id === openId ? " lifted" : ""}" href="#${esc(e.id)}" data-id="${esc(e.id)}">${avatar(e)}<div class="body">
       <b>${esc(e.name)}</b><small>${esc((e.lore || {}).classification || "")}</small>
       ${e.category ? `<span class="chip cat">${esc(CATEGORY[e.category] || label(e.category))}</span>` : ""}
@@ -187,7 +239,7 @@ function statBlock(v) {
 }
 
 /* ---------- DM panel ---------- */
-const E_DONE = new Set(["kind", "_hay", "id", "name", "local_name", "aliases", "category", "faction", "type", "size",
+const E_DONE = new Set(["kind", "_hay", "_serial", "serial", "id", "name", "local_name", "aliases", "category", "faction", "type", "size",
   "description", "region", "lore", "versions", "appearances", "dm_tips", "notes", "trivia", "loot", "theme",
   "mechanics", "opening_line", "raw_note", "interpreted", "role", "race_class", "combat_notes", "quirks",
   "applies_to", "see_also", "effect", "counterplay", "encounter_mechanics", "encounter_options_for_players",
@@ -237,6 +289,7 @@ function renderEntry(e) {
   let h = `<article class="entry">`;
   h += `<div class="entry-head">${avatar(e)}<div>`;
   h += `<p class="kicker">${esc(e.region || "Unplaced")}</p><h1 id="rv-title">${esc(e.name)}</h1>`;
+  h += `<p class="designation">Designation <b>${esc(e._serial)}</b>${e.kind === "rumour" ? " · unconfirmed" : ""}</p>`;
   if (alt.length) h += `<p class="aka">Also called ${alt.map(a => `<i>${esc(a)}</i>`).join(", ")}</p>`;
   h += `<div class="meta">`;
   if (l.classification) h += `<span class="chip">${esc(l.classification)}</span>`;
@@ -517,10 +570,13 @@ document.addEventListener("change", ev => {
   if (ev.target.id === "animate") {
     state.animate = ev.target.checked;
     storage("bestiary.animate", state.animate ? "on" : "off");
+    document.body.classList.toggle("still", !state.animate);
   }
 });
 setDM(storage("bestiary.dm") !== "off");
 document.getElementById("animate").checked = state.animate;
+// Off, the switch stills the cells too: no blinking, swaying or drifting fog.
+document.body.classList.toggle("still", !state.animate);
 
 // Live mode: reload when enemies.yaml / template / images change, keeping
 // the search, tab and scroll position across the reload.
