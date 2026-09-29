@@ -1,0 +1,702 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Threadmint Memoria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f3ede1;
+  --panel: #fbf8f1;
+  --ink: #2a241d;
+  --muted: #6f6557;
+  --rule: #d8cdb8;
+  --accent: #8c2f23;
+  --accent-soft: #f1ddd5;
+  --redact: #2a241d;
+  /* the gallery: plaster walls in panels, lamplight from above, walnut cases */
+  --plaster: #e8dfcb;
+  --lamp: rgb(255 238 196 / .6);
+  --vignette: rgb(70 52 28 / .22);
+  --label: #f8f3e6;
+  --frame: #3b2a1c;
+  --frame-hi: #6b4a30;
+  --brass-hi: #f0d997;
+  --brass: #d9bb70;
+  --brass-lo: #a9843a;
+  --brass-ink: #3a2a10;
+  --serif: "EB Garamond", Georgia, "Times New Roman", serif;
+  --display: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
+    --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520; --redact: #e9e1d0;
+    --plaster: #221d17; --lamp: rgb(255 214 150 / .1); --vignette: rgb(0 0 0 / .55);
+    --label: #201c17; --frame: #120d08; --frame-hi: #4a3322;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
+  --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520; --redact: #e9e1d0;
+  --plaster: #221d17; --lamp: rgb(255 214 150 / .1); --vignette: rgb(0 0 0 / .55);
+  --label: #201c17; --frame: #120d08; --frame-hi: #4a3322;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
+/* The gallery wall: plaster in raised panels, lit from above, darker toward the edges. */
+body {
+  margin: 0; color: var(--ink); font: 18px/1.6 var(--serif);
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 30%, transparent 55%, var(--vignette)) fixed,
+    radial-gradient(ellipse 70% 520px at 50% 0, var(--lamp), transparent 75%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='360'%3E%3Crect x='22' y='22' width='256' height='316' rx='2' fill='%23000' fill-opacity='.025'/%3E%3Crect x='22' y='22' width='256' height='316' rx='2' fill='none' stroke='%23000' stroke-opacity='.11' stroke-width='2'/%3E%3Crect x='25.5' y='25.5' width='249' height='309' fill='none' stroke='%23fff' stroke-opacity='.16'/%3E%3Crect x='34' y='34' width='232' height='292' fill='none' stroke='%23000' stroke-opacity='.05'/%3E%3C/svg%3E") 0 0 / 300px 360px,
+    var(--plaster);
+}
+body.reading { overflow: hidden; }
+a { color: var(--accent); }
+button, input { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+
+/* ---------- top bar ---------- */
+.top {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px;
+  padding: 12px 24px; background: var(--panel); border-bottom: 1px solid var(--rule);
+}
+.brand { text-decoration: none; color: var(--ink); margin-right: auto; }
+.brand b { font: 700 26px/1 var(--display); letter-spacing: .01em; }
+.brand span { display: block; font-size: 13px; color: var(--muted); font-style: italic; }
+.search {
+  width: min(320px, 100%); padding: 7px 12px; border: 1px solid var(--rule);
+  border-radius: 6px; background: var(--bg); font: 15px var(--sans);
+}
+.switch { display: flex; align-items: center; gap: 8px; font: 14px var(--sans); color: var(--muted); cursor: pointer; user-select: none; }
+.switch input { accent-color: var(--accent); width: 16px; height: 16px; }
+
+main { padding: 32px 48px 80px; min-width: 0; }
+.front { max-width: 1200px; margin: 0 auto; }
+.error {
+  max-width: 1200px; margin: 0 auto 20px; padding: 12px 16px; border-radius: 8px; background: #fbe3dc; color: #5a1a10;
+  border: 1px solid #d9432f; font: 14px/1.5 ui-monospace, Consolas, monospace; white-space: pre-wrap;
+}
+
+/* ---------- the front: intro and the plan ---------- */
+.hero { display: flex; align-items: flex-start; gap: 40px; }
+.intro { flex: 1; max-width: 760px; }
+.tier { margin: 0; font: 13px var(--sans); color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+#count { text-transform: none; margin-top: 10px; }
+h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
+#intro p { margin: 0 0 .6em; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 0 0; }
+.tabs button {
+  border: 1px solid var(--rule); background: color-mix(in srgb, var(--panel) 70%, transparent); border-radius: 999px;
+  padding: 3px 11px; font: 13px var(--sans); cursor: pointer; color: var(--muted);
+}
+.tabs button:hover { color: var(--ink); border-color: var(--muted); }
+.tabs button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+
+/* The plan: a brass-rimmed medallion hung on the wall. */
+.plan { flex: none; width: 290px; margin: -6px 0 0; display: flex; flex-direction: column; align-items: center; }
+.plan::before { content: ""; width: 2px; height: 26px; background: linear-gradient(180deg, transparent, var(--brass-lo)); }
+.plan svg {
+  display: block; width: 100%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 50% 42%, #f7efd9, #e6d6b0 70%, #cdb888);
+  box-shadow: 0 0 0 6px var(--brass), 0 0 0 7px var(--brass-lo), 0 0 0 11px var(--frame), 0 16px 30px rgb(0 0 0 / .35),
+    inset 0 0 26px rgb(90 60 20 / .35);
+}
+.plan figcaption { margin-top: 18px; font: 600 11px var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.p-room { cursor: pointer; }
+.p-room rect, .p-room circle { stroke-width: .9; transition: filter .2s; }
+.p-room:hover rect, .p-room:hover > circle, .p-room.on rect, .p-room.on > circle { filter: brightness(1.25) drop-shadow(0 0 1.5px #fff8); }
+.p-crypt circle { fill: none; stroke: #5b6470; stroke-dasharray: 2 1.6; }
+.p-ring { fill: none; stroke: #0002; stroke-width: .5 !important; }
+.p-centre { fill: #fff8e0; stroke: #a9843a; }
+.p-stair { fill: #5b6470; }
+.plan text { font: 700 4.4px var(--display); fill: #3a2a10; letter-spacing: .1px; pointer-events: none; }
+.p-rot text, .p-north text { text-anchor: middle; }
+.p-rot text { font: 600 2.8px var(--sans); letter-spacing: .5px; text-transform: uppercase; fill: #6b5220; }
+.p-north path { fill: #8c2f23; }
+.p-north text { font: 700 4px var(--sans); fill: #8c2f23; }
+
+/* ---------- a room: its name on a brass plate bolted to a rail in its colour ---------- */
+.room { margin-top: 56px; }
+.room h2 { display: flex; align-items: center; gap: 14px; margin: 0 0 8px; font: 700 21px/1 var(--display); }
+.room h2 span {
+  padding: 6px 16px 5px; border-radius: 3px; color: var(--brass-ink); letter-spacing: .03em; white-space: nowrap;
+  background: linear-gradient(180deg, var(--brass-hi), var(--brass) 45%, var(--brass-lo));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), inset 0 -1px 0 rgb(0 0 0 / .2), 0 2px 5px rgb(0 0 0 / .35);
+}
+.room h2::after {
+  content: ""; flex: 1; height: 9px; border-radius: 2px;
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--trim) 50%, #fff) 0 1.6px, transparent 2.2px) 0 50% / 36px 9px repeat-x,
+    linear-gradient(180deg, color-mix(in srgb, var(--trim) 70%, #fff), var(--trim) 45%, color-mix(in srgb, var(--trim) 45%, #000));
+  box-shadow: 0 2px 4px rgb(0 0 0 / .3);
+}
+.kind-crypt h2 span { color: #20242a; background: linear-gradient(180deg, #eef1f4, #b8c0c9 45%, #7d8792); }
+.room-sub { margin: 0 0 4px; font-style: italic; color: var(--muted); }
+.room-text { max-width: 760px; margin: 0 0 24px; font-size: 16.5px; }
+.link { border: 0; padding: 0; background: none; color: var(--accent); cursor: pointer; text-align: left; font: inherit; }
+.link:hover, .link:focus-visible { text-decoration: underline; outline: none; }
+
+/* ---------- a vitrine: a lit case in a walnut frame, its tag, its label ---------- */
+.cases { display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 28px; padding: 0 6px; }
+.vitrine {
+  position: relative; display: flex; flex-direction: column; padding: 0; border: 0; border-radius: 5px; overflow: hidden;
+  background: var(--label); color: var(--ink); text-align: left; cursor: pointer;
+  box-shadow: 0 0 0 5px var(--frame), 0 0 0 6px #0009, inset 0 0 0 1px var(--frame-hi), 0 14px 26px -8px rgb(0 0 0 / .5);
+  transition: transform .2s, box-shadow .2s;
+}
+.vitrine:hover, .vitrine:focus-visible {
+  transform: translateY(-3px); outline: none;
+  box-shadow: 0 0 0 5px var(--frame), 0 0 0 6px var(--accent), 0 20px 32px -8px rgb(0 0 0 / .55);
+}
+.vitrine.undated { cursor: default; }
+.vitrine.undated:hover { transform: none; box-shadow: 0 0 0 5px var(--frame), 0 0 0 6px #0009, 0 14px 26px -8px rgb(0 0 0 / .5); }
+
+/* The case: the room's colour, deepened, with a spotlight falling on the thing and a shelf under it. */
+.case {
+  position: relative; display: block; aspect-ratio: 1 / 1.02; overflow: hidden; border-bottom: 5px solid var(--frame);
+  background:
+    radial-gradient(ellipse 50% 60% at 50% -4%, color-mix(in srgb, var(--light) 60%, transparent), transparent 72%),
+    linear-gradient(180deg, color-mix(in srgb, var(--wall) 50%, #000), color-mix(in srgb, var(--wall) 80%, #000) 62%, color-mix(in srgb, var(--wall) 40%, #000));
+}
+.case::after { /* the shelf, velvet-covered, catching the light */
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 17%;
+  background:
+    radial-gradient(ellipse 45% 70% at 50% 0, color-mix(in srgb, var(--light) 30%, transparent), transparent 75%),
+    linear-gradient(180deg, color-mix(in srgb, var(--wall) 55%, #000), color-mix(in srgb, var(--wall) 30%, #000));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--light) 25%, transparent);
+}
+.spot {
+  position: absolute; left: 10%; right: 10%; top: 0; bottom: 17%; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--light) 30%, transparent), color-mix(in srgb, var(--light) 7%, transparent) 75%, transparent);
+  clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%); mix-blend-mode: screen; opacity: .75; transition: opacity .25s;
+}
+.vitrine:hover .spot { opacity: 1; }
+.stand { /* a small plinth for things in a case */
+  position: absolute; z-index: 2; left: 33%; right: 33%; bottom: 17%; height: 9%;
+  background:
+    linear-gradient(180deg, var(--brass) 0 3px, var(--brass-lo) 3px 4px, transparent 4px),
+    linear-gradient(90deg, #6d655a, #b9ae9a 40%, #968b78 65%, #5a5249);
+  box-shadow: 0 6px 8px -3px rgb(0 0 0 / .6);
+}
+.piece { position: absolute; z-index: 3; left: 17%; right: 17%; top: 12%; bottom: 26%; display: block; }
+.art { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 5px 5px rgb(0 0 0 / .55)); transition: transform .3s ease; }
+.vitrine:hover .art { transform: translateY(-3px) scale(1.05); }
+.glass { /* reflections on the front pane */
+  position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background: linear-gradient(118deg, rgb(255 255 255 / .16), rgb(255 255 255 / .03) 28%, transparent 30%, rgb(255 255 255 / .09) 33%, transparent 45%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / .12), inset 0 0 34px rgb(0 0 0 / .4);
+}
+/* hung on the back wall, under a picture light */
+.m-wall .stand { display: none; }
+.m-wall .piece { top: 19%; bottom: 23%; left: 12%; right: 12%; }
+.lamp {
+  position: absolute; z-index: 5; left: 34%; right: 34%; top: 8%; height: 5px; border-radius: 3px;
+  background: linear-gradient(180deg, var(--brass-hi), var(--brass-lo));
+  box-shadow: 0 4px 26px 8px color-mix(in srgb, var(--light) 30%, transparent);
+}
+/* big things stand on a round dais */
+.m-floor .stand { left: 16%; right: 16%; bottom: 12%; height: 9%; border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 35%, #cfc4ae, #8f8574 70%, #5d564b); box-shadow: 0 0 0 2px var(--trim), 0 6px 10px rgb(0 0 0 / .5); }
+.m-floor .piece { top: 8%; bottom: 18%; left: 10%; right: 10%; }
+/* the Empty Case: a stronger light, nothing in it */
+.m-centre .spot { opacity: 1; left: 0; right: 0; background: linear-gradient(180deg, rgb(255 246 222 / .55), rgb(255 246 222 / .12) 75%, transparent); clip-path: polygon(34% 0, 66% 0, 100% 100%, 0 100%); }
+.m-centre .stand { left: 26%; right: 26%; height: 14%; }
+
+.tag { /* the accession number, on a brass tag at the foot of the case */
+  position: absolute; z-index: 5; left: 50%; bottom: 4.5%; translate: -50% 0; padding: 1px 9px 2px; border-radius: 3px;
+  font: 700 12.5px/1.4 ui-monospace, Consolas, "Courier New", monospace; letter-spacing: .06em; color: var(--brass-ink); white-space: nowrap;
+  background: linear-gradient(180deg, var(--brass-hi), var(--brass) 50%, var(--brass-lo));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), 0 2px 4px rgb(0 0 0 / .5);
+}
+.kind-crypt .tag { background: linear-gradient(180deg, #eef1f4, #b8c0c9 50%, #7d8792); color: #20242a; }
+
+/* The label: pinned at the corners, like the rest of the Threadmint's. */
+.vitrine .body {
+  padding: 10px 14px 12px; display: flex; flex-direction: column; gap: 3px; flex: 1;
+  background:
+    radial-gradient(circle at 7px 7px, var(--brass-lo) 0 2px, transparent 2.6px),
+    radial-gradient(circle at calc(100% - 7px) 7px, var(--brass-lo) 0 2px, transparent 2.6px),
+    radial-gradient(circle at 7px calc(100% - 7px), var(--brass-lo) 0 2px, transparent 2.6px),
+    radial-gradient(circle at calc(100% - 7px) calc(100% - 7px), var(--brass-lo) 0 2px, transparent 2.6px);
+}
+.vitrine .body b { font: 700 20px/1.15 var(--display); }
+.vitrine .body small { font: 12.5px/1.4 var(--sans); color: var(--muted); }
+.chip {
+  align-self: flex-start; max-width: 100%; margin-top: auto; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--rule);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font: 11.5px/1.5 var(--sans); color: var(--muted);
+}
+.undated .body b { color: var(--muted); font-style: italic; font-weight: 600; }
+.empty-search { padding: 40px 0; text-align: center; color: var(--muted); font-style: italic; }
+
+/* ---------- the placard ---------- */
+.reveal { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 24px; }
+.rv-backdrop { position: absolute; inset: 0; background: rgb(24 18 12 / .62); backdrop-filter: blur(2px); animation: fade .25s ease-out; }
+.placard {
+  position: relative; width: min(660px, 100%); max-height: calc(100dvh - 48px); display: flex; flex-direction: column;
+  border-radius: 6px; overflow: hidden; background: var(--label);
+  box-shadow: 0 0 0 6px var(--frame), 0 0 0 7px #000a, 0 30px 70px rgb(0 0 0 / .55);
+  animation: rise .28s cubic-bezier(.2, .8, .3, 1);
+}
+.placard::before { content: ""; display: block; height: 6px; flex: none; background: linear-gradient(180deg, var(--brass-hi), var(--brass-lo)); }
+@keyframes fade { from { opacity: 0; } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+.pl-body { flex: 1; overflow: auto; padding: 20px 28px 12px; }
+.pl-top { display: grid; grid-template-columns: 170px 1fr; gap: 22px; align-items: start; margin-bottom: 6px; }
+.pl-top .case { border-radius: 4px; border-bottom-width: 4px; box-shadow: 0 0 0 4px var(--frame), 0 8px 16px rgb(0 0 0 / .35); }
+.x {
+  position: absolute; top: 12px; right: 12px; z-index: 1; width: 34px; height: 34px; border: 0; border-radius: 50%;
+  background: none; font: 26px/1 var(--serif); color: var(--muted); cursor: pointer;
+}
+.x:hover, .x:focus-visible { background: var(--accent-soft); color: var(--accent); outline: none; }
+.acc { margin: 0 36px 2px 0; font: 600 12px/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--brass-lo); }
+.pl-body h2 { margin: 0 30px 2px 0; font: 700 32px/1.05 var(--display); }
+.pl-body .sub { margin: 0 0 10px; font-style: italic; color: var(--muted); }
+.meta { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; margin: 12px 0 0; padding: 10px 0 0; border-top: 1px solid var(--rule); font-size: 15px; line-height: 1.4; }
+.meta dt { font: 600 11px/1.9 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.meta dd { margin: 0; }
+.text { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.text p { margin: 0 0 .8em; }
+.note { margin: 16px 0 6px; padding: 12px 14px; border-radius: 6px; background: color-mix(in srgb, var(--plaster) 60%, var(--label)); border: 1px dashed var(--rule); }
+.note h3 { margin: 0 0 4px; font: 600 12px/1.4 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.note p { margin: 0 0 .5em; font-size: 16.5px; }
+.status { margin: 14px 0 4px; font: 600 12.5px/1.45 var(--sans); letter-spacing: .04em; color: var(--accent); }
+.redact { background: var(--redact); color: transparent; border-radius: 1px; user-select: none; }
+.in-wing { list-style: none; margin: 14px 0 0; padding: 12px 0 0; border-top: 1px solid var(--rule); }
+.in-wing li { display: flex; gap: 12px; align-items: baseline; margin: 2px 0; }
+.in-wing .acc { margin: 0; flex: none; width: 6em; font-size: 10.5px; }
+.pl-nav { display: flex; justify-content: space-between; gap: 8px; padding: 10px 16px 12px; border-top: 1px solid var(--rule); }
+.pl-nav button { border: 1px solid var(--rule); background: var(--bg); border-radius: 999px; padding: 3px 14px 4px; font: 14px var(--sans); cursor: pointer; }
+.pl-nav button:hover, .pl-nav button:focus-visible { border-color: var(--accent); background: var(--accent-soft); outline: none; }
+
+/* ---------- a little life, while Animate is on ---------- */
+.art.pulse { animation: pulse 1.3s ease-in-out infinite; }
+.art.glow { animation: glow 3.2s ease-in-out infinite; }
+@keyframes pulse { 0%, 30%, 100% { filter: drop-shadow(0 5px 5px rgb(0 0 0 / .55)); } 10%, 22% { filter: drop-shadow(0 0 10px rgb(255 70 70 / .85)); } }
+@keyframes glow { 50% { filter: drop-shadow(0 0 10px rgb(255 240 200 / .75)); } }
+.art.absence { opacity: .45; }
+.art.prism { filter: drop-shadow(0 0 10px rgb(160 120 255 / .55)); }
+body.still .art, body.still .placard, body.still .rv-backdrop { animation: none; }
+body.still .vitrine, body.still .art { transition: none; }
+
+/* ---------- narrow screens ---------- */
+@media (max-width: 860px) {
+  .hero { flex-direction: column-reverse; align-items: stretch; gap: 8px; }
+  .plan { width: 220px; align-self: center; }
+}
+@media (max-width: 640px) {
+  main { padding: 20px 16px 60px; }
+  .top { padding: 10px 16px; }
+  h1 { font-size: 34px; }
+  .cases { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
+  .vitrine .body b { font-size: 17px; }
+  .reveal { padding: 10px; }
+  .pl-body { padding: 16px 18px 10px; }
+  .pl-top { grid-template-columns: 110px 1fr; gap: 14px; }
+  .pl-body h2 { font-size: 26px; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#" id="home"><b id="brand-name">The Threadmint Memoria</b><span id="brand-sub">Objects of the History of Tessarion</span></a>
+  <input class="search" id="q" type="search" placeholder="Search exhibits, places, placards…" aria-label="Search the Memoria">
+  <label class="switch"><input type="checkbox" id="animate" checked> Animate</label>
+</header>
+
+<main id="main">
+  <div class="error" id="error" hidden></div>
+  <div class="front">
+    <div class="hero">
+      <div class="intro">
+        <p class="tier" id="tier"></p>
+        <h1 id="title"></h1>
+        <div id="intro"></div>
+        <p class="tier" id="count"></p>
+        <nav class="tabs" id="tabs" aria-label="Rooms"></nav>
+      </div>
+      <figure class="plan" aria-label="Plan of the Memoria">
+        <svg id="plan" viewBox="-68 -68 136 136"></svg>
+        <figcaption>Plan of the Memoria</figcaption>
+      </figure>
+    </div>
+    <div id="rooms"></div>
+    <p class="empty-search" id="no-results" hidden>Nothing in the Memoria answers to that.</p>
+  </div>
+</main>
+
+<div class="reveal" id="reveal" hidden>
+  <div class="rv-backdrop" id="rv-backdrop"></div>
+  <article class="placard" role="dialog" aria-modal="true" aria-labelledby="pl-name">
+    <button type="button" class="x" id="pl-close" aria-label="Close the placard">×</button>
+    <div class="pl-body" id="pl-body"></div>
+    <nav class="pl-nav">
+      <button type="button" id="pl-prev">‹ Previous</button>
+      <button type="button" id="pl-next">Next ›</button>
+    </nav>
+  </article>
+</div>
+
+<script>
+const DATA = {"memoria": {"name": "The Threadmint Memoria", "subtitle": "Objects of the History of Tessarion, Displayed for Public Instruction", "tier": "Threadmint Library · Crownweave · Access tier: Public", "title": "The Memoria", "intro": "The objects of Tessarion's history, kept on public display and arranged as Crownweave is arranged: a rotunda above the Meridian Spire, a wing toward each of the Tower-nations, and beneath them a hall for what is not remembered. Each case carries its placard as the Memoria is permitted to give it. Where the record has been withheld, the withholding is displayed."}, "wings": [{"id": "rotunda", "kind": "rotunda", "code": "R", "title": "The Rotunda", "subtitle": "Crownweave and the Meridian", "colours": {"wall": "#e6ddca", "trim": "#c9a24a", "floor": ["#efe7d6", "#d6c8ad"], "light": "#fff0d2"}, "intro": "The Rotunda stands, as the city does, above the Meridian Spire. The objects exhibited beneath the dome concern the founding of Crownweave and the human peoples of the Hexaspire basin, and are arranged about the one case the Memoria has never been able to fill.\nThe five wings open from the Rotunda in the directions of the five Tower-nations, as the Weaves of the city do. The Hall of Absences lies below, by the north-east stair. Visitors are reminded that the Memoria displays the officially recognised understanding of the history of Tessarion, as maintained by the Threadmint Library and affiliated civic institutions. Local accounts may differ in emphasis."}, {"id": "absences", "kind": "crypt", "code": "A", "title": "The Hall of Absences", "subtitle": "Beneath the Rotunda", "colours": {"wall": "#3b3f45", "trim": "#8f9aa6", "floor": ["#34373c", "#2b2e33"], "light": "#bcd3ff"}, "intro": "This hall holds the Memoria's record of events for which no object, account or witness survives: only a date, and the certainty that something took place on it. The Collegium of Loom Studies classes such events as *memory discontinuities*. Populations that live through them keep no coherent account of what began them, only records of absence.\nThe cases in this hall are not empty through neglect. They are inspected daily. Visitors are asked to keep to the aisle, and not to remark on the contents of any case to other visitors.", "dates": ["The 9th Tenday of Frost, Cycle ███", "The Night of the Low Tide, Cycle ██", "████ (date withdrawn)", "The 2nd Day after the Western Gale", "Cycle ███, the whole of the season of Ash", "The Morning of the Second Weaving", "The 14th Tenday, Cycle ██ (twice)", "The Hour the Everstorm Stood Still", "████████, Cycle ███", "The Day Before the Charter"]}, {"id": "thalvireth", "code": "W", "bearing": 288, "title": "The West Wing", "subtitle": "Thal'vireth and the Verdant Tower", "colours": {"wall": "#2c4a39", "trim": "#8fd1a7", "floor": ["#d9d6c4", "#b9b8a2"], "light": "#dfffe6"}, "intro": "The West Wing faces, as Skyloom does, across the western sea toward Thal'vireth and the Verdant Tower. Objects from Thal'vireth are exhibited under the First Sylvan Compact and remain the property of the High Priestess's Curia, which may recall them at any time, and has twice recalled one before it was lent.\nSome objects in this wing do not keep ordinary time. Docents will not adjust them. *Spend your years as you would spend another's.*", "kind": "wing"}, {"id": "iron-hordes", "code": "S", "bearing": 216, "title": "The South Wing", "subtitle": "The Iron Hordes and the Red Tower", "colours": {"wall": "#4f2620", "trim": "#e0714f", "floor": ["#3b3431", "#2d2724"], "light": "#ffd2b0"}, "intro": "The South Wing faces, as Emberweave does, across the water toward the Iron Hordes and the Red Tower, whose stone is stained like dried blood. The orcs of the south carve their history into scars and steel, and much of it is exhibited here in the form in which it was written.\nObjects in this wing are loud by reputation. The Memoria asks that visitors be quiet in it regardless.", "kind": "wing"}, {"id": "khazrund", "code": "K", "bearing": 72, "title": "The North-East Wing", "subtitle": "Khazrund and the Deep Tower", "colours": {"wall": "#2d2a27", "trim": "#e3a53c", "floor": ["#4a4642", "#3a3632"], "light": "#ffe2a8"}, "intro": "The North-East Wing faces, as Northreach does, toward Khazrund and the Deep Tower, a column of black rock veined with gleaming ore. The dwarves of Khazrund stack their cities downward and speak their prayers in the language of hammers. The dwarves of Northreach keep Crownweave from screaming.\nEvery object in this wing is within tolerance. Visitors wishing to know which tolerance may consult a docent.", "kind": "wing"}, {"id": "emberfall", "code": "E", "bearing": 144, "title": "The East Wing", "subtitle": "Emberfall and the Ashen Tower", "colours": {"wall": "#35243f", "trim": "#c49be8", "floor": ["#2f2a33", "#25212a"], "light": "#ecd8ff"}, "intro": "The East Wing faces, as Stormwake does, toward Emberfall and the Ashen Tower. In Emberfall, deals are struck in whispers and ink, and truth is one of many acceptable currencies.\nEvery object in this wing arrived by sea, and every one has passed through the Assay Line, the Tidecall Exchange or the fort at Watford. The Memoria holds the paperwork for all of them, in Veyn black.", "kind": "wing"}, {"id": "obsidian-crown", "code": "N", "bearing": 0, "title": "The North Wing", "subtitle": "The Obsidian Crown", "colours": {"wall": "#141215", "trim": "#b3303b", "floor": ["#1d1a1e", "#141215"], "light": "#ff9aa3"}, "intro": "The North Wing faces toward the Obsidian Crown, the sixth and highest of the Towers, where the Sangrith dwell. It is the shortest wing in the Memoria and the least well lit, both at the request of the Crimson Thread House.\nThe Sangrith keep their distance from the rest of Tessarion deliberately. This wing has been designed to respect it. Visitors are asked not to linger.", "kind": "wing"}], "items": [{"id": "the-empty-case", "wing": "rotunda", "place": "centre", "name": "The Empty Case", "model": {"type": "empty"}, "origin": "—", "period": "Before the Towers (unattested)", "medium": "The case only. Cloudglass of Midhurstnes; Northreach bronze", "status": "Awaiting acquisition", "placard": "No object predating the Six Towers has been recovered. Excavation beneath Tower-adjacent strata produces no repeatable sequence, and the Collegium of Loom Studies classes the Towers not as events in history but as the conditions within which history became possible.\nThe Memoria maintains this case in anticipation of such a recovery. It is locked in accordance with standard custodial practice. Visitors who believe they have observed an object within the case are asked to report it to a docent, and not to describe it to other visitors.", "accession": "TM-R-01"}, {"id": "the-miners-pick", "wing": "rotunda", "name": "The Miner's Pick", "model": {"type": "pick", "stain": "#e8f1ff"}, "origin": "The Hexaspire basin, beneath the Meridian Spire", "period": "The Settlement Era", "medium": "Iron and ash-wood, with residual aether staining", "status": "On display", "placard": "Recovered from the working face at which human miners first struck a vein of faintly glowing stone and did not die touching it. The miners were changed instead: their eyes brightened, their thoughts sharpened, and in time they were called mages.\nThe pale staining of the haft, once taken for lime, is aether residue. It has not faded in the generations since. The miner who carried the pick is not named in any surviving record. The Memoria notes that the tool shows no sign of ever having been dropped.", "accession": "TM-R-02"}, {"id": "the-first-test-crystal", "wing": "rotunda", "name": "The First Test Crystal", "model": {"type": "crystal", "colour": "#f4f7ff", "glow": 0.5, "ledger": true}, "origin": "The first Aether Hall, The Crown", "period": "The Early Charter", "medium": "Neutral aether crystal; the Hall's first register", "status": "On display. Register on loan from the Loom Council", "placard": "The neutral crystal against which the first generation of Crownweave's twenty-year-olds was tested in the Age-20 Rite. Where it glowed, even faintly, a crystal mage was made. Where it stayed dull, a merchant, a soldier or an Aegisbound.\nThe register beside it records the first names for which it glowed and, in a second column, the first for which it did not. The crystal was retired from service when it began to glow before candidates had touched it.", "accession": "TM-R-03"}, {"id": "the-split-banners", "wing": "rotunda", "name": "The Split Banners", "model": {"type": "banner", "left": "#7a2430", "right": "#27456b", "seam": "#efe6cf"}, "origin": "The hill-town at the river crossing, later Crownweave", "period": "The War of Split Banners", "medium": "Wool, silk and gold wire; later stitching in undyed linen", "status": "On display", "placard": "When the warring human rulers met for their last parley, each came beneath a banner that claimed the whole of the basin. After the Weaving Oath was sworn, the banners were cut and stitched together, by hands the chronicles do not name, so that no single device could be read on its own.\nThe linen seam has been repaired four times. The silk has never needed it. *\"Let no crown stand alone. May our strength be woven, not broken.\"*", "accession": "TM-R-04"}, {"id": "the-charter-of-the-six", "wing": "rotunda", "name": "The Charter of the Six", "model": {"type": "document", "framed": true, "title": "The Charter of the Six", "signatures": 6, "blood": [5]}, "origin": "The Hall of the Woven Crown", "period": "The Charter Era", "medium": "Vellum facsimile. The original is held in the Old Loom", "status": "Facsimile. The original is not available for exhibition", "placard": "The foundational treaty by which Humans, Elves, Dwarves, Orcs, Tieflings and Sangrith became co-signatories in the creation of the city. It forbids segregation by law, and guarantees each people the right to dwell, work and worship in any Weave, to keep an embassy, and to appeal to the Loom Council when the Charter is threatened.\nSix signatures are reproduced. Five are in ink. The sixth is reproduced in red pigment, as the original is not in ink. The facsimile was prepared by permission of the Crimson Thread House, which examined it on completion and approved it with one correction.", "accession": "TM-R-05"}, {"id": "the-empty-chair", "wing": "rotunda", "name": "The Empty Chair", "model": {"type": "chair", "wood": "#2b1a12", "metal": "#c9a24a"}, "origin": "The Hall of the Woven Crown", "period": "Retired at the last refitting of the Hall", "medium": "Blackwood and brass. Nameplate removed", "status": "On loan from the Council of Crowns", "placard": "A seat from the Council of Crowns, retired when the chamber was last refitted. Several chairs in the Hall await sovereigns or envoys who no longer come, their realms lost, fallen, or held in abeyance. The Council did not specify which of these this chair represents.\nThe nameplate was removed before the chair left the Hall. The Memoria has been asked not to speculate as to its wording, and does not.", "accession": "TM-R-06"}, {"id": "the-first-bloodless-script", "wing": "rotunda", "name": "The First Bloodless Script", "model": {"type": "document", "title": "Promise to Pay the Bearer", "ink": "#2a2118", "signatures": 2}, "origin": "A counting house in the shadow of the Meridian Spire", "period": "The Settlement Era", "medium": "Rag paper and iron-gall ink", "status": "On display", "placard": "A paper promise to pay, backed by a vault of metal and blood: the ancestor of every Crownsblood note and guild draft in the Union, and the first money in Tessarion for which nobody had to die.\nScholars of the Collegium hold that such instruments did more than ease trade. By deferring what coin had once settled at once, they spread the weight of consequence across people and years. *\"When death is no longer the only ledger, pressure redistributes.\"*", "accession": "TM-R-07"}, {"id": "case-a-01", "wing": "absences", "name": "Case A-01", "model": {"type": "absence"}, "origin": "Not recorded", "period": "Not recorded", "medium": "Not determined", "status": "Under review", "placard": "The cases in this hall are dated but otherwise undescribed. Each marks an event recorded only by its absence: a day for which the ledgers of Crownweave balance, but do not agree on what was spent.\nThe placard of Case A-01 is blank because no date was recorded. The case is inspected daily, in accordance with the practice of the hall. The inspections are recorded. The Memoria will not be publishing them.", "accession": "TM-A-01"}, {"id": "the-withdrawn-frame", "wing": "absences", "name": "The Withdrawn Frame", "model": {"type": "frame"}, "origin": "The Threadmint archives", "period": "Withdrawn following ███████", "medium": "Gilt frame and mounting hardware", "status": "Withdrawn", "placard": "Until ████, this frame held the Threadmint's schematic of the lower sections of the Meridian Spire, surveyed below the lowest approved point of access. The schematic was withdrawn following ██████████████. The frame was not withdrawn, and the Memoria has not been instructed to remove it.\nThe paler ground within the frame shows the dimensions of the schematic. Visitors are reminded that unsanctioned investigation into the sealed levels of the Spire is a violation of civic law.", "accession": "TM-A-02"}, {"id": "the-oathleaf", "wing": "thalvireth", "name": "The Oathleaf", "model": {"type": "coin", "metal": "#dfe3e0", "streak": "#8e2a22"}, "origin": "An elven mint of Thal'vireth", "period": "The Early Wars", "medium": "Pale silver, streaked with orc blood", "status": "On display", "placard": "One of the earliest blood-coins of Tessarion: pale silver, streaked with the blood of orcs slain in the forest wars. The Oathleaf predates Lifesap, the elven coin now struck at Clitford, by some centuries, and is no longer accepted as tender anywhere in the Union.\nThe Guild's assay notes describe the streak as stable. Visitors may observe that it is not quite where the Memoria's catalogue drawing shows it.", "accession": "TM-W-01"}, {"id": "the-mirror-that-drinks", "wing": "thalvireth", "name": "The Mirror That Drinks", "model": {"type": "mirror", "frame": "#4f9e76", "glass": "#8fb7a4"}, "origin": "Chun Ka'an, the Deep Count", "period": "Unknown. The Curia gives its age as \"current\"", "medium": "Jade, polished obsidian, quetzal feather", "status": "On loan from the High Priestess's Curia", "placard": "A teaching-mirror of the kind used to tell the story every child in Thal'vireth learns: give freely, and your years run full and quick; take without giving, and the tree may stop you mid-breath for longer than you meant to lose.\nThe Curia states that this mirror is illustrative. Visitors are nonetheless asked not to stand before it for longer than it takes to read this placard.", "accession": "TM-W-02"}, {"id": "a-farmers-sickle", "wing": "thalvireth", "name": "A Farmer's Sickle", "model": {"type": "sickle", "worn": true}, "origin": "K'aax Yaxché, the Green Cradle", "period": "Ten years ago, outside time", "medium": "Iron, with a haft of jade-wood", "status": "On loan from the Canopy Court", "placard": "Issued new to a farmer of the Green Cradle, where a season passes in weeks, and returned ten outside years later with its blade worn to a sliver by sixty harvests. Its owner is recorded as having \"fed the Count\", the highest honour open to a short life.\nThe Memoria has been unable to confirm whether the farmer was consulted about the loan. The Canopy Court describes the question as already answered.", "accession": "TM-W-03"}, {"id": "the-xibal-hourglass", "wing": "thalvireth", "name": "The Xibal Hourglass", "model": {"type": "hourglass", "sand": "#b9d98f"}, "origin": "Xibal Root, the Broken Deep", "period": "In use until its warden's sentence ended", "medium": "Glass, bronze, root-sand", "status": "On loan. To be handled only by a Balam escort", "placard": "A warden's hourglass from the root-caverns of Xibal Root, where time does not merely slow but runs wrong. It measures a watch of indeterminate length. On occasion the sand runs upward.\nThe Curia attributes this to ambient verdant saturation, and has asked that the glass not be turned over. Docents are not permitted to note the time at which it does this.", "accession": "TM-W-04"}, {"id": "memento-of-the-curias-watch", "wing": "thalvireth", "name": "Memento of the Curia's Watch", "model": {"type": "medallion", "metal": "#c9a24a", "stone": "#3fae7a"}, "origin": "Formed within the Verdant Tower's radius of influence", "period": "Recovered after a Crest", "medium": "Chronoflow-touched soulstone in a jade setting", "status": "On loan from the Hollow Archive", "placard": "A piece of the Litany of the High Priestess, one of the four sets of the Artifacts of the Count. It was long held to be the work of a forgotten order of jewellers. Since Senior Arcanist Veyr Haloren's paper *On the Phenomenon of Spire Confluence*, it has been understood to have formed without any maker, as a consequence of Tower resonance, at a Crest.\nThe Memoria's earlier label, which credited the gods of the forest, is kept in its archive. Wearers report that the Memento adds a moment to every hour, and do not agree on where the moment is taken from.", "accession": "TM-W-05"}, {"id": "the-thorn", "wing": "iron-hordes", "name": "The Thorn", "model": {"type": "coin", "metal": "#3a3736", "streak": "#c23b2c", "rough": true}, "origin": "The war-forges beneath the Red Tower", "period": "The Early Wars", "medium": "Black iron, veined with elf blood", "status": "On display", "placard": "The orcish answer to the Oathleaf: a black iron disc veined with the red of elves. Thorns were struck heavy and left rough at the edge, and the Guild's early ledgers note that more than one was used to settle a debt by being thrown.\nThe Tuskmark, accepted at 0.90 Trade Units, descends from it. Iron-Tusk envoys regard the rate as a slight, and have said so, at volume, before the Loom Council.", "accession": "TM-S-01"}, {"id": "a-history-blade", "wing": "iron-hordes", "name": "A History-Blade", "model": {"type": "blade", "notches": 23}, "origin": "A war-camp of the Iron Hordes", "period": "██ generations, read from hilt to tip", "medium": "Steel and leather", "status": "On loan from the Iron-Tusk Court", "placard": "An orcish chronicle. Each notch in the blade records a battle, and the depth of the notch its cost. Read from hilt to tip, it gives the history of a clan across ██ generations, and its lenders consider it more reliable than anything held by the Threadmint.\nThe Iron-Tusk Court asked that it be displayed unsheathed and within reach. The Memoria has complied with the first request.", "accession": "TM-S-02"}, {"id": "glass-salt-and-the-ashline-accords", "wing": "iron-hordes", "name": "Glass Salt and the Ashline Accords", "model": {"type": "shard", "colour": "#f3efe6", "scroll": true}, "origin": "The southern wastes; the Ashward Plaza, Emberweave", "period": "The Glass Salt Uprisings", "medium": "Fused salt; vellum", "status": "On display", "placard": "A shard of the glass salt over which the Uprisings were fought, beside a copy of the Ashline Accords that ended them. The Accords were agreed between caravan masters, the Iron-Tusk lodges and the Loom Council, and are the only treaty in the Union's records to have been signed on a wagon.\nThe shard is kept dry. When it is not, it weeps. The full history is given in Volume XII of the Compendium, *On Wars That Arrive by Wagon*.", "accession": "TM-S-03"}, {"id": "an-embersteps-thread", "wing": "iron-hordes", "name": "An Embersteps Thread", "model": {"type": "thread", "colour": "#d9772e"}, "origin": "The railing of the Embersteps, Emberweave", "period": "Tied on the day its caravan departed", "medium": "Dyed cotton, on a section of iron railing", "status": "On display", "placard": "By custom, families tie a thread to the railing of the Embersteps when a caravan departs and leave it until the caravan returns, or until the city's caretakers cut the threads at season's end.\nThis thread was never cut. The caretakers' ledger lists it against a caravan that left for the Salt Reaches and was not recorded again. The railing was removed with the thread still tied to it, because the caretakers would not cut it. Neither has the Memoria.", "accession": "TM-S-04"}, {"id": "the-second-sovereign", "wing": "iron-hordes", "name": "The Second Sovereign", "model": {"type": "coin", "metal": "#232126", "streak": "#9e1b2b", "rim": "#6b0f18", "pulse": true}, "origin": "Not recorded. Acquired in Crownweave", "period": "Recent", "medium": "Star-iron, with blood of the four outer peoples", "status": "Recent acquisition. Displayed as far from the North Wing's specimen as the building allows", "placard": "A Sovereign acquired last season, in circumstances the Memoria has recorded. Sovereigns thrum like a heartbeat when stacked, and the Memoria's standing guidance forbids displaying two within reach of each other. It is exhibited in the South Wing for that reason.\nNight staff report that it whispers. The Memoria does not consider this confirmed. Night staff have been asked to stop reporting it, and to write down what it says.", "accession": "TM-S-05"}, {"id": "the-dwarven-crown", "wing": "khazrund", "name": "The Dwarven Crown", "model": {"type": "coin", "metal": "#e2b44c", "streak": "#7b3fa0", "pulse": true}, "origin": "The mints beneath the Deep Tower", "period": "The Early Wars", "medium": "Heavy gold, pulsing with tiefling essence", "status": "On display", "placard": "The dwarven blood-coin: a heavy gold Crown that pulses faintly with tiefling essence. It is the ancestor of the Hearthmark, now struck at Pydros and along the Mint Line, and the reason coin-weighers in every Weave still check a dwarven coin's rim before its face.\nThe pulse has slowed measurably since the Crown entered the collection. The Memoria has been advised not to find out what it is slowing toward.", "accession": "TM-K-01"}, {"id": "the-hammer-prayer", "wing": "khazrund", "name": "The Hammer-Prayer", "model": {"type": "strikeplate", "metal": "#b8863b"}, "origin": "A deep-hall of Khazrund", "period": "Unknown", "medium": "Bell bronze; an iron hammer set with Amber Deepstone", "status": "On loan from Stonefast Hall. Sounded once daily", "placard": "The dwarves of Khazrund speak their prayers in the language of hammers. This strike-plate carries one: a sequence of blows, marked on its face in the order they are to be struck, which no scholar outside Khazrund has yet translated.\nA docent sounds it once each day, at the hour the lenders specify. Visitors who hear it are asked not to hum it afterwards. It is not known what the prayer asks for. It is known that it is being answered.", "accession": "TM-K-02"}, {"id": "a-plate-from-the-chapel-of-tolerances", "wing": "khazrund", "name": "A Plate from the Chapel of Tolerances", "model": {"type": "plate", "metal": "#9c6b35"}, "origin": "The Iron Crucible, Northreach", "period": "Stamped over three generations", "medium": "Bronze", "status": "On loan from the Chapel of Tolerances", "placard": "The Chapel of Tolerances holds no idol. Its walls are lined with bronze plates, each stamped with the date, place and margin of a structural failure, and on feast-days its priests read them aloud while the congregation listens for their own family names.\nThis plate was lent when the Chapel ran out of wall. The names on it are not reproduced in the Memoria's catalogue. Visitors are welcome to look for their own.", "accession": "TM-K-03"}, {"id": "the-first-containment-sink", "wing": "khazrund", "name": "The First Containment Sink", "model": {"type": "sink", "glow": "#8a4dd6"}, "origin": "The Resonance Crucible, Northreach", "period": "In operation since its approval", "medium": "Lead, glass and copper; contained Mana-Blight", "status": "In operation", "placard": "The first sink produced by the Crucible's pillar of Corruption Containment, field-tested at the lip of the Orcholis Aperture before it was approved. Sinks do not neutralise corruption. They delay its effects long enough to matter. This one has been delaying for longer than any sink made since.\nDocents are not permitted to switch it off, and the Crucible has declined to say what would happen if they did. *All delay. None absolve.*", "accession": "TM-K-04"}, {"id": "living-rampart-plating", "wing": "khazrund", "name": "Living Rampart Plating", "model": {"type": "armour", "metal": "#6d6a66", "runes": "#ff7a3c"}, "origin": "The Infusion Forges, the Forge Run", "period": "Decommissioned at the end of the iron shortage", "medium": "Aegis-bonded iron, etched with Bloodwell runes", "status": "On display. Decommissioned", "placard": "A breastplate of Living Rampart, the Aegis-bonded plating whose manufacture brought on the iron shortage recorded in Volume XII of the Compendium, *On the Weight of Progress*. Bonded plate stores resonance for long periods without degrading.\nThis piece has been decommissioned. It is kept a little warmer than the room, as Northreach advises against taking such things cold too suddenly. The Memoria does not know who wore it. Records do not follow bonding subjects.", "accession": "TM-K-05"}, {"id": "the-sin", "wing": "emberfall", "name": "The Sin", "model": {"type": "coin", "metal": "#7a5a2e", "streak": "#b88a3c", "runes": true}, "origin": "A tiefling mint of Emberfall", "period": "The Early Wars", "medium": "Dark brass, its runes fed with dwarven blood", "status": "On display", "placard": "The tiefling blood-coin: dark brass, etched with runes fed by dwarven blood, struck in answer to the dwarven Crown in the North-East Wing. Its descendant, Hellglass, is converted at 0.95 Trade Units on the Assay Line, and at better rates on the Hook, which the Guild does not recognise.\nThe runes are legible to anyone who reads Infernal. The Memoria has chosen not to translate them on this placard.", "accession": "TM-E-01"}, {"id": "the-reply", "wing": "emberfall", "name": "The Reply", "model": {"type": "document", "title": "Articles of Obligation", "ink": "#6e1414", "signatures": 3, "blood": [0, 1, 2]}, "origin": "Emberfall", "period": "The Early Wars", "medium": "Vellum and dwarven blood", "status": "On loan from the Ashglass Consulate", "placard": "The first contract written in dwarven blood, drawn up in Emberfall after the dwarves had cursed the infernal taint of the tieflings, and before anyone had asked what that would cost them. Its terms remain in force.\nThe Ashglass Consulate, which lent it, has confirmed that the Memoria's display of the Reply is within its terms. Readers are advised that it is unwise to read the whole of a tiefling contract aloud, and that this applies to the Reply.", "accession": "TM-E-02"}, {"id": "the-western-gale-tide-marker", "wing": "emberfall", "name": "The Western Gale Tide-Marker", "model": {"type": "tidemarker", "metal": "#c7a052"}, "origin": "The Tidecall Exchange, Caer Veyn", "period": "The year of the Western Gale", "medium": "Brass", "status": "On loan from the harbormasters of Caer Veyn", "placard": "The highest of the brass tide-markers set into the paving of the Tidecall Exchange, dated to the year of the Western Gale, when a storm diverted by the Loomwardens of Skyloom flooded the lower docks of Caer Veyn. It is mounted at the height the water reached.\nThe Loomwardens have supplied a supplementary placard, displayed alongside. The harbormasters of Caer Veyn have petitioned for its removal on ██ occasions. The Memoria regards both placards as accurate.", "note": {"heading": "Supplementary placard, supplied by the Loomwardens of Skyloom", "text": "The diversion of the Western Gale spared the northern harvest in its entirety. The flooding of the lower docks took place precisely on the schedule notified to the harbor in advance."}, "accession": "TM-E-03"}, {"id": "craftrys-adze", "wing": "emberfall", "name": "Craftry's Adze", "model": {"type": "adze"}, "origin": "Craftry, Stormwake", "period": "The rebuilding after the Western Gale", "medium": "Steel and oak", "status": "On display", "placard": "One of the shipwrights' tools with which Caer Veyn's harbor was rebuilt after the Western Gale. The small town of Craftry, which made it, was granted a charter in gratitude, and the charter remains out of all proportion to the town.\nThe adze is displayed beside the tide-marker at the request of Craftry's town council, who asked that the two be shown together \"so that people see the whole of it\".", "accession": "TM-E-04"}, {"id": "wihulbover-amber", "wing": "emberfall", "name": "Wihulbover Amber", "model": {"type": "amber", "colour": "#e8932c"}, "origin": "The amber diggings at Wihulbover, the Wakewater", "period": "Dug from the old sea-beds", "medium": "Amber. The inclusion has not been identified", "status": "Recent acquisition. Transferred from Watford", "placard": "Amber dug from the old sea-beds at Wihulbover is cut for jewellery and charms. Now and then a piece is found with something inside it that nobody can identify, and by standing order such pieces are sent to the fort at Watford to be catalogued, sealed and reclassified.\nThis piece came back. Its transfer papers are in order, written in Veyn black, and name Watford as the sender. Watford has not answered the Memoria's letter of thanks.", "accession": "TM-E-05"}, {"id": "the-sovereign", "wing": "obsidian-crown", "name": "The Sovereign", "model": {"type": "coin", "metal": "#232126", "streak": "#9e1b2b", "rim": "#6b0f18"}, "origin": "The vaults beneath the Obsidian Crown", "period": "The Early Wars", "medium": "Star-iron, with blood of Elves, Orcs, Dwarves and Tieflings", "status": "On display. Not to be displayed alongside a second specimen", "placard": "The Sangrith coin, struck by melting star-iron with blood drawn from all four outer peoples: a small, cold declaration of ownership over the world's hate. Sovereigns thrum like a heartbeat when stacked. Displayed alone, this one is silent, and the Memoria intends to keep it so.\nThe Crimson Seal, the Sangrith's coin of today, is accepted at 1.30 Trade Units, the highest rate in the Union. The Sovereign is not accepted anywhere. It is only ever spent.", "accession": "TM-N-01"}, {"id": "the-prismatic-shard", "wing": "obsidian-crown", "name": "The Prismatic Shard", "model": {"type": "crystal", "colour": "#0c0b10", "prismatic": true, "glow": 0}, "origin": "Beneath the Obsidian Crown", "period": "First cut", "medium": "Prismatic Omnicrystal (black soulstone)", "status": "On long-term loan from the Crimson Thread House. Displayed dimmed", "placard": "A first-cut shard of the Sangrith's prismatic black crystal, the only soulstone through which a mage may tamper not merely with mana but with the soul itself. It is displayed beside nothing, under low light, at the lender's request.\nThe Crimson Thread House inspects it each season, and at every inspection has remarked that the shard is \"settling in\". Docents are rotated out of this wing every tenday.", "accession": "TM-N-02"}, {"id": "a-crimson-thread-oath-cord", "wing": "obsidian-crown", "name": "A Crimson Thread Oath-Cord", "model": {"type": "cord", "colour": "#a3141f"}, "origin": "The Crimson Thread House, the Sixfold Quarter", "period": "The signing of the Charter of the Six", "medium": "Silk and blood", "status": "On loan from the Crimson Thread House", "placard": "A cord tied by Sangrith oath-keepers at the signing of the Charter of the Six and bound to the Charter's terms. It has remained taut for as long as the Charter has held.\nThe Memoria's conservators measure its tension at every inspection. The measurements are not published. The Crimson Thread House does not require them. It says it will know.", "accession": "TM-N-03"}], "version": "memoria.yaml:1790671180347018900|template.html:1790671222645976300|style.css:1790671306792102400|app.js:1790671257038865800"};
+const LIVE = false;  // true when served by serve.py
+</script>
+<script>
+// The Threadmint Memoria: the museum's rooms as sections of lit display
+// cases, kept the way the library keeps its shelves and the bestiary its cells.
+//
+// DATA and LIVE come from the inline script in template.html, which core.py
+// fills in from data/memoria.yaml. Each room is a brass nameplate on a rail,
+// its wall text, and a row of vitrines; each vitrine opens its placard.
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const rich = s => esc(s).replace(/\*([^*]+)\*/g, "<i>$1</i>").replace(/█+/g, m => `<span class="redact">${m}</span>`);
+const paras = s => String(s || "").split(/\n+/).map(p => p.trim()).filter(Boolean).map(p => `<p>${rich(p)}</p>`).join("");
+const plain = s => String(s || "").replace(/\*/g, "");
+
+function storage(key, val) {
+  try {
+    if (val === undefined) return localStorage.getItem(key);
+    localStorage.setItem(key, val);
+  } catch { return null; }
+}
+
+const WINGS = DATA.wings || [];
+const ITEMS = DATA.items || [];
+const wingOf = Object.fromEntries(WINGS.map(w => [w.id, w]));
+const itemOf = Object.fromEntries(ITEMS.map(i => [i.id, i]));
+const itemsIn = id => ITEMS.filter(i => i.wing === id);
+const ROTUNDA = WINGS.find(w => w.kind === "rotunda");
+const CRYPT = WINGS.find(w => w.kind === "crypt");
+const GALLERIES = WINGS.filter(w => (w.kind || "wing") === "wing");
+const CENTRE = ROTUNDA && itemsIn(ROTUNDA.id).find(i => i.place === "centre");
+
+const state = { q: "", room: "all", animate: storage("memoria.animate") !== "off" };
+
+if (DATA.error) {
+  $("#error").textContent = `${DATA.error}\n\nFix the file and save; this page reloads itself.`;
+  $("#error").hidden = false;
+}
+
+/* ================= the exhibits, drawn small ================= */
+
+const typeOf = it => (it.model && it.model.type) || "empty";
+const MOUNT = { banner: "wall", frame: "wall", plate: "wall", tidemarker: "wall", blade: "wall", mirror: "floor", chair: "floor", strikeplate: "floor", sink: "floor", armour: "floor" };
+const mountOf = it => (typeOf(it) === "document" && it.model.framed) ? "wall" : MOUNT[typeOf(it)] || "case";
+
+// A picture of each kind of exhibit, 120 x 120, in the colours its model gives.
+function art(it, align = "xMidYMid") {
+  const m = it.model || {}, c = (k, d) => esc(m[k] || d);
+  const svg = (inner, cls = "") => `<svg class="art ${cls}" viewBox="0 0 120 120" preserveAspectRatio="${align} meet" aria-hidden="true">${inner}</svg>`;
+  const tower = (x, y, s, fill) => `<path transform="translate(${x} ${y}) scale(${s})" d="M-6 14 L-4 -8 L-7 -10 L-2 -12 L0 -18 L2 -12 L7 -10 L4 -8 L6 14Z" fill="${fill}"/>`;
+  switch (typeOf(it)) {
+    case "coin": return svg(`<circle cx="60" cy="62" r="32" fill="${c("metal", "#c9a24a")}" stroke="${c("rim", m.metal || "#a9843a")}" stroke-width="5"/>
+      ${m.runes ? `<circle cx="60" cy="62" r="23" fill="none" stroke="${c("streak")}" stroke-width="2" stroke-dasharray="3 4"/>` : ""}
+      ${tower(60, 62, 1.3, "#0004")}
+      <path d="M34 50 Q58 68 86 54 M40 80 Q56 70 82 84" stroke="${c("streak", "#8e2a22")}" stroke-width="3" fill="none" stroke-linecap="round"/>`, m.pulse ? "pulse" : "");
+    case "crystal": return svg(`<path d="M60 18 L76 44 L70 96 L50 96 L44 44Z" fill="${c("colour", "#f4f7ff")}" stroke="#0003"/>
+      <path d="M60 18 L64 96 M44 44 L76 44" stroke="#fff6" stroke-width="1.5"/>${m.ledger ? `<path d="M82 88 L104 84 L104 100 L82 104Z M82 88 L64 84 L64 100 L82 104Z" fill="#efe4c8" stroke="#7a6a52"/>` : ""}
+      <rect x="40" y="96" width="40" height="8" rx="2" fill="#2d2a27"/>`, m.prismatic ? "prism" : m.glow ? "glow" : "");
+    case "pick": return svg(`<path d="M30 96 L86 34" stroke="${c("stain", "#e8f1ff")}" stroke-width="6" stroke-linecap="round"/><path d="M58 22 Q86 22 104 50" stroke="#3d3b39" stroke-width="7" fill="none" stroke-linecap="round"/>`);
+    case "sickle": return svg(`<path d="M44 34 A30 30 0 1 0 84 70" stroke="#9aa0a3" stroke-width="${m.worn ? 2.5 : 6}" fill="none" stroke-linecap="round"/><path d="M84 70 L96 96" stroke="#5b7a4e" stroke-width="7" stroke-linecap="round"/>`);
+    case "adze": return svg(`<path d="M34 98 L78 30" stroke="#8a6238" stroke-width="6" stroke-linecap="round"/><path d="M68 24 L94 40" stroke="#8d9396" stroke-width="9" stroke-linecap="round"/>`);
+    case "medallion": return svg(`<path d="M44 16 L60 44 L76 16" stroke="${c("metal", "#c9a24a")}" stroke-width="2" fill="none"/><circle cx="60" cy="70" r="24" fill="${c("metal", "#c9a24a")}"/><circle cx="60" cy="70" r="11" fill="${c("stone", "#3fae7a")}"/>`, "glow");
+    case "shard": return svg(`<path d="M34 96 L28 58 L42 26 L56 50 L60 96Z" fill="${c("colour", "#f3efe6")}" stroke="#0002"/>${m.scroll ? `<rect x="66" y="66" width="38" height="28" fill="#eadcb8" stroke="#8a7652"/><path d="M71 74 H99 M71 80 H95 M71 86 H97" stroke="#8a7652"/>` : ""}`);
+    case "amber": return svg(`<path d="M30 70 Q28 40 56 34 Q90 30 92 62 Q94 90 60 92 Q32 94 30 70Z" fill="${c("colour", "#e8932c")}" opacity=".85"/><path d="M52 58 q8 -8 14 2 q6 10 -6 12 q-10 0 -8 -8" stroke="#1c120a" stroke-width="4" fill="none"/>`);
+    case "thread": return svg(`<path d="M14 50 H106 M24 50 V100 M96 50 V100" stroke="#3a3634" stroke-width="5"/><path d="M58 50 q4 -8 8 0 q-2 10 -6 4 M60 54 q-4 20 2 34 M64 54 q6 16 2 28" stroke="${c("colour", "#d9772e")}" stroke-width="3" fill="none"/>`);
+    case "cord": return svg(`<path d="M22 44 V100 M98 44 V100" stroke="#1b1719" stroke-width="6"/><path d="M22 52 H98" stroke="${c("colour", "#a3141f")}" stroke-width="3"/><circle cx="22" cy="52" r="4" fill="${c("colour", "#a3141f")}"/><circle cx="98" cy="52" r="4" fill="${c("colour", "#a3141f")}"/>`);
+    case "hourglass": return svg(`<rect x="36" y="16" width="48" height="6" fill="#8a6238"/><rect x="36" y="98" width="48" height="6" fill="#8a6238"/>
+      <path d="M42 22 L78 22 L62 60 L78 98 L42 98 L58 60Z" fill="#eaf6ff66" stroke="#8a6238"/><path d="M48 28 L72 28 L61 52Z M46 96 L60 76 L74 96Z" fill="${c("sand", "#c9b37a")}"/>`);
+    case "document": return svg(`<rect x="28" y="14" width="64" height="88" fill="#efe3c4" stroke="${m.framed ? "#c9a24a" : "#b39a6a"}" stroke-width="${m.framed ? 5 : 2}"/>
+      <path d="M38 30 H82 M38 40 H80 M38 48 H76 M38 56 H80 M38 64 H70" stroke="${c("ink", "#2a2118")}" stroke-opacity=".5"/>
+      ${Array.from({ length: Math.min(m.signatures || 0, 6) }, (_, i) => `<path d="M${38 + (i % 2) * 24} ${78 + Math.floor(i / 2) * 8} q5 -5 9 0 t9 0" stroke="${(m.blood || []).includes(i) ? "#8e1512" : esc(m.ink || "#2a2118")}" stroke-width="2" fill="none"/>`).join("")}`);
+    case "banner": return svg(`<path d="M14 22 H106" stroke="#c9a24a" stroke-width="4"/><path d="M18 24 H58 L62 34 L56 46 L63 58 L57 72 L62 84 L58 96 H18Z" fill="${c("left", "#7a2430")}"/>
+      <path d="M58 24 H102 V96 H58 L62 84 L57 72 L63 58 L56 46 L62 34Z" fill="${c("right", "#27456b")}"/><circle cx="38" cy="56" r="10" fill="none" stroke="#d6b35c" stroke-width="3"/><path d="M80 46 V66 M70 56 H90 M73 49 L87 63 M87 49 L73 63" stroke="#d6b35c" stroke-width="3"/>`);
+    case "frame": return svg(`<rect x="18" y="26" width="84" height="64" fill="#6d7985" stroke="#b8943e" stroke-width="7"/><rect x="42" y="52" width="36" height="11" fill="#f6f1e4"/><path d="M46 57.5 H74" stroke="#8c2f23" stroke-width="3"/>`);
+    case "plate": return svg(`<rect x="14" y="30" width="92" height="60" fill="${c("metal", "#9c6b35")}" stroke="#0004" stroke-width="3"/>${[40, 50, 60, 70, 80].map(y => `<path d="M22 ${y} H${70 + (y % 20)}" stroke="#0005" stroke-width="2"/>`).join("")}`);
+    case "tidemarker": return svg(`<path d="M6 70 H114" stroke="#1f3a4f" stroke-width="2"/><rect x="18" y="44" width="84" height="20" fill="${c("metal", "#c7a052")}"/><path d="M24 44 v6 M34 44 v4 M44 44 v6 M54 44 v4 M64 44 v6 M74 44 v4 M84 44 v6 M94 44 v4" stroke="#0006"/><rect x="18" y="80" width="26" height="20" fill="#fbfaf6" stroke="#4f6b8a"/>`);
+    case "blade": return svg(`<path d="M30 62 L104 54 L110 58 L104 62 Z" fill="#aeb4b8"/><path d="M40 60 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3 l3 -3 l3 3" stroke="#0005" fill="none"/><rect x="26" y="48" width="5" height="26" fill="#5b5550"/><path d="M10 61 H26" stroke="#3a2416" stroke-width="7" stroke-linecap="round"/>`);
+    case "mirror": return svg(`<path d="M28 104 V30 M92 104 V30" stroke="#3f5a3c" stroke-width="5"/><ellipse cx="60" cy="56" rx="26" ry="36" fill="${c("glass", "#8fb7a4")}" stroke="${c("frame", "#4f9e76")}" stroke-width="6"/><path d="M76 20 q10 -10 14 4" stroke="#2fb58a" stroke-width="4" fill="none"/>`);
+    case "chair": return svg(`<rect x="40" y="10" width="40" height="56" fill="${c("wood", "#2b1a12")}"/><rect x="48" y="20" width="24" height="36" fill="#5a1f22"/><rect x="52" y="12" width="16" height="5" fill="#b8b2a4"/>
+      <rect x="34" y="64" width="52" height="8" fill="${c("wood", "#2b1a12")}"/><path d="M38 72 V106 M82 72 V106" stroke="${c("wood", "#2b1a12")}" stroke-width="5"/><circle cx="40" cy="10" r="4" fill="${c("metal", "#c9a24a")}"/><circle cx="80" cy="10" r="4" fill="${c("metal", "#c9a24a")}"/>`);
+    case "strikeplate": return svg(`<path d="M20 106 V18 H100 V106" stroke="#3a2a1e" stroke-width="6" fill="none"/><rect x="32" y="32" width="56" height="40" fill="${c("metal", "#b8863b")}"/>${[[42, 42], [56, 50], [70, 40], [48, 62], [76, 60]].map(([x, y]) => `<circle cx="${x}" cy="${y}" r="4" fill="none" stroke="#0006"/>`).join("")}`);
+    case "sink": return svg(`<rect x="36" y="92" width="48" height="14" fill="#55585c"/><rect x="40" y="18" width="40" height="10" fill="#55585c"/><rect x="44" y="28" width="32" height="64" fill="#eaf6ff44" stroke="#b87333"/>
+      <path d="M60 34 q14 10 0 20 q-14 10 0 20 q14 8 0 14" stroke="${c("glow", "#8a4dd6")}" stroke-width="8" fill="none"/><path d="M40 48 H80 M40 62 H80 M40 76 H80" stroke="#b87333" stroke-width="2"/>`, "glow");
+    case "armour": return svg(`<path d="M60 106 V84" stroke="#2d2a27" stroke-width="4"/><path d="M40 30 Q60 22 80 30 L84 50 Q80 76 72 84 H48 Q40 76 36 50Z" fill="${c("metal", "#6d6a66")}"/>
+      <path d="M50 40 l4 8 l-2 8 M68 38 l-3 10 l4 6 M58 60 l3 8" stroke="${c("runes", "#ff7a3c")}" stroke-width="2" fill="none"/><ellipse cx="34" cy="32" rx="11" ry="7" fill="${c("metal", "#6d6a66")}"/><ellipse cx="86" cy="32" rx="11" ry="7" fill="${c("metal", "#6d6a66")}"/>`);
+    case "absence": return svg(`<ellipse cx="60" cy="72" rx="12" ry="22" fill="#050506"/><circle cx="64" cy="44" r="9" fill="#050506"/>`, "absence");
+    default: return svg("");
+  }
+}
+
+/* ================= the cases ================= */
+
+const roomVars = w => {
+  const C = (w && w.colours) || {};
+  return `--wall:${esc(C.wall || "#55504a")};--trim:${esc(C.trim || "#c9a24a")};--light:${esc(C.light || "#fff0d2")}`;
+};
+const firstSentence = s => plain(String(s || "").split(/\.\s/)[0]);
+const doorLabel = g => plain((g.subtitle || g.title).replace(/\s+and\s+the\s+.*$/i, ""));
+const COMPASS = ["north", "north-east", "east", "south-east", "south", "south-west", "west", "north-west"];
+const compass = b => COMPASS[Math.round(((b % 360) + 360) % 360 / 45) % 8];
+
+// Inside a case: the spotlight, the thing on its stand (or hung, or on a dais), the glass, the brass tag.
+function caseInner(it, centre) {
+  const mount = centre ? "centre" : mountOf(it);
+  return `<span class="spot"></span>${mount === "wall" ? `<span class="lamp"></span>` : ""}
+    <span class="stand"></span><span class="piece">${art(it, mount === "wall" ? "xMidYMid" : "xMidYMax")}</span>
+    <span class="glass"></span>`;
+}
+
+function vitrine(it, centre) {
+  const mount = centre ? "centre" : mountOf(it);
+  const text = [it.name, it.accession, it.origin, it.period, it.medium, it.status, it.placard, it.note && it.note.text]
+    .join(" ").toLowerCase();
+  return `<button type="button" class="vitrine m-${mount}" data-item="${esc(it.id)}" data-text="${esc(text)}">
+    <span class="case">${caseInner(it, centre)}<span class="tag">${esc(it.accession)}</span></span>
+    <span class="body"><b>${rich(it.name)}</b><small>${rich(it.origin || "")}</small><span class="chip">${rich(firstSentence(it.status))}</span></span>
+  </button>`;
+}
+
+// The Hall of Absences' dated cases: nothing to open.
+function undated(date) {
+  return `<div class="vitrine m-case undated" data-text="${esc(String(date).toLowerCase())}">
+    <span class="case"><span class="spot"></span><span class="stand"></span><span class="glass"></span><span class="tag">—</span></span>
+    <span class="body"><b>Undescribed</b><small>${rich(date)}</small></span>
+  </div>`;
+}
+
+function roomHTML(w) {
+  const items = itemsIn(w.id);
+  const ordered = CENTRE && w === ROTUNDA ? [CENTRE, ...items.filter(i => i !== CENTRE)] : items;
+  const lede = String(w.intro || "").split(/\n+/).map(p => p.trim()).filter(Boolean)[0] || "";
+  const where = (w.kind || "wing") === "wing" && typeof w.bearing === "number" ? ` · to the ${compass(w.bearing)} of the Rotunda` : "";
+  return `<section class="room kind-${esc(w.kind || "wing")}" id="room-${esc(w.id)}" data-room="${esc(w.id)}" style="${roomVars(w)}">
+    <h2><span>${rich(w.title)}</span></h2>
+    <p class="room-sub">${rich(w.subtitle || "")}${where}</p>
+    <p class="room-text">${rich(lede)} <button type="button" class="link" data-wall="${esc(w.id)}">Read the wall text ›</button></p>
+    <div class="cases">${ordered.map(it => vitrine(it, it === CENTRE)).join("")}${w.kind === "crypt" ? (w.dates || []).map(undated).join("") : ""}</div>
+  </section>`;
+}
+
+/* ================= the placard ================= */
+
+let openId = null, openedFrom = null;  // an item id, or "wall:<room id>"
+
+function placardHTML(it) {
+  const w = wingOf[it.wing] || {};
+  const meta = [["Origin", it.origin], ["Period", it.period], ["Medium", it.medium]]
+    .filter(([, v]) => v).map(([k, v]) => `<dt>${k}</dt><dd>${rich(v)}</dd>`).join("");
+  const note = it.note ? `<div class="note"><h3>${rich(it.note.heading || "")}</h3>${paras(it.note.text)}</div>` : "";
+  const mount = it === CENTRE ? "centre" : mountOf(it);
+  return `<div class="pl-top">
+      <span class="case m-${mount}">${caseInner(it, it === CENTRE)}</span>
+      <div><p class="acc">${esc(it.accession)} · ${rich(w.title || "")}</p><h2 id="pl-name">${rich(it.name)}</h2>
+      ${meta ? `<dl class="meta">${meta}</dl>` : ""}</div>
+    </div>
+    <div class="text">${paras(it.placard)}</div>${note}
+    ${it.status ? `<p class="status">${rich(it.status)}</p>` : ""}`;
+}
+
+function wallHTML(w) {
+  const list = itemsIn(w.id).map(i => `<li><span class="acc">${esc(i.accession)}</span><button type="button" class="link" data-item="${esc(i.id)}">${rich(i.name)}</button></li>`).join("");
+  return `<p class="acc">Wall text</p>
+    <h2 id="pl-name">${rich(w.title)}</h2>
+    <p class="sub">${rich(w.subtitle || "")}</p>
+    <div class="text">${paras(w.intro)}</div>
+    ${list ? `<ul class="in-wing">${list}</ul>` : ""}`;
+}
+
+function setHash(h) {
+  history.replaceState(null, "", h ? `#${h}` : location.pathname + location.search);
+}
+
+function showPlacard(id) {
+  const wall = id.startsWith("wall:") ? wingOf[id.slice(5)] : null;
+  const it = wall ? null : itemOf[id];
+  if (!wall && !it) return;
+  if (!openId) openedFrom = document.activeElement;
+  openId = id;
+  const reveal = $("#reveal");
+  reveal.setAttribute("style", roomVars(wall || wingOf[it.wing]));
+  $("#pl-body").innerHTML = wall ? wallHTML(wall) : placardHTML(it);
+  $("#pl-body").scrollTop = 0;
+  reveal.hidden = false;
+  document.body.classList.add("reading");
+  $("#pl-close").focus({ preventScroll: true });
+  setHash(id.replace(":", "-"));
+  // Behind it, bring its case into view, so closing it leaves you there.
+  const card = it ? document.querySelector(`.vitrine[data-item="${CSS.escape(it.id)}"]`) : document.getElementById(`room-${wall.id}`);
+  if (card && !card.hidden) card.scrollIntoView({ block: it ? "center" : "start" });
+}
+
+function closePlacard() {
+  if ($("#reveal").hidden) return;
+  $("#reveal").hidden = true;
+  document.body.classList.remove("reading");
+  openId = null;
+  setHash("");
+  if (openedFrom && openedFrom.focus) openedFrom.focus({ preventScroll: true });
+}
+
+// ‹ Previous / Next › go through each room's wall text, then its cases.
+const ORDER = WINGS.flatMap(w => [`wall:${w.id}`, ...itemsIn(w.id).map(i => i.id)]);
+function step(by) {
+  if (!openId) return;
+  const i = ORDER.indexOf(openId);
+  showPlacard(ORDER[(i + by + ORDER.length) % ORDER.length]);
+}
+
+$("#pl-close").addEventListener("click", closePlacard);
+$("#rv-backdrop").addEventListener("click", closePlacard);
+$("#pl-prev").addEventListener("click", () => step(-1));
+$("#pl-next").addEventListener("click", () => step(1));
+$("#pl-body").addEventListener("click", ev => {
+  const b = ev.target.closest("[data-item]");
+  if (b) showPlacard(b.dataset.item);
+});
+document.addEventListener("keydown", ev => {
+  if ($("#reveal").hidden) return;
+  if (ev.key === "Escape") closePlacard();
+  if (ev.key === "ArrowLeft" && !ev.target.closest("input")) step(-1);
+  if (ev.key === "ArrowRight" && !ev.target.closest("input")) step(1);
+});
+
+/* ================= the plan ================= */
+
+// The building from above, north up: the rotunda, a wing out toward each
+// nation (longer for more cases), the stair, and the crypt's outline beneath.
+function planSVG() {
+  const R = 13, out = [];
+  const pt = (b, r) => [Math.sin(b * Math.PI / 180) * r, -Math.cos(b * Math.PI / 180) * r];
+  const f = n => n.toFixed(1);
+  if (CRYPT) out.push(`<g class="p-room p-crypt" data-room="${esc(CRYPT.id)}"><title>${esc(plain(CRYPT.title))}</title><circle r="${R + 5}"/></g>`);
+  for (const g of GALLERIES) {
+    const b = g.bearing ?? 0, C = g.colours || {};
+    const len = Math.min(28, 12 + itemsIn(g.id).length * 2.8);
+    // The label sits just past the wing's end, reading away from it.
+    const [lx, ly] = pt(b, R + len + 4);
+    const side = Math.sin(b * Math.PI / 180), anchor = side > .35 ? "start" : side < -.35 ? "end" : "middle";
+    out.push(`<g class="p-room" data-room="${esc(g.id)}"><title>${esc(plain(g.title))}: ${esc(plain(g.subtitle || ""))}</title>
+      <g transform="rotate(${b})"><rect x="-5.5" y="${f(-(R + len))}" width="11" height="${f(len + 3)}" rx="1.2" style="fill:${esc(C.wall || "#666")};stroke:${esc(C.trim || "#c9a24a")}"/>
+      <path d="M0 ${f(-(R + len - 2.4))} l-2 5 h4z" style="fill:${esc(C.trim || "#c9a24a")}"/></g>
+      <text x="${f(lx)}" y="${f(ly + 1.5 + (anchor === "middle" ? Math.sign(ly) * 2.5 : 0))}" text-anchor="${anchor}">${esc(doorLabel(g).replace(/^The /, ""))}</text></g>`);
+  }
+  if (ROTUNDA) {
+    const C = ROTUNDA.colours || {};
+    const [sx, sy] = pt(36, 8);
+    out.push(`<g class="p-room p-rot" data-room="${esc(ROTUNDA.id)}"><title>${esc(plain(ROTUNDA.title))}</title>
+      <circle r="${R}" style="fill:${esc(C.wall || "#e6ddca")};stroke:${esc(C.trim || "#c9a24a")}"/>
+      <circle r="${R - 2.2}" class="p-ring"/><circle r="1.8" class="p-centre"/>
+      ${CRYPT ? `<rect x="-1.6" y="-4" width="3.2" height="8" transform="translate(${f(sx)} ${f(sy)}) rotate(36)" class="p-stair"/>` : ""}
+      <text y="6.5">Rotunda</text></g>`);
+  }
+  out.push(`<g class="p-north" transform="translate(52 -52)"><path d="M0 -6 L3 4 L0 2 L-3 4Z"/><text y="10">N</text></g>`);
+  return out.join("");
+}
+
+/* ================= the page ================= */
+
+const M = DATA.memoria || {};
+$("#brand-name").textContent = M.name || "The Threadmint Memoria";
+$("#brand-sub").textContent = M.subtitle || "";
+$("#tier").textContent = M.tier || "";
+$("#title").textContent = M.title || M.name || "The Memoria";
+$("#intro").innerHTML = paras(M.intro);
+$("#count").textContent = `${ITEMS.length} exhibits · ${WINGS.length} rooms`;
+$("#tabs").innerHTML = [["all", "All rooms"], ...WINGS.map(w => [w.id, plain(w.title)])]
+  .map(([id, label]) => `<button type="button" data-room="${esc(id)}" aria-pressed="${id === "all"}">${esc(label)}</button>`).join("");
+$("#plan").innerHTML = planSVG();
+$("#rooms").innerHTML = WINGS.map(roomHTML).join("");
+
+function applyFilter() {
+  const q = state.q.trim().toLowerCase();
+  let shown = 0;
+  for (const sec of document.querySelectorAll(".room")) {
+    const inRoom = state.room === "all" || sec.dataset.room === state.room;
+    let hits = 0;
+    for (const v of sec.querySelectorAll(".vitrine")) {
+      const hit = inRoom && (!q || v.dataset.text.includes(q));
+      v.hidden = !hit;
+      if (hit) hits++;
+    }
+    sec.hidden = !inRoom || (q !== "" && hits === 0);
+    if (!sec.hidden) shown++;
+  }
+  $("#no-results").hidden = shown > 0;
+  for (const b of $("#tabs").children) b.setAttribute("aria-pressed", String(b.dataset.room === state.room));
+  for (const g of $("#plan").querySelectorAll(".p-room")) g.classList.toggle("on", g.dataset.room === state.room);
+}
+
+$("#tabs").addEventListener("click", ev => {
+  const b = ev.target.closest("button[data-room]");
+  if (!b) return;
+  state.room = b.dataset.room;
+  applyFilter();
+});
+$("#plan").addEventListener("click", ev => {
+  const g = ev.target.closest("[data-room]");
+  if (!g) return;
+  state.room = g.dataset.room;
+  applyFilter();
+  document.getElementById(`room-${g.dataset.room}`)?.scrollIntoView({ behavior: state.animate ? "smooth" : "auto", block: "start" });
+});
+$("#q").addEventListener("input", ev => { state.q = ev.target.value; applyFilter(); });
+$("#rooms").addEventListener("click", ev => {
+  const b = ev.target.closest("[data-item], [data-wall]");
+  if (b) showPlacard(b.dataset.item || `wall:${b.dataset.wall}`);
+});
+$("#home").addEventListener("click", ev => {
+  ev.preventDefault();
+  closePlacard();
+  state.room = "all";
+  state.q = $("#q").value = "";
+  applyFilter();
+  scrollTo({ top: 0, behavior: state.animate ? "smooth" : "auto" });
+});
+
+$("#animate").checked = state.animate;
+document.body.classList.toggle("still", !state.animate);
+$("#animate").addEventListener("change", ev => {
+  state.animate = ev.target.checked;
+  storage("memoria.animate", state.animate ? "on" : "off");
+  document.body.classList.toggle("still", !state.animate);
+});
+
+/* ================= starting up ================= */
+
+function openFromHash() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (itemOf[h]) showPlacard(h);
+  else if (h.startsWith("wall-") && wingOf[h.slice(5)]) showPlacard(`wall:${h.slice(5)}`);
+}
+applyFilter();
+let place = null;
+try { place = JSON.parse(sessionStorage.getItem("memoria.place") || "null"); sessionStorage.removeItem("memoria.place"); } catch { /* none */ }
+if (place) scrollTo(0, place.y || 0);
+openFromHash();
+addEventListener("hashchange", openFromHash);
+
+if (LIVE) {
+  setInterval(async () => {
+    try {
+      const { version } = await (await fetch("/version", { cache: "no-store" })).json();
+      if (version === DATA.version) return;
+      try { sessionStorage.setItem("memoria.place", JSON.stringify({ y: scrollY })); } catch { /* private mode */ }
+      location.reload();
+    } catch { /* server stopped or restarting; try again next tick */ }
+  }, 1500);
+}
+</script>
+</body>
+</html>

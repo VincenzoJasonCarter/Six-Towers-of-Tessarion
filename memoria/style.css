@@ -1,0 +1,296 @@
+:root {
+  --bg: #f3ede1;
+  --panel: #fbf8f1;
+  --ink: #2a241d;
+  --muted: #6f6557;
+  --rule: #d8cdb8;
+  --accent: #8c2f23;
+  --accent-soft: #f1ddd5;
+  --redact: #2a241d;
+  /* the gallery: plaster walls in panels, lamplight from above, walnut cases */
+  --plaster: #e8dfcb;
+  --lamp: rgb(255 238 196 / .6);
+  --vignette: rgb(70 52 28 / .22);
+  --label: #f8f3e6;
+  --frame: #3b2a1c;
+  --frame-hi: #6b4a30;
+  --brass-hi: #f0d997;
+  --brass: #d9bb70;
+  --brass-lo: #a9843a;
+  --brass-ink: #3a2a10;
+  --serif: "EB Garamond", Georgia, "Times New Roman", serif;
+  --display: "Cormorant Garamond", "EB Garamond", Georgia, serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
+    --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520; --redact: #e9e1d0;
+    --plaster: #221d17; --lamp: rgb(255 214 150 / .1); --vignette: rgb(0 0 0 / .55);
+    --label: #201c17; --frame: #120d08; --frame-hi: #4a3322;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
+  --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520; --redact: #e9e1d0;
+  --plaster: #221d17; --lamp: rgb(255 214 150 / .1); --vignette: rgb(0 0 0 / .55);
+  --label: #201c17; --frame: #120d08; --frame-hi: #4a3322;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
+/* The gallery wall: plaster in raised panels, lit from above, darker toward the edges. */
+body {
+  margin: 0; color: var(--ink); font: 18px/1.6 var(--serif);
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 30%, transparent 55%, var(--vignette)) fixed,
+    radial-gradient(ellipse 70% 520px at 50% 0, var(--lamp), transparent 75%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='360'%3E%3Crect x='22' y='22' width='256' height='316' rx='2' fill='%23000' fill-opacity='.025'/%3E%3Crect x='22' y='22' width='256' height='316' rx='2' fill='none' stroke='%23000' stroke-opacity='.11' stroke-width='2'/%3E%3Crect x='25.5' y='25.5' width='249' height='309' fill='none' stroke='%23fff' stroke-opacity='.16'/%3E%3Crect x='34' y='34' width='232' height='292' fill='none' stroke='%23000' stroke-opacity='.05'/%3E%3C/svg%3E") 0 0 / 300px 360px,
+    var(--plaster);
+}
+body.reading { overflow: hidden; }
+a { color: var(--accent); }
+button, input { font: inherit; color: inherit; }
+[hidden] { display: none !important; }
+
+/* ---------- top bar ---------- */
+.top {
+  position: sticky; top: 0; z-index: 5;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px;
+  padding: 12px 24px; background: var(--panel); border-bottom: 1px solid var(--rule);
+}
+.brand { text-decoration: none; color: var(--ink); margin-right: auto; }
+.brand b { font: 700 26px/1 var(--display); letter-spacing: .01em; }
+.brand span { display: block; font-size: 13px; color: var(--muted); font-style: italic; }
+.search {
+  width: min(320px, 100%); padding: 7px 12px; border: 1px solid var(--rule);
+  border-radius: 6px; background: var(--bg); font: 15px var(--sans);
+}
+.switch { display: flex; align-items: center; gap: 8px; font: 14px var(--sans); color: var(--muted); cursor: pointer; user-select: none; }
+.switch input { accent-color: var(--accent); width: 16px; height: 16px; }
+
+main { padding: 32px 48px 80px; min-width: 0; }
+.front { max-width: 1200px; margin: 0 auto; }
+.error {
+  max-width: 1200px; margin: 0 auto 20px; padding: 12px 16px; border-radius: 8px; background: #fbe3dc; color: #5a1a10;
+  border: 1px solid #d9432f; font: 14px/1.5 ui-monospace, Consolas, monospace; white-space: pre-wrap;
+}
+
+/* ---------- the front: intro and the plan ---------- */
+.hero { display: flex; align-items: flex-start; gap: 40px; }
+.intro { flex: 1; max-width: 760px; }
+.tier { margin: 0; font: 13px var(--sans); color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
+#count { text-transform: none; margin-top: 10px; }
+h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
+#intro p { margin: 0 0 .6em; }
+.tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 0 0; }
+.tabs button {
+  border: 1px solid var(--rule); background: color-mix(in srgb, var(--panel) 70%, transparent); border-radius: 999px;
+  padding: 3px 11px; font: 13px var(--sans); cursor: pointer; color: var(--muted);
+}
+.tabs button:hover { color: var(--ink); border-color: var(--muted); }
+.tabs button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+
+/* The plan: a brass-rimmed medallion hung on the wall. */
+.plan { flex: none; width: 290px; margin: -6px 0 0; display: flex; flex-direction: column; align-items: center; }
+.plan::before { content: ""; width: 2px; height: 26px; background: linear-gradient(180deg, transparent, var(--brass-lo)); }
+.plan svg {
+  display: block; width: 100%; aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 50% 42%, #f7efd9, #e6d6b0 70%, #cdb888);
+  box-shadow: 0 0 0 6px var(--brass), 0 0 0 7px var(--brass-lo), 0 0 0 11px var(--frame), 0 16px 30px rgb(0 0 0 / .35),
+    inset 0 0 26px rgb(90 60 20 / .35);
+}
+.plan figcaption { margin-top: 18px; font: 600 11px var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.p-room { cursor: pointer; }
+.p-room rect, .p-room circle { stroke-width: .9; transition: filter .2s; }
+.p-room:hover rect, .p-room:hover > circle, .p-room.on rect, .p-room.on > circle { filter: brightness(1.25) drop-shadow(0 0 1.5px #fff8); }
+.p-crypt circle { fill: none; stroke: #5b6470; stroke-dasharray: 2 1.6; }
+.p-ring { fill: none; stroke: #0002; stroke-width: .5 !important; }
+.p-centre { fill: #fff8e0; stroke: #a9843a; }
+.p-stair { fill: #5b6470; }
+.plan text { font: 700 4.4px var(--display); fill: #3a2a10; letter-spacing: .1px; pointer-events: none; }
+.p-rot text, .p-north text { text-anchor: middle; }
+.p-rot text { font: 600 2.8px var(--sans); letter-spacing: .5px; text-transform: uppercase; fill: #6b5220; }
+.p-north path { fill: #8c2f23; }
+.p-north text { font: 700 4px var(--sans); fill: #8c2f23; }
+
+/* ---------- a room: its name on a brass plate bolted to a rail in its colour ---------- */
+.room { margin-top: 56px; }
+.room h2 { display: flex; align-items: center; gap: 14px; margin: 0 0 8px; font: 700 21px/1 var(--display); }
+.room h2 span {
+  padding: 6px 16px 5px; border-radius: 3px; color: var(--brass-ink); letter-spacing: .03em; white-space: nowrap;
+  background: linear-gradient(180deg, var(--brass-hi), var(--brass) 45%, var(--brass-lo));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), inset 0 -1px 0 rgb(0 0 0 / .2), 0 2px 5px rgb(0 0 0 / .35);
+}
+.room h2::after {
+  content: ""; flex: 1; height: 9px; border-radius: 2px;
+  background:
+    radial-gradient(circle, color-mix(in srgb, var(--trim) 50%, #fff) 0 1.6px, transparent 2.2px) 0 50% / 36px 9px repeat-x,
+    linear-gradient(180deg, color-mix(in srgb, var(--trim) 70%, #fff), var(--trim) 45%, color-mix(in srgb, var(--trim) 45%, #000));
+  box-shadow: 0 2px 4px rgb(0 0 0 / .3);
+}
+.kind-crypt h2 span { color: #20242a; background: linear-gradient(180deg, #eef1f4, #b8c0c9 45%, #7d8792); }
+.room-sub { margin: 0 0 4px; font-style: italic; color: var(--muted); }
+.room-text { max-width: 760px; margin: 0 0 24px; font-size: 16.5px; }
+.link { border: 0; padding: 0; background: none; color: var(--accent); cursor: pointer; text-align: left; font: inherit; }
+.link:hover, .link:focus-visible { text-decoration: underline; outline: none; }
+
+/* ---------- a vitrine: a lit case in a walnut frame, its tag, its label ---------- */
+.cases { display: grid; grid-template-columns: repeat(auto-fill, minmax(196px, 1fr)); gap: 28px; padding: 0 6px; }
+.vitrine {
+  position: relative; display: flex; flex-direction: column; padding: 0; border: 0; border-radius: 5px; overflow: hidden;
+  background: var(--label); color: var(--ink); text-align: left; cursor: pointer;
+  box-shadow: 0 0 0 5px var(--frame), 0 0 0 6px #0009, inset 0 0 0 1px var(--frame-hi), 0 14px 26px -8px rgb(0 0 0 / .5);
+  transition: transform .2s, box-shadow .2s;
+}
+.vitrine:hover, .vitrine:focus-visible {
+  transform: translateY(-3px); outline: none;
+  box-shadow: 0 0 0 5px var(--frame), 0 0 0 6px var(--accent), 0 20px 32px -8px rgb(0 0 0 / .55);
+}
+.vitrine.undated { cursor: default; }
+.vitrine.undated:hover { transform: none; box-shadow: 0 0 0 5px var(--frame), 0 0 0 6px #0009, 0 14px 26px -8px rgb(0 0 0 / .5); }
+
+/* The case: the room's colour, deepened, with a spotlight falling on the thing and a shelf under it. */
+.case {
+  position: relative; display: block; aspect-ratio: 1 / 1.02; overflow: hidden; border-bottom: 5px solid var(--frame);
+  background:
+    radial-gradient(ellipse 50% 60% at 50% -4%, color-mix(in srgb, var(--light) 60%, transparent), transparent 72%),
+    linear-gradient(180deg, color-mix(in srgb, var(--wall) 50%, #000), color-mix(in srgb, var(--wall) 80%, #000) 62%, color-mix(in srgb, var(--wall) 40%, #000));
+}
+.case::after { /* the shelf, velvet-covered, catching the light */
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 17%;
+  background:
+    radial-gradient(ellipse 45% 70% at 50% 0, color-mix(in srgb, var(--light) 30%, transparent), transparent 75%),
+    linear-gradient(180deg, color-mix(in srgb, var(--wall) 55%, #000), color-mix(in srgb, var(--wall) 30%, #000));
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--light) 25%, transparent);
+}
+.spot {
+  position: absolute; left: 10%; right: 10%; top: 0; bottom: 17%; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--light) 30%, transparent), color-mix(in srgb, var(--light) 7%, transparent) 75%, transparent);
+  clip-path: polygon(40% 0, 60% 0, 100% 100%, 0 100%); mix-blend-mode: screen; opacity: .75; transition: opacity .25s;
+}
+.vitrine:hover .spot { opacity: 1; }
+.stand { /* a small plinth for things in a case */
+  position: absolute; z-index: 2; left: 33%; right: 33%; bottom: 17%; height: 9%;
+  background:
+    linear-gradient(180deg, var(--brass) 0 3px, var(--brass-lo) 3px 4px, transparent 4px),
+    linear-gradient(90deg, #6d655a, #b9ae9a 40%, #968b78 65%, #5a5249);
+  box-shadow: 0 6px 8px -3px rgb(0 0 0 / .6);
+}
+.piece { position: absolute; z-index: 3; left: 17%; right: 17%; top: 12%; bottom: 26%; display: block; }
+.art { display: block; width: 100%; height: 100%; overflow: visible; filter: drop-shadow(0 5px 5px rgb(0 0 0 / .55)); transition: transform .3s ease; }
+.vitrine:hover .art { transform: translateY(-3px) scale(1.05); }
+.glass { /* reflections on the front pane */
+  position: absolute; inset: 0; z-index: 4; pointer-events: none;
+  background: linear-gradient(118deg, rgb(255 255 255 / .16), rgb(255 255 255 / .03) 28%, transparent 30%, rgb(255 255 255 / .09) 33%, transparent 45%);
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / .12), inset 0 0 34px rgb(0 0 0 / .4);
+}
+/* hung on the back wall, under a picture light */
+.m-wall .stand { display: none; }
+.m-wall .piece { top: 19%; bottom: 23%; left: 12%; right: 12%; }
+.lamp {
+  position: absolute; z-index: 5; left: 34%; right: 34%; top: 8%; height: 5px; border-radius: 3px;
+  background: linear-gradient(180deg, var(--brass-hi), var(--brass-lo));
+  box-shadow: 0 4px 26px 8px color-mix(in srgb, var(--light) 30%, transparent);
+}
+/* big things stand on a round dais */
+.m-floor .stand { left: 16%; right: 16%; bottom: 12%; height: 9%; border-radius: 50%;
+  background: radial-gradient(ellipse at 50% 35%, #cfc4ae, #8f8574 70%, #5d564b); box-shadow: 0 0 0 2px var(--trim), 0 6px 10px rgb(0 0 0 / .5); }
+.m-floor .piece { top: 8%; bottom: 18%; left: 10%; right: 10%; }
+/* the Empty Case: a stronger light, nothing in it */
+.m-centre .spot { opacity: 1; left: 0; right: 0; background: linear-gradient(180deg, rgb(255 246 222 / .55), rgb(255 246 222 / .12) 75%, transparent); clip-path: polygon(34% 0, 66% 0, 100% 100%, 0 100%); }
+.m-centre .stand { left: 26%; right: 26%; height: 14%; }
+
+.tag { /* the accession number, on a brass tag at the foot of the case */
+  position: absolute; z-index: 5; left: 50%; bottom: 4.5%; translate: -50% 0; padding: 1px 9px 2px; border-radius: 3px;
+  font: 700 12.5px/1.4 ui-monospace, Consolas, "Courier New", monospace; letter-spacing: .06em; color: var(--brass-ink); white-space: nowrap;
+  background: linear-gradient(180deg, var(--brass-hi), var(--brass) 50%, var(--brass-lo));
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), 0 2px 4px rgb(0 0 0 / .5);
+}
+.kind-crypt .tag { background: linear-gradient(180deg, #eef1f4, #b8c0c9 50%, #7d8792); color: #20242a; }
+
+/* The label: pinned at the corners, like the rest of the Threadmint's. */
+.vitrine .body {
+  padding: 10px 14px 12px; display: flex; flex-direction: column; gap: 3px; flex: 1;
+  background:
+    radial-gradient(circle at 7px 7px, var(--brass-lo) 0 2px, transparent 2.6px),
+    radial-gradient(circle at calc(100% - 7px) 7px, var(--brass-lo) 0 2px, transparent 2.6px),
+    radial-gradient(circle at 7px calc(100% - 7px), var(--brass-lo) 0 2px, transparent 2.6px),
+    radial-gradient(circle at calc(100% - 7px) calc(100% - 7px), var(--brass-lo) 0 2px, transparent 2.6px);
+}
+.vitrine .body b { font: 700 20px/1.15 var(--display); }
+.vitrine .body small { font: 12.5px/1.4 var(--sans); color: var(--muted); }
+.chip {
+  align-self: flex-start; max-width: 100%; margin-top: auto; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--rule);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  font: 11.5px/1.5 var(--sans); color: var(--muted);
+}
+.undated .body b { color: var(--muted); font-style: italic; font-weight: 600; }
+.empty-search { padding: 40px 0; text-align: center; color: var(--muted); font-style: italic; }
+
+/* ---------- the placard ---------- */
+.reveal { position: fixed; inset: 0; z-index: 20; display: grid; place-items: center; padding: 24px; }
+.rv-backdrop { position: absolute; inset: 0; background: rgb(24 18 12 / .62); backdrop-filter: blur(2px); animation: fade .25s ease-out; }
+.placard {
+  position: relative; width: min(660px, 100%); max-height: calc(100dvh - 48px); display: flex; flex-direction: column;
+  border-radius: 6px; overflow: hidden; background: var(--label);
+  box-shadow: 0 0 0 6px var(--frame), 0 0 0 7px #000a, 0 30px 70px rgb(0 0 0 / .55);
+  animation: rise .28s cubic-bezier(.2, .8, .3, 1);
+}
+.placard::before { content: ""; display: block; height: 6px; flex: none; background: linear-gradient(180deg, var(--brass-hi), var(--brass-lo)); }
+@keyframes fade { from { opacity: 0; } }
+@keyframes rise { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+.pl-body { flex: 1; overflow: auto; padding: 20px 28px 12px; }
+.pl-top { display: grid; grid-template-columns: 170px 1fr; gap: 22px; align-items: start; margin-bottom: 6px; }
+.pl-top .case { border-radius: 4px; border-bottom-width: 4px; box-shadow: 0 0 0 4px var(--frame), 0 8px 16px rgb(0 0 0 / .35); }
+.x {
+  position: absolute; top: 12px; right: 12px; z-index: 1; width: 34px; height: 34px; border: 0; border-radius: 50%;
+  background: none; font: 26px/1 var(--serif); color: var(--muted); cursor: pointer;
+}
+.x:hover, .x:focus-visible { background: var(--accent-soft); color: var(--accent); outline: none; }
+.acc { margin: 0 36px 2px 0; font: 600 12px/1.3 var(--sans); letter-spacing: .16em; text-transform: uppercase; color: var(--brass-lo); }
+.pl-body h2 { margin: 0 30px 2px 0; font: 700 32px/1.05 var(--display); }
+.pl-body .sub { margin: 0 0 10px; font-style: italic; color: var(--muted); }
+.meta { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; margin: 12px 0 0; padding: 10px 0 0; border-top: 1px solid var(--rule); font-size: 15px; line-height: 1.4; }
+.meta dt { font: 600 11px/1.9 var(--sans); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.meta dd { margin: 0; }
+.text { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.text p { margin: 0 0 .8em; }
+.note { margin: 16px 0 6px; padding: 12px 14px; border-radius: 6px; background: color-mix(in srgb, var(--plaster) 60%, var(--label)); border: 1px dashed var(--rule); }
+.note h3 { margin: 0 0 4px; font: 600 12px/1.4 var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.note p { margin: 0 0 .5em; font-size: 16.5px; }
+.status { margin: 14px 0 4px; font: 600 12.5px/1.45 var(--sans); letter-spacing: .04em; color: var(--accent); }
+.redact { background: var(--redact); color: transparent; border-radius: 1px; user-select: none; }
+.in-wing { list-style: none; margin: 14px 0 0; padding: 12px 0 0; border-top: 1px solid var(--rule); }
+.in-wing li { display: flex; gap: 12px; align-items: baseline; margin: 2px 0; }
+.in-wing .acc { margin: 0; flex: none; width: 6em; font-size: 10.5px; }
+.pl-nav { display: flex; justify-content: space-between; gap: 8px; padding: 10px 16px 12px; border-top: 1px solid var(--rule); }
+.pl-nav button { border: 1px solid var(--rule); background: var(--bg); border-radius: 999px; padding: 3px 14px 4px; font: 14px var(--sans); cursor: pointer; }
+.pl-nav button:hover, .pl-nav button:focus-visible { border-color: var(--accent); background: var(--accent-soft); outline: none; }
+
+/* ---------- a little life, while Animate is on ---------- */
+.art.pulse { animation: pulse 1.3s ease-in-out infinite; }
+.art.glow { animation: glow 3.2s ease-in-out infinite; }
+@keyframes pulse { 0%, 30%, 100% { filter: drop-shadow(0 5px 5px rgb(0 0 0 / .55)); } 10%, 22% { filter: drop-shadow(0 0 10px rgb(255 70 70 / .85)); } }
+@keyframes glow { 50% { filter: drop-shadow(0 0 10px rgb(255 240 200 / .75)); } }
+.art.absence { opacity: .45; }
+.art.prism { filter: drop-shadow(0 0 10px rgb(160 120 255 / .55)); }
+body.still .art, body.still .placard, body.still .rv-backdrop { animation: none; }
+body.still .vitrine, body.still .art { transition: none; }
+
+/* ---------- narrow screens ---------- */
+@media (max-width: 860px) {
+  .hero { flex-direction: column-reverse; align-items: stretch; gap: 8px; }
+  .plan { width: 220px; align-self: center; }
+}
+@media (max-width: 640px) {
+  main { padding: 20px 16px 60px; }
+  .top { padding: 10px 16px; }
+  h1 { font-size: 34px; }
+  .cases { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
+  .vitrine .body b { font-size: 17px; }
+  .reveal { padding: 10px; }
+  .pl-body { padding: 16px 18px 10px; }
+  .pl-top { grid-template-columns: 110px 1fr; gap: 14px; }
+  .pl-body h2 { font-size: 26px; }
+}

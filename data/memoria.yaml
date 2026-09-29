@@ -1,0 +1,790 @@
+# =============================================================================
+# The Threadmint Memoria: the museum of Tessarion's history
+#
+# Browse it live with `make memoria` (uv run memoria/serve.py); the page
+# rereads this file and reloads itself whenever it is saved.
+#
+# Structure
+#   memoria:  the museum's name and the line under it; the front page's
+#             tier line, title and intro
+#   wings:    the rooms, in the order the directory lists them
+#     id, title, subtitle, intro (the wall text at the wing's entrance)
+#     kind:     rotunda (the domed hall in the middle, over the Meridian
+#               Spire), crypt (the Hall of Absences, down the stair under
+#               the rotunda) or wing (the default)
+#     bearing:  a wing's compass direction from the rotunda, in degrees
+#               clockwise from north; it places the wing's doorway in the
+#               rotunda's ring, which runs in compass order.
+#     code:     the letter in its items' accession numbers (TM-W-03)
+#     colours:  wall, trim (cornices, emblem, lettering), floor (two tiles),
+#               light (the lamps' colour)
+#     dates:    crypt only: the date placards on its empty cases
+#   items:    the exhibits. Each stands round its room's ring in the order
+#             listed here; a room's ring grows to fit more.
+#     id:       also its link (#charter-of-the-six)
+#     place:    centre, for the one exhibit under the dome
+#     model:    how it is drawn: a `type` (see memoria/README.md for the list)
+#               and that type's colours or options
+#     origin, period, medium, status: the placard's small print
+#     placard:  the placard itself, in the Threadmint's official voice.
+#               *Italics* work; ████ shows as a redaction bar.
+#     note:     an optional second placard displayed beside the first
+#               (heading + text)
+#
+# The placards are the in-world official text: what the Memoria is willing
+# to say. What is actually going on is the DM's business.
+# =============================================================================
+
+memoria:
+  name: The Threadmint Memoria
+  subtitle: Objects of the History of Tessarion, Displayed for Public Instruction
+  tier: "Threadmint Library · Crownweave · Access tier: Public"
+  title: The Memoria
+  intro: >-
+    The objects of Tessarion's history, kept on public display and arranged
+    as Crownweave is arranged: a rotunda above the Meridian Spire, a wing
+    toward each of the Tower-nations, and beneath them a hall for what is not
+    remembered. Each case carries its placard as the Memoria is permitted to
+    give it. Where the record has been withheld, the withholding is displayed.
+
+wings:
+
+  - id: rotunda
+    kind: rotunda
+    code: R
+    title: The Rotunda
+    subtitle: Crownweave and the Meridian
+    colours: { wall: "#e6ddca", trim: "#c9a24a", floor: ["#efe7d6", "#d6c8ad"], light: "#fff0d2" }
+    intro: >-
+      The Rotunda stands, as the city does, above the Meridian Spire. The
+      objects exhibited beneath the dome concern the founding of Crownweave
+      and the human peoples of the Hexaspire basin, and are arranged about
+      the one case the Memoria has never been able to fill.
+
+      The five wings open from the Rotunda in the directions of the five
+      Tower-nations, as the Weaves of the city do. The Hall of Absences lies
+      below, by the north-east stair. Visitors are reminded that
+      the Memoria displays the officially recognised understanding of the
+      history of Tessarion, as maintained by the Threadmint Library and
+      affiliated civic institutions. Local accounts may differ in emphasis.
+
+  - id: absences
+    kind: crypt
+    code: A
+    title: The Hall of Absences
+    subtitle: Beneath the Rotunda
+    colours: { wall: "#3b3f45", trim: "#8f9aa6", floor: ["#34373c", "#2b2e33"], light: "#bcd3ff" }
+    intro: >-
+      This hall holds the Memoria's record of events for which no object,
+      account or witness survives: only a date, and the certainty that
+      something took place on it. The Collegium of Loom Studies classes such
+      events as *memory discontinuities*. Populations that live through them
+      keep no coherent account of what began them, only records of absence.
+
+      The cases in this hall are not empty through neglect. They are
+      inspected daily. Visitors are asked to keep to the aisle, and not to
+      remark on the contents of any case to other visitors.
+    dates:
+      - "The 9th Tenday of Frost, Cycle ███"
+      - "The Night of the Low Tide, Cycle ██"
+      - "████ (date withdrawn)"
+      - "The 2nd Day after the Western Gale"
+      - "Cycle ███, the whole of the season of Ash"
+      - "The Morning of the Second Weaving"
+      - "The 14th Tenday, Cycle ██ (twice)"
+      - "The Hour the Everstorm Stood Still"
+      - "████████, Cycle ███"
+      - "The Day Before the Charter"
+
+  - id: thalvireth
+    code: W
+    bearing: 288
+    title: The West Wing
+    subtitle: Thal'vireth and the Verdant Tower
+    colours: { wall: "#2c4a39", trim: "#8fd1a7", floor: ["#d9d6c4", "#b9b8a2"], light: "#dfffe6" }
+    intro: >-
+      The West Wing faces, as Skyloom does, across the western sea toward
+      Thal'vireth and the Verdant Tower. Objects from Thal'vireth are
+      exhibited under the First Sylvan Compact and remain the property of the
+      High Priestess's Curia, which may recall them at any time, and has
+      twice recalled one before it was lent.
+
+      Some objects in this wing do not keep ordinary time. Docents will not
+      adjust them. *Spend your years as you would spend another's.*
+
+  - id: iron-hordes
+    code: S
+    bearing: 216
+    title: The South Wing
+    subtitle: The Iron Hordes and the Red Tower
+    colours: { wall: "#4f2620", trim: "#e0714f", floor: ["#3b3431", "#2d2724"], light: "#ffd2b0" }
+    intro: >-
+      The South Wing faces, as Emberweave does, across the water toward the
+      Iron Hordes and the Red Tower, whose stone is stained like dried blood.
+      The orcs of the south carve their history into scars and steel, and
+      much of it is exhibited here in the form in which it was written.
+
+      Objects in this wing are loud by reputation. The Memoria asks that
+      visitors be quiet in it regardless.
+
+  - id: khazrund
+    code: K
+    bearing: 72
+    title: The North-East Wing
+    subtitle: Khazrund and the Deep Tower
+    colours: { wall: "#2d2a27", trim: "#e3a53c", floor: ["#4a4642", "#3a3632"], light: "#ffe2a8" }
+    intro: >-
+      The North-East Wing faces, as Northreach does, toward Khazrund and the
+      Deep Tower, a column of black rock veined with gleaming ore. The dwarves
+      of Khazrund stack their cities downward and speak their prayers in the
+      language of hammers. The dwarves of Northreach keep Crownweave from
+      screaming.
+
+      Every object in this wing is within tolerance. Visitors wishing to know
+      which tolerance may consult a docent.
+
+  - id: emberfall
+    code: E
+    bearing: 144
+    title: The East Wing
+    subtitle: Emberfall and the Ashen Tower
+    colours: { wall: "#35243f", trim: "#c49be8", floor: ["#2f2a33", "#25212a"], light: "#ecd8ff" }
+    intro: >-
+      The East Wing faces, as Stormwake does, toward Emberfall and the Ashen
+      Tower. In Emberfall, deals are struck in whispers and ink, and truth is
+      one of many acceptable currencies.
+
+      Every object in this wing arrived by sea, and every one has passed
+      through the Assay Line, the Tidecall Exchange or the fort at Watford.
+      The Memoria holds the paperwork for all of them, in Veyn black.
+
+  - id: obsidian-crown
+    code: N
+    bearing: 0
+    title: The North Wing
+    subtitle: The Obsidian Crown
+    colours: { wall: "#141215", trim: "#b3303b", floor: ["#1d1a1e", "#141215"], light: "#ff9aa3" }
+    intro: >-
+      The North Wing faces toward the Obsidian Crown, the sixth and highest
+      of the Towers, where the Sangrith dwell. It is the shortest wing in the
+      Memoria and the least well lit, both at the request of the Crimson
+      Thread House.
+
+      The Sangrith keep their distance from the rest of Tessarion
+      deliberately. This wing has been designed to respect it. Visitors are
+      asked not to linger.
+
+items:
+
+  # ---------------------------------------------------------------------------
+  # The Rotunda: Crownweave and the Meridian
+  # ---------------------------------------------------------------------------
+  - id: the-empty-case
+    wing: rotunda
+    place: centre
+    name: The Empty Case
+    model: { type: empty }
+    origin: —
+    period: Before the Towers (unattested)
+    medium: The case only. Cloudglass of Midhurstnes; Northreach bronze
+    status: Awaiting acquisition
+    placard: >-
+      No object predating the Six Towers has been recovered. Excavation
+      beneath Tower-adjacent strata produces no repeatable sequence, and the
+      Collegium of Loom Studies classes the Towers not as events in history
+      but as the conditions within which history became possible.
+
+      The Memoria maintains this case in anticipation of such a recovery. It
+      is locked in accordance with standard custodial practice. Visitors who
+      believe they have observed an object within the case are asked to
+      report it to a docent, and not to describe it to other visitors.
+
+  - id: the-miners-pick
+    wing: rotunda
+    name: The Miner's Pick
+    model: { type: pick, stain: "#e8f1ff" }
+    origin: The Hexaspire basin, beneath the Meridian Spire
+    period: The Settlement Era
+    medium: Iron and ash-wood, with residual aether staining
+    status: On display
+    placard: >-
+      Recovered from the working face at which human miners first struck a
+      vein of faintly glowing stone and did not die touching it. The miners
+      were changed instead: their eyes brightened, their thoughts sharpened,
+      and in time they were called mages.
+
+      The pale staining of the haft, once taken for lime, is aether residue.
+      It has not faded in the generations since. The miner who carried the
+      pick is not named in any surviving record. The Memoria notes that the
+      tool shows no sign of ever having been dropped.
+
+  - id: the-first-test-crystal
+    wing: rotunda
+    name: The First Test Crystal
+    model: { type: crystal, colour: "#f4f7ff", glow: 0.5, ledger: true }
+    origin: The first Aether Hall, The Crown
+    period: The Early Charter
+    medium: Neutral aether crystal; the Hall's first register
+    status: On display. Register on loan from the Loom Council
+    placard: >-
+      The neutral crystal against which the first generation of Crownweave's
+      twenty-year-olds was tested in the Age-20 Rite. Where it glowed, even
+      faintly, a crystal mage was made. Where it stayed dull, a merchant, a
+      soldier or an Aegisbound.
+
+      The register beside it records the first names for which it glowed
+      and, in a second column, the first for which it did not. The crystal
+      was retired from service when it began to glow before candidates had
+      touched it.
+
+  - id: the-split-banners
+    wing: rotunda
+    name: The Split Banners
+    model: { type: banner, left: "#7a2430", right: "#27456b", seam: "#efe6cf" }
+    origin: The hill-town at the river crossing, later Crownweave
+    period: The War of Split Banners
+    medium: Wool, silk and gold wire; later stitching in undyed linen
+    status: On display
+    placard: >-
+      When the warring human rulers met for their last parley, each came
+      beneath a banner that claimed the whole of the basin. After the
+      Weaving Oath was sworn, the banners were cut and stitched together, by
+      hands the chronicles do not name, so that no single device could be
+      read on its own.
+
+      The linen seam has been repaired four times. The silk has never needed
+      it. *"Let no crown stand alone. May our strength be woven, not
+      broken."*
+
+  - id: the-charter-of-the-six
+    wing: rotunda
+    name: The Charter of the Six
+    model: { type: document, framed: true, title: "The Charter of the Six", signatures: 6, blood: [5] }
+    origin: The Hall of the Woven Crown
+    period: The Charter Era
+    medium: Vellum facsimile. The original is held in the Old Loom
+    status: Facsimile. The original is not available for exhibition
+    placard: >-
+      The foundational treaty by which Humans, Elves, Dwarves, Orcs,
+      Tieflings and Sangrith became co-signatories in the creation of the
+      city. It forbids segregation by law, and guarantees each people the
+      right to dwell, work and worship in any Weave, to keep an embassy, and
+      to appeal to the Loom Council when the Charter is threatened.
+
+      Six signatures are reproduced. Five are in ink. The sixth is
+      reproduced in red pigment, as the original is not in ink. The
+      facsimile was prepared by permission of the Crimson Thread House,
+      which examined it on completion and approved it with one correction.
+
+  - id: the-empty-chair
+    wing: rotunda
+    name: The Empty Chair
+    model: { type: chair, wood: "#2b1a12", metal: "#c9a24a" }
+    origin: The Hall of the Woven Crown
+    period: Retired at the last refitting of the Hall
+    medium: Blackwood and brass. Nameplate removed
+    status: On loan from the Council of Crowns
+    placard: >-
+      A seat from the Council of Crowns, retired when the chamber was last
+      refitted. Several chairs in the Hall await sovereigns or envoys who no
+      longer come, their realms lost, fallen, or held in abeyance. The
+      Council did not specify which of these this chair represents.
+
+      The nameplate was removed before the chair left the Hall. The Memoria
+      has been asked not to speculate as to its wording, and does not.
+
+  - id: the-first-bloodless-script
+    wing: rotunda
+    name: The First Bloodless Script
+    model: { type: document, title: "Promise to Pay the Bearer", ink: "#2a2118", signatures: 2 }
+    origin: A counting house in the shadow of the Meridian Spire
+    period: The Settlement Era
+    medium: Rag paper and iron-gall ink
+    status: On display
+    placard: >-
+      A paper promise to pay, backed by a vault of metal and blood: the
+      ancestor of every Crownsblood note and guild draft in the Union, and
+      the first money in Tessarion for which nobody had to die.
+
+      Scholars of the Collegium hold that such instruments did more than
+      ease trade. By deferring what coin had once settled at once, they
+      spread the weight of consequence across people and years. *"When death
+      is no longer the only ledger, pressure redistributes."*
+
+  # ---------------------------------------------------------------------------
+  # The Hall of Absences (beneath the Rotunda)
+  # ---------------------------------------------------------------------------
+  - id: case-a-01
+    wing: absences
+    name: Case A-01
+    model: { type: absence }
+    origin: Not recorded
+    period: Not recorded
+    medium: Not determined
+    status: Under review
+    placard: >-
+      The cases in this hall are dated but otherwise undescribed. Each marks
+      an event recorded only by its absence: a day for which the ledgers of
+      Crownweave balance, but do not agree on what was spent.
+
+      The placard of Case A-01 is blank because no date was recorded. The
+      case is inspected daily, in accordance with the practice of the hall.
+      The inspections are recorded. The Memoria will not be publishing them.
+
+  - id: the-withdrawn-frame
+    wing: absences
+    name: The Withdrawn Frame
+    model: { type: frame }
+    origin: The Threadmint archives
+    period: Withdrawn following ███████
+    medium: Gilt frame and mounting hardware
+    status: Withdrawn
+    placard: >-
+      Until ████, this frame held the Threadmint's schematic of the lower
+      sections of the Meridian Spire, surveyed below the lowest approved
+      point of access. The schematic was withdrawn following
+      ██████████████. The frame was not withdrawn, and the Memoria has not
+      been instructed to remove it.
+
+      The paler ground within the frame shows the dimensions of the
+      schematic. Visitors are reminded that unsanctioned investigation into
+      the sealed levels of the Spire is a violation of civic law.
+
+  # ---------------------------------------------------------------------------
+  # The West Wing: Thal'vireth and the Verdant Tower
+  # ---------------------------------------------------------------------------
+  - id: the-oathleaf
+    wing: thalvireth
+    name: The Oathleaf
+    model: { type: coin, metal: "#dfe3e0", streak: "#8e2a22" }
+    origin: An elven mint of Thal'vireth
+    period: The Early Wars
+    medium: Pale silver, streaked with orc blood
+    status: On display
+    placard: >-
+      One of the earliest blood-coins of Tessarion: pale silver, streaked
+      with the blood of orcs slain in the forest wars. The Oathleaf predates
+      Lifesap, the elven coin now struck at Clitford, by some centuries, and
+      is no longer accepted as tender anywhere in the Union.
+
+      The Guild's assay notes describe the streak as stable. Visitors may
+      observe that it is not quite where the Memoria's catalogue drawing
+      shows it.
+
+  - id: the-mirror-that-drinks
+    wing: thalvireth
+    name: The Mirror That Drinks
+    model: { type: mirror, frame: "#4f9e76", glass: "#8fb7a4" }
+    origin: Chun Ka'an, the Deep Count
+    period: Unknown. The Curia gives its age as "current"
+    medium: Jade, polished obsidian, quetzal feather
+    status: On loan from the High Priestess's Curia
+    placard: >-
+      A teaching-mirror of the kind used to tell the story every child in
+      Thal'vireth learns: give freely, and your years run full and quick;
+      take without giving, and the tree may stop you mid-breath for longer
+      than you meant to lose.
+
+      The Curia states that this mirror is illustrative. Visitors are
+      nonetheless asked not to stand before it for longer than it takes to
+      read this placard.
+
+  - id: a-farmers-sickle
+    wing: thalvireth
+    name: A Farmer's Sickle
+    model: { type: sickle, worn: true }
+    origin: K'aax Yaxché, the Green Cradle
+    period: Ten years ago, outside time
+    medium: Iron, with a haft of jade-wood
+    status: On loan from the Canopy Court
+    placard: >-
+      Issued new to a farmer of the Green Cradle, where a season passes in
+      weeks, and returned ten outside years later with its blade worn to a
+      sliver by sixty harvests. Its owner is recorded as having "fed the
+      Count", the highest honour open to a short life.
+
+      The Memoria has been unable to confirm whether the farmer was
+      consulted about the loan. The Canopy Court describes the question as
+      already answered.
+
+  - id: the-xibal-hourglass
+    wing: thalvireth
+    name: The Xibal Hourglass
+    model: { type: hourglass, sand: "#b9d98f" }
+    origin: Xibal Root, the Broken Deep
+    period: In use until its warden's sentence ended
+    medium: Glass, bronze, root-sand
+    status: On loan. To be handled only by a Balam escort
+    placard: >-
+      A warden's hourglass from the root-caverns of Xibal Root, where time
+      does not merely slow but runs wrong. It measures a watch of
+      indeterminate length. On occasion the sand runs upward.
+
+      The Curia attributes this to ambient verdant saturation, and has asked
+      that the glass not be turned over. Docents are not permitted to note
+      the time at which it does this.
+
+  - id: memento-of-the-curias-watch
+    wing: thalvireth
+    name: Memento of the Curia's Watch
+    model: { type: medallion, metal: "#c9a24a", stone: "#3fae7a" }
+    origin: Formed within the Verdant Tower's radius of influence
+    period: Recovered after a Crest
+    medium: Chronoflow-touched soulstone in a jade setting
+    status: On loan from the Hollow Archive
+    placard: >-
+      A piece of the Litany of the High Priestess, one of the four sets of
+      the Artifacts of the Count. It was long held to be the work of a
+      forgotten order of jewellers. Since Senior Arcanist Veyr Haloren's
+      paper *On the Phenomenon of Spire Confluence*, it has been understood
+      to have formed without any maker, as a consequence of Tower resonance,
+      at a Crest.
+
+      The Memoria's earlier label, which credited the gods of the forest, is
+      kept in its archive. Wearers report that the Memento adds a moment to
+      every hour, and do not agree on where the moment is taken from.
+
+  # ---------------------------------------------------------------------------
+  # The South Wing: the Iron Hordes and the Red Tower
+  # ---------------------------------------------------------------------------
+  - id: the-thorn
+    wing: iron-hordes
+    name: The Thorn
+    model: { type: coin, metal: "#3a3736", streak: "#c23b2c", rough: true }
+    origin: The war-forges beneath the Red Tower
+    period: The Early Wars
+    medium: Black iron, veined with elf blood
+    status: On display
+    placard: >-
+      The orcish answer to the Oathleaf: a black iron disc veined with the
+      red of elves. Thorns were struck heavy and left rough at the edge, and
+      the Guild's early ledgers note that more than one was used to settle a
+      debt by being thrown.
+
+      The Tuskmark, accepted at 0.90 Trade Units, descends from it. Iron-Tusk
+      envoys regard the rate as a slight, and have said so, at volume,
+      before the Loom Council.
+
+  - id: a-history-blade
+    wing: iron-hordes
+    name: A History-Blade
+    model: { type: blade, notches: 23 }
+    origin: A war-camp of the Iron Hordes
+    period: ██ generations, read from hilt to tip
+    medium: Steel and leather
+    status: On loan from the Iron-Tusk Court
+    placard: >-
+      An orcish chronicle. Each notch in the blade records a battle, and the
+      depth of the notch its cost. Read from hilt to tip, it gives the
+      history of a clan across ██ generations, and its lenders consider it
+      more reliable than anything held by the Threadmint.
+
+      The Iron-Tusk Court asked that it be displayed unsheathed and within
+      reach. The Memoria has complied with the first request.
+
+  - id: glass-salt-and-the-ashline-accords
+    wing: iron-hordes
+    name: Glass Salt and the Ashline Accords
+    model: { type: shard, colour: "#f3efe6", scroll: true }
+    origin: The southern wastes; the Ashward Plaza, Emberweave
+    period: The Glass Salt Uprisings
+    medium: Fused salt; vellum
+    status: On display
+    placard: >-
+      A shard of the glass salt over which the Uprisings were fought, beside
+      a copy of the Ashline Accords that ended them. The Accords were agreed
+      between caravan masters, the Iron-Tusk lodges and the Loom Council, and
+      are the only treaty in the Union's records to have been signed on a
+      wagon.
+
+      The shard is kept dry. When it is not, it weeps. The full history is
+      given in Volume XII of the Compendium, *On Wars That Arrive by Wagon*.
+
+  - id: an-embersteps-thread
+    wing: iron-hordes
+    name: An Embersteps Thread
+    model: { type: thread, colour: "#d9772e" }
+    origin: The railing of the Embersteps, Emberweave
+    period: Tied on the day its caravan departed
+    medium: Dyed cotton, on a section of iron railing
+    status: On display
+    placard: >-
+      By custom, families tie a thread to the railing of the Embersteps when
+      a caravan departs and leave it until the caravan returns, or until the
+      city's caretakers cut the threads at season's end.
+
+      This thread was never cut. The caretakers' ledger lists it against a
+      caravan that left for the Salt Reaches and was not recorded again. The
+      railing was removed with the thread still tied to it, because the
+      caretakers would not cut it. Neither has the Memoria.
+
+  - id: the-second-sovereign
+    wing: iron-hordes
+    name: The Second Sovereign
+    model: { type: coin, metal: "#232126", streak: "#9e1b2b", rim: "#6b0f18", pulse: true }
+    origin: Not recorded. Acquired in Crownweave
+    period: Recent
+    medium: Star-iron, with blood of the four outer peoples
+    status: Recent acquisition. Displayed as far from the North Wing's specimen as the building allows
+    placard: >-
+      A Sovereign acquired last season, in circumstances the Memoria has
+      recorded. Sovereigns thrum like a heartbeat when stacked, and the
+      Memoria's standing guidance forbids displaying two within reach of
+      each other. It is exhibited in the South Wing for that reason.
+
+      Night staff report that it whispers. The Memoria does not consider
+      this confirmed. Night staff have been asked to stop reporting it, and
+      to write down what it says.
+
+  # ---------------------------------------------------------------------------
+  # The North-East Wing: Khazrund and the Deep Tower
+  # ---------------------------------------------------------------------------
+  - id: the-dwarven-crown
+    wing: khazrund
+    name: The Dwarven Crown
+    model: { type: coin, metal: "#e2b44c", streak: "#7b3fa0", pulse: true }
+    origin: The mints beneath the Deep Tower
+    period: The Early Wars
+    medium: Heavy gold, pulsing with tiefling essence
+    status: On display
+    placard: >-
+      The dwarven blood-coin: a heavy gold Crown that pulses faintly with
+      tiefling essence. It is the ancestor of the Hearthmark, now struck at
+      Pydros and along the Mint Line, and the reason coin-weighers in every
+      Weave still check a dwarven coin's rim before its face.
+
+      The pulse has slowed measurably since the Crown entered the
+      collection. The Memoria has been advised not to find out what it is
+      slowing toward.
+
+  - id: the-hammer-prayer
+    wing: khazrund
+    name: The Hammer-Prayer
+    model: { type: strikeplate, metal: "#b8863b" }
+    origin: A deep-hall of Khazrund
+    period: Unknown
+    medium: Bell bronze; an iron hammer set with Amber Deepstone
+    status: On loan from Stonefast Hall. Sounded once daily
+    placard: >-
+      The dwarves of Khazrund speak their prayers in the language of
+      hammers. This strike-plate carries one: a sequence of blows, marked on
+      its face in the order they are to be struck, which no scholar outside
+      Khazrund has yet translated.
+
+      A docent sounds it once each day, at the hour the lenders specify.
+      Visitors who hear it are asked not to hum it afterwards. It is not
+      known what the prayer asks for. It is known that it is being answered.
+
+  - id: a-plate-from-the-chapel-of-tolerances
+    wing: khazrund
+    name: A Plate from the Chapel of Tolerances
+    model: { type: plate, metal: "#9c6b35" }
+    origin: The Iron Crucible, Northreach
+    period: Stamped over three generations
+    medium: Bronze
+    status: On loan from the Chapel of Tolerances
+    placard: >-
+      The Chapel of Tolerances holds no idol. Its walls are lined with bronze
+      plates, each stamped with the date, place and margin of a structural
+      failure, and on feast-days its priests read them aloud while the
+      congregation listens for their own family names.
+
+      This plate was lent when the Chapel ran out of wall. The names on it
+      are not reproduced in the Memoria's catalogue. Visitors are welcome to
+      look for their own.
+
+  - id: the-first-containment-sink
+    wing: khazrund
+    name: The First Containment Sink
+    model: { type: sink, glow: "#8a4dd6" }
+    origin: The Resonance Crucible, Northreach
+    period: In operation since its approval
+    medium: Lead, glass and copper; contained Mana-Blight
+    status: In operation
+    placard: >-
+      The first sink produced by the Crucible's pillar of Corruption
+      Containment, field-tested at the lip of the Orcholis Aperture before
+      it was approved. Sinks do not neutralise corruption. They delay its
+      effects long enough to matter. This one has been delaying for longer
+      than any sink made since.
+
+      Docents are not permitted to switch it off, and the Crucible has
+      declined to say what would happen if they did. *All delay. None
+      absolve.*
+
+  - id: living-rampart-plating
+    wing: khazrund
+    name: Living Rampart Plating
+    model: { type: armour, metal: "#6d6a66", runes: "#ff7a3c" }
+    origin: The Infusion Forges, the Forge Run
+    period: Decommissioned at the end of the iron shortage
+    medium: Aegis-bonded iron, etched with Bloodwell runes
+    status: On display. Decommissioned
+    placard: >-
+      A breastplate of Living Rampart, the Aegis-bonded plating whose
+      manufacture brought on the iron shortage recorded in Volume XII of the
+      Compendium, *On the Weight of Progress*. Bonded plate stores resonance
+      for long periods without degrading.
+
+      This piece has been decommissioned. It is kept a little warmer than
+      the room, as Northreach advises against taking such things cold too
+      suddenly. The Memoria does not know who wore it. Records do not follow
+      bonding subjects.
+
+  # ---------------------------------------------------------------------------
+  # The East Wing: Emberfall and the Ashen Tower
+  # ---------------------------------------------------------------------------
+  - id: the-sin
+    wing: emberfall
+    name: The Sin
+    model: { type: coin, metal: "#7a5a2e", streak: "#b88a3c", runes: true }
+    origin: A tiefling mint of Emberfall
+    period: The Early Wars
+    medium: Dark brass, its runes fed with dwarven blood
+    status: On display
+    placard: >-
+      The tiefling blood-coin: dark brass, etched with runes fed by dwarven
+      blood, struck in answer to the dwarven Crown in the North-East Wing.
+      Its descendant, Hellglass, is converted at 0.95 Trade Units on the
+      Assay Line, and at better rates on the Hook, which the Guild does not
+      recognise.
+
+      The runes are legible to anyone who reads Infernal. The Memoria has
+      chosen not to translate them on this placard.
+
+  - id: the-reply
+    wing: emberfall
+    name: The Reply
+    model: { type: document, title: "Articles of Obligation", ink: "#6e1414", signatures: 3, blood: [0, 1, 2] }
+    origin: Emberfall
+    period: The Early Wars
+    medium: Vellum and dwarven blood
+    status: On loan from the Ashglass Consulate
+    placard: >-
+      The first contract written in dwarven blood, drawn up in Emberfall
+      after the dwarves had cursed the infernal taint of the tieflings, and
+      before anyone had asked what that would cost them. Its terms remain in
+      force.
+
+      The Ashglass Consulate, which lent it, has confirmed that the
+      Memoria's display of the Reply is within its terms. Readers are
+      advised that it is unwise to read the whole of a tiefling contract
+      aloud, and that this applies to the Reply.
+
+  - id: the-western-gale-tide-marker
+    wing: emberfall
+    name: The Western Gale Tide-Marker
+    model: { type: tidemarker, metal: "#c7a052" }
+    origin: The Tidecall Exchange, Caer Veyn
+    period: The year of the Western Gale
+    medium: Brass
+    status: On loan from the harbormasters of Caer Veyn
+    placard: >-
+      The highest of the brass tide-markers set into the paving of the
+      Tidecall Exchange, dated to the year of the Western Gale, when a storm
+      diverted by the Loomwardens of Skyloom flooded the lower docks of Caer
+      Veyn. It is mounted at the height the water reached.
+
+      The Loomwardens have supplied a supplementary placard, displayed
+      alongside. The harbormasters of Caer Veyn have petitioned for its
+      removal on ██ occasions. The Memoria regards both placards as
+      accurate.
+    note:
+      heading: Supplementary placard, supplied by the Loomwardens of Skyloom
+      text: >-
+        The diversion of the Western Gale spared the northern harvest in its
+        entirety. The flooding of the lower docks took place precisely on
+        the schedule notified to the harbor in advance.
+
+  - id: craftrys-adze
+    wing: emberfall
+    name: Craftry's Adze
+    model: { type: adze }
+    origin: Craftry, Stormwake
+    period: The rebuilding after the Western Gale
+    medium: Steel and oak
+    status: On display
+    placard: >-
+      One of the shipwrights' tools with which Caer Veyn's harbor was rebuilt
+      after the Western Gale. The small town of Craftry, which made it, was
+      granted a charter in gratitude, and the charter remains out of all
+      proportion to the town.
+
+      The adze is displayed beside the tide-marker at the request of
+      Craftry's town council, who asked that the two be shown together "so
+      that people see the whole of it".
+
+  - id: wihulbover-amber
+    wing: emberfall
+    name: Wihulbover Amber
+    model: { type: amber, colour: "#e8932c" }
+    origin: The amber diggings at Wihulbover, the Wakewater
+    period: Dug from the old sea-beds
+    medium: Amber. The inclusion has not been identified
+    status: Recent acquisition. Transferred from Watford
+    placard: >-
+      Amber dug from the old sea-beds at Wihulbover is cut for jewellery and
+      charms. Now and then a piece is found with something inside it that
+      nobody can identify, and by standing order such pieces are sent to the
+      fort at Watford to be catalogued, sealed and reclassified.
+
+      This piece came back. Its transfer papers are in order, written in
+      Veyn black, and name Watford as the sender. Watford has not answered
+      the Memoria's letter of thanks.
+
+  # ---------------------------------------------------------------------------
+  # The North Wing: the Obsidian Crown
+  # ---------------------------------------------------------------------------
+  - id: the-sovereign
+    wing: obsidian-crown
+    name: The Sovereign
+    model: { type: coin, metal: "#232126", streak: "#9e1b2b", rim: "#6b0f18" }
+    origin: The vaults beneath the Obsidian Crown
+    period: The Early Wars
+    medium: Star-iron, with blood of Elves, Orcs, Dwarves and Tieflings
+    status: On display. Not to be displayed alongside a second specimen
+    placard: >-
+      The Sangrith coin, struck by melting star-iron with blood drawn from
+      all four outer peoples: a small, cold declaration of ownership over
+      the world's hate. Sovereigns thrum like a heartbeat when stacked.
+      Displayed alone, this one is silent, and the Memoria intends to keep
+      it so.
+
+      The Crimson Seal, the Sangrith's coin of today, is accepted at 1.30
+      Trade Units, the highest rate in the Union. The Sovereign is not
+      accepted anywhere. It is only ever spent.
+
+  - id: the-prismatic-shard
+    wing: obsidian-crown
+    name: The Prismatic Shard
+    model: { type: crystal, colour: "#0c0b10", prismatic: true, glow: 0 }
+    origin: Beneath the Obsidian Crown
+    period: First cut
+    medium: Prismatic Omnicrystal (black soulstone)
+    status: On long-term loan from the Crimson Thread House. Displayed dimmed
+    placard: >-
+      A first-cut shard of the Sangrith's prismatic black crystal, the only
+      soulstone through which a mage may tamper not merely with mana but
+      with the soul itself. It is displayed beside nothing, under low light,
+      at the lender's request.
+
+      The Crimson Thread House inspects it each season, and at every
+      inspection has remarked that the shard is "settling in". Docents are
+      rotated out of this wing every tenday.
+
+  - id: a-crimson-thread-oath-cord
+    wing: obsidian-crown
+    name: A Crimson Thread Oath-Cord
+    model: { type: cord, colour: "#a3141f" }
+    origin: The Crimson Thread House, the Sixfold Quarter
+    period: The signing of the Charter of the Six
+    medium: Silk and blood
+    status: On loan from the Crimson Thread House
+    placard: >-
+      A cord tied by Sangrith oath-keepers at the signing of the Charter of
+      the Six and bound to the Charter's terms. It has remained taut for as
+      long as the Charter has held.
+
+      The Memoria's conservators measure its tension at every inspection.
+      The measurements are not published. The Crimson Thread House does not
+      require them. It says it will know.

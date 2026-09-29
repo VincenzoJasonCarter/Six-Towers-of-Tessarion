@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Threadmint Memoria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#" id="home"><b id="brand-name">The Threadmint Memoria</b><span id="brand-sub">Objects of the History of Tessarion</span></a>
+  <input class="search" id="q" type="search" placeholder="Search exhibits, places, placards…" aria-label="Search the Memoria">
+  <label class="switch"><input type="checkbox" id="animate" checked> Animate</label>
+</header>
+
+<main id="main">
+  <div class="error" id="error" hidden></div>
+  <div class="front">
+    <div class="hero">
+      <div class="intro">
+        <p class="tier" id="tier"></p>
+        <h1 id="title"></h1>
+        <div id="intro"></div>
+        <p class="tier" id="count"></p>
+        <nav class="tabs" id="tabs" aria-label="Rooms"></nav>
+      </div>
+      <figure class="plan" aria-label="Plan of the Memoria">
+        <svg id="plan" viewBox="-68 -68 136 136"></svg>
+        <figcaption>Plan of the Memoria</figcaption>
+      </figure>
+    </div>
+    <div id="rooms"></div>
+    <p class="empty-search" id="no-results" hidden>Nothing in the Memoria answers to that.</p>
+  </div>
+</main>
+
+<div class="reveal" id="reveal" hidden>
+  <div class="rv-backdrop" id="rv-backdrop"></div>
+  <article class="placard" role="dialog" aria-modal="true" aria-labelledby="pl-name">
+    <button type="button" class="x" id="pl-close" aria-label="Close the placard">×</button>
+    <div class="pl-body" id="pl-body"></div>
+    <nav class="pl-nav">
+      <button type="button" id="pl-prev">‹ Previous</button>
+      <button type="button" id="pl-next">Next ›</button>
+    </nav>
+  </article>
+</div>
+
+<script>
+const DATA = /*__MEMORIA_DATA__*/null;
+const LIVE = /*__MEMORIA_LIVE__*/false;  // true when served by serve.py
+</script>
+<script src="app.js"></script>
+</body>
+</html>

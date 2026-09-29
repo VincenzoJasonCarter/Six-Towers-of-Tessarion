@@ -43,6 +43,16 @@ barracks-build: ## Build charasheet for /barracks/ into charasheet/dist/ (ARGS="
 barracks-dev: ## Work on charasheet's code: Vite's dev server with live reload at http://127.0.0.1:5173/
 	cd charasheet && { test -d node_modules || npm ci --no-audit --no-fund; } && npm run dev -- --host 127.0.0.1 $(ARGS)
 
+# --- memoria (the museum of Tessarion's history, a 3D building, from data/memoria.yaml) ---
+
+.PHONY: memoria
+memoria: ## Serve the Memoria live at http://127.0.0.1:8769/ (reloads on memoria.yaml edits)
+	uv run memoria/serve.py $(ARGS)
+
+.PHONY: memoria-build
+memoria-build: ## Export a static snapshot to memoria/memoria.html
+	uv run memoria/build.py
+
 # --- web (the hub, library, bestiary and barracks as one static site, for Vercel or any static host) ---
 
 .PHONY: web-build
