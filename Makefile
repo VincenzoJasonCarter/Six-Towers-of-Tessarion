@@ -53,10 +53,10 @@ memoria: ## Serve the Memoria live at http://127.0.0.1:8769/ (reloads on memoria
 memoria-build: ## Export a static snapshot to memoria/memoria.html
 	uv run memoria/build.py
 
-# --- web (the hub, library, bestiary and barracks as one static site, for Vercel or any static host) ---
+# --- web (the hub, library, bestiary, barracks and memoria as one static site, for Vercel or any static host) ---
 
 .PHONY: web-build
-web-build: ## Build the public site (hub + library + bestiary + barracks) to dist/
+web-build: ## Build the public site (hub + library + bestiary + barracks + memoria) to dist/
 	uv run web/build.py
 
 # --- hub (one page for all of them) ---

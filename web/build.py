@@ -2,7 +2,7 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Build the Threadmint's public website: the hub, the library, the bestiary and the Barracks as one static site.
+"""Build the Threadmint's public website: the hub, the library, the bestiary, the Barracks and the Memoria as one static site.
 
 Usage, from the repo root:
 
@@ -12,8 +12,8 @@ dist/ is the hub's reception page at the root (index.html, style.css, app.js,
 clerk.js from hub/, with the page marked data-hosted so it needs no hub
 server), library/ (the output of library/build.py), bestiary/
 (bestiary.html as its index.html, plus bestiary/images/ if there is one) and
-barracks/ (charasheet/dist, the output of barracks/build.py). It
-is rebuilt from scratch every time. Upload it to any static host; vercel.json
+barracks/ (charasheet/dist, the output of barracks/build.py) and memoria/
+(memoria.html as its index.html). It is rebuilt from scratch every time. Upload it to any static host; vercel.json
 at the repo root does that on Vercel.
 """
 import os
@@ -42,6 +42,7 @@ def main():
     run("library/build.py")
     run("bestiary/build.py")
     run("barracks/build.py")
+    run("memoria/build.py")
 
     shutil.rmtree(DIST, ignore_errors=True)
     shutil.copytree(ROOT / "charasheet" / "dist", DIST / "barracks", ignore=shutil.ignore_patterns(".built-for"))
@@ -50,6 +51,8 @@ def main():
     shutil.copy(ROOT / "bestiary" / "bestiary.html", DIST / "bestiary" / "index.html")
     if (ROOT / "bestiary" / "images").is_dir():
         shutil.copytree(ROOT / "bestiary" / "images", DIST / "bestiary" / "images")
+    (DIST / "memoria").mkdir()
+    shutil.copy(ROOT / "memoria" / "memoria.html", DIST / "memoria" / "index.html")
 
     page = (HUB / "index.html").read_text(encoding="utf-8")
     if "<body>" not in page:

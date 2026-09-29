@@ -1,8 +1,9 @@
 # The Threadmint on the web
 
-The hub, the library, the bestiary and the Barracks as one static site: the
-hub's reception hall at `/`, the library at `/library/`, the bestiary at
-`/bestiary/` and the Barracks (charasheet) at `/barracks/`.
+The hub, the library, the bestiary, the Barracks and the Memoria as one
+static site: the hub's reception hall at `/`, the library at `/library/`, the
+bestiary at `/bestiary/`, the Barracks (charasheet) at `/barracks/` and the
+Memoria at `/memoria/`.
 
 ## Building it
 
@@ -12,15 +13,16 @@ From the repo root:
 make web-build                # or: uv run web/build.py
 ```
 
-That runs `library/build.py`, `bestiary/build.py` and `barracks/build.py`
+That runs `library/build.py`, `bestiary/build.py`, `barracks/build.py` and `memoria/build.py`
 (charasheet's build for `/barracks/`, which needs Node, and skips itself when
 charasheet/ hasn't changed since the last one), gathers their output
 into `dist/` (not committed) and copies the hub's page files to its root.
 The hub's page is marked `<body data-hosted>` there, so instead of asking
-`hub/serve.py` which tools are running it shows both halls as open and loads
-them from `library/` and `bestiary/`. Like those two, it is a snapshot: rebuild after
-editing the lore-book or `enemies.yaml`. It also rewrites
-`bestiary/bestiary.html`, the same as `make bestiary-build`.
+`hub/serve.py` which tools are running it shows every hall as open and loads
+them from the folders next to it. Like them, it is a snapshot: rebuild after
+editing the lore-book, `enemies.yaml` or `memoria.yaml`. It also rewrites
+`bestiary/bestiary.html` and `memoria/memoria.html`, the same as
+`make bestiary-build` and `make memoria-build`.
 
 To look at it before deploying:
 
@@ -37,7 +39,7 @@ defaults, since vercel.json overrides them. Every push to `main` then
 redeploys.
 
 `.vercelignore` limits the upload to what the build reads (`web/`,
-`hub/`, `library/`, `bestiary/`, `lore-book/`, `data/`, `charasheet/`). If the build starts reading
+`hub/`, `library/`, `bestiary/`, `memoria/`, `lore-book/`, `data/`, `charasheet/`, `barracks/`). If the build starts reading
 another folder, add it there too.
 
 Library images carry a hash of their contents in their names, so vercel.json
