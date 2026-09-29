@@ -9,7 +9,7 @@ Usage, from the repo root:
     uv run hub/serve.py              # http://127.0.0.1:8760/
     uv run hub/serve.py --port 9000 --no-browser
 
-Starts the library, bestiary and Barracks servers on their usual ports (or
+Starts the library, bestiary, Barracks and Memoria servers on their usual ports (or
 reuses one that is already running there) and shows them side by side in one
 tabbed page. Ctrl+C stops everything the hub started.
 """
@@ -46,6 +46,7 @@ APPS = {
     "library": (8767, "library/serve.py", "/"),
     "bestiary": (8766, "bestiary/serve.py", "/"),
     "barracks": (8768, "barracks/serve.py", "/barracks/"),
+    "memoria": (8769, "memoria/serve.py", "/"),
 }
 
 

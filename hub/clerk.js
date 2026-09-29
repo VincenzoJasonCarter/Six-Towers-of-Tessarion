@@ -63,6 +63,7 @@ const GOSSIP = bag([
   ["flat", "Somebody asked for clarification on Seal SF-WA again. It's been logged. Everything is logged. Nothing is answered."],
   ["surprised", "Skyloom lost a cartographer last week. Not the person. The whole office. It's just not above the same bit of ground any more."],
   ["smile", "Northreach sent a crate of crystals marked \"processed, inert\". It hummed all night. I have moved my desk twice."],
+  ["flat", "The Memoria's night staff have asked for a second lamp in the North Wing. The Crimson Thread House has asked them not to ask."],
   ["frown", "There's a debt collector from the Crimson Thread House who keeps asking for a library card. We don't know what it would do with one. We have said no in writing."],
 ]);
 
@@ -93,6 +94,10 @@ const HALLS = {
   barracks: {
     name: "The Barracks", app: "barracks",
     line: ["smug", "The barracks, right behind me. A bunk, a footlocker and a sheet per adventurer. The sheets stay in your own browser and nowhere else, so take a copy home. And keep your hit points honest."],
+  },
+  memoria: {
+    name: "The Memoria", app: "memoria",
+    line: ["smile", "The Memoria: the history of Tessarion, one object at a time, laid out like the city itself. Rotunda in the middle, a wing for every Tower-nation. Take the stair down if you like. I don't."],
   },
   bestiary: {
     name: "The Bestiary", app: "bestiary",
@@ -145,7 +150,7 @@ const TALK = {
     replies: [["Take me there.", () => go("library")], MORE],
   },
   halls: {
-    line: ["flat", "Three halls. The Library on the left, the barracks behind me, the Bestiary on the right. Which one?"],
+    line: ["flat", "Four halls. The Library on the left, the barracks and the Memoria behind me, the Bestiary on the right. Which one?"],
     replies: () => [...Object.entries(HALLS).map(([id, h]) => [h.name + "?", "hall:" + id]), MORE],
   },
   restricted: { line: ["flat", "No."], replies: [["Please?", "restricted2"], ["Fair enough.", "menu"]] },
@@ -175,6 +180,8 @@ const BACK_FROM = {
     ["flat", "Anything in there look at you funny? They all do. Don't take it personally."]],
   barracks: [["smug", "Back from the barracks. Did you level up, or did you just write that you did?"],
     ["flat", "Sheet in order? Good. Hit points are not a suggestion, whatever your cleric says."]],
+  memoria: [["flat", "Back from the Memoria. Did you look in the Empty Case? Don't tell me. Nobody's supposed to tell anybody."],
+    ["smug", "Enjoy the Memoria? The docents say the South Wing's Sovereign has been chatty. The docents say a lot of things."]],
 };
 
 const IDLE = bag([

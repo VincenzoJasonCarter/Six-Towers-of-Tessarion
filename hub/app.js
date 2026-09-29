@@ -3,13 +3,14 @@ const TOOLS = {
   library: { app: "library", name: "The Library" },
   bestiary: { app: "bestiary", name: "The Bestiary" },
   barracks: { app: "barracks", name: "The Barracks" },
+  memoria: { app: "memoria", name: "The Memoria" },
 };
 const STATE_TEXT = { ready: "Open", external: "Open", starting: "Lighting the lamps…", stopped: "Closed" };
 // Like the library's "Animate books": the hub's own setting, on unless it is
 // switched off here, whatever the system's reduce-motion preference says.
 let motion = stored("hub.animate") !== "off";
 // On the public website (web/build.py) there is no hub server: the tools are
-// static pages next to this one, in library/ and bestiary/, and always open.
+// static pages next to this one, in library/, bestiary/, barracks/ and memoria/, and always open.
 const HOSTED = "hosted" in document.body.dataset;
 
 function stored(key, value) {
@@ -256,6 +257,51 @@ const CORRIDORS = {
       line(P(-.13, 1.84, z), P(.13, 1.84, z), shade("#d9bb70", f), 1.4 * depth(z));
       const [x, y] = P(0, 1.63, z);
       ellipse(x, y, 5 * depth(z), 5 * depth(z), shade("#d9bb70", f));
+    });
+    farGlow(c);
+  },
+
+  // The Memoria: a marble gallery with glass cases on plinths down both
+  // walls, columns between them, and the rotunda's daylight at the far end.
+  memoria() {
+    const c = { wall: "#d9cfbb", wallFar: "#241f18", floor: "#d3c8b0", floorFar: "#1c1813", ceil: "#8f846f", far: "#3a3226", glow: "#fff2d0", glowA: .6, glowR: 90 };
+    shell(c);
+    const shade = (hex, f) => {
+      const n = parseInt(hex.slice(1), 16), k = v => Math.round(v * f).toString(16).padStart(2, "0");
+      return `#${k(n >> 16)}${k(n >> 8 & 255)}${k(n & 255)}`;
+    };
+    polygon(end(-.42, .42, 0, 1.38), "#fff4dc");
+    polygon(end(-.47, .47, 1.38, 1.48), "#b89a5a");
+    polygon(end(-.06, .06, 0, .5), "#e9e2d3");  // the Empty Case's plinth, seen through the arch
+    polygon(end(-.08, .08, .5, .56), "#c9a24a");
+    for (let x = -.75; x < .8; x += .25) line(P(x, 0, from1()), P(x, 0, D), "#a89878", .8, { alpha: .45 });
+    polygon(flat(.002, -.05, .05, 1, D), "#c9a24a", .8);
+    // Columns along both walls, far to near.
+    for (const z of [3.95, 3.25, 2.5, 1.75, 1.05]) {
+      if (!seen(z)) continue;
+      const f = fade(z);
+      for (const X of [-1, 1]) polygon(side(X * .985, z, z + .1, 0, 2), shade("#ece5d6", f));
+      polygon(flat(1.94, -1, 1, z, z + .1), shade("#c9a24a", f));
+    }
+    // The cases: a plinth, a glass box, something small and bright inside.
+    const inside = ["#8fd1a7", "#e0714f", "#e3a53c", "#c49be8"];
+    [3.45, 2.7, 1.95, 1.2].forEach((z0, i) => {
+      const z1 = z0 + .32, a = fade(z0);
+      for (const s of [-1, 1]) {
+        const inner = s * .56, outer = s * .88, lo = Math.min(inner, outer), hi = Math.max(inner, outer);
+        polygon(side(inner, z0, z1, 0, .52), shade("#cfc5b0", a));
+        polygon(end(lo, hi, 0, .52, z0), shade("#bdb29c", a));
+        polygon(flat(.52, inner, outer, z0, z1), shade("#c9a24a", a));
+        polygon(side(inner, z0, z1, .53, .84), "#eaf6ff", .16 * a);
+        polygon(end(lo, hi, .53, .84, z0), "#eaf6ff", .1 * a);
+        if (!seen(z0)) continue;
+        const d = depth(z0);
+        line(P(inner, .84, z0), P(inner, .84, z1), shade("#c9a24a", a), 1.2 * d);
+        line(P(inner, .53, z0), P(inner, .84, z0), shade("#c9a24a", a), 1 * d);
+        const [x, y] = P((inner + outer) / 2, .62, (z0 + z1) / 2);
+        glowAt(x, y, 14 * d, 12 * d, inside[(i + (s > 0 ? 2 : 0)) % inside.length], .45 * a, { cls: "flicker" });
+        ellipse(x, y, 3.2 * d, 3.8 * d, inside[(i + (s > 0 ? 2 : 0)) % inside.length], { alpha: a });
+      }
     });
     farGlow(c);
   },
@@ -567,7 +613,7 @@ async function poll() {
 // light hides that where a frozen stride would not. Walking out plays the
 // same path backwards. Every frame of a walk is drawn on a canvas; see toCanvas().
 
-const GLOW = { library: "#ffd98a", bestiary: "#57d19b", barracks: "#ff9a55" };
+const GLOW = { library: "#ffd98a", bestiary: "#57d19b", barracks: "#ff9a55", memoria: "#fff2d0" };
 const WALK_TO = 3.75;
 const WALK_MS = 1900;
 const REVEAL_MS = 420;  // the light fading into the tool (or back into the corridor)
@@ -615,7 +661,7 @@ function walker(view) {
   const dpr = devicePixelRatio || 1;
   let geo = measure(door);
   let doorway = null, tunnel = null;
-  // Which door, for style.css (Hessa stands in front of the Barracks').
+  // Which door, for style.css (Hessa stands in front of the Barracks' and the Memoria's).
   hall.dataset.walk = view;
 
   return {

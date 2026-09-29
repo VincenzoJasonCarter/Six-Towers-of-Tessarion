@@ -62,7 +62,7 @@ web-build: ## Build the public site (hub + library + bestiary + barracks) to dis
 # --- hub (one page for all of them) ---
 
 .PHONY: hub
-hub: ## Open everything in one place at http://127.0.0.1:8760/ (starts the library, bestiary and barracks)
+hub: ## Open everything in one place at http://127.0.0.1:8760/ (starts the library, bestiary, barracks and memoria)
 	uv run hub/serve.py $(ARGS)
 
 # --- misc ---
