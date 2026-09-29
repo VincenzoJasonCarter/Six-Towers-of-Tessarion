@@ -66,6 +66,17 @@ heading, and the `barracks` / `footlocker` classes that make it a barracks),
 panel titles (`terminal-title` in `panel.tsx`), the toasts following
 the system theme, and the font link in `index.html`.
 
+The sheet also has an Equipped panel (`src/components/gear/equipped-panel.tsx`):
+the character standing in the middle, drawn like the people in the bunks,
+wearing what's in its head, chest, hands, legs, feet, main hand and off hand
+slots (what can go where is told from the item's name, in
+`src/db/equipped.ts`). Each slot holds the id of one of the character's own
+weapons or equipment items, in a new `equipped` field on the character, so
+upstream's files carry a little of it:
+the field and its v9 migration (`src/db/db.ts`), its default
+(`characters.ts`), import/export (`transfer.ts`) and sync merge
+(`sync-engine.ts`), and the panel's place on the sheet (`sheet.tsx`).
+
 Google Drive sync is off: it only switches on when `VITE_GDRIVE_CLIENT_ID`
 is set at build time, and the build strips that from the environment. Its
 token relay (`charasheet/api/google-token.ts`) isn't deployed either, since
