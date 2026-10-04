@@ -153,10 +153,16 @@ class Creature:
         return e
 
     def has(self, name):
-        return any(e.name == name for e in self.effects)
+        for e in self.effects:
+            if e.name == name:
+                return True
+        return False
 
     def get(self, name):
-        return next((e for e in self.effects if e.name == name), None)
+        for e in self.effects:
+            if e.name == name:
+                return e
+        return None
 
     def remove(self, name=None, effect=None):
         self.effects = [e for e in self.effects
@@ -260,7 +266,7 @@ class Creature:
         return self.has("paralyzed") or self.has("stunned")
 
     def speed_now(self):
-        if any(self.has(n) for n in SPEED_ZERO):
+        if any(e.name in SPEED_ZERO for e in self.effects):
             return 0
         return max(0, self.base_speed - self.total("slow"))
 

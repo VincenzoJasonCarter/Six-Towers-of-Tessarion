@@ -26,6 +26,8 @@ uv run arena/party.py --n 50          # quicker and noisier (default 100 per par
 uv run arena/run.py --recalibrate     # re-tune the foes (do this after changing rules)
 uv run arena/party.py --recalibrate
 uv run arena/party.py --only gunman   # rerun just the parties with one subclass, after changing it
+uv run arena/party.py --size 6        # six-hero parties against six-creature encounters (party6_* files)
+uv run arena/party.py --size 6 --repeats --n 10   # the same subclass may appear more than once (party6r_* files)
 uv run arena/run.py --report-only     # rebuild a report from its saved results
 ```
 
@@ -35,6 +37,23 @@ recalibrate. `--only` reruns the 120 parties containing one subclass (about
 10 minutes) against the saved encounter tuning. That's the quick way to test a
 change to one subclass, as long as the change doesn't shift the average
 party much.
+
+`--size N` runs every party of N different subclasses. Encounters grow to one
+creature per hero, using the line-ups in `ENCOUNTERS_BY_SIZE` in `foes.py`
+(sizes without an entry repeat the four-creature line-up), and the Boss stays
+alone. Each size gets its own encounter tuning and its own
+`party{N}_calibration.json`, `party{N}_results.json` and `party{N}_report.md`.
+Six-hero parties are the slowest: 462 parties and fights about half as fast,
+so roughly an hour at `--n 50` including calibration.
+
+`--repeats` lets a party bring the same subclass more than once (two
+Bulwarks, three Verdants). That's 1,001 parties at size 4 and 8,008 at size
+6, so use a small `--n`; each subclass still appears in thousands of parties.
+The report adds a **Stacking** table: the party win rate with one, two, and
+three or more copies of each subclass, and how much the second copy adds.
+With this many parties and few fights each, a single party's win rate is
+noisy, so the best and worst lists flatter lucky parties. The per-subclass
+numbers are solid.
 The tuned foe sizes are kept in `calibration.json` and
 `party_calibration.json`, so results stay comparable between runs until you
 recalibrate.

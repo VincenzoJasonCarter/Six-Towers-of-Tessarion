@@ -222,8 +222,30 @@ def archetype(name, level, scale):
     raise ValueError(name)
 
 
-def encounter(name, level, scale):
-    return [archetype(a, level, scale) for a in ENCOUNTERS[name]]
+# Line-ups for bigger parties; edit freely. A party size without an entry here
+# repeats the four-creature line-up above until there is one creature per hero.
+ENCOUNTERS_BY_SIZE = {
+    6: {
+        "warband": ("brute", "brute", "soldier", "soldier", "soldier", "skirmisher"),
+        "ambush": ("skirmisher", "skirmisher", "skirmisher", "sniper", "sniper", "caster"),
+        "mixed": ("brute", "soldier", "soldier", "skirmisher", "sniper", "caster"),
+        "boss": ("boss",),
+    },
+}
+
+
+def lineup(name, size=4):
+    """The creatures in an encounter for a party of `size` (the boss always stands alone)."""
+    if size in ENCOUNTERS_BY_SIZE:
+        return ENCOUNTERS_BY_SIZE[size][name]
+    base = ENCOUNTERS[name]
+    if name == "boss":
+        return base
+    return tuple(base[i % len(base)] for i in range(size))
+
+
+def encounter(name, level, scale, size=4):
+    return [archetype(a, level, scale) for a in lineup(name, size)]
 
 
 # ----- the campaign's own stat blocks (level 3) -----------------------------

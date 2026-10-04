@@ -2,16 +2,19 @@
 # requires-python = ">=3.11"
 # dependencies = ["pyyaml>=6.0"]
 # ///
-"""The Proving Grounds, party edition: every four-subclass party against four
-kinds of encounter, to see what each subclass is worth to a team.
+"""The Proving Grounds, party edition: every party of different subclasses
+against four kinds of encounter, to see what each subclass is worth to a team.
 
 Usage, from the repo root:
 
-    uv run arena/party.py                 # all 330 parties, 200 fights per party and encounter
+    uv run arena/party.py                 # all 330 four-hero parties, 100 fights per party and encounter
+    uv run arena/party.py --size 6        # six-hero parties (462 of them) against six-creature encounters
+    uv run arena/party.py --repeats       # allow the same subclass more than once in a party
     uv run arena/party.py --n 50          # quicker, noisier
     uv run arena/party.py --recalibrate   # re-tune the encounters first
 
-Writes arena/party_results.json and arena/party_report.md.
+Writes arena/party_results.json and arena/party_report.md (party6_* etc. for
+other sizes, party4r_* etc. with repeats, each with its own encounter tuning).
 """
 import argparse
 import itertools
@@ -28,38 +31,62 @@ HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
 from engine import Fight, seed  # noqa: E402
-from foes import ENCOUNTERS, TIERS, encounter  # noqa: E402
+from foes import ENCOUNTERS, TIERS, encounter, lineup  # noqa: E402
 from heroes import BY_KEY, ROSTER  # noqa: E402
 
 LEVELS = (3, 7, 10, 15)
-PARTY_SIZE = 4
-CALIBRATION = HERE / "party_calibration.json"
-RESULTS = HERE / "party_results.json"
-REPORT = HERE / "party_report.md"
 SOLO = HERE / "results.json"
 KEYS = [c.key for c in ROSTER]
-PARTIES = [list(p) for p in itertools.combinations(KEYS, PARTY_SIZE)]
+PARTY_SIZE = 4
+REPEATS = False
+CALIBRATION = RESULTS = REPORT = None
+PARTIES = []
+
+
+def setup(size, repeats=False):
+    """Point the module at one kind of party: its party list and its output files."""
+    global PARTY_SIZE, REPEATS, CALIBRATION, RESULTS, REPORT, PARTIES
+    PARTY_SIZE, REPEATS = size, repeats
+    stem = f"party{size}r" if repeats else "party" if size == 4 else f"party{size}"
+    CALIBRATION = HERE / f"{stem}_calibration.json"
+    RESULTS = HERE / f"{stem}_results.json"
+    REPORT = HERE / f"{stem}_report.md"
+    combos = itertools.combinations_with_replacement if repeats else itertools.combinations
+    PARTIES = [list(p) for p in combos(KEYS, size)]
+
+
+setup(4)
 
 
 def battle(task):
     """n fights of one party against one encounter."""
     party, level, enc, scale, n, s = task
     seed(s)
+    size = len(party)
     wins = draws = 0
     rounds = []
-    members = {k: {"down": 0, "dealt": 0, "taken": 0} for k in party}
+    members = [[0, 0, 0] for _ in party]   # per hero, in party order: [times down, dealt, taken]
     for _ in range(n):
         heroes = [BY_KEY[k](level, True) for k in party]
-        winner, r = Fight(heroes, encounter(enc, level, scale)).run()
+        winner, r = Fight(heroes, encounter(enc, level, scale, size)).run()
         rounds.append(r)
         wins += winner == 0
         draws += winner is None
-        for h in heroes:
-            m = members[h.key]
-            m["down"] += h.dead
-            m["dealt"] += h.dealt
-            m["taken"] += h.taken
-    return dict(party=party, wins=wins, draws=draws, n=n, rounds=statistics.mean(rounds), members=members)
+        for h, m in zip(heroes, members):
+            m[0] += h.dead
+            m[1] += h.dealt
+            m[2] += h.taken
+    return dict(party=party, wins=wins, draws=draws, n=n, rounds=round(statistics.mean(rounds), 2),
+                members=members)
+
+
+def slots(r):
+    """(subclass, [down, dealt, taken]) for each hero in a result row. Older
+    results stored one dict per subclass; both shapes are read."""
+    m = r["members"]
+    if isinstance(m, dict):
+        return [(k, [m[k]["down"], m[k]["dealt"], m[k]["taken"]]) for k in r["party"]]
+    return list(zip(r["party"], m))
 
 
 def win_rate(r):
@@ -94,7 +121,7 @@ def calibrate(pool, sample=48, n=40):
 def run_all(pool, scales, n, only=None, previous=None):
     """Simulate every party, or with `only`, just the parties containing that
     subclass, merged into `previous` (for testing a change to one subclass)."""
-    results = previous or {"n": n, "levels": list(LEVELS), "encounters": list(ENCOUNTERS), "scales": scales,
+    results = previous or {"n": n, "size": PARTY_SIZE, "repeats": REPEATS, "levels": list(LEVELS), "encounters": list(ENCOUNTERS), "scales": scales,
                            "subclasses": [dict(key=c.key, label=c.label, chassis=c.chassis,
                                                patched=c.patch_sensitive) for c in ROSTER], "fights": {}}
     for level in LEVELS:
@@ -141,13 +168,16 @@ def analyse(results):
                 for r in rows:
                     if k not in r["party"]:
                         continue
-                    m = r["members"]
-                    tot_dealt = sum(x["dealt"] for x in m.values()) or 1
-                    tot_taken = sum(x["taken"] for x in m.values()) or 1
-                    down += m[k]["down"] / r["n"]
-                    dealt_share += m[k]["dealt"] / tot_dealt
-                    taken_share += m[k]["taken"] / tot_taken
-                    count += 1
+                    sl = slots(r)
+                    tot_dealt = sum(m[1] for _, m in sl) or 1
+                    tot_taken = sum(m[2] for _, m in sl) or 1
+                    for key, m in sl:
+                        if key != k:
+                            continue
+                        down += m[0] / r["n"]
+                        dealt_share += m[1] / tot_dealt
+                        taken_share += m[2] / tot_taken
+                        count += 1
             row.update(survive=1 - down / count, dealt=dealt_share / count, taken=taken_share / count)
             subs[k] = row
         # Pair synergy: how much better a pair does together than its two halves predict.
@@ -155,7 +185,16 @@ def analyse(results):
         for a, b in itertools.combinations(KEYS, 2):
             both = [v for p, v in party_wr.items() if a in p and b in p]
             pairs[(a, b)] = statistics.mean(both) - (subs[a]["with"] + subs[b]["with"] - overall)
-        out[level] = {"subs": subs, "parties": party_wr, "pairs": pairs, "overall": overall}
+        # Stacking: average win rate by how many copies of a subclass the party has.
+        stack = {}
+        for k in KEYS:
+            by = {}
+            for p, v in party_wr.items():
+                c = p.count(k)
+                if c:
+                    by.setdefault(min(c, 3), []).append(v)
+            stack[k] = {c: statistics.mean(v) for c, v in by.items()}
+        out[level] = {"subs": subs, "parties": party_wr, "pairs": pairs, "overall": overall, "stack": stack}
     return out
 
 
@@ -178,13 +217,15 @@ def solo_ranks():
 
 
 def write_report(results):
+    setup(results.get("size", 4), results.get("repeats", False))
     a = analyse(results)
     levels, encs = results["levels"], results["encounters"]
     label = {s["key"]: s["label"] for s in results["subclasses"]}
     chassis = {s["key"]: s["chassis"] for s in results["subclasses"]}
     L = []
-    L.append("# Proving Grounds: party simulation\n")
-    L.append(f"Every party of {PARTY_SIZE} different subclasses ({len(PARTIES)} parties) against four encounters "
+    L.append(f"# Proving Grounds: party simulation ({PARTY_SIZE} heroes)\n")
+    kind = "subclasses, repeats allowed" if REPEATS else "different subclasses"
+    L.append(f"Every party of {PARTY_SIZE} {kind} ({len(PARTIES):,} parties) against four encounters "
              f"at levels {', '.join(map(str, levels))}, {results['n']} fights each: "
              f"{len(PARTIES) * len(levels) * len(encs) * results['n']:,} fights. "
              "Generated by `uv run arena/party.py`; [README.md](README.md) has the rules and assumptions.\n")
@@ -192,10 +233,10 @@ def write_report(results):
     L.append("- Each encounter is tuned so the average party wins 50%.")
     L.append("- **Value** is the main number: the win rate of parties that include the subclass minus the "
              "win rate of parties that don't, in percentage points. +5 means bringing it makes a party "
-             "about 5 points more likely to win. Around 0 is average. Because a party has 4 of the 11 "
-             "subclasses, values are relative to the field.")
+             "about 5 points more likely to win. Around 0 is average. Because a party has "
+             f"{PARTY_SIZE} of the 11 subclasses, values are relative to the field.")
     L.append("- **Survives** is how often that character is still standing at the end. **Damage** and **Taken** "
-             "are its share of the party's damage dealt and taken (25% is an even share).")
+             f"are its share of the party's damage dealt and taken ({100 / PARTY_SIZE:.0f}% is an even share).")
     L.append("- Every fight starts fresh with full resources, as in the one-on-one run.\n")
 
     solo = solo_ranks()
@@ -273,13 +314,30 @@ def write_report(results):
         L.append(f"| {label[pr[0]]} + {label[pr[1]]} | {pts(mean_pair[pr])} |")
     L.append("")
 
+    if REPEATS:
+        L.append("## Stacking\n")
+        L.append("Average party win rate by how many copies of the subclass it brings, averaged over levels. "
+                 "**2nd copy** is the change from one copy to two: positive means doubling up pays, negative "
+                 "means a second one adds less than a different subclass would.\n")
+        L.append("| Subclass | 1 copy | 2 copies | 3+ copies | 2nd copy |")
+        L.append("|---|---:|---:|---:|---:|")
+        def mean_c(k, c):
+            vals = [a[lv]["stack"][k][c] for lv in levels if c in a[lv]["stack"][k]]
+            return statistics.mean(vals) if vals else None
+        cell = lambda v: "—" if v is None else pct(v)
+        gain = lambda k: (mean_c(k, 2) - mean_c(k, 1)) if mean_c(k, 2) is not None else 0
+        for k in sorted(KEYS, key=lambda k: -gain(k)):
+            L.append(f"| {label[k]} | {cell(mean_c(k, 1))} | {cell(mean_c(k, 2))} | {cell(mean_c(k, 3))} | "
+                     f"**{pts(gain(k))}** |")
+        L.append("")
+
     L.append("## Encounters\n")
     L.append("One creature per hero (the boss alone), built like the gauntlet's benchmark foes, with HP and "
              "damage multiplied by the calibrated scale.\n")
     L.append("| Encounter | Creatures | " + " | ".join(f"L{lv} scale" for lv in levels) + " |")
     L.append("|---|---|" + "---:|" * len(levels))
     for e in encs:
-        L.append(f"| {e.title()} | {', '.join(ENCOUNTERS[e])} | "
+        L.append(f"| {e.title()} | {', '.join(lineup(e, PARTY_SIZE))} | "
                  + " | ".join(f"×{results['scales'][str(lv)][e]}" for lv in levels) + " |")
     L.append("\n- **Skirmishers** ignore the front rank and go for the lowest-AC hero. **Snipers** shoot the "
              "lowest-AC hero in range. **Casters** blast a 10-foot radius wherever the most heroes stand. The "
@@ -298,8 +356,11 @@ def main():
                     help="rerun only the parties containing this subclass (e.g. sanguine_mage) and "
                          "merge them into the saved results; uses the saved encounter tuning")
     ap.add_argument("--report-only", action="store_true", help="rebuild party_report.md from party_results.json")
+    ap.add_argument("--size", type=int, default=4, help="heroes per party (default 4); enemies scale to match")
+    ap.add_argument("--repeats", action="store_true", help="allow the same subclass more than once in a party")
     ap.add_argument("--workers", type=int, default=os.cpu_count())
     args = ap.parse_args()
+    setup(args.size, args.repeats)
     if args.report_only:
         write_report(json.loads(RESULTS.read_text(encoding="utf-8")))
         print(f"wrote {REPORT.relative_to(HERE.parent)}")
