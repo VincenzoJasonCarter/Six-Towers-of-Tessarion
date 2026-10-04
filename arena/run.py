@@ -77,10 +77,10 @@ def bout(task):
         a, b = build(a_spec), build(b_spec)
         winner, r = Fight(a, b).run()
         rounds.append(r)
-        if winner is a:
+        if winner == 0:
             wins += 1
             hp_left.append(a.hp / a.max_hp)
-        elif winner is b:
+        elif winner == 1:
             losses += 1
         else:
             draws += 1

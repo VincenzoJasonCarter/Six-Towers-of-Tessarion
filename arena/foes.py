@@ -1,18 +1,18 @@
-"""Opponents for the gauntlet: four benchmark archetypes built from the DMG's
-monster-by-CR math for each tested level, and a handful of real stat blocks
-from data/enemies.yaml for level 3 (the campaign's current tier).
+"""Opponents: benchmark archetypes built from the DMG's monster-by-CR math for
+each tested level, the encounter groups the party simulator throws them in,
+and a handful of real stat blocks from data/enemies.yaml for level 3 (the
+campaign's current tier).
 """
 import re
 from pathlib import Path
 
 import yaml
 
-from engine import Creature, attack, d, d20, deal, move, p_hit, roll_damage, saving_throw
-from heroes import Hero
+from engine import Creature, attack, d, d20, deal, move, p_hit, roll_damage, saving_throw, cage_over
 
 ENEMIES = Path(__file__).resolve().parent.parent / "data" / "enemies.yaml"
 
-# A solo foe that is a hard fight for one character of this level:
+# One foe that is a hard fight for one character of this level:
 # AC, attack bonus and save DC from the CR table, HP and damage per round
 # before the calibrated scale is applied.
 TIERS = {
@@ -23,6 +23,16 @@ TIERS = {
 }
 ARCHETYPES = ("brute", "soldier", "sniper", "caster")
 
+# Party encounters: one creature per hero (the boss stands alone). Each one
+# stresses something different: a melee rush, pressure on the back rank, a bit
+# of everything, and a single big target.
+ENCOUNTERS = {
+    "warband": ("brute", "soldier", "soldier", "skirmisher"),
+    "ambush": ("skirmisher", "skirmisher", "sniper", "caster"),
+    "mixed": ("brute", "soldier", "sniper", "caster"),
+    "boss": ("boss",),
+}
+
 
 def dice_for(avg_dmg, dtype):
     """Damage parts (d8s plus a flat bonus) averaging about avg_dmg."""
@@ -32,18 +42,17 @@ def dice_for(avg_dmg, dtype):
 
 
 class Monster(Creature):
-    keep_distance = Hero.keep_distance
-
     def __init__(self, name, *, ac, hp, attacks, saves, multi=1, speed=30, style="melee",
                  ctype="humanoid", pb=2, spell=None, net=None, silence=None, reach=5,
-                 cast_mod=0, frenzy=False):
+                 cast_mod=0, frenzy=False, targeting="nearest", legendary=0):
         scores = dict(str=10, dex=10 + 2 * saves.get("dex", 0), con=10, int=10, wis=10, cha=10)
         super().__init__(name, 0, scores, (), pb, hp, ac, speed=speed, reach=reach)
         self.attacks, self.saves, self.multi = attacks, saves, multi
         self.style, self.creature_type = style, ctype
         self.caster = spell is not None
         self.spell, self.net, self.silence = spell, net, silence
-        self.cast_mod, self.frenzy = cast_mod, frenzy
+        self.cast_mod, self.frenzy, self.targeting = cast_mod, frenzy, targeting
+        self.legendary = legendary
         self.recharged = {"net": True, "silence": True}
         ranged = [a for a in attacks if a["kind"] == "ranged"]
         self.max_range = 60 if self.caster else (min(a["normal"] for a in ranged) if ranged else 5)
@@ -52,11 +61,32 @@ class Monster(Creature):
     def save_bonus(self, abil):
         return self.saves.get(abil, 0)
 
+    def save_reroll(self, abil, dc, src, ctx):
+        # Legendary Resistance: shrug off a save that would end the fight.
+        if self.legendary and (ctx.get("control") or ctx.get("big")):
+            self.legendary -= 1
+            return True
+        return False
+
     def est_dpr(self, target):
         if self.spell:
             return 0.6 * sum(n * (die + 1) / 2 + f for n, die, f, _ in self.spell["parts"])
         return sum(self.multi * p_hit(a["bonus"], target.ac()) *
                    sum(n * (die + 1) / 2 + f for n, die, f, _ in a["parts"]) for a in self.attacks[:1])
+
+    def pick_target(self):
+        foes = self.enemies()
+        if not foes:
+            return None
+        if self.targeting == "weakest":            # dives for the softest target
+            return min(foes, key=lambda e: (e.ac(), e.hp))
+        if self.targeting == "sniper":             # shoots the softest target it can reach
+            rng = max(a["long"] for a in self.attacks)
+            near = [e for e in foes if self.dist_to(e) <= rng] or foes
+            return min(near, key=lambda e: (e.ac(), e.hp))
+        if self.targeting == "cluster":            # blasts where the most heroes stand
+            return max(foes, key=lambda e: (sum(1 for o in foes if o.dist_to(e) <= 10), -e.hp))
+        return self.nearest(foes)
 
     def attack_mods(self, tgt, ctx):
         return bool(self.frenzy and tgt.caster), False   # Slag Ghoul's Mana-Frenzy
@@ -69,7 +99,9 @@ class Monster(Creature):
     def opportunity_attack(self, tgt):
         melee = [a for a in self.attacks if a["kind"] == "melee"]
         if melee:
+            foe, self.foe = self.foe, tgt
             self.strike(melee[0], {"oa": True})
+            self.foe = foe
 
     def usable(self):
         dist = self.dist()
@@ -87,8 +119,11 @@ class Monster(Creature):
             action = False
             if d20() + self.saves.get("str", 0) >= e.value[1]:
                 self.remove(effect=e)
-                if e.source.conc and any(x is e for _, x in e.source.conc.held):
-                    e.source.conc = None
+                src = e.source
+                if src.conc and any(x is e for _, x in src.conc.held):
+                    src.conc.held = [(h, x) for h, x in src.conc.held if x is not e]
+                    if not src.conc.held:
+                        src.conc = None
         if self.style == "melee":
             sp = self.speed_now()
             if self.dist() > self.reach and sp:
@@ -105,7 +140,7 @@ class Monster(Creature):
             if not saving_throw(self.foe, "dex", self.net["dc"], self, {"control": True}):
                 self.foe.add("restrained", self, value=("escape", self.net["dc"]))
             return
-        if self.silence and self.recharged["silence"] and self.engaged() and self.foe.caster:
+        if self.silence and self.recharged["silence"] and self.dist() <= 5 and self.foe.caster:
             self.recharged["silence"] = False
             if not saving_throw(self.foe, "con", self.silence, self, {"control": True}):
                 self.foe.add("silenced", self, until=("end", self.foe))
@@ -113,28 +148,34 @@ class Monster(Creature):
         if self.spell and not self.has("silenced") and self.dist() <= self.spell["range"]:
             self.cast()
         else:
-            options = self.usable()
-            if options:
-                a = options[0]
-                for _ in range(self.multi):
-                    if self.foe.dead:
+            for _ in range(self.multi):
+                if self.foe.dead:
+                    self.foe = self.pick_target()
+                    if self.foe is None:
                         break
-                    self.strike(a)
-        if self.style != "melee" and not self.foe.dead and not self.dead:
+                options = self.usable()
+                if not options:
+                    break
+                self.strike(options[0])
+        if self.style != "melee" and self.enemies() and not self.dead:
+            if self.foe.dead:
+                self.foe = self.pick_target()
             self.keep_distance()
 
     def cast(self):
+        """A blast centred on the target that catches its neighbours (10-foot radius)."""
         s, foe = self.spell, self.foe
         self.acted = True
-        cage = foe.get("cage")
-        if cage and self.dist() > 15 and d20() + self.cast_mod < cage.value:
+        w, cage = cage_over(foe)
+        if cage and abs(self.x - w.x) > 15 and d20() + self.cast_mod < cage.value:
             return
-        ctx = {"spell": True, "level": s["level"], "name": s["name"], "damage": True}
-        ok = saving_throw(foe, s["abil"], s["dc"], self, ctx)
+        hit = [e for e in self.enemies() if e.dist_to(foe) <= s.get("radius", 0)] or [foe]
         dmg = roll_damage(s["parts"])
-        if ok:
-            dmg = {k: v // 2 for k, v in dmg.items()}
-        deal(foe, dmg, self, ctx)
+        for t in hit:
+            ctx = {"spell": True, "level": s["level"], "name": s["name"], "damage": True,
+                   "single": len(hit) == 1}
+            ok = saving_throw(t, s["abil"], s["dc"], self, ctx)
+            deal(t, {k: v // 2 for k, v in dmg.items()} if ok else dict(dmg), self, ctx)
 
 
 def archetype(name, level, scale):
@@ -152,20 +193,37 @@ def archetype(name, level, scale):
                        attacks=[dict(name="blade", bonus=t["atk"], parts=dice_for(dmg / 2, "slashing"),
                                      kind="melee", normal=5, long=5)],
                        saves=dict(str=m + pb, dex=1, con=2 + pb, int=0, wis=1, cha=0))
+    if name == "skirmisher":
+        return Monster(f"Skirmisher (CR {t['cr']})", ac=t["ac"] + 1, hp=hp(0.8), multi=2, speed=40, pb=pb,
+                       targeting="weakest",
+                       attacks=[dict(name="knives", bonus=t["atk"] + 1, parts=dice_for(dmg / 2, "piercing"),
+                                     kind="melee", normal=5, long=5)],
+                       saves=dict(str=1, dex=m + pb, con=1, int=0, wis=1 + pb, cha=0))
     if name == "sniper":
         return Monster(f"Sniper (CR {t['cr']})", ac=t["ac"], hp=hp(0.8), multi=2, style="ranged", pb=pb,
+                       targeting="sniper",
                        attacks=[dict(name="bow", bonus=t["atk"], parts=dice_for(dmg * 0.45, "piercing"),
                                      kind="ranged", normal=150, long=600)],
                        saves=dict(str=0, dex=m + pb, con=1, int=0, wis=1 + pb, cha=0))
     if name == "caster":
         return Monster(f"Caster (CR {t['cr']})", ac=t["ac"] - 2, hp=hp(0.7), style="caster", pb=pb,
-                       cast_mod=m,
+                       cast_mod=m, targeting="cluster",
                        attacks=[dict(name="staff", bonus=t["atk"] - 2, parts=[(1, 6, 0, "bludgeoning")],
                                      kind="melee", normal=5, long=5)],
-                       spell=dict(name="searing burst", abil="dex", dc=t["dc"], level=3, range=120,
+                       spell=dict(name="searing burst", abil="dex", dc=t["dc"], level=3, range=120, radius=10,
                                   parts=dice_for(dmg * 1.1, "fire")),
                        saves=dict(str=-1, dex=1, con=1, int=m + pb, wis=1 + pb, cha=0))
+    if name == "boss":
+        return Monster(f"Boss (CR {t['cr']}+)", ac=t["ac"] + 1, hp=hp(4.5), multi=3, speed=40, pb=pb + 1,
+                       ctype="monstrosity", reach=10, legendary=2,
+                       attacks=[dict(name="claws", bonus=t["atk"] + 2, parts=dice_for(dmg * 0.9, "slashing"),
+                                     kind="melee", normal=10, long=10, reach=10)],
+                       saves=dict(str=m + pb + 1, dex=1, con=m + pb + 1, int=0, wis=2 + pb, cha=1))
     raise ValueError(name)
+
+
+def encounter(name, level, scale):
+    return [archetype(a, level, scale) for a in ENCOUNTERS[name]]
 
 
 # ----- the campaign's own stat blocks (level 3) -----------------------------

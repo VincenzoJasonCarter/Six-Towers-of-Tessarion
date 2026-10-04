@@ -56,8 +56,12 @@ memoria-build: ## Export a static snapshot to memoria/memoria.html
 # --- arena (Monte Carlo power rankings for the subclasses) ---
 
 .PHONY: arena
-arena: ## Simulate the subclasses and write arena/report.md (ARGS="--n 200" for a quick run)
+arena: ## Simulate the subclasses one-on-one and write arena/report.md (ARGS="--n 200" for a quick run)
 	uv run arena/run.py $(ARGS)
+
+.PHONY: arena-party
+arena-party: ## Simulate every four-subclass party and write arena/party_report.md (ARGS="--n 50" for a quick run)
+	uv run arena/party.py $(ARGS)
 
 # --- web (the hub, library, bestiary, barracks and memoria as one static site, for Vercel or any static host) ---
 

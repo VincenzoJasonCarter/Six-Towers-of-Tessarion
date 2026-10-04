@@ -1,37 +1,55 @@
 # The Proving Grounds
 
 A Monte Carlo combat simulator for the eleven subclasses in
-`../lore-book/05-subclasses-skill.md`. It runs hundreds of thousands of
-one-on-one fights and ranks the subclasses at levels 3, 7, 10 and 15, both
-as written now and as they were before Patch 1 (`../balance-patch.md`).
+`../lore-book/05-subclasses-skill.md`, at levels 3, 7, 10 and 15. It has
+two modes:
 
-The output is [report.md](report.md) (the rankings) and `results.json` (every
-raw number).
+- **One-on-one** (`run.py` → [report.md](report.md)). Every subclass against
+  benchmark foes and against each other, both as written now and as they
+  were before Patch 1 (`../balance-patch.md`).
+- **Party** (`party.py` → [party_report.md](party_report.md)). Every party of
+  four different subclasses (330 of them) against four kinds of encounter.
+  It measures what each subclass is worth to a team, which is where support
+  and control features earn their keep.
+
+Raw numbers go to `results.json` and `party_results.json`.
 
 ## Running it
 
 From the repo root:
 
 ```
-make arena                          # or: uv run arena/run.py
-uv run arena/run.py --n 200         # quicker and noisier (default is 1000 fights per matchup)
-uv run arena/run.py --recalibrate   # re-tune the benchmark foes (do this after changing rules)
-uv run arena/run.py --report-only   # rebuild report.md from results.json
+make arena                            # or: uv run arena/run.py
+make arena-party                      # or: uv run arena/party.py
+uv run arena/run.py --n 200           # quicker and noisier (default 1000 fights per matchup)
+uv run arena/party.py --n 50          # quicker and noisier (default 100 per party and encounter)
+uv run arena/run.py --recalibrate     # re-tune the foes (do this after changing rules)
+uv run arena/party.py --recalibrate
+uv run arena/party.py --only gunman   # rerun just the parties with one subclass, after changing it
+uv run arena/run.py --report-only     # rebuild a report from its saved results
 ```
 
-A full run takes about 5 minutes on 8 cores; `--recalibrate` adds about 5
-more. The tuned foe sizes are kept in `calibration.json` so the rankings stay
-comparable between runs until you recalibrate.
+On 8 cores the one-on-one run takes about 6 minutes plus 7 to recalibrate.
+The party run takes about 25 minutes (528,000 fights) plus about 17 to
+recalibrate. `--only` reruns the 120 parties containing one subclass (about
+10 minutes) against the saved encounter tuning. That's the quick way to test a
+change to one subclass, as long as the change doesn't shift the average
+party much.
+The tuned foe sizes are kept in `calibration.json` and
+`party_calibration.json`, so results stay comparable between runs until you
+recalibrate.
 
 ## What it measures
 
-- **Gauntlet** (the ranking). Each subclass fights four solo foes built from
-  the DMG's monster-by-CR numbers: a **Brute** (beast, one huge hit, fast), a
+**One-on-one**
+
+- **Gauntlet**. Each subclass fights four solo foes built from the DMG's
+  monster-by-CR numbers: a **Brute** (beast, one huge hit, fast), a
   **Soldier** (humanoid, armoured, two attacks), a **Sniper** (humanoid
-  archer who keeps its distance) and a **Caster** (humanoid, a Dexterity-save
-  blast every turn). Each foe's HP and damage are scaled, separately for
-  Wizards and Fighters, until the average subclass of that chassis wins half
-  its fights. 50% is par within a chassis.
+  archer who keeps its distance) and a **Caster** (humanoid, a 10-foot
+  Dexterity-save blast every turn). Each foe's HP and damage are scaled,
+  separately for Wizards and Fighters, until the average subclass of that
+  chassis wins half its fights. 50% is par within a chassis.
 - **Chassis gap**. The ratio of those scales: how much tougher a foe the
   Wizards can handle than the Fighters. It measures 5e itself, not your
   subclasses.
@@ -43,37 +61,70 @@ comparable between runs until you recalibrate.
 - **Campaign monsters** (level 3 only). Real stat blocks from
   `../data/enemies.yaml`.
 
+**Party**
+
+- Encounters, one creature per hero:
+  - **Warband**: Brute, two Soldiers and a Skirmisher.
+  - **Ambush**: two Skirmishers, a Sniper and a Caster.
+  - **Mixed**: Brute, Soldier, Sniper and Caster.
+  - **Boss**: alone. Three attacks, 10-foot reach, and two Legendary
+    Resistances.
+
+  Each encounter is scaled until the average party wins half its fights.
+- Monsters pick targets by type. Brutes and Soldiers take the nearest hero.
+  Skirmishers run past the front rank to the lowest-AC hero. Snipers shoot
+  the lowest-AC hero in range. Casters blast wherever the most heroes stand
+  together.
+- **Value** of a subclass: the win rate of parties that include it minus the
+  win rate of parties that don't. The report also lists each subclass's
+  survival rate and its share of damage dealt and taken, the best and worst
+  parties, results by number of mages, and pair synergies.
+
 ## Files
 
 | File | What it holds |
 |---|---|
-| `engine.py` | Dice, conditions, attacks, saves, damage, concentration, movement and the turn loop |
+| `engine.py` | Dice, conditions, attacks, saves, damage, concentration, movement, targeting and the turn loop |
 | `heroes.py` | The Wizard and Fighter chassis and the eleven subclasses, feature by feature, with the pre-patch rules behind `patched=False` |
-| `foes.py` | The benchmark archetypes and the loader for the campaign's stat blocks |
-| `run.py` | Calibration, the experiments, `results.json` and `report.md` |
+| `foes.py` | The benchmark archetypes, the party encounters, and the loader for the campaign's stat blocks |
+| `run.py` | One-on-one: calibration, experiments, `results.json` and `report.md` |
+| `party.py` | Party: calibration, all 330 parties, `party_results.json` and `party_report.md` |
 
 To test a rules change, edit the subclass in `heroes.py`, run with
-`--recalibrate`, and compare the report. To compare against the current rules
-instead, add the change behind a flag the way `patched` works.
+`--recalibrate`, and compare the reports. To compare against the current
+rules instead, add the change behind a flag the way `patched` works.
 
 ## The arena
 
-Two combatants start 60 feet apart on a 120-foot line with a wall at each
-end, so a shooter can back away 30 feet before it is cornered. Movement is in
-5-foot steps. Entering difficult terrain costs double, and leaving a foe's
-reach provokes an opportunity attack. A fight ends when one side drops to 0
-HP. There are no death saves, and after 20 rounds the fight is a draw, which
-counts as half a win.
+Combatants stand on a 120-foot line with a wall at each end. One-on-one, they
+start 60 feet apart. In a party fight, melee heroes start at 30 feet and
+everyone else at 10, and the enemy mirrors that at 90 and 110 feet. Creatures
+can pass each other, as they could step around each other on a real map.
 
-The combatants are bots. Melee fighters close in, dashing when they can't
-reach, and use Action Surge on the first turn they can attack. Shooters and
-casters back away from anything that wants to melee them. Once engaged, they
-step out (and take the opportunity attack) only when the foe can't follow,
-for example after Verdant Snare or Entangle. Wizards cast Hold Person (Hold
-Monster from 10th level) when it's likely to land and nothing is held yet.
-Otherwise they cast whatever has the highest expected damage this turn, so
-they spend their biggest slots first. Ammunition and other choices are also
-picked by expected value.
+Movement is in 5-foot steps. Entering difficult terrain costs double, and
+leaving an enemy's reach provokes an opportunity attack. A creature at 0 HP
+is out of the fight; there are no death saves and no healing of allies. A
+fight ends when one side is down. After 20 rounds it is a draw, which counts
+as half a win.
+
+The combatants are bots:
+
+- **Melee heroes** close in, dashing when they can't reach, and attack the
+  most hurt enemy in reach. They use Action Surge on the first turn they can
+  attack.
+- **Guards** (Bulwark and Warden, when the party has a back rank) don't
+  charge. They stand just in front of the most vulnerable ally and engage
+  whatever comes for it.
+- **Shooters and casters** focus the most hurt enemy in range and back away
+  from anything that wants to melee them. Once engaged, they step out (taking
+  the opportunity attack) only when the enemy can't follow, for example after
+  Verdant Snare or Entangle.
+- **Wizards** cast Hold Person (Hold Monster from 10th level) on the most
+  dangerous enemy when it's likely to land and nothing is held yet. Otherwise
+  they cast whatever has the highest expected damage this turn, so they spend
+  their biggest slots first. Area spells go where they catch the most enemies
+  and no allies, and aren't cast if every spot would hit a friend.
+- Ammunition and other choices are also picked by expected value.
 
 ## Builds and gear
 
@@ -96,17 +147,21 @@ is kept back for it), *magic missile*, *scorching ray*, *hold person*,
 death*, using whichever its slots allow. Each fight starts with every spell
 slot and every once-per-rest feature unspent. Compared with a full
 adventuring day, that favours once-per-rest features (Overdrive, Fortress,
-Overlord, Soulshot Barrage) and Wizards in general.
+Overlord, Stoneheart, Soulshot Barrage) and Wizards in general.
 
 ## How each feature was read
 
 Where the text left a choice or room for interpretation, the simulator does this:
 
-- **Verdant Mage** takes *entangle*, which competes with Hold Person for
-  concentration. Rootbind is used only when the slow keeps a charging foe out
-  of reach this round. Memory of the Grove rerolls fear saves. Verdant Veil is
-  used against ranged foes. Master of Living Paths gives disadvantage on the
-  save and the 15-foot teleport.
+- **Verdant Mage** takes *entangle*, cast on the spot that restrains the most
+  enemies without catching allies. It competes with Hold Person for
+  concentration. Rootbind is used only when the slow keeps a charging enemy
+  out of reach this round, and hits extra creatures from 5th level. Memory of
+  the Grove rerolls fear saves for itself and allies within 30 feet (the
+  benchmark foes cause no fear, so this only comes up against the Sanguine
+  Aegis). Verdant Veil goes on the lowest-AC member of the party while enemy
+  archers are alive. Master of Living Paths gives disadvantage on the save
+  and the 15-foot teleport.
 - **Warbound Mage** takes *shield* and *booming blade*. After Patch 1 it
   wields a rapier, before it a dagger. Both use Dexterity, so its melee
   attacks are weak, and the bot only melees when that beats casting.
@@ -114,56 +169,65 @@ Where the text left a choice or room for interpretation, the simulator does this
   War Drum, Battle Surge, Blood for Power (only while above half HP, both
   versions), Crimson Presence and Warstorm (both versions) are all modelled.
 - **Stonewarden Mage** takes the free *mage armor* (AC 16, no slot). Runic
-  Bulwark halves any hit of 8+ damage. Living Rampart does nothing here (no
-  wall spells), and Stoneheart Aegis protects allies, so it is never used solo.
+  Bulwark halves any hit of 8+ damage on itself or an ally within 30 feet.
+  Stoneheart Aegis goes up on turn one when at least two allies are within 30
+  feet (+2 AC and advantage on Con saves for them; the redirect is not
+  modelled). Living Rampart does nothing here (no wall spells).
 - **Hellbound Mage** takes *hex*. Shadow Mark goes on before save spells,
-  and Curseweaver gives disadvantage on the foe's next attack. From 10th
-  level it opens with *darkness* centred on itself (it sees through it)
-  against shooters and casters, or after one Hold attempt against melee.
-  Pact Nexus is used when its expected damage beats a spell.
+  and Curseweaver gives disadvantage on the target's next attack. From 10th
+  level, fighting alone, it opens with *darkness* centred on itself (it sees
+  through it) when no Hold is worth casting. With allies it never does,
+  because the darkness would blind them too. Pact Nexus is used when its
+  expected damage beats a spell.
 - **Sanguine Mage** takes *inflict wounds* and uses Soul Tether every turn it
   can. **Flux Manipulation's save swap is assumed always DM-approved**: Hold
   Person against a fighter becomes an Intelligence save, and Hold Monster
   against a beast too. That is the single strongest thing in the book; see the
   report. Overlord opens the fight from 14th level, flips saves within 30 feet
-  while above 25 HP, and pushes melee foes 10 feet away. Prismatic Echoes
-  never triggers, because the kill ends the fight.
+  while above 25 HP, and pushes melee enemies 10 feet away. Prismatic Echoes
+  isn't modelled.
 - **Aether Mage**: guidance, Stabilizing Pulse and Adaptive Resonance do
-  nothing in a fight like this. Null Field goes up against spellcasters.
-  Anchor of Tessarion's resistance applies (including against
-  *disintegrate*); its death-save clause doesn't come up.
+  nothing in a fight like this. Null Field goes up when there are enemy
+  spellcasters, and covers allies within 10 feet. Anchor of Tessarion's
+  resistance applies (including against *disintegrate*), and its once-a-day
+  save keeps someone within 30 feet at 1 HP.
 - **Sanguine Aegis**: Blood Charges, Leeching Strikes, Red Pact (spends the
   most charges it may), Hunger of the Armor with Scent of Blood, and
   Overdrive on turn one at 15th level. It heals with charges below 40% HP.
-- **Bulwark Aegis**: Living Wall's +1 AC, Anchored Stance whenever it moved
-  10 feet or less, immunity to being pushed from 7th level, and Fortress
-  against melee foes once engaged. Its features that protect allies don't
-  apply in a duel.
-- **Warden Aegis**: the anchor is placed on the foe once it's within 30 feet.
-  Shackle Strike is used on shooters and casters, Lockstep Field roots on an
-  opportunity-attack hit, and Mana Cage goes up on turn one against a caster.
-  Field Commander does nothing solo.
+- **Bulwark Aegis** guards the back rank. It has Living Wall (+1 AC, and its
+  reaction gives disadvantage on attacks against an adjacent ally), Anchored
+  Stance whenever it moved 10 feet or less, and immunity to being pushed from
+  7th level. Unmoving Bastion gives +1 AC to allies within 10 feet. Intercepting
+  Guard takes hits of 10+ (or a killing blow) meant for an ally within 10 feet,
+  while above 30% HP. Fortress goes up against melee enemies once engaged and
+  gives allies within 10 feet half cover.
+- **Warden Aegis** guards the back rank. The anchor goes on the nearest enemy
+  once it is within 30 feet. Shackle Strike is used on any hit when it has
+  allies to protect (alone, only on shooters and casters). Lockstep Field
+  roots on an opportunity-attack hit. Mana Cage goes up on turn one when
+  there are enemy casters and protects everyone in the dome. Field Commander
+  lends allies within 10 feet its Strength or Constitution for those saves.
 - **Crystal Archer**: Crystal Sight opens the fight from 7th level. **Silent
-  Volley is read as giving the foe disadvantage on attacks against the archer
-  until the archer's next turn** (the arena is assumed to have scattered
-  cover). Rain of Shards is used when it beats a volley and the archer isn't
-  inside the blast. Before Patch 1 it never is.
+  Volley is read as giving the target disadvantage on attacks against the
+  archer until the archer's next turn** (the arena is assumed to have
+  scattered cover). Amber Dust's temporary HP go to the most hurt friend
+  within 10 feet of the target. Rain of Shards is used when it beats a volley
+  and the area catches no allies.
 - **Gunman** carries a backup pistol (1d10, 30/90 ft) for after Soulshot
-  Barrage disables the musket. Powder Disruption silences casters, and
-  Recoil Step backs off 10 feet after a shot when a melee foe is adjacent.
-  Amber Slug's −2 AC only helps the Gunman's own later shots that turn, so
-  solo it rarely beats Red Impact. In a party, every ally's attacks would
-  benefit.
+  Barrage disables the musket. From 7th level it shoots enemy casters first,
+  and Powder Disruption silences them. Recoil Step backs off 10 feet after a
+  shot when a melee enemy is adjacent. Amber Slug's −2 AC counts for its own
+  remaining shots and every ally's attacks until its next turn.
 
 ## Not modelled
 
-- Party play: allies, healing others, intercepting, auras for allies. This is
-  where Bulwark, Warden, Stonewarden and Aether earn their keep, so their
-  solo numbers understate them.
 - The Aegisbound's shared "magic-resistant armor" trait (the lore gives no
   numbers).
-- *Counterspell*, *misty step*, prone, cover, flying, feats, consumables, and
-  magic items beyond the +N weapon or focus.
+- *Counterspell*, *misty step*, healing allies, death saves, prone, cover,
+  flying, feats, consumables, and magic items beyond the +N weapon or focus.
+- Real map geometry: the line lets area spells and guards work roughly as
+  they would, but flanking, chokepoints and shaping a blast around allies
+  don't exist.
 - Rests between fights: every fight starts fresh.
 - For the campaign monsters: saving throws aren't in the YAML (they are
   guessed in `foes.py`), and of their recharge abilities only Iron-Hound's

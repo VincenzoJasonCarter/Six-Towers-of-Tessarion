@@ -3,10 +3,11 @@ lore-book/05-subclasses-skill.md on the 5e Wizard and Fighter chassis.
 
 patched=False rebuilds the rules as they stood before Patch 1
 (balance-patch.md) for the four subclasses it changed; the other seven
-ignore the flag.
+ignore the flag. Everything works one-on-one and in a party; features that
+help allies only do something when there are allies.
 """
-from engine import (Conc, Creature, Zone, attack, attack_adv, avg, d, d20, deal, mod, move,
-                    p_fail, p_hit, roll_damage, room_behind, saving_throw)
+from engine import (Conc, Creature, Zone, attack, attack_adv, avg, cage_over, d, d20, deal, mod,
+                    move, move_to, p_fail, p_hit, push, roll_damage, room_behind, saving_throw)
 
 
 def prof(level):
@@ -47,6 +48,7 @@ RANGE_BASE = dict(str=10, dex=16, con=14, int=8, wis=12, cha=10)
 class Hero(Creature):
     key = label = chassis = ""
     patch_sensitive = False
+    guard = False   # holds the line in front of the back rank instead of charging
 
     def __init__(self, level, patched, scores, save_profs, hp, ac):
         super().__init__(self.label, level, scores, save_profs, prof(level), hp, ac)
@@ -57,23 +59,29 @@ class Hero(Creature):
         """Effect timing for "until the end of your next turn"."""
         return dict(until=("end", self), skip=1 if self.my_turn() else 0)
 
-    def keep_distance(self):
-        """Ranged and caster footwork: kite a foe that wants to close, close on one that doesn't.
-        Called before and again after the action, with whatever movement is left."""
-        foe, sp = self.foe, self.speed_now() - self.moved
-        if sp <= 0:
-            return
-        if foe.style == "melee":
-            if self.engaged():
-                # Step away (eating the opportunity attack) only if the foe can't
-                # follow and still attack on its turn.
-                after = self.dist() + min(sp, room_behind(self))
-                if foe.speed_now() < after - foe.reach:
-                    move(self, False, sp)
-            elif self.dist() < self.max_range:
-                move(self, False, min(sp, self.max_range - self.dist()))
-        elif self.dist() > self.max_range:
-            move(self, True, min(sp, self.dist() - self.max_range))
+    # ----- targets ----------------------------------------------------
+    def reach_of_attacks(self):
+        return self.reach if self.style == "melee" else self.max_range
+
+    def pick_target(self):
+        """Melee: the most hurt enemy within reach, else the nearest. Ranged and
+        casters: focus fire on the most hurt enemy in range, else the nearest."""
+        foes = self.enemies()
+        if not foes:
+            return None
+        if self.guard and self.ward_ally():
+            ward = self.ward_ally()
+            return min(foes, key=lambda e: (e.dist_to(ward), e.hp))
+        rng = self.reach_of_attacks()
+        near = [e for e in foes if self.dist_to(e) <= rng]
+        if near:
+            return min(near, key=lambda e: (e.hp, self.dist_to(e)))
+        return self.nearest(foes)
+
+    def ward_ally(self):
+        """The back-rank ally a guard stands in front of, if any."""
+        backs = [a for a in self.allies() if a.style != "melee"]
+        return min(backs, key=lambda a: (a.ac(), a.hp)) if backs else None
 
 
 # =========================================================================
@@ -106,7 +114,7 @@ class Wizard(Hero):
         self.slots[1] -= 1         # cast before the day's fights
 
     def ac(self):
-        return self.base_ac + (3 if self.has("mage_armor") else 0) + self.total("ac")
+        return self.base_ac + (3 if self.has("mage_armor") else 0) + self.ac_bonus()
 
     def est_dpr(self, target):
         return 0.65 * 5.5 * self.tier + 3 * self.level
@@ -124,6 +132,9 @@ class Wizard(Hero):
     # ----- reactions -------------------------------------------------
     def can_shield(self):
         return self.free.get("shield") or self.slots[1] > 0
+
+    def can_shield_cheap(self):
+        return self.reaction and bool(self.can_shield())
 
     def use_shield(self):
         self.spend(1, "shield")
@@ -143,95 +154,115 @@ class Wizard(Hero):
         return False
 
     # ----- prediction helpers -----------------------------------------
-    def p_attack(self, kind="ranged"):
-        adv, dis = attack_adv(self, self.foe, {"kind": kind, "spell": True})
-        return p_hit(self.spell_atk, self.foe.ac(), adv, dis)
+    def p_attack(self, tgt, kind="ranged"):
+        adv, dis = attack_adv(self, tgt, {"kind": kind, "spell": True})
+        return p_hit(self.spell_atk, tgt.ac(), adv, dis)
 
-    def save_ability(self, abil, ctx, commit=False):
-        """Hook for Flux Manipulation; returns the ability the foe actually saves with."""
+    def save_ability(self, tgt, abil, ctx, commit=False):
+        """Hook for Flux Manipulation; returns the ability the target actually saves with."""
         return abil
 
-    def p_save_fail(self, abil, ctx=None):
-        foe = self.foe
+    def p_save_fail(self, tgt, abil, ctx=None):
         ctx = dict(ctx or {}, spell=True)
-        abil = self.save_ability(abil, ctx)
-        if abil in ("str", "dex") and foe.incapacitated():
+        abil = self.save_ability(tgt, abil, ctx)
+        if abil in ("str", "dex") and tgt.incapacitated():
             return 1.0
-        a1, d1 = foe.save_mods(abil, self, ctx)
-        a2, d2 = self.impose_save_mods(foe, abil, dict(ctx, predict=True))
-        dis = d1 or d2 or (abil == "dex" and foe.has("restrained"))
-        p = p_fail(foe.save_bonus(abil), self.dc, a1 or a2, dis)
-        return p
+        a1, d1 = tgt.save_mods(abil, self, ctx)
+        a2, d2 = self.impose_save_mods(tgt, abil, dict(ctx, predict=True))
+        adv, dis = a1 or a2, d1 or d2 or (abil == "dex" and tgt.has("restrained"))
+        for g in tgt.allies():
+            a3, d3 = g.aura_save_mods(tgt, abil, self, ctx)
+            adv, dis = adv or a3, dis or d3
+        return p_fail(tgt.save_bonus(abil), self.dc, adv, dis)
 
-    def cage_factor(self, targeted):
-        cage = self.foe.get("cage")
-        if targeted and cage and self.dist() > 15:
+    def p_half(self, tgt, abil, ctx=None):
+        """Expected fraction of a save-for-half spell's damage that lands."""
+        pf = self.p_save_fail(tgt, abil, ctx)
+        return pf + (1 - pf) / 2
+
+    def cage_factor(self, tgt, targeted=True):
+        w, cage = cage_over(tgt) if targeted else (None, None)
+        if cage and abs(self.x - w.x) > 15:
             return min(1.0, max(0.0, (21 - (cage.value - self.mod("int"))) / 20))
         return 1.0
 
-    def cage_passes(self, targeted):
-        cage = self.foe.get("cage")
-        if targeted and cage and self.dist() > 15:
+    def cage_passes(self, tgt, targeted=True):
+        w, cage = cage_over(tgt) if targeted else (None, None)
+        if cage and abs(self.x - w.x) > 15:
             return d20() + self.mod("int") >= cage.value
         return True
+
+    def in_range(self, rng, sight=True):
+        return [e for e in self.enemies() if self.dist_to(e) <= rng and (not sight or self.can_see(e))]
+
+    def aim(self, tgt):
+        self.foe = tgt
 
     # ----- spells ----------------------------------------------------
     def spell_bonus_parts(self, ctx):
         """Flat bonuses some subclasses add to a spell's damage roll."""
         return []
 
-    def spell_attack(self, name, level, rays, parts, kind="ranged", free=None):
+    def spell_attack(self, name, level, rays, parts, kind="ranged", free=None, rng=120):
         self.cast = {}
         self.spend(level, free)
         self.acted = True
-        if not self.cage_passes(True):
+        if not self.cage_passes(self.foe):
             return
         for _ in range(rays):
             if self.foe.dead:
-                break
-            ctx = {"name": name}
+                nxt = [e for e in self.in_range(rng, sight=False)]
+                if not nxt:
+                    break
+                self.foe = min(nxt, key=lambda e: e.hp)
             attack(self, self.foe, bonus=self.spell_atk, parts=parts, kind=kind,
-                   spell=True, level=level, ctx=ctx)
+                   spell=True, level=level, ctx={"name": name})
 
     def hit_extra(self, tgt, ctx):
         return self.spell_bonus_parts(ctx) if ctx.get("spell") else []
 
-    def save_spell(self, name, level, abil, parts, half=True, targeted=True, free=None,
-                   on_fail=None):
+    def save_spell(self, name, level, abil, parts, half=True, targets=None, free=None,
+                   on_fail=None, targeted=True):
+        """One spell, one damage roll, a save for each creature caught in it."""
         self.cast = {}
         self.spend(level, free)
         self.acted = True
-        foe = self.foe
-        if not self.cage_passes(targeted):
+        targets = [t for t in (targets or [self.foe]) if not t.dead]
+        if targeted and targets and not self.cage_passes(targets[0]):
             return
-        ctx = {"spell": True, "level": level, "name": name, "damage": True,
-               "big": avg(parts) >= 0.2 * foe.max_hp}
-        abil = self.save_ability(abil, ctx, commit=True)
-        ok = saving_throw(foe, abil, self.dc, self, ctx)
-        if ok and not half:
-            return
-        dmg = roll_damage(list(parts) + self.spell_bonus_parts(ctx))
-        if ok:
-            dmg = {k: v // 2 for k, v in dmg.items()}
-        deal(foe, dmg, self, ctx)
-        if not ok and on_fail and not foe.dead:
-            on_fail()
-        self.after_spell_damage(ctx)
+        base = roll_damage(list(parts) + self.spell_bonus_parts({"spell": True}))
+        # The save's ability is chosen once for the whole spell (Flux Manipulation).
+        lead = max(targets, key=lambda t: t.max_hp) if targets else None
+        ab = abil
+        if lead:
+            ab = self.save_ability(lead, abil, {"spell": True, "level": level, "damage": True,
+                                                "big": avg(parts) >= 0.2 * lead.max_hp,
+                                                "group": targets}, commit=True)
+        for t in targets:
+            ctx = {"spell": True, "level": level, "name": name, "damage": True,
+                   "single": len(targets) == 1, "big": avg(parts) >= 0.2 * t.max_hp}
+            ok = saving_throw(t, ab, self.dc, self, ctx)
+            if ok and not half:
+                continue
+            dmg = {k: v // 2 for k, v in base.items()} if ok else dict(base)
+            deal(t, dmg, self, ctx)
+            if not ok and on_fail and not t.dead:
+                on_fail(t)
+            self.after_spell_damage(t, ctx)
 
-    def after_spell_damage(self, ctx):
+    def after_spell_damage(self, tgt, ctx):
         pass
 
     def magic_missile(self, level):
         self.cast = {}
         self.spend(level)
         self.acted = True
-        if not self.cage_passes(True) or self.foe.block_missiles():
+        if not self.cage_passes(self.foe) or self.foe.block_missiles():
             return
         darts = 2 + level
         ctx = {"spell": True, "level": level, "name": "magic missile"}
-        deal(self.foe, roll_damage([(darts, 4, darts, "force")] + self.spell_bonus_parts(ctx)),
-             self, ctx)
-        self.after_spell_damage(ctx)
+        deal(self.foe, roll_damage([(darts, 4, darts, "force")] + self.spell_bonus_parts(ctx)), self, ctx)
+        self.after_spell_damage(self.foe, ctx)
 
     def hold(self, level, name, free=None):
         self.spend(level, free)
@@ -239,31 +270,35 @@ class Wizard(Hero):
         self.drop_conc()
         self.control_tries += 1
         foe = self.foe
-        if not self.cage_passes(True):
+        if not self.cage_passes(foe):
             return
-        ctx = {"spell": True, "level": level, "name": name, "control": True}
-        abil = self.save_ability("wis", ctx, commit=True)
+        ctx = {"spell": True, "level": level, "name": name, "control": True, "single": True}
+        abil = self.save_ability(foe, "wis", ctx, commit=True)
         if not saving_throw(foe, abil, self.dc, self, ctx):
             e = foe.add("paralyzed", self, value=(abil, self.dc, self))
             self.conc = Conc(name, [(foe, e)])
 
+    def toll_the_dead(self):
+        die = 12 if self.foe.hp < self.foe.max_hp else 8
+        self.save_spell("toll the dead", 0, "wis", [(self.tier, die, 0, "necrotic")], half=False)
+
     # ----- choosing ---------------------------------------------------
     def options(self):
         """Every action worth considering this turn as (expected value, label, do)."""
-        foe, dist, opts = self.foe, self.dist(), []
-        if self.has("silenced"):
+        foe, opts = self.foe, []
+        if self.has("silenced") or foe is None:
             return opts
-        sight = self.can_see_foe()
-        p = self.p_attack()
-        cage_t = self.cage_factor(True)
+        dist = self.dist()
+        sight = self.can_see(foe)
+        p = self.p_attack(foe)
+        cage_t = self.cage_factor(foe)
         t = self.tier
         if dist <= 120:
             opts.append((p * 5.5 * t * cage_t, "fire bolt",
                          lambda: self.spell_attack("fire bolt", 0, 1, [(t, 10, 0, "fire")])))
         if dist <= 60 and sight:
-            pw = self.p_save_fail("wis")
             die = 6.5 if foe.hp < foe.max_hp else 4.5
-            opts.append((pw * die * t * cage_t, "toll the dead", self.toll_the_dead))
+            opts.append((self.p_save_fail(foe, "wis") * die * t * cage_t, "toll the dead", self.toll_the_dead))
         if sight and dist <= 120:
             for lv in self.avail(1):
                 if lv == 1 and self.slots[1] <= 1 and not self.free.get("shield"):
@@ -276,59 +311,71 @@ class Wizard(Hero):
             for lv in self.avail(2):
                 rays = 1 + lv
                 opts.append((rays * p * 7 * cage_t, f"scorching ray {lv}",
-                             lambda lv=lv, r=rays: self.spell_attack(
-                                 "scorching ray", lv, r, [(2, 6, 0, "fire")])))
-        pd = self.p_save_fail("dex", {"damage": True})
-        if 25 <= dist <= 150:
-            for lv in self.avail(3):
-                n = 5 + lv
-                opts.append((3.5 * n * (pd + (1 - pd) / 2), f"fireball {lv}",
-                             lambda lv=lv, n=n: self.save_spell(
-                                 "fireball", lv, "dex", [(n, 6, 0, "fire")], targeted=False)))
-            for lv in self.avail(4):
-                n = 10 + 2 * (lv - 4)
-                opts.append((2.5 * n * (pd + (1 - pd) / 2) + pd * 12.5, f"vitriolic sphere {lv}",
-                             lambda lv=lv, n=n: self.save_spell(
-                                 "vitriolic sphere", lv, "dex", [(n, 4, 0, "acid")], targeted=False,
-                                 on_fail=lambda: self.foe.add("dot", self, value=([(5, 4, 0, "acid")], self)))))
+                             lambda lv=lv, r=rays: self.spell_attack("scorching ray", lv, r, [(2, 6, 0, "fire")])))
+        # Area spells: the spot that catches the most enemies and no friends.
+        if self.avail(3):
+            area = self.best_area(20, 150, score=lambda hit: sum(self.p_half(e, "dex") for e in hit))
+            if area:
+                hit, cx = area
+                frac = sum(self.p_half(e, "dex") for e in hit)
+                for lv in self.avail(3):
+                    n = 5 + lv
+                    opts.append((3.5 * n * frac, f"fireball {lv}",
+                                 lambda lv=lv, n=n, hit=hit: self.save_spell(
+                                     "fireball", lv, "dex", [(n, 6, 0, "fire")], targets=hit, targeted=False)))
+                for lv in self.avail(4):
+                    n = 10 + 2 * (lv - 4)
+                    later = sum(self.p_save_fail(e, "dex") for e in hit) * 12.5
+                    opts.append((2.5 * n * frac + later, f"vitriolic sphere {lv}",
+                                 lambda lv=lv, n=n, hit=hit: self.save_spell(
+                                     "vitriolic sphere", lv, "dex", [(n, 4, 0, "acid")], targets=hit,
+                                     targeted=False,
+                                     on_fail=lambda e: e.add("dot", self, value=([(5, 4, 0, "acid")], self)))))
         if sight and dist <= 60:
+            pd = self.p_save_fail(foe, "dex", {"damage": True, "big": True})
             for lv in self.avail(6):
                 n = 10 + 3 * (lv - 6)
                 opts.append(((3.5 * n + 40) * pd * cage_t, f"disintegrate {lv}",
                              lambda lv=lv, n=n: self.save_spell(
                                  "disintegrate", lv, "dex", [(n, 6, 40, "force")], half=False)))
-            pc = self.p_save_fail("con", {"damage": True})
+            ph = self.p_half(foe, "con", {"damage": True, "big": True})
             for lv in self.avail(7):
-                opts.append((61.5 * (pc + (1 - pc) / 2) * cage_t, f"finger of death {lv}",
+                opts.append((61.5 * ph * cage_t, f"finger of death {lv}",
                              lambda lv=lv: self.save_spell(
                                  "finger of death", lv, "con", [(7, 8, 30, "necrotic")])))
         self.extra_options(opts)
         return opts
 
-    def toll_the_dead(self):
-        die = 12 if self.foe.hp < self.foe.max_hp else 8
-        self.save_spell("toll the dead", 0, "wis", [(self.tier, die, 0, "necrotic")], half=False)
-
     def extra_options(self, opts):
         pass
 
     def control_option(self):
-        """Hold person / hold monster when nothing is held yet and it's likely to land."""
-        foe = self.foe
-        if (self.conc or self.control_tries >= 2 or foe.incapacitated() or foe.has("restrained")
-                or self.has("silenced") or not self.can_see_foe() or foe.hp < 0.3 * foe.max_hp):
+        """Hold the most dangerous enemy that isn't held yet, if it's likely to land.
+        Candidates are (chance x impact, label, do); paralysis has impact 1."""
+        if self.conc or self.control_tries >= 2 or self.has("silenced"):
             return None
         best = None
-        pf = self.p_save_fail("wis", {"control": True}) * self.cage_factor(True)
-        if foe.creature_type == "humanoid" and self.dist() <= 60 and self.avail(2):
-            best = (pf, "hold person", lambda lv=self.avail(2)[0]: self.hold(lv, "hold person"))
-        elif self.dist() <= 90 and self.avail(5) and foe.creature_type != "undead":
-            best = (pf, "hold monster", lambda lv=self.avail(5)[0]: self.hold(lv, "hold monster"))
+        for e in self.enemies():
+            if (e.incapacitated() or e.has("restrained") or not self.can_see(e)
+                    or e.hp < 0.3 * e.max_hp):
+                continue
+            pf = self.p_save_fail(e, "wis", {"control": True}) * self.cage_factor(e)
+            score = pf * (1 + e.est_dpr(self) / 100)
+            if e.creature_type == "humanoid" and self.dist_to(e) <= 60 and self.avail(2):
+                cand = (pf, score, "hold person",
+                        lambda e=e, lv=self.avail(2)[0]: (self.aim(e), self.hold(lv, "hold person")))
+            elif self.dist_to(e) <= 90 and self.avail(5) and e.creature_type != "undead":
+                cand = (pf, score, "hold monster",
+                        lambda e=e, lv=self.avail(5)[0]: (self.aim(e), self.hold(lv, "hold monster")))
+            else:
+                continue
+            if best is None or cand[1] > best[1]:
+                best = cand
         for alt in self.extra_controls():
             if alt and (best is None or alt[0] > best[0]):
-                best = alt
+                best = (alt[0], alt[0], alt[1], alt[2])
         if best and best[0] >= 0.4:
-            return best
+            return (best[0], best[2], best[3])
         return None
 
     def extra_controls(self):
@@ -348,19 +395,18 @@ class Wizard(Hero):
         self.bonus_before(plan)
         if plan and not self.dead:
             plan[2]()
-        if not self.foe.dead and not self.dead:
-            self.bonus_after(plan)
-        if not self.foe.dead and not self.dead:
-            self.keep_distance()
+        if not self.dead and self.enemies():
+            if self.foe is None or self.foe.dead:
+                self.foe = self.pick_target()
+            if self.foe:
+                self.bonus_after(plan)
+                self.keep_distance()
 
     def bonus_before(self, plan):
         pass
 
     def bonus_after(self, plan):
         pass
-
-    def can_shield_cheap(self):
-        return self.reaction and bool(self.can_shield())
 
 
 class VerdantMage(Wizard):
@@ -376,40 +422,45 @@ class VerdantMage(Wizard):
     def ac(self):
         return super().ac() + (1 if self.level >= 10 else 0)
 
-    def entangle(self):
+    def entangle(self, hit):
         self.spend(0 if self.free.get("entangle") else self.avail(1)[0], "entangle")
         self.acted = True
         self.drop_conc()
         self.control_tries += 1
-        foe = self.foe
-        if not self.cage_passes(False):
-            return
-        if not saving_throw(foe, "str", self.dc, self, {"spell": True, "level": 1, "control": True,
-                                                         "name": "entangle"}):
-            e = foe.add("restrained", self, value=("escape", self.dc))
-            self.conc = Conc("entangle", [(foe, e)])
+        held = []
+        for t in hit:
+            if not saving_throw(t, "str", self.dc, self, {"spell": True, "level": 1, "control": True,
+                                                          "name": "entangle"}):
+                held.append((t, t.add("restrained", self, value=("escape", self.dc))))
+        if held:
+            self.conc = Conc("entangle", held)
 
     def extra_controls(self):
-        if self.dist() <= 90 and (self.free.get("entangle") or self.avail(1)):
-            pf = self.p_save_fail("str", {"control": True, "name": "entangle"})
-            # Restrained stops a melee foe reaching you; a shooter or caster barely cares.
-            impact = 0.8 if self.foe.style == "melee" else 0.35
-            return [(pf * impact, "entangle", self.entangle)]
+        if not (self.free.get("entangle") or self.avail(1)):
+            return []
+        # Restrained stops a melee foe reaching anyone; a shooter or caster barely cares.
+        impact = lambda e: 0.8 if e.style == "melee" else 0.35
+        score = lambda hit: sum(self.p_save_fail(e, "str", {"control": True, "name": "entangle"}) * impact(e)
+                                for e in hit if not e.has("restrained"))
+        area = self.best_area(10, 90, score=score)
+        if area and score(area[0]) > 0:
+            return [(score(area[0]), "entangle", lambda hit=area[0]: self.entangle(hit))]
         return []
 
-    def rootbind(self):
+    def rootbind(self, tgt):
         self.acted = True
-        foe = self.foe
-        if not saving_throw(foe, "str", self.dc, self, {"spell": True, "level": 0, "name": "rootbind"}):
-            foe.add("slow", self, until=("start", self), value=10)
+        extra = [e for e in self.enemies() if e is not tgt and e.dist_to(tgt) <= 5]
+        for t in [tgt] + extra[:self.tier - 1]:
+            if not saving_throw(t, "str", self.dc, self, {"spell": True, "level": 0, "name": "rootbind"}):
+                t.add("slow", self, until=("start", self), value=10)
 
     def extra_options(self, opts):
         foe = self.foe
-        if self.dist() <= 30 and foe.style == "melee" and not self.engaged() and self.can_see_foe():
+        if self.dist() <= 30 and foe.style == "melee" and not self.threatened() and self.can_see(foe):
             sp = foe.speed_now()
             if sp >= self.dist() - 5 > sp - 10:  # the slow keeps it out of reach this round
-                pf = self.p_save_fail("str", {"name": "rootbind"})
-                opts.append((pf * foe.est_dpr(self), "rootbind", self.rootbind))
+                pf = self.p_save_fail(foe, "str", {"name": "rootbind"})
+                opts.append((pf * foe.est_dpr(self), "rootbind", lambda f=foe: self.rootbind(f)))
 
     def impose_save_mods(self, tgt, abil, ctx):
         # Master of Living Paths: disadvantage on the first save (each casting has one).
@@ -417,25 +468,34 @@ class VerdantMage(Wizard):
 
     def on_failed_save(self, tgt, ctx):
         # Master of Living Paths: teleport 15 feet when a restrain/slow spell lands.
-        if self.level >= 14 and ctx.get("name") in ("entangle", "rootbind") and self.engaged():
-            move(self, False, 15, provoke=False)
+        if self.level >= 14 and ctx.get("name") in ("entangle", "rootbind") and self.threatened():
+            threat = self.melee_threat()
+            if threat:
+                move(self, False, 15, provoke=False, ref=threat)
 
-    def save_reroll(self, abil, dc, src, ctx):
-        if ctx.get("fear") and self.grove and self.reaction:
+    def grove_reroll(self, who, abil, dc, ctx):
+        if ctx.get("fear") and self.grove and self.reaction and not self.incapacitated() \
+                and self.dist_to(who) <= 30:
             self.grove -= 1
             self.reaction = False
-            return d20() + self.save_bonus(abil) >= dc
+            return d20() + who.save_bonus(abil) >= dc
         return False
 
-    def bonus_before(self, plan):
-        if self.veils and self.foe.style == "ranged" and not self.has("veiled"):
-            self.veils -= 1
-            self.add("veiled", self, until=("start", self))
+    def save_reroll(self, abil, dc, src, ctx):
+        return self.grove_reroll(self, abil, dc, ctx)
 
-    def defend_mods(self, att, ctx):
-        dis = (self.has("veiled") and ctx["kind"] == "ranged" and not ctx.get("spell")
-               and self.dist() > 10)
-        return False, dis
+    def ally_save_reroll(self, ally, abil, dc, src, ctx):
+        return self.grove_reroll(ally, abil, dc, ctx)
+
+    def bonus_before(self, plan):
+        # Verdant Veil on whoever the enemy archers are most likely to shoot.
+        if self.veils and any(e.style == "ranged" for e in self.enemies()):
+            cands = [self] + [a for a in self.allies() if self.dist_to(a) <= 30]
+            who = min(cands, key=lambda c: (c.ac(), c.hp))
+            if not who.has("veiled"):
+                self.veils -= 1
+                self.bonus_used = True
+                who.add("veiled", self, until=("start", self))
 
 
 class WarboundMage(Wizard):
@@ -514,9 +574,10 @@ class WarboundMage(Wizard):
         if hit and not foe.dead:
             foe.add("booming", self, until=("start", self), value=t)
 
-    def on_foe_moved_away(self, mover):
-        e = mover.take("booming")
+    def on_creature_moved(self, mover):
+        e = mover.get("booming")
         if e and e.source is self:
+            mover.remove(effect=e)
             deal(mover, roll_damage([(e.value, 8, 0, "thunder")]), self, {"spell": True})
 
     def opportunity_attack(self, tgt):
@@ -530,7 +591,7 @@ class WarboundMage(Wizard):
 
     def extra_options(self, opts):
         foe = self.foe
-        if self.engaged():
+        if self.dist() <= 5:
             adv, dis = attack_adv(self, foe, {"kind": "melee"})
             p = p_hit(self.wpn_bonus, foe.ac(), adv, dis)
             n, die, _ = self.wpn
@@ -538,7 +599,7 @@ class WarboundMage(Wizard):
             opts.append((ev, "booming blade", self.booming_blade))
         if self.warstorm_ready and not self.warstorm:
             if self.patched:
-                gain = 0.55 * (4.5 + self.wpn_dmg) if self.engaged() else 0
+                gain = 0.55 * (4.5 + self.wpn_dmg) if self.threatened() else 0
             else:
                 gain = self.mod("int")
             opts.append((gain * 3, "warstorm", self.enter_warstorm))
@@ -564,7 +625,7 @@ class WarboundMage(Wizard):
         self.bfp = 0
         self.presence_now = False
         # Warstorm (after Patch 1): a melee weapon attack as a bonus action after casting.
-        if self.warstorm and self.patched and plan and not self.bonus_used and self.engaged():
+        if self.warstorm and self.patched and plan and not self.bonus_used and self.dist() <= 5:
             self.bonus_used = True
             self.opportunity_attack(self.foe)
 
@@ -578,21 +639,46 @@ class StonewardenMage(Wizard):
     def __init__(self, level, patched=True):
         super().__init__(level, patched)
         self.runic = max(1, self.mod("int")) if level >= 6 else 0
+        self.stoneheart_ready = level >= 14
 
     def don_mage_armor(self):
         self.add("mage_armor", self)   # the free casting, no slot spent
 
     def ac(self):
         # Stoneguard: 13 + Dex, +1 more under mage armor.
-        return 13 + self.mod("dex") + (1 if self.has("mage_armor") else 0) + self.total("ac")
+        return 13 + self.mod("dex") + (1 if self.has("mage_armor") else 0) + self.ac_bonus()
 
-    def react_to_damage(self, dmg, src, ctx):
+    def runic_bulwark(self, tgt, dmg):
         total = sum(dmg.values())
-        if self.runic and self.reaction and not self.incapacitated() and total >= max(8, 0.15 * self.max_hp):
+        if (self.runic and self.reaction and not self.incapacitated() and self.dist_to(tgt) <= 30
+                and total >= max(8, 0.15 * tgt.max_hp)):
             self.runic -= 1
             self.reaction = False
             return {k: v // 2 for k, v in dmg.items()}
         return dmg
+
+    def react_to_damage(self, dmg, src, ctx):
+        return self.runic_bulwark(self, dmg)
+
+    def ward(self, tgt, dmg, src, ctx):
+        return self.runic_bulwark(tgt, dmg)
+
+    # Stoneheart Aegis: +2 AC and advantage on Con saves for allies within 30 feet.
+    def aura_ac(self, ally):
+        return 2 if self.has("stoneheart") and self.dist_to(ally) <= 30 else 0
+
+    def aura_save_mods(self, ally, abil, src, ctx):
+        return bool(self.has("stoneheart") and abil == "con" and self.dist_to(ally) <= 30), False
+
+    def choose(self):
+        near = [a for a in self.allies() if self.dist_to(a) <= 30]
+        if self.stoneheart_ready and len(near) >= 2 and not self.has("silenced"):
+            return (99, "stoneheart aegis", self.raise_stoneheart)
+        return super().choose()
+
+    def raise_stoneheart(self):
+        self.stoneheart_ready = False
+        self.add("stoneheart", self)
 
 
 class HellboundMage(Wizard):
@@ -643,18 +729,20 @@ class HellboundMage(Wizard):
 
     def choose(self):
         # Hold first; darkness (seen through only by me) when no hold is worth casting.
+        # With allies around, darkness would blind them too, so it stays solo-only.
         ctrl = self.control_option()
         if ctrl:
             return ctrl
         if (not self.conc and not self.has("silenced") and self.free.get("darkness")
-                and not self.foe.devils_sight):
+                and not self.allies() and not any(e.devils_sight for e in self.enemies())):
             return (99, "darkness", self.darkness)
         return super().choose()
 
     def extra_options(self, opts):
         if self.nexus_ready:
-            pf = self.p_save_fail("wis")
-            opts.append((max(1, self.mod("int")) * pf * 3, "pact nexus", self.pact_nexus))
+            near = [e for e in self.enemies() if self.dist_to(e) <= 20 + 30]
+            ev = sum(max(1, self.mod("int")) * self.p_save_fail(e, "wis") * 3 for e in near)
+            opts.append((ev, "pact nexus", self.pact_nexus))
 
     def bonus_before(self, plan):
         if not plan:
@@ -684,15 +772,16 @@ class SanguineMage(Wizard):
         self.overlord_ready = level >= 14
         self.overlord = False
 
-    def save_ability(self, abil, ctx, commit=False):
-        """Flux Manipulation: move the save onto the foe's weakest ability."""
+    def save_ability(self, tgt, abil, ctx, commit=False):
+        """Flux Manipulation: move the save onto the target's weakest ability."""
         if not self.flux or not (ctx.get("control") or ctx.get("big")):
             return abil
-        foe = self.foe
-        best = min(("str", "dex", "con", "int", "wis", "cha"), key=foe.save_bonus)
-        if foe.incapacitated() and abil in ("str", "dex"):
+        if tgt.incapacitated() and abil in ("str", "dex"):
             return abil
-        if foe.save_bonus(best) <= foe.save_bonus(abil) - 2:
+        group = ctx.get("group") or [tgt]
+        total = lambda ab: sum(t.save_bonus(ab) for t in group) / len(group)
+        best = min(("str", "dex", "con", "int", "wis", "cha"), key=total)
+        if total(best) <= total(abil) - 2:
             if commit:
                 self.flux -= 1
             return best
@@ -702,15 +791,15 @@ class SanguineMage(Wizard):
         free = self.free.get("inflict wounds")
         lv = 1 if free else self.avail(1)[0]
         self.spell_attack("inflict wounds", 0 if free else lv, 1, [(2 + lv, 10, 0, "necrotic")],
-                          kind="melee", free="inflict wounds")
+                          kind="melee", free="inflict wounds", rng=5)
 
     def extra_options(self, opts):
-        if self.engaged() and (self.free.get("inflict wounds")) and not self.has("silenced"):
-            p = self.p_attack("melee")
-            opts.append((p * 16.5, "inflict wounds", self.inflict_wounds))
+        if self.dist() <= 5 and self.free.get("inflict wounds") and not self.has("silenced"):
+            opts.append((self.p_attack(self.foe, "melee") * 16.5, "inflict wounds", self.inflict_wounds))
 
     def choose(self):
-        if self.overlord_ready and self.foe.hp > 0.6 * self.foe.max_hp and not self.has("silenced"):
+        if (self.overlord_ready and not self.has("silenced")
+                and sum(e.hp for e in self.enemies()) > 0.6 * sum(e.max_hp for e in self.enemies())):
             return (99, "sanguine overlord", self.enter_overlord)
         return super().choose()
 
@@ -721,31 +810,34 @@ class SanguineMage(Wizard):
 
     def flip_success(self, tgt, ctx):
         if (self.overlord and ctx.get("spell") and (ctx.get("control") or ctx.get("big"))
-                and self.dist() <= 30 and self.hp > 25):
+                and tgt.side != self.side and self.dist_to(tgt) <= 30 and self.hp > 25):
             deal(self, {"psychic": d(2, 8)}, None, {})
             return not self.dead
         return False
 
     def after_damage_dealt(self, tgt, amount, ctx):
         if self.my_turn() and not tgt.dead:
-            tgt.remove("tethered")
+            for e in self.enemies():
+                m = e.get("tethered")
+                if m and m.source is self:
+                    e.remove(effect=m)        # one tether at a time
             tgt.add("tethered", self, until=("start", self), skip=2)
 
-    def after_spell_damage(self, ctx):
+    def after_spell_damage(self, tgt, ctx):
         # Overlord: push a damaged Large-or-smaller creature 10 feet (here: away).
-        if self.overlord and not self.foe.dead and self.foe.style == "melee":
-            foe = self.foe
-            step = 10 if foe.x > self.x else -10
-            foe.x = max(0, min(120, foe.x + step))
+        if self.overlord and not tgt.dead and tgt.style == "melee":
+            push(tgt, self, 10)
 
     def bonus_after(self, plan):
-        foe = self.foe
-        e = foe.get("tethered")
-        if e and e.source is self and self.tethers and not self.bonus_used:
-            self.tethers -= 1
-            self.bonus_used = True
-            dealt = deal(foe, roll_damage([(1, 6, 0, "necrotic")]), self, {"spell": True})
-            self.heal(dealt)
+        if not self.tethers or self.bonus_used:
+            return
+        for e in self.enemies():
+            m = e.get("tethered")
+            if m and m.source is self:
+                self.tethers -= 1
+                self.bonus_used = True
+                self.heal(deal(e, roll_damage([(1, 6, 0, "necrotic")]), self, {"spell": True}))
+                return
 
 
 class AetherMage(Wizard):
@@ -754,29 +846,46 @@ class AetherMage(Wizard):
     def __init__(self, level, patched=True):
         super().__init__(level, patched)
         self.fields = self.pb if level >= 10 else 0
+        self.anchor_ready = level >= 14
 
     def bonus_before(self, plan):
-        if self.fields and self.foe.caster and not self.has("null_field"):
+        if self.fields and any(e.caster for e in self.enemies()) and not self.has("null_field"):
             self.fields -= 1
             self.bonus_used = True
             self.add("null_field", self)
 
+    def in_field(self, who):
+        return self.has("null_field") and self.dist_to(who) <= 10
+
     def save_mods(self, abil, src, ctx):
         return bool(self.has("null_field") and ctx.get("spell")), False
 
-    def save_reroll(self, abil, dc, src, ctx):
-        if (self.has("null_field") and ctx.get("spell") and ctx.get("level", 0) <= 3
+    def aura_save_mods(self, ally, abil, src, ctx):
+        return bool(self.in_field(ally) and ctx.get("spell")), False
+
+    def field_reroll(self, who, abil, dc, ctx):
+        if (self.in_field(who) and ctx.get("spell") and ctx.get("level", 0) <= 3 and ctx.get("single", True)
                 and self.reaction and not self.incapacitated()):
             self.reaction = False
-            return d20() + self.save_bonus(abil) >= dc
+            return d20() + who.save_bonus(abil) >= dc
         return False
+
+    def save_reroll(self, abil, dc, src, ctx):
+        return self.field_reroll(self, abil, dc, ctx)
+
+    def ally_save_reroll(self, ally, abil, dc, src, ctx):
+        return self.field_reroll(ally, abil, dc, ctx)
 
     def react_to_attack(self, att, ctx, total, ac):
         raised = super().react_to_attack(att, ctx, total, ac)
         if raised:
             return raised
-        if (self.has("null_field") and ctx.get("spell") and ctx.get("level", 0) <= 3
-                and self.reaction):
+        return self.guard_attack_hit(att, self, ctx, total, ac)
+
+    def guard_attack_hit(self, att, ally, ctx, total, ac):
+        # Null Field: force a spell attack (3rd level or lower) to be rerolled.
+        if (self.in_field(ally) and ctx.get("spell") and ctx.get("level", 0) <= 3
+                and self.reaction and not self.incapacitated()):
             self.reaction = False
             if d20() + ctx["bonus"] < ac:
                 return 99
@@ -784,6 +893,15 @@ class AetherMage(Wizard):
 
     def resists(self, dtype, ctx):
         return self.level >= 14 and dtype in ("force", "psychic")
+
+    def save_from_death(self, tgt):
+        # Anchor of Tessarion: once, someone within 30 feet drops to 1 HP instead.
+        if self.anchor_ready and self.dist_to(tgt) <= 30 and (self.reaction or tgt is self):
+            self.anchor_ready = False
+            if tgt is not self:
+                self.reaction = False
+            return True
+        return False
 
 
 # =========================================================================
@@ -817,9 +935,12 @@ class Fighter(Hero):
         w = self.weapon
         return self.attacks * p_hit(self.atk_bonus, target.ac()) * (w["n"] * (w["die"] + 1) / 2 + self.dmg_bonus)
 
+    def reach_of_attacks(self):
+        return self.weapon["normal"] if self.ranged else self.reach
+
     def weapon_attack(self, tgt, *, ctx=None, extra=(), weapon=None):
         w = weapon or self.weapon
-        dis = w["kind"] == "ranged" and self.dist() > w["normal"] and not self.ignores_long_range()
+        dis = w["kind"] == "ranged" and self.dist_to(tgt) > w["normal"] and not self.ignores_long_range()
         parts = [(w["n"], w["die"], self.dmg_bonus, w["dtype"])] + list(extra)
         return attack(self, tgt, bonus=self.atk_bonus, parts=parts, kind=w["kind"],
                       magical=self.item > 0, weapon=w["name"], dis=dis, ctx=ctx)
@@ -828,10 +949,19 @@ class Fighter(Hero):
         return False
 
     def can_attack(self):
+        if self.foe is None or self.foe.dead:
+            return False
         w = self.weapon
         if w["kind"] == "melee":
             return self.dist() <= self.reach
         return self.dist() <= w["long"]
+
+    def retarget(self):
+        """After a kill: the next enemy this turn's attacks can still reach."""
+        if self.foe is not None and not self.foe.dead:
+            return True
+        self.foe = self.pick_target()
+        return self.can_attack()
 
     def opportunity_attack(self, tgt):
         if self.weapon["kind"] == "melee":
@@ -853,16 +983,18 @@ class Fighter(Hero):
             self.keep_distance()
         else:
             self.close_in()
-        if self.action and self.can_attack() and not self.foe.dead:
+        if self.action and self.can_attack():
             self.action = False
             self.main_action()
-        if self.surges and self.can_attack() and not self.foe.dead and not self.dead:
+        if self.surges and self.retarget() and not self.dead:
             self.surges -= 1
             self.main_action()
-        if not self.dead and not self.foe.dead:
-            self.post_bonus()
-        if self.ranged and not self.dead and not self.foe.dead:
-            self.keep_distance()   # e.g. step off a foe the shot just rooted
+        if not self.dead and self.enemies():
+            self.retarget()
+            if self.foe:
+                self.post_bonus()
+                if self.ranged:
+                    self.keep_distance()   # e.g. step off a foe the shot just rooted
 
     def try_escape(self):
         e = self.get("restrained")
@@ -872,14 +1004,24 @@ class Fighter(Hero):
                 self.remove(effect=e)
                 src = e.source
                 if src.conc and any(eff is e for _, eff in src.conc.held):
-                    src.conc = None
+                    src.conc.held = [(h, x) for h, x in src.conc.held if x is not e]
+                    if not src.conc.held:
+                        src.conc = None
 
     def close_in(self):
         sp = self.speed_now()
-        if self.engaged() or sp == 0:
+        if sp == 0 or self.dist() <= self.reach:
             return
+        ward = self.ward_ally() if self.guard else None
+        if ward:
+            # Hold the line: engage what's coming for the back rank, otherwise
+            # stand just in front of it.
+            if self.dist() - self.reach > sp + 5 and self.foe.dist_to(ward) > 15:
+                front = 5 if self.foe.x > ward.x else -5
+                move_to(self, ward.x + front, sp)
+                return
         move(self, True, sp)
-        if not self.engaged() and self.action and self.speed_now():
+        if self.dist() > self.reach and self.action and self.speed_now():
             self.action = False   # Dash
             move(self, True, sp)
 
@@ -888,7 +1030,7 @@ class Fighter(Hero):
 
     def attack_action(self):
         for i in range(self.attacks):
-            if self.foe.dead or self.dead:
+            if self.dead or not self.retarget():
                 break
             self.one_attack(i)
 
@@ -1021,6 +1163,7 @@ class SanguineAegis(Aegis):
 
 class BulwarkAegis(Aegis):
     key, label = "bulwark", "Bulwark Aegis"
+    guard = True
 
     def __init__(self, level, patched=True):
         super().__init__(level, patched)
@@ -1035,8 +1178,38 @@ class BulwarkAegis(Aegis):
     def resists(self, dtype, ctx):
         return self.has("fortress") or (self.has("anchored") and ctx.get("nonmagical"))
 
+    def guard_attack(self, att, ally, ctx):
+        # Living Wall: an attack on someone next to me is made with disadvantage.
+        if self.reaction and not self.incapacitated() and self.dist_to(ally) <= 5 and att is not self:
+            self.reaction = False
+            return True
+        return False
+
+    def aura_ac(self, ally):
+        bonus = 0
+        if self.level >= 7 and self.dist_to(ally) <= 10:
+            bonus += 1                   # Unmoving Bastion
+        if self.has("fortress") and self.dist_to(ally) <= 10:
+            bonus += 2                   # Fortress: half cover
+        return bonus
+
+    def aura_save_bonus(self, ally, abil):
+        return 2 if self.has("fortress") and abil == "dex" and self.dist_to(ally) <= 10 else 0
+
+    def intercept(self, ally, dmg, src, ctx):
+        # Intercepting Guard: step in and take a big hit meant for someone within 10 feet.
+        total = sum(dmg.values())
+        if (self.level >= 10 and self.reaction and not self.incapacitated() and self.dist_to(ally) <= 10
+                and (total >= 10 or total >= ally.hp) and self.hp > 0.3 * self.max_hp
+                and (ctx.get("attack") or ctx.get("single", False))):
+            self.reaction = False
+            self.x = ally.x
+            return True
+        return False
+
     def main_action(self):
-        if self.fortress_ready and self.engaged() and self.foe.style == "melee" and not self.has("fortress"):
+        if (self.fortress_ready and self.dist() <= 5 and self.foe.style == "melee"
+                and not self.has("fortress")):
             self.fortress_ready = False
             self.add("fortress", self)
             self.add("speed0", self)
@@ -1046,6 +1219,7 @@ class BulwarkAegis(Aegis):
 
 class WardenAegis(Aegis):
     key, label = "warden", "Warden Aegis"
+    guard = True
 
     def __init__(self, level, patched=True):
         super().__init__(level, patched)
@@ -1058,44 +1232,43 @@ class WardenAegis(Aegis):
         if self.level >= 7:
             self.fight.zones.append(Zone("lockstep", self, self.x, 5, follows=True))
 
-    def main_action(self):
-        if self.cage_ready and self.foe.caster:
-            self.cage_ready = False
-            self.add("cage", self, value=8 + self.pb + self.mod("str"))
-            return
-        super().main_action()
-
     def take_turn(self):
-        # Raise the Mana Cage before closing in on a caster, then walk.
-        if self.cage_ready and self.foe.caster and not self.has("restrained"):
+        # Raise the Mana Cage on turn one against spellcasters, then move up.
+        if self.cage_ready and any(e.caster for e in self.enemies()) and not self.has("restrained"):
             self.pre_bonus()
             self.action = False
             self.cage_ready = False
             self.add("cage", self, value=8 + self.pb + self.mod("str"))
-            move(self, True, self.speed_now())
+            self.close_in()
             self.post_bonus()
             return
         super().take_turn()
 
     def post_bonus(self):
-        if self.anchor is None and not self.bonus_used and self.dist() <= 30:
-            self.bonus_used = True
-            step = min(20, self.dist())
-            center = self.x + (step if self.foe.x > self.x else -step)
-            self.anchor = AnchorZone("anchor", self, center, 10)
-            self.fight.zones.append(self.anchor)
+        if self.anchor is None and not self.bonus_used:
+            # Gravitic Anchor on the enemies nearest us, within 20 feet of where I stand.
+            near = self.nearest_enemy()
+            if near and self.dist_to(near) <= 30:
+                self.bonus_used = True
+                center = max(self.x - 20, min(self.x + 20, near.x))
+                self.anchor = AnchorZone("anchor", self, center, 10)
+                self.fight.zones.append(self.anchor)
         super().post_bonus()
 
     def after_hit(self, tgt, ctx, crit):
         if ctx.get("oa") and self.level >= 7 and not tgt.dead:
             tgt.add("speed0", self, until=("end", tgt))    # Lockstep Field
-        elif self.shackles and tgt.style != "melee" and not tgt.dead and not ctx.get("oa"):
+        elif (self.shackles and not tgt.dead and not ctx.get("oa")
+              and (tgt.style != "melee" or self.allies())):
             self.shackles -= 1
             tgt.add("slow", self, until=("start", self), value=10)
 
-    def defend_mods(self, att, ctx):
-        # Mana Cage: ranged spell attacks at creatures in the dome have disadvantage.
-        return False, bool(self.has("cage") and ctx.get("spell") and ctx["kind"] == "ranged")
+    def aura_save_bonus(self, ally, abil):
+        # Field Commander: allies within 10 feet may use my Strength or Constitution.
+        if self.level >= 15 and abil in ("str", "con") and self.dist_to(ally) <= 10:
+            mine = max(self.mod("str"), self.mod("con"))
+            return max(0, mine - ally.mod(abil))
+        return 0
 
 
 class AnchorZone(Zone):
@@ -1130,6 +1303,11 @@ class CrystalArcher(Range):
             self.bonus_used = True
             self.add("crystal_sight", self)
 
+    def amber_ally(self, tgt):
+        """Who would take Amber Dust's temporary HP: the most hurt friend near the target."""
+        near = [c for c in [self] + self.allies() if c.dist_to(tgt) <= 10]
+        return min(near, key=lambda c: c.hp / c.max_hp) if near else None
+
     def pick_arrow(self, i):
         """The special arrow worth most on this shot, or None (one per turn)."""
         if not self.arrows or self.special_turn == self.turns:
@@ -1139,18 +1317,19 @@ class CrystalArcher(Range):
         left = self.attacks - 1 - i
         dc = 8 + self.pb + self.mod("dex")
         ev = {"red": 2.5}
-        if self.engaged() and foe.style == "melee" and left and not getattr(foe, "immovable", False):
+        if self.dist() <= 5 and foe.style == "melee" and left and not getattr(foe, "immovable", False):
             # the push frees the remaining arrows from point-blank disadvantage
             p, pd = p_hit(self.atk_bonus, foe.ac()), p_hit(self.atk_bonus, foe.ac(), dis=True)
             ev["red"] += p_fail(foe.save_bonus("str"), dc) * left * (p - pd) * avg_hit
         sp = foe.speed_now()
-        if not self.engaged() and foe.style == "melee" and sp >= self.dist() - 5 > sp - 10:
-            ev["verdant"] = foe.est_dpr(self)          # it can't reach me this round
+        closest = min([self] + self.allies(), key=lambda c: c.dist_to(foe))
+        if foe.style == "melee" and sp >= foe.dist_to(closest) - 5 > sp - 10:
+            ev["verdant"] = foe.est_dpr(closest)          # it can't reach anyone this round
         if self.patched:
             ev["prismatic"] = 2.5 + (2.5 if self.hp < self.max_hp else 0)
-            if self.dist() <= 10:
-                ev["amber"] = 2.5 + self.pb          # the temporary HP land on me
-            ev["violet"] = 0.125 * foe.est_dpr(self) / max(1, getattr(foe, "multi", 1))
+            if self.amber_ally(foe):
+                ev["amber"] = 2.5 + self.pb
+            ev["violet"] = 0.125 * foe.est_dpr(closest) / max(1, getattr(foe, "multi", 1))
             if foe.has("darkness"):
                 p, pd = p_hit(self.atk_bonus, foe.ac()), p_hit(self.atk_bonus, foe.ac(), dis=True)
                 ev["white"] = (left + self.attacks) * (p - pd) * avg_hit
@@ -1200,38 +1379,42 @@ class CrystalArcher(Range):
             tgt.add("slow", self, until=("start", self), value=10)
         elif sp == "red":
             if not getattr(tgt, "immovable", False) and not saving_throw(tgt, "str", dc, self, {}):
-                step = 5 if tgt.x > self.x else -5
-                tgt.x = max(0, min(120, tgt.x + step))
+                push(tgt, self, 5)
+        elif sp == "amber":
+            who = self.amber_ally(tgt)
+            if who:
+                who.gain_thp(d(1, 4) + self.pb)
         elif sp == "white":
             tgt.add("white_dust", self, until=("start", self))
 
     def main_action(self):
-        if self.rain_ready and self.dist() > 20:
+        if self.rain_ready:
             dc = 8 + self.pb + self.mod("dex")
-            pf = p_fail(self.foe.save_bonus("dex"), dc)
             dice = (6, 3) if self.patched else (4, 2)
-            rain = 4.5 * sum(dice) * (pf + (1 - pf) / 2)
-            p = p_hit(self.atk_bonus, self.foe.ac())
-            volley = self.attacks * p * (4.5 + self.dmg_bonus + 2)
-            if rain > volley:
-                self.rain_ready = False
-                self.rain_of_shards(dc, dice)
-                return
+            frac = lambda hit: sum(p_fail(e.save_bonus("dex"), dc) / 2 + 0.5 for e in hit)
+            area = self.best_area(20, self.weapon["long"], score=frac)
+            if area:
+                rain = 4.5 * sum(dice) * frac(area[0])
+                p = p_hit(self.atk_bonus, self.foe.ac())
+                volley = self.attacks * p * (4.5 + self.dmg_bonus + 2)
+                if rain > volley:
+                    self.rain_ready = False
+                    self.rain_of_shards(dc, dice, area[0])
+                    return
         super().main_action()
 
-    def rain_of_shards(self, dc, dice):
-        foe = self.foe
+    def rain_of_shards(self, dc, dice, hit):
         arrow = None
         if self.patched and self.arrows:
             self.arrows -= 1
-            arrow = "verdant" if foe.style == "melee" else "white" if foe.has("darkness") else None
-        ok = saving_throw(foe, "dex", dc, self, {"big": True})
+            arrow = "verdant" if any(e.style == "melee" for e in hit) else None
         dmg = roll_damage([(dice[0], 8, 0, "piercing"), (dice[1], 8, 0, "force")])
-        if ok:
-            dmg = {k: v // 2 for k, v in dmg.items()}
-        deal(foe, dmg, self, {"weapon": "longbow", "magical": True})
-        if not ok and arrow and not foe.dead:
-            self.arrow_effect(foe, arrow)
+        for e in hit:
+            ok = saving_throw(e, "dex", dc, self, {"big": True})
+            deal(e, {k: v // 2 for k, v in dmg.items()} if ok else dict(dmg), self,
+                 {"weapon": "longbow", "magical": True})
+            if not ok and arrow and not e.dead:
+                self.arrow_effect(e, arrow)
 
 
 class Gunman(Range):
@@ -1249,6 +1432,15 @@ class Gunman(Range):
         self.special_turn = -1
         self.barrage_ready = level >= 15
 
+    def pick_target(self):
+        # From 7th level, a spellcaster in range is the Gunman's first job.
+        if self.level >= 7:
+            casters = [e for e in self.enemies() if e.caster and self.dist_to(e) <= self.weapon["long"]
+                       and not e.has("silenced")]
+            if casters:
+                return min(casters, key=lambda e: e.hp)
+        return super().pick_target()
+
     def pick_shot(self, i):
         """The special round worth most on this shot, or None (one per turn)."""
         if not self.shots or self.special_turn == self.turns:
@@ -1257,8 +1449,8 @@ class Gunman(Range):
         dc = 8 + self.pb + self.mod("dex")
         w = self.weapon
         avg_hit = w["n"] * (w["die"] + 1) / 2 + self.dmg_bonus
-        p = p_hit(self.atk_bonus, foe.ac())
-        threat = foe.est_dpr(self)
+        closest = min([self] + self.allies(), key=lambda c: c.dist_to(foe))
+        threat = foe.est_dpr(closest)
         # Powder Disruption rides on any special shot from 7th level: silence a caster.
         pd = 0.0
         if self.level >= 7 and foe.caster and not foe.has("silenced"):
@@ -1268,10 +1460,11 @@ class Gunman(Range):
             ev["violet"] = (p_fail(foe.save_bonus("con") - 2.5, dc)) * threat
         if self.patched:
             ev["prismatic"] = 3.5 + pd + (3 if foe.heals else 0)
-            if self.attacks - 1 - i > 0:
-                # -2 AC helps only my remaining attacks this turn (allies would gain too)
-                ev["amber"] = pd + (self.attacks - 1 - i) * 0.1 * avg_hit
-            reach = foe.style == "melee" and (self.engaged() or foe.speed_now() >= self.dist() - 5)
+            if self.attacks - 1 - i > 0 or self.allies():
+                # -2 AC helps my remaining attacks this turn and every ally's until my next turn
+                swings = (self.attacks - 1 - i) + sum(getattr(a, "attacks", 0) for a in self.allies())
+                ev["amber"] = pd + swings * 0.1 * avg_hit
+            reach = foe.style == "melee" and (self.dist() <= 5 or foe.speed_now() >= foe.dist_to(closest) - 5)
             if reach:
                 ev["snare"] = pd + p_fail(foe.save_bonus("str"), dc) * threat
             if foe.has("mage_armor") or foe.has("darkness"):
@@ -1283,11 +1476,11 @@ class Gunman(Range):
         if shot:
             self.shots -= 1
             self.special_turn = self.turns
-        self.weapon_attack(self.foe, ctx={"special": shot, "firearm": True,
-                                          "powder": self.level >= 7})
+        self.weapon_attack(self.foe, ctx={"special": shot, "firearm": True, "powder": self.level >= 7})
         # Recoil Step: slide 10 feet back after the shot, no opportunity attack.
-        if self.level >= 10 and self.engaged() and not self.dead and self.foe.style == "melee":
-            if move(self, False, 10, provoke=False) and not self.has("recoil"):
+        threat = self.melee_threat()
+        if self.level >= 10 and threat and self.dist_to(threat) <= 5 and not self.dead:
+            if move(self, False, 10, provoke=False, ref=threat) and not self.has("recoil"):
                 self.add("ac", self, until=("start", self), value=2)
                 self.add("recoil", self, until=("start", self))
 
@@ -1329,18 +1522,18 @@ class Gunman(Range):
         if self.barrage_ready and self.dist() <= self.weapon["normal"]:
             self.barrage_ready = False
             dc = 8 + self.pb + self.mod("dex")
-            hit_any = False
+            struck = []
             for _ in range(3):
-                if self.foe.dead:
+                if not self.retarget():
                     break
-                hit, _ = self.weapon_attack(self.foe, ctx={"barrage": True, "firearm": True,
-                                                           "powder": True})
-                hit_any = hit_any or hit
+                hit, _ = self.weapon_attack(self.foe, ctx={"barrage": True, "firearm": True, "powder": True})
+                if hit and self.foe not in struck:
+                    struck.append(self.foe)
             self.weapon = dict(self.PISTOL)   # the musket is spent; the backup pistol comes out
             self.max_range = 30
-            if hit_any and not self.foe.dead:
-                if not saving_throw(self.foe, "wis", dc, self, {"control": True}):
-                    self.foe.add("stunned", self, until=("start", self))
+            for t in struck:
+                if not t.dead and not saving_throw(t, "wis", dc, self, {"control": True}):
+                    t.add("stunned", self, until=("start", self))
             return
         super().main_action()
 
@@ -1354,7 +1547,7 @@ class SanguineMageNoSwap(SanguineMage):
     """What-if: Flux Manipulation keeps its damage-type swap but loses the save swap."""
     key, label = "sanguine_mage_noswap", "Sanguine Mage without Flux's save swap"
 
-    def save_ability(self, abil, ctx, commit=False):
+    def save_ability(self, tgt, abil, ctx, commit=False):
         return abil
 
 
