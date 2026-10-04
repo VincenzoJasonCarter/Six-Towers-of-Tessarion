@@ -53,6 +53,12 @@ memoria: ## Serve the Memoria live at http://127.0.0.1:8769/ (reloads on memoria
 memoria-build: ## Export a static snapshot to memoria/memoria.html
 	uv run memoria/build.py
 
+# --- arena (Monte Carlo power rankings for the subclasses) ---
+
+.PHONY: arena
+arena: ## Simulate the subclasses and write arena/report.md (ARGS="--n 200" for a quick run)
+	uv run arena/run.py $(ARGS)
+
 # --- web (the hub, library, bestiary, barracks and memoria as one static site, for Vercel or any static host) ---
 
 .PHONY: web-build

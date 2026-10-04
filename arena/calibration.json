@@ -1,0 +1,58 @@
+{
+  "3": {
+    "Wizard": {
+      "brute": 1.034,
+      "soldier": 1.001,
+      "sniper": 1.03,
+      "caster": 0.839
+    },
+    "Fighter": {
+      "brute": 1.101,
+      "soldier": 1.194,
+      "sniper": 2.002,
+      "caster": 1.067
+    }
+  },
+  "7": {
+    "Wizard": {
+      "brute": 1.151,
+      "soldier": 1.658,
+      "sniper": 1.963,
+      "caster": 1.592
+    },
+    "Fighter": {
+      "brute": 1.62,
+      "soldier": 1.813,
+      "sniper": 2.884,
+      "caster": 1.355
+    }
+  },
+  "10": {
+    "Wizard": {
+      "brute": 1.813,
+      "soldier": 2.11,
+      "sniper": 1.944,
+      "caster": 1.522
+    },
+    "Fighter": {
+      "brute": 1.342,
+      "soldier": 1.464,
+      "sniper": 2.276,
+      "caster": 1.158
+    }
+  },
+  "15": {
+    "Wizard": {
+      "brute": 2.85,
+      "soldier": 3.246,
+      "sniper": 2.552,
+      "caster": 2.168
+    },
+    "Fighter": {
+      "brute": 1.549,
+      "soldier": 1.734,
+      "sniper": 2.464,
+      "caster": 1.376
+    }
+  }
+}
