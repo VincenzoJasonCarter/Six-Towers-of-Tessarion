@@ -22,6 +22,9 @@
   --brass-lo: #a9843a;
   --brass-ink: #3a2a10;
   --sconce: rgb(255 214 140 / .55);
+  /* patch-note badges */
+  --buff: #2e6b2c; --buff-bg: #dcefd3; --nerf: #a12c1f; --nerf-bg: #f7dad3;
+  --new: #7a5510; --new-bg: #f6e6bb; --change: #2b4f7c; --change-bg: #d9e5f3;
   --serif: "EB Garamond", Georgia, "Times New Roman", serif;
   --display: "Cormorant Garamond", "EB Garamond", Georgia, serif;
   --sans: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
@@ -34,6 +37,8 @@
     --plaster: #3a3025; --plaster-lo: #251e17; --stone: #5a4e3e; --stone-lo: #332b21;
     --wood: #4d311c; --wood-hi: #6b4629; --wood-lo: #1f130a; --floor-a: #2c2118; --floor-b: #221911;
     --sconce: rgb(255 190 110 / .5);
+    --buff: #9fd88f; --buff-bg: #1f3320; --nerf: #f2988a; --nerf-bg: #3d211c;
+    --new: #ecc96e; --new-bg: #3a2f17; --change: #9cc0ee; --change-bg: #1d2a3b;
   }
 }
 :root[data-theme="dark"] {
@@ -42,6 +47,8 @@
   --plaster: #3a3025; --plaster-lo: #251e17; --stone: #5a4e3e; --stone-lo: #332b21;
   --wood: #4d311c; --wood-hi: #6b4629; --wood-lo: #1f130a; --floor-a: #2c2118; --floor-b: #221911;
   --sconce: rgb(255 190 110 / .5);
+  --buff: #9fd88f; --buff-bg: #1f3320; --nerf: #f2988a; --nerf-bg: #3d211c;
+  --new: #ecc96e; --new-bg: #3a2f17; --change: #9cc0ee; --change-bg: #1d2a3b;
 }
 
 * { box-sizing: border-box; }
@@ -300,6 +307,96 @@ html.in-tool .bar { touch-action: pan-x; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; margin: 0; }
 .flame { animation: flicker 2.4s ease-in-out infinite; transform-origin: 50% 100%; }
 
+/* The notice board stands on the floor just left of the desk, however wide
+   the window (the desk is centred and min(900px, 66%) wide). Its wax seal
+   glows while the newest patch in balance-patch.md hasn't been read here yet. */
+.guildboard {
+  --bw: clamp(120px, 13vw, 190px);
+  position: absolute; left: max(1%, calc(50% - min(450px, 33%) - var(--bw) - 28px)); bottom: 5%; z-index: 3; width: var(--bw);
+  display: flex; flex-direction: column; border: 0; padding: 0; background: none;
+  cursor: pointer; text-align: center; filter: drop-shadow(0 6px 10px rgb(0 0 0 / .4));
+}
+.board {
+  display: flex; flex-direction: column; align-items: center; gap: 8px; padding: 8px 10px 12px; border-radius: 3px;
+  background:
+    repeating-linear-gradient(35deg, rgb(0 0 0 / .05) 0 2px, transparent 2px 6px),
+    linear-gradient(180deg, #b98a55, #9c6f3f);
+  box-shadow: inset 0 0 0 4px var(--wood), inset 0 0 0 6px var(--wood-lo), inset 0 0 12px 6px rgb(0 0 0 / .3);
+}
+.board-title {
+  padding: 3px 8px; font: 700 9px/1.2 var(--sans); letter-spacing: .14em; text-transform: uppercase; white-space: nowrap;
+  color: var(--brass-ink); background: linear-gradient(180deg, #f0d997, var(--brass) 50%, var(--brass-lo)); border-radius: 2px;
+  box-shadow: 0 2px 4px rgb(0 0 0 / .4);
+}
+.sheet {
+  position: relative; display: flex; flex-direction: column; align-items: center; width: 82%; padding: 8px 6px 14px;
+  color: #3b2c1c; background: linear-gradient(180deg, #f6ecd4, #e2d2b0); border-radius: 1px;
+  box-shadow: 0 3px 6px rgb(0 0 0 / .35); transform: rotate(-2deg); transition: transform .2s;
+}
+.sheet::before { /* the pin */
+  content: ""; position: absolute; top: 3px; left: 50%; width: 7px; height: 7px; margin-left: -3.5px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f3dc9a, var(--brass-lo));
+}
+.sheet b { font: 700 19px/1.1 var(--display); margin-top: 4px; }
+.sheet small { font: 600 10px/1.3 var(--sans); letter-spacing: .06em; text-transform: uppercase; opacity: .7; }
+.seal {
+  position: absolute; right: -7px; bottom: -7px; width: 20px; height: 20px; border-radius: 50%;
+  background: radial-gradient(circle at 38% 35%, #d9604a, #8c2f23 60%, #5a1a12);
+  box-shadow: 0 1px 2px rgb(0 0 0 / .5);
+}
+.guildboard.unread .seal { box-shadow: 0 0 8px 3px rgb(255 120 80 / .75); animation: seal 1.8s ease-in-out infinite; }
+@keyframes seal { 50% { box-shadow: 0 0 3px 1px rgb(255 120 80 / .4); } }
+.legs { height: 26px; margin: 0 22%; border-left: 6px solid var(--wood-lo); border-right: 6px solid var(--wood-lo); }
+.guildboard:hover .sheet, .guildboard:focus-visible .sheet { transform: rotate(0) translateY(-2px); }
+.guildboard:focus-visible { outline: none; }
+.guildboard:focus-visible .board { outline: 2px solid var(--brass); outline-offset: 3px; }
+
+/* the notice itself, opened from the board */
+.patchnotes {
+  width: min(760px, calc(100vw - 32px)); max-height: min(86dvh, 900px); padding: 0; border: 0; border-radius: 10px; overflow: hidden;
+  background: var(--panel); color: var(--ink); box-shadow: 0 20px 60px rgb(0 0 0 / .5);
+}
+.patchnotes[open] { display: flex; flex-direction: column; }
+.patchnotes::backdrop { background: rgb(20 14 8 / .6); }
+.patch-head {
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 16px;
+  padding: 18px 22px 12px; border-bottom: 1px solid var(--rule); border-top: 4px solid var(--accent);
+}
+.patch-head .kicker { margin: 0; font: 600 11px var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--accent); }
+.patch-head h2 { margin: 2px 0 0; font: 700 30px/1.1 var(--display); }
+.patchnotes .close {
+  flex: none; display: grid; place-items: center; width: 34px; height: 34px; padding: 0;
+  border: 1px solid var(--rule); border-radius: 50%; background: var(--bg); color: var(--muted); cursor: pointer;
+}
+.patchnotes .close svg { width: 12px; height: 12px; stroke: currentColor; stroke-width: 2; stroke-linecap: round; fill: none; }
+.patchnotes .close:hover, .patchnotes .close:focus-visible { color: var(--accent); border-color: var(--accent); outline: none; }
+.patch-body { overflow-y: auto; padding: 6px 22px 26px; font-size: 17px; line-height: 1.55; }
+.patch-body h2 { font: 700 25px/1.15 var(--display); margin: 22px 0 6px; padding-bottom: 4px; border-bottom: 1px solid var(--rule); }
+.patch-body h3 { font: 700 21px/1.2 var(--display); margin: 22px 0 4px; color: var(--accent); }
+.patch-body p, .patch-body ul { margin: 8px 0; }
+.patch-body ul { padding-left: 22px; }
+.patch-body hr { border: 0; border-top: 1px solid var(--rule); margin: 20px 0; }
+.patch-body blockquote { margin: 10px 0; padding: 2px 0 2px 14px; border-left: 3px solid var(--accent); color: var(--muted); }
+.patch-body code { font: 14px ui-monospace, Consolas, monospace; padding: 1px 4px; border-radius: 3px; background: var(--bg); }
+.patch-body .table { overflow-x: auto; margin: 10px 0; }
+.patch-body table { border-collapse: collapse; width: 100%; font-size: 15px; line-height: 1.4; }
+.patch-body th, .patch-body td { padding: 6px 10px; border-bottom: 1px solid var(--rule); text-align: left; vertical-align: top; }
+.patch-body th { font: 600 12px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+/* buff / nerf / new / change badges, from [buff] etc. in the notes */
+.patch-body .tag {
+  display: inline-block; padding: 0 8px; margin: 0 2px; border-radius: 999px; white-space: nowrap; vertical-align: .12em;
+  font: 700 11px/1.75 var(--sans); letter-spacing: .06em; text-transform: uppercase;
+  color: var(--tag-ink); background: var(--tag-bg); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tag-ink) 30%, transparent);
+}
+.patch-body li > .tag:first-child { margin-left: 0; margin-right: 4px; }
+.patch-body .was { color: var(--muted); }
+.patch-body .to { color: var(--accent); font-weight: 700; padding: 0 2px; }
+.patch-body h3 .tag { vertical-align: .3em; margin-left: 8px; }
+.tag.buff { --tag-ink: var(--buff); --tag-bg: var(--buff-bg); }
+.tag.nerf { --tag-ink: var(--nerf); --tag-bg: var(--nerf-bg); }
+.tag.new { --tag-ink: var(--new); --tag-bg: var(--new-bg); }
+.tag.change { --tag-ink: var(--change); --tag-bg: var(--change-bg); }
+
 /* Walking into (or out of) a hall. The hall is one cached GPU layer that is
    zoomed without repainting, its ambient animations hold still, and the
    corridor is drawn on canvases: one in the doorway, then a full-screen one. */
@@ -354,10 +451,15 @@ pre.log { margin: 12px 0 0; padding: 12px 14px; max-height: 280px; overflow: aut
   .desk { margin-top: 170px; }
   .bubble { left: 12px; right: 12px; width: auto; max-width: none; bottom: calc(100% + 150px); }
   .bubble::after { left: 50%; bottom: -9px; margin-left: -9px; border: 9px solid transparent; border-bottom: 0; border-top-color: var(--panel); }
+  .guildboard { position: relative; left: auto; bottom: auto; width: 180px; margin: 0 auto; }
+  .patch-head { padding: 14px 16px 10px; }
+  .patch-head h2 { font-size: 25px; }
+  .patch-body { padding: 4px 16px 22px; }
 }
 /* The Animate switch in the bar, rather than the system's reduce-motion
    setting, decides whether anything moves (as with the library's books). */
 body:not(.motion) :is(.dot.starting, .sconce, .flame, .corridor .flicker, .corridor .blink, .bell.ring svg, .arrive,
-  .clerk .eyes, .clerk .bodyg, .clerk .head) { animation: none; }
+  .clerk .eyes, .clerk .bodyg, .clerk .head, .guildboard .seal) { animation: none; }
+body:not(.motion) .sheet { transition: none; }
 body:not(.motion) .clerk .m-talk { display: none; }
 body:not(.motion) .arch svg { transition: none; }

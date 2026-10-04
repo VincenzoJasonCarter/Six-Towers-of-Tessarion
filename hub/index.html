@@ -55,6 +55,14 @@
         </a>
       </nav>
 
+      <button class="guildboard" id="guildboard" type="button" aria-haspopup="dialog" hidden>
+        <span class="board">
+          <span class="board-title">Guild Notices</span>
+          <span class="sheet"><b data-board="title"></b><small data-board="date"></small><i class="seal"></i></span>
+        </span>
+        <span class="legs"></span>
+      </button>
+
       <div class="desk">
         <button class="clerk" id="clerk" type="button" data-mood="flat" aria-label="Talk to Hessa, the clerk at the desk">
           <svg viewBox="0 -12 160 202" aria-hidden="true">
@@ -146,6 +154,17 @@
   </section>
 
   <div id="frames"></div>
+
+  <dialog class="patchnotes" id="patchnotes" aria-labelledby="patchHead">
+    <header class="patch-head">
+      <div>
+        <p class="kicker">Threadmint · Guild Notices</p>
+        <h2 id="patchHead">Balance Patch Notes</h2>
+      </div>
+      <button class="close" id="patchClose" type="button" aria-label="Close the notice"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2 2 12"/></svg></button>
+    </header>
+    <div class="patch-body" id="patchBody"></div>
+  </dialog>
 </main>
 
 <script src="app.js"></script>

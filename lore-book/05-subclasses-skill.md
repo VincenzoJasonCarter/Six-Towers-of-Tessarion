@@ -74,6 +74,7 @@ You can use this feature a number of times equal to your **proficiency bonus**, 
  Your soul resonates with orcish war-crystals.
 
 * You gain proficiency in **Athletics** or **Intimidation** (your choice).  
+* You gain proficiency with **light armor** and with **one martial melee weapon** of your choice.  
 * You learn one of the following cantrips: **green-flame blade** or **booming blade**. It counts as a wizard cantrip for you.
 
 * You learn one additional 1st-level spell: **shield** or **hellish rebuke**. It counts as a wizard spell for you, and you can cast the chosen spell **once without expending a spell slot**. You regain the ability to do so when you finish a **long rest**.
@@ -93,11 +94,25 @@ you gain **temporary hit points** equal to your **Intelligence modifier \+ your 
 
 ---
 
+**War Drum**  
+ *2nd-level Warbound Mage feature*  
+ Every blow is a beat on the war-drum, and the fourth beat is the killing blow.
+
+Each time you hit a creature with an **attack roll** (weapon or spell), you gain one **Beat**. When you have **3 Beats**, the next attack you hit with is a **critical hit**, and you lose all your Beats.
+
+After that attack, the crash follows the surge: until the end of your next turn, you have **disadvantage on attack rolls** and on **Constitution saving throws to maintain concentration**.
+
+If that attack would already be a critical hit, you keep your Beats and don’t suffer the crash; the drum waits for your next hit.
+
+Beats last until you finish a **short or long rest**. Missing an attack doesn’t remove Beats.
+
+---
+
 **Blood for Power**  
  *6th-level Warbound Mage feature*  
  You can burn your lifeforce to empower your spells.
 
-As a **bonus action**, you can lose a number of hit points up to your **wizard level** (you can’t reduce yourself below 1 hit point this way). Until the end of the current turn, you add **half the hit points lost (rounded up)** to the **damage rolls** of your wizard spells.
+As a **bonus action**, you can lose a number of hit points up to your **wizard level** (you can’t reduce yourself below 1 hit point this way). The next time you deal damage with a wizard spell this turn, add **the hit points lost** to **one damage roll** of that spell.
 
 You can use this feature a number of times equal to your **proficiency bonus**, and you regain all expended uses when you finish a **long rest**.
 
@@ -121,7 +136,7 @@ You can use the second part of this feature a number of times equal to your **In
 
 As an **action**, you can enter a warstorm state for **1 minute**. While it lasts:
 
-* When you deal damage with a wizard spell, you can add your **Intelligence modifier** to **one damage roll** of that spell.
+* When you use your action to cast a wizard spell, you can make **one melee weapon attack** as a **bonus action**.
 
 * When a hostile creature within 10 feet of you drops to 0 hit points, you can use your **reaction** to move up to **half your speed** without provoking opportunity attacks.
 
@@ -391,7 +406,7 @@ You can use this feature a number of times equal to your **proficiency bonus**, 
  *3rd-level Sanguine Aegis feature*  
  Your armor is etched with channels that store stolen vitality.
 
-When you hit a creature with a **melee weapon attack**, you gain a number of **Blood Charges** equal to **the damage dealt ÷ 10** (round down, minimum of 1).
+When you hit a creature with a **melee weapon attack**, you gain **1 Blood Charge** (**2** on a critical hit).
 
 * You can have a maximum number of Blood Charges equal to your **Constitution modifier \+ your proficiency bonus** (minimum of 1).
 
@@ -419,7 +434,7 @@ When you roll **initiative** and have **no Blood Charges**, you immediately gain
 
 In addition, as a **bonus action**, you can spend up to **a number of Blood Charges equal to half your fighter level** (round down):
 
-* You add the number of charges spent to **one weapon damage roll** this turn.
+* The next time you hit with a weapon attack this turn, it deals an extra **1d6 necrotic damage per charge spent**.
 
 * The target of that attack must succeed on a **Constitution saving throw** (DC \= 8 \+ your proficiency bonus \+ your Constitution modifier) or become **frightened of you** until the end of your next turn.
 
@@ -432,6 +447,8 @@ In addition, as a **bonus action**, you can spend up to **a number of Blood Char
 At the end of your turn, if you **haven’t hit a creature** with an attack since your last turn, you must succeed on a **DC 13 Wisdom saving throw** or have **disadvantage on your next attack roll or ability check** that you make before the end of your next turn.
 
 When you reduce a creature to **0 hit points**, you can choose to end this penalty early and gain **temporary hit points equal to twice your proficiency bonus**.
+
+**Scent of Blood.** You have **advantage** on melee weapon attack rolls against creatures that are **below half their hit point maximum**.
 
 ---
 
@@ -570,9 +587,9 @@ You can use this feature once per **short or long rest**.
  *3rd-level Crystal Archer feature*  
  You are trained to fire with flawless precision.
 
-* You gain proficiency with the **longbow** and **hand crossbow** if you don’t already have it.
+* You gain proficiency in **Stealth** or **Perception** (your choice).
 
-* When you make a ranged weapon attack with a bow or crossbow on your turn and you have moved **no more than 10 feet** that turn, you deal an additional **\+2 damage** on that attack.
+* When you hit with a ranged weapon attack using a bow or crossbow, you deal an additional **\+2 damage**.
 
 ---
 
@@ -580,11 +597,19 @@ You can use this feature once per **short or long rest**.
  *3rd-level Crystal Archer feature*  
  You can prepare specialized soulstone-tipped arrows.
 
-During a **short or long rest**, you can craft a number of **special arrows** equal to your **proficiency bonus**. Each arrow is imbued with one of the following effects (you choose per arrow):
+During a **short or long rest**, you can craft a number of **special arrows** equal to your **proficiency bonus**. Each arrow is tipped with dust from one of Tessarion’s six soulstones, imbuing it with one of the following effects (you choose per arrow):
 
 * **Verdant Dust.** On a hit, the target’s speed is **reduced by 10 feet** until the start of your next turn.
 
 * **Red Dust.** On a hit, the attack deals an extra **1d4 thunder damage**. The target must succeed on a **Strength saving throw** (DC \= 8 \+ your proficiency bonus \+ your Dexterity modifier) or be **pushed 5 feet** away from you.
+
+* **Amber Dust.** On a hit, the arrowhead bursts into a shell of hardened amber light. Choose one creature you can see within **10 feet** of the target, other than the target; it gains **temporary hit points** equal to **1d4 \+ your proficiency bonus**.
+
+* **Violet Dust.** On a hit, smoke-laced hellglass clings to the target. It suffers a **–1d4 penalty** to the **next attack roll** it makes before the start of your next turn.
+
+* **Prismatic Dust.** On a hit, the attack deals an extra **1d4 necrotic damage**, and you regain hit points equal to the necrotic damage dealt. Crafting a Prismatic arrow costs you **one Hit Die**, expended without regaining any hit points; if you have no Hit Dice left, you can’t craft one. Prismatic soulstone is forbidden in most of Tessarion, and these arrows are rarely carried openly.
+
+* **White Dust.** On a hit, aetherite light clings to the target until the start of your next turn. It sheds **dim light** in a 5-foot radius, it can’t benefit from being **invisible**, and attack rolls against it don’t suffer **disadvantage** from dim light, darkness, fog, or smoke.
 
 Any unused special arrows **lose their power** at the end of your next **long rest**.
 
@@ -599,6 +624,8 @@ As a **bonus action**, you enter a state of hyper-focus for **1 minute**. While 
 * The **normal range** of bows you wield is **doubled**.
 
 * You **ignore half and three-quarters cover** when making ranged weapon attacks with bows.
+
+* Once on each of your turns, when you hit a creature with a ranged weapon attack, it takes an extra **1d6 damage** of the weapon’s type.
 
 You can use this feature a number of times equal to your **proficiency bonus**, and you regain all expended uses when you finish a **long rest**.
 
@@ -623,8 +650,10 @@ In addition, your ranged weapon attacks with bows **no longer suffer disadvantag
 As an **action**, you fire a volley of arrows into a point you can see within your weapon’s range, creating a **20-foot-radius** area of lethal shards.
 
 * Each creature in that area must make a **Dexterity saving throw**.  
-* On a failed save, a creature takes **4d8 piercing damage plus 2d8 damage** of your choice of **force, thunder, or necrotic**  
+* On a failed save, a creature takes **6d8 piercing damage plus 3d8 damage** of your choice of **force, thunder, or necrotic**  
 * On a successful save, the creature takes **half** as much damage.
+
+If you expend one of your **special arrows** as part of this action, its effect applies to **every creature that fails the saving throw**.
 
 Allies in the area can use their **reaction** to **drop prone**, gaining **advantage** on this saving throw.
 
@@ -648,11 +677,19 @@ Once you use this feature, you can’t use it again until you finish a **long re
  *3rd-level Gunman feature*  
  You infuse ammunition with soulstone effects.
 
-During a **short or long rest**, you can craft a number of **special shots** equal to your **proficiency bonus**. Each shot is imbued with one of the following effects (you choose per shot):
+During a **short or long rest**, you can craft a number of **special shots** equal to your **proficiency bonus**. Each shot carries a casing of one of Tessarion’s six soulstones, imbuing it with one of the following effects (you choose per shot):
+
+* **Verdant Snare.** On a hit, the round splits into grasping roots. The target must succeed on a **Strength saving throw** (DC \= 8 \+ your proficiency bonus \+ your Dexterity modifier) or have its **speed become 0** until the start of your next turn.
 
 * **Red Impact.** On a hit, the attack deals an extra **1d6 force damage**.
 
+* **Amber Slug.** On a hit, a dense deepstone core cracks the target’s armor. The target’s **AC is reduced by 2** until the start of your next turn.
+
 * **Violet Hex.** On a hit, the target suffers a **–1d4 penalty** to the **next saving throw** it makes before the start of your next turn.
+
+* **Prismatic Round.** On a hit, the attack deals an extra **1d6 necrotic damage**, and the target **can’t regain hit points** until the start of your next turn. Crafting a Prismatic round costs you **one Hit Die**, expended without regaining any hit points; if you have no Hit Dice left, you can’t craft one. Prismatic soulstone is forbidden in most of Tessarion, and these rounds are rarely carried openly.
+
+* **White Null.** On a hit, choose one spell of **2nd level or lower** affecting the target; that spell **ends**.
 
 A creature can be under the effect of **only one** special shot at a time; if it is hit by another special shot before the first effect is used, you decide which effect remains.
 

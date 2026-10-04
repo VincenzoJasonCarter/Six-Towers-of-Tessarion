@@ -38,6 +38,7 @@ PAGE_FILES = {
     "/style.css": ("style.css", "text/css; charset=utf-8"),
     "/app.js": ("app.js", "text/javascript; charset=utf-8"),
     "/clerk.js": ("clerk.js", "text/javascript; charset=utf-8"),
+    "/balance-patch.md": ("../balance-patch.md", "text/markdown; charset=utf-8"),  # the notice board
 }
 
 # Same commands as the Makefile targets, minus the browser tab each one opens:

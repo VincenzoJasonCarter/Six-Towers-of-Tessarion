@@ -33,6 +33,8 @@ function greeting() {
     stored("hub.clerk.introduced", "yes");
     return ["surprised", "Oh! A visitor. Welcome to the Threadmint. I'm Hessa, front desk. The halls are behind me; I'm what you get before them."];
   }
+  if (noticeUnread())
+    return ["smug", `Before you ask: yes, the Guild's posted another rules notice. ${notice.title}. It's on the board, and no, I won't read it aloud.`];
   if (visits >= 12 && Math.random() < .3)
     return ["smug", `Visit number ${visits}. I've started a file on you. Don't worry, everyone gets a file.`];
   const h = new Date().getHours();
@@ -120,6 +122,7 @@ function menu() {
   return [
     asked.has("who") ? ["How's work?", "work"] : ["Who are you?", "who"],
     ["What's back there?", "halls"],
+    ["Any new notices?", "notice"],
     ["Heard anything interesting?", "gossip"],
     ["Tell me about Tessarion.", "lore"],
     ["Can I see the restricted section?", "restricted"],
@@ -152,6 +155,12 @@ const TALK = {
   halls: {
     line: ["flat", "Four halls. The Library on the left, the barracks and the Memoria behind me, the Bestiary on the right. Which one?"],
     replies: () => [...Object.entries(HALLS).map(([id, h]) => [h.name + "?", "hall:" + id]), MORE],
+  },
+  notice: {
+    line: () => !notice ? ["flat", "The notice board's empty. Enjoy it while it lasts."]
+      : noticeUnread() ? ["flat", `${notice.title}, posted ${notice.date}. Rules changes, mostly to the subclasses. The Guild calls it a balance patch. I call it more filing.`]
+      : ["smug", `Nothing since ${notice.title}. You've read it already. I watched you.`],
+    replies: () => notice ? [["Show me.", () => { hide(); openNotice(); }], MORE] : [MORE],
   },
   restricted: { line: ["flat", "No."], replies: [["Please?", "restricted2"], ["Fair enough.", "menu"]] },
   restricted2: {
@@ -348,6 +357,15 @@ addEventListener("hashchange", () => {
     }, motion ? 2400 : 300);
   }
   idleSoon();
+});
+
+// An unread notice on the board: she points it out once, a moment after you arrive.
+addEventListener("notice", () => {
+  if (!noticeUnread()) return;
+  setTimeout(() => {
+    if (currentView() === "desk" && !document.hidden && !bubble.classList.contains("show") && noticeUnread())
+      speak(["smug", `New notice on the board: ${notice.title}. The Guild's been rebalancing again.`], [], false);
+  }, 3500);
 });
 
 // Left alone at the desk for a while, she mutters. Now and then; not forever.

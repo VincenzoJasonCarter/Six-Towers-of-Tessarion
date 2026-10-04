@@ -10,7 +10,7 @@ Usage, from the repo root:
 
 dist/ is the hub's reception page at the root (index.html, style.css, app.js,
 clerk.js from hub/, with the page marked data-hosted so it needs no hub
-server), library/ (the output of library/build.py), bestiary/
+server, and balance-patch.md for its notice board), library/ (the output of library/build.py), bestiary/
 (bestiary.html as its index.html, plus bestiary/images/ if there is one) and
 barracks/ (charasheet/dist, the output of barracks/build.py) and memoria/
 (memoria.html as its index.html). It is rebuilt from scratch every time. Upload it to any static host; vercel.json
@@ -60,6 +60,7 @@ def main():
     (DIST / "index.html").write_text(page.replace("<body>", "<body data-hosted>", 1), encoding="utf-8")
     for name in ("style.css", "app.js", "clerk.js"):
         shutil.copy(HUB / name, DIST / name)
+    shutil.copy(ROOT / "balance-patch.md", DIST / "balance-patch.md")  # pinned to the hub's notice board
 
     size = sum(p.stat().st_size for p in DIST.rglob("*") if p.is_file())
     print(f"wrote {DIST.relative_to(ROOT)}/ ({size / 1e6:.1f} MB)")

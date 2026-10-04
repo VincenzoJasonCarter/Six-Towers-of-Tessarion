@@ -841,6 +841,103 @@ async function walk(view, moves) {
   }
 }
 
+// ---------- the notice board ----------
+// balance-patch.md (at the repo root, served next to this page) is pinned to
+// the board. Its first "## " heading names the newest patch; until that patch
+// has been opened in this browser, the board's seal glows and Hessa mentions
+// it (clerk.js, which listens for the "notice" event).
+
+let notice = null;  // { id, title, date, html } once loaded
+
+const escapeHTML = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+// [buff], [nerf], [new] and [change] in the notes become arrowed badges.
+const TAGS = { buff: "▲ Buff", nerf: "▼ Nerf", new: "✦ New", change: "◆ Change" };
+const inlineMd = s => escapeHTML(s)
+  .replace(/`([^`]+)`/g, "<code>$1</code>")
+  .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
+  .replace(/\*(.+?)\*/g, "<em>$1</em>")
+  .replace(/\[(buff|nerf|new|change)\]/gi, (_, t) => `<span class="tag ${t.toLowerCase()}">${TAGS[t.toLowerCase()]}</span>`);
+
+// A list item written "old → new" shows the old part dimmed, after any badge.
+function mdItem(text) {
+  const [, tag = "", rest] = text.match(/^(\[(?:buff|nerf|new|change)\]\s*)?([\s\S]*)$/i);
+  const at = rest.indexOf(" → ");
+  if (at < 0) return inlineMd(text);
+  return `${inlineMd(tag)}<span class="was">${inlineMd(rest.slice(0, at))}</span> <span class="to">→</span> ${inlineMd(rest.slice(at + 3))}`;
+}
+
+function mdTable(rows) {
+  const cells = r => r.trim().replace(/^\||\|$/g, "").split("|").map(c => inlineMd(c.trim()));
+  const [head, , ...body] = rows;
+  return `<div class="table"><table><thead><tr>${cells(head).map(c => `<th>${c}</th>`).join("")}</tr></thead>`
+    + `<tbody>${body.map(r => `<tr>${cells(r).map(c => `<td>${c}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+}
+
+// Just enough markdown for the patch notes: headings, paragraphs, lists,
+// tables, block quotes, rules, and bold, italic and code inline.
+function renderMd(src) {
+  const lines = src.replace(/\r/g, "").split("\n"), out = [];
+  const starts = /^(#{1,4}\s|-{3,}\s*$|\||>|[-*]\s)/;
+  const run = test => { const got = []; while (i < lines.length && test(lines[i])) got.push(lines[i++]); return got; };
+  let i = 0;
+  while (i < lines.length) {
+    const l = lines[i];
+    let m;
+    if (!l.trim()) i++;
+    else if ((m = l.match(/^(#{1,4})\s+(.*)/))) { out.push(`<h${m[1].length}>${inlineMd(m[2])}</h${m[1].length}>`); i++; }
+    else if (/^-{3,}\s*$/.test(l)) { out.push("<hr>"); i++; }
+    else if (l.startsWith("|")) out.push(mdTable(run(x => x.startsWith("|"))));
+    else if (l.startsWith(">")) out.push(`<blockquote>${renderMd(run(x => x.startsWith(">")).map(x => x.replace(/^>\s?/, "")).join("\n"))}</blockquote>`);
+    else if (/^[-*]\s/.test(l)) out.push(`<ul>${run(x => /^[-*]\s/.test(x)).map(x => `<li>${mdItem(x.replace(/^[-*]\s+/, ""))}</li>`).join("")}</ul>`);
+    else out.push(`<p>${inlineMd(run(x => x.trim() && !starts.test(x)).join(" "))}</p>`);
+  }
+  return out.join("\n");
+}
+
+const noticeUnread = () => !!notice && stored("hub.notice.seen") !== notice.id;
+
+function showNoticeState() {
+  const board = $("#guildboard"), unread = noticeUnread();
+  board.classList.toggle("unread", unread);
+  board.setAttribute("aria-label", `Guild notices: ${notice.title}${notice.date ? `, ${notice.date}` : ""}${unread ? " (unread)" : ""}`);
+}
+
+function openNotice() {
+  if (!notice) return;
+  stored("hub.notice.seen", notice.id);
+  showNoticeState();
+  $("#patchBody").scrollTop = 0;
+  $("#patchnotes").showModal();
+}
+
+async function loadNotice() {
+  try {
+    const res = await fetch("balance-patch.md", { cache: "no-store" });
+    if (!res.ok) return;
+    const src = await res.text();
+    const latest = src.match(/^##\s+(.+)$/m);
+    if (!latest) return;
+    const [title, when = ""] = latest[1].split(/\s+[—–-]\s+/);
+    const day = new Date(when.trim());
+    const date = isNaN(day) ? when.trim() : day.toLocaleDateString("en-GB", { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" });
+    const heading = src.match(/^#\s+(.+)$/m);
+    // The page's own title replaces the file's "# " heading.
+    notice = { id: latest[1].trim(), title: title.trim(), date, html: renderMd(src.replace(/^#\s+.+$/m, "")) };
+    if (heading) $("#patchHead").textContent = heading[1].trim();
+    $("#patchBody").innerHTML = notice.html;
+    $('[data-board="title"]').textContent = notice.title;
+    $('[data-board="date"]').textContent = notice.date;
+    $("#guildboard").hidden = false;
+    showNoticeState();
+    dispatchEvent(new Event("notice"));
+  } catch { /* no notes to pin; the board stays away */ }
+}
+
+$("#guildboard").addEventListener("click", openNotice);
+$("#patchClose").addEventListener("click", () => $("#patchnotes").close());
+// A click on the dimmed backdrop (the dialog itself, outside its contents) closes it.
+$("#patchnotes").addEventListener("click", ev => { if (ev.target === ev.currentTarget) ev.currentTarget.close(); });
+
 // ---------- the desk bell ----------
 // Rung by clerk.js, which also decides what Hessa says about it.
 
@@ -878,3 +975,5 @@ setMotion(motion);
 
 render();
 poll();
+// After clerk.js has run too, so she hears about the notice.
+addEventListener("DOMContentLoaded", loadNotice);

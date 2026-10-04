@@ -113,12 +113,12 @@ Humans are defined by their reliance on **distance, precision, and technology** 
 
 * **Core Weaponry:** Composite Bows, Crossbows, Specialized Quivers.  
 * **Theme & Focus:** Versatility, silence, speed, and adaptable munitions.  
-* **Signature Concepts:** **Modular Ammunition** (arrowheads coated with Verdant dust for binding or Red dust for concussive blast); **Crystal Sights** (small Amber crystals for enhanced focus/targeting).  
+* **Signature Concepts:** **Modular Ammunition** (arrowheads coated in dust from any of the six soulstones, e.g., Verdant dust for binding or Red dust for concussive blast); **Crystal Sights** (small Amber crystals for enhanced focus/targeting).  
 * **Drawback:** Less effective against heavy armor; dependent on **costly, specialized ammunition**; requires high mobility and open space.
 
 ### **2\. Gunmen (Artificers/Ballisticians)**
 
 * **Core Weaponry:** Black-powder Rifles, Heavy Handguns, Bombards.  
 * **Theme & Focus:** Kinetic force, disruption, anti-armor, and technology.  
-* **Signature Concepts:** **Crystal Casing Rounds** (loading a crystal behind the shot to focus energy, e.g., Red for raw impact, Violet for temporary anti-magic curses on armor). **Powder Disruption** (black powder inherently disrupts magical entities).  
+* **Signature Concepts:** **Crystal Casing Rounds** (loading any of the six soulstones behind the shot to focus energy, e.g., Red for raw impact, Amber to crack armor, White to snuff out spells). **Powder Disruption** (black powder inherently disrupts magical entities).  
 * **Drawback:** **Loud** and draws immediate attention; dependent on scarce or volatile resources (powder, specific casings); vulnerable in close quarters/melee.

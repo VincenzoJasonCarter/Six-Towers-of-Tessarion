@@ -68,6 +68,20 @@ running.
 
 Options: `--port 9000`, `--no-browser`. Requires `uv` on PATH.
 
+## The notice board
+
+A board of Guild Notices stands on the floor left of the desk, with
+`balance-patch.md` (at the repo root) pinned to it. Click it and the patch
+notes open over the hall. The first `## ` heading in that file names the
+newest patch (`## Patch 2 — 2026-11-01`, say). Until that patch has been
+opened in a browser, the board's wax seal glows there and Hessa points it
+out. So to announce a balance change, add a new patch at the top of the
+file. The page renders the file itself, with just enough markdown for patch
+notes: headings, paragraphs, lists, tables, block quotes and rules. Write
+`[buff]`, `[nerf]`, `[new]` or `[change]` anywhere in a line (a heading, a
+list item, a table cell) and it shows as a coloured badge with an arrow:
+▲ Buff, ▼ Nerf, ✦ New, ◆ Change.
+
 ## The Barracks
 
 The Barracks is `barracks/serve.py` (port 8768, as `make barracks` runs
@@ -88,6 +102,6 @@ serve.py: there every hall is always open, and the tools load from
 serve.py     starts the tools and serves the desk (stdlib only)
 index.html   page markup: the reception hall and tool tabs
 style.css    page styles
-app.js       corridor drawings (SVG), tool status, views, desk bell
+app.js       corridor drawings (SVG), tool status, views, notice board, desk bell
 clerk.js     the clerk's conversation: every line, the replies, and when she says what
 ```

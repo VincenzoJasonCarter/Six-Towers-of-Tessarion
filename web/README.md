@@ -38,7 +38,7 @@ project settings (framework, build command, output directory) on their
 defaults, since vercel.json overrides them. Every push to `main` then
 redeploys.
 
-`.vercelignore` limits the upload to what the build reads (`web/`,
+`.vercelignore` limits the upload to what the build reads (`balance-patch.md`, `web/`,
 `hub/`, `library/`, `bestiary/`, `memoria/`, `lore-book/`, `data/`, `charasheet/`, `barracks/`). If the build starts reading
 another folder, add it there too.
 

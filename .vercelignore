@@ -1,6 +1,7 @@
 # Vercel only needs what web/build.py reads; everything else stays out of the upload.
 /*
 !/vercel.json
+!/balance-patch.md
 !/web
 !/hub
 !/library
