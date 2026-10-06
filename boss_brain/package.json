@@ -1,7 +1,7 @@
 {
-  "name": "underweave",
+  "name": "boss_brain",
   "private": true,
-  "description": "The Underweave boss brain: a Bayesian decision engine for bosses, and the harness that measures it.",
+  "description": "The boss brain: a Bayesian decision engine for bosses, and the harness that measures it.",
   "type": "module",
   "engines": {
     "node": ">=22.18"

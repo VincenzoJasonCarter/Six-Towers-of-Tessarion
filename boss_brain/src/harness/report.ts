@@ -17,7 +17,7 @@ export function toMarkdown(result: SuiteResult, title: string): string {
   const { threshold, perRound, rewindCost } = result.policy;
   const out: string[] = [];
 
-  out.push(`# Underweave harness: ${title}`, "");
+  out.push(`# Boss brain harness: ${title}`, "");
   out.push(
     `Belief model \`${result.belief}\` against a party of ${party}. ` +
       `${result.trials} fights of ${result.rounds} rounds per player style, seed ${result.seed}. ` +

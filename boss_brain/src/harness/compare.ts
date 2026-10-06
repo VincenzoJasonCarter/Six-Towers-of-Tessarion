@@ -1,7 +1,7 @@
 /**
  * M2: choose the belief model (DESIGN.md 8, "M2 protocol").
  *
- * Usage, from underweave/:
+ * Usage, from boss_brain/:
  *
  *     npm run compare              # the full protocol, a few minutes
  *     npm run compare -- --quick   # a smoke test with few fights; its verdict means nothing

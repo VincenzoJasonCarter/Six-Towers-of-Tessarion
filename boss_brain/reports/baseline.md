@@ -1,4 +1,4 @@
-# Underweave harness: baseline
+# Boss brain harness: baseline
 
 Belief model `counts` against a party of Gunman, Bulwark Aegis, Verdant Mage, Hellbound Mage. 1000 fights of 10 rounds per player style, seed 1. Every hero in a fight plays the same style.
 

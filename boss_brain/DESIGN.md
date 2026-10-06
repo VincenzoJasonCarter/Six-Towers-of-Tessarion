@@ -1,4 +1,4 @@
-  # The Underweave Boss Brain: design
+# The Boss Brain: design
 
 **Status:** 1.1, 2026-10-06. The open questions are closed (section 11).
 M1 and M2 are done: the harness is in `src/harness/`, and the belief model
@@ -753,7 +753,7 @@ Closed 2026-10-05. Reopen one by editing its row and saying why.
 
 | # | Question | Decision |
 |---|---|---|
-| Q1 | Where does this live: `underweave/` in this repo, or its own repo? | This repo, while it is campaign-specific. |
+| Q1 | Where does this live: `underweave/` in this repo, or its own repo? | This repo, while it is campaign-specific. Renamed to `boss_brain/` on 2026-10-06: it is a general engine, not the Underweave's. |
 | Q2 | Language: Python harness plus JS table tool, or one TypeScript core for both? | One TypeScript core, so the harness and the table run the same code. The repo already has Node for `charasheet/`. |
 | Q3 | Which context tags, if any, beyond the action category? | None at first. Add a tag only if the harness shows it's worth its tap. |
 | Q4 | Can temperament shift mid-fight, and is director mode allowed? | Triggers yes, declared per module. Director mode as an opt-in DM setting, off by default. |

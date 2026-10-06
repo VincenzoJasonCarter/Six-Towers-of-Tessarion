@@ -2,7 +2,7 @@
  * M2b: should the belief read players who read the boss? (DESIGN.md 8,
  * "M2b protocol").
  *
- * Usage, from underweave/:
+ * Usage, from boss_brain/:
  *
  *     npm run compare:m2b              # the full protocol, a few minutes
  *     npm run compare:m2b -- --quick   # a smoke test with few fights; its verdict means nothing

@@ -1,4 +1,4 @@
-# The Underweave boss brain
+# The boss brain
 
 A Bayesian decision engine for bosses: it watches how the players play,
 builds a belief about each of them, and picks whatever move it judges most
@@ -61,7 +61,7 @@ npm run compare -- --quick                       # smoke test of the protocol; n
 npm run compare:m2b                              # the M2b protocol → reports/m2b-wary.md (several minutes)
 ```
 
-Or from the repo root: `make underweave-test` and `make underweave-harness
+Or from the repo root: `make boss-brain-test` and `make boss-brain-harness
 ARGS="--trials 200"`.
 
 The run is deterministic: the same options and seed give the same numbers.

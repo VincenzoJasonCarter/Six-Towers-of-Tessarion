@@ -1,8 +1,8 @@
 /**
- * The Underweave research harness: plays a belief model against synthetic
+ * The boss brain's research harness: plays a belief model against synthetic
  * players and scores it (DESIGN.md 8).
  *
- * Usage, from underweave/:
+ * Usage, from boss_brain/:
  *
  *     npm run harness                                  # every style, 1000 fights each
  *     npm run harness -- --trials 200                  # quicker, noisier
