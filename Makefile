@@ -63,6 +63,16 @@ arena: ## Simulate the subclasses one-on-one and write arena/report.md (ARGS="--
 arena-party: ## Simulate every four-subclass party and write arena/party_report.md (ARGS="--n 50" for a quick run)
 	uv run arena/party.py $(ARGS)
 
+# --- underweave (the boss brain and its research harness; needs Node 22.18+) ---
+
+.PHONY: underweave-test
+underweave-test: ## Type-check and unit-test the Underweave boss brain
+	cd underweave && { test -d node_modules || npm ci --no-audit --no-fund; } && npm run check && npm test
+
+.PHONY: underweave-harness
+underweave-harness: ## Score the boss brain against synthetic players → underweave/reports/ (ARGS="--trials 200" for a quick run)
+	cd underweave && node src/harness/cli.ts $(ARGS)
+
 # --- web (the hub, library, bestiary, barracks and memoria as one static site, for Vercel or any static host) ---
 
 .PHONY: web-build

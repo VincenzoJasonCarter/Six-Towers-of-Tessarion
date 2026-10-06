@@ -19,6 +19,22 @@ START = (30, 90)                 # one-on-one
 FORMATION = ((30, 10), (90, 110))  # parties: (front rank, back rank) for side 0 and side 1
 MAX_ROUNDS = 20
 BPS = ("bludgeoning", "piercing", "slashing")
+
+# Bot and arena fixes, each a switch so the old behaviour can be reproduced
+# (party.py --legacy turns them all off):
+#   area_scan         area spells may be centred on any point in range, not only on an enemy
+#   spread            party members start staggered 5 feet apart instead of stacked on one spot
+#   sight_targeting   monsters that hunt the softest hero judge by armour alone and stick
+#                     with their pick, instead of always knowing who has the fewest HP
+#   legendary_refund  a Hold eaten by Legendary Resistance doesn't use up one of the bot's tries
+ALL_TACTICS = frozenset({"area_scan", "spread", "sight_targeting", "legendary_refund"})
+TACTICS = set(ALL_TACTICS)
+
+
+def set_tactics(names):
+    """Pick which fixes are on (also the Pool initializer, so workers match the parent)."""
+    TACTICS.clear()
+    TACTICS.update(names)
 SPEED_ZERO = ("paralyzed", "stunned", "restrained", "speed0")
 
 
@@ -244,14 +260,18 @@ class Creature:
         return [e for e in self.enemies() if abs(e.x - center_x) <= radius]
 
     def best_area(self, radius, rng, score=len):
-        """(targets, center) for the area spot that best scores its targets."""
+        """(targets, center) for the area spot that best scores its targets.
+        With area_scan, every 5-foot point in range is tried, so a blast can sit
+        off-centre to catch an enemy while missing the ally fighting it."""
+        if "area_scan" in TACTICS:
+            centres = range(max(ARENA[0], self.x - rng), min(ARENA[1], self.x + rng) + 1, 5)
+        else:
+            centres = [e.x for e in self.enemies() if self.dist_to(e) <= rng]
         best = None
-        for e in self.enemies():
-            if self.dist_to(e) > rng:
-                continue
-            hit = self.area_targets(e.x, radius)
+        for cx in centres:
+            hit = self.area_targets(cx, radius)
             if hit and (best is None or score(hit) > score(best[0])):
-                best = (hit, e.x)
+                best = (hit, cx)
         return best
 
     # ----- derived stats -------------------------------------------------
@@ -365,8 +385,12 @@ class Fight:
         else:
             for i, side in enumerate(sides):
                 front, back = FORMATION[i]
+                placed = {}   # rank -> how many already stand in it
                 for c in side:
-                    c.x = front if c.style == "melee" else back
+                    home = front if c.style == "melee" else back
+                    k = placed[home] = placed.get(home, -1) + 1
+                    off = 5 * ((k + 1) // 2) * (1 if k % 2 else -1) if "spread" in TACTICS else 0
+                    c.x = max(ARENA[0], min(ARENA[1], home + off))   # 0, +5, -5, +10, ...
 
     def run(self, max_rounds=MAX_ROUNDS):
         """Returns (winning side 0/1 or None for a draw, rounds)."""

@@ -1,0 +1,1082 @@
+{
+  "belief": "counts",
+  "seed": 1,
+  "trials": 1000,
+  "rounds": 10,
+  "party": [
+    "gunman",
+    "bulwark",
+    "verdant",
+    "hellbound"
+  ],
+  "policy": {
+    "threshold": 0.4,
+    "perRound": 1,
+    "rewindCost": 3
+  },
+  "styles": [
+    {
+      "style": "habitual",
+      "name": "Habitual",
+      "plays": "the subclass's main action 9 times in 13, anything else otherwise",
+      "forecast": {
+        "turns": 40000,
+        "accuracy": 0.6922,
+        "accuracyByPhase": [
+          0.6905,
+          0.6910833333333334,
+          0.6943125
+        ],
+        "logLoss": 1.1650718015411219,
+        "brier": 0.5330924464537365,
+        "calibrationError": 0.09783719062047228,
+        "calibration": [
+          {
+            "from": 0.2,
+            "to": 0.3,
+            "turns": 23,
+            "said": 0.2868523724802203,
+            "happened": 0.4782608695652174
+          },
+          {
+            "from": 0.3,
+            "to": 0.4,
+            "turns": 504,
+            "said": 0.3678835332159134,
+            "happened": 0.6011904761904762
+          },
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 3317,
+            "said": 0.4562866710786039,
+            "happened": 0.6689779921615918
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 9133,
+            "said": 0.5481790318048599,
+            "happened": 0.6982371619402168
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 10849,
+            "said": 0.6472070614641133,
+            "happened": 0.6939810120748456
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 11144,
+            "said": 0.7378452509322037,
+            "happened": 0.7010050251256281
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "turns": 4733,
+            "said": 0.8377888377760941,
+            "happened": 0.6851890978237904
+          },
+          {
+            "from": 0.9,
+            "to": 1,
+            "turns": 297,
+            "said": 0.9066258579451364,
+            "happened": 0.6531986531986532
+          }
+        ]
+      },
+      "named": {
+        "turns": 10000,
+        "accuracy": 0.6947,
+        "accuracyByPhase": [
+          0.6983333333333334,
+          0.697,
+          0.69025
+        ],
+        "logLoss": 1.1420401144586523,
+        "brier": 0.516709293470501,
+        "calibrationError": 0.08752087529813873,
+        "calibration": [
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 1,
+            "said": 0.4915254237288135,
+            "happened": 1
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 61,
+            "said": 0.5761272658628832,
+            "happened": 0.8032786885245902
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 994,
+            "said": 0.6621001903214795,
+            "happened": 0.6830985915492958
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 4906,
+            "said": 0.7427974893014528,
+            "happened": 0.7070933550754178
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "turns": 3749,
+            "said": 0.8406949213465895,
+            "happened": 0.6825820218724993
+          },
+          {
+            "from": 0.9,
+            "to": 1,
+            "turns": 289,
+            "said": 0.906719336197268,
+            "happened": 0.657439446366782
+          }
+        ]
+      },
+      "prophecy": {
+        "fights": 1000,
+        "spokenPerFight": 10,
+        "hitRate": 0.6947,
+        "chargesPerFight": 6.947,
+        "rewindReached": 0.997,
+        "firstRewindRound": 4.2657973921765295
+      }
+    },
+    {
+      "style": "by-the-book",
+      "name": "By the book",
+      "plays": "the subclass's usual mix, exactly as the prior assumes",
+      "forecast": {
+        "turns": 40000,
+        "accuracy": 0.6005,
+        "accuracyByPhase": [
+          0.6086666666666667,
+          0.5965,
+          0.597375
+        ],
+        "logLoss": 1.1648776908261822,
+        "brier": 0.5778908293247539,
+        "calibrationError": 0.04922340187000079,
+        "calibration": [
+          {
+            "from": 0.2,
+            "to": 0.3,
+            "turns": 14,
+            "said": 0.28617900341814495,
+            "happened": 0.35714285714285715
+          },
+          {
+            "from": 0.3,
+            "to": 0.4,
+            "turns": 978,
+            "said": 0.37171235601121566,
+            "happened": 0.49079754601226994
+          },
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 6212,
+            "said": 0.45723806444692094,
+            "happened": 0.4872826786864134
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 10506,
+            "said": 0.5453044474296909,
+            "happened": 0.5616790405482581
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 8768,
+            "said": 0.6452887371918546,
+            "happened": 0.6111998175182481
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 8992,
+            "said": 0.7355191084434823,
+            "happened": 0.6801601423487544
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "turns": 4115,
+            "said": 0.8388180428842628,
+            "happened": 0.6908869987849332
+          },
+          {
+            "from": 0.9,
+            "to": 1,
+            "turns": 415,
+            "said": 0.9069709127150449,
+            "happened": 0.6963855421686747
+          }
+        ]
+      },
+      "named": {
+        "turns": 10000,
+        "accuracy": 0.6867,
+        "accuracyByPhase": [
+          0.6956666666666667,
+          0.6796666666666666,
+          0.68525
+        ],
+        "logLoss": 1.0823334475608086,
+        "brier": 0.5151018005882766,
+        "calibrationError": 0.08436294948088965,
+        "calibration": [
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 2,
+            "said": 0.48218255754646494,
+            "happened": 1
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 145,
+            "said": 0.5711897852423902,
+            "happened": 0.6275862068965518
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 1371,
+            "said": 0.6592139759170572,
+            "happened": 0.6666666666666666
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 4714,
+            "said": 0.740255717821414,
+            "happened": 0.6911327959270259
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "turns": 3367,
+            "said": 0.8407792866063654,
+            "happened": 0.6893376893376894
+          },
+          {
+            "from": 0.9,
+            "to": 1,
+            "turns": 401,
+            "said": 0.9070559300564693,
+            "happened": 0.7007481296758105
+          }
+        ]
+      },
+      "prophecy": {
+        "fights": 1000,
+        "spokenPerFight": 10,
+        "hitRate": 0.6867,
+        "chargesPerFight": 6.867,
+        "rewindReached": 0.997,
+        "firstRewindRound": 4.3470411233701105
+      }
+    },
+    {
+      "style": "random",
+      "name": "Random",
+      "plays": "uniformly at random, ignoring everything (the floor)",
+      "forecast": {
+        "turns": 40000,
+        "accuracy": 0.198175,
+        "accuracyByPhase": [
+          0.19741666666666666,
+          0.19616666666666666,
+          0.20025
+        ],
+        "logLoss": 1.9982252098756463,
+        "brier": 0.9281154932696547,
+        "calibrationError": 0.2538062669256304,
+        "calibration": [
+          {
+            "from": 0.2,
+            "to": 0.3,
+            "turns": 2422,
+            "said": 0.2799758231827759,
+            "happened": 0.18579686209744012
+          },
+          {
+            "from": 0.3,
+            "to": 0.4,
+            "turns": 12758,
+            "said": 0.3543551064436446,
+            "happened": 0.19846370904530491
+          },
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 12399,
+            "said": 0.44396640994957637,
+            "happened": 0.19412855875473828
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 7747,
+            "said": 0.5406936562046251,
+            "happened": 0.20485349167419648
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 1931,
+            "said": 0.6341103695311521,
+            "happened": 0.2180217503883998
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 2637,
+            "said": 0.7111856748343849,
+            "happened": 0.19036784224497535
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "turns": 106,
+            "said": 0.8200921281467964,
+            "happened": 0.2641509433962264
+          }
+        ]
+      },
+      "named": {
+        "turns": 9424,
+        "accuracy": 0.199490662139219,
+        "accuracyByPhase": [
+          0.193,
+          0.19931271477663232,
+          0.2051792828685259
+        ],
+        "logLoss": 2.1307965670392925,
+        "brier": 0.9998452418828231,
+        "calibrationError": 0.3630571885991175,
+        "calibration": [
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 3124,
+            "said": 0.45568797630089153,
+            "happened": 0.19206145966709348
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 3091,
+            "said": 0.5464922418944188,
+            "happened": 0.20155289550307343
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 1518,
+            "said": 0.635951314686505,
+            "happened": 0.21409749670619235
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 1586,
+            "said": 0.7170122418067599,
+            "happened": 0.19230769230769232
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "turns": 105,
+            "said": 0.8201778714172825,
+            "happened": 0.2571428571428571
+          }
+        ]
+      },
+      "prophecy": {
+        "fights": 1000,
+        "spokenPerFight": 9.424,
+        "hitRate": 0.199490662139219,
+        "chargesPerFight": 1.88,
+        "rewindReached": 0.298,
+        "firstRewindRound": 7.489932885906041
+      }
+    },
+    {
+      "style": "alternator",
+      "name": "Alternator",
+      "plays": "Strike, Guard, Strike, Guard, ...",
+      "forecast": {
+        "turns": 40000,
+        "accuracy": 0.575,
+        "accuracyByPhase": [
+          0.16666666666666666,
+          0.4166666666666667,
+          1
+        ],
+        "logLoss": 1.153709170123785,
+        "brier": 0.6219686518148358,
+        "calibrationError": 0.16615097321759922,
+        "calibration": [
+          {
+            "from": 0.3,
+            "to": 0.4,
+            "turns": 10000,
+            "said": 0.36184721313036283,
+            "happened": 0.4
+          },
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 10000,
+            "said": 0.46494859268163957,
+            "happened": 0.6
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 16000,
+            "said": 0.5439855203686089,
+            "happened": 0.75
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 2000,
+            "said": 0.608882656360842,
+            "happened": 0.5
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 2000,
+            "said": 0.7000000000000259,
+            "happened": 0
+          }
+        ]
+      },
+      "named": {
+        "turns": 10000,
+        "accuracy": 0.6,
+        "accuracyByPhase": [
+          0.3333333333333333,
+          0.3333333333333333,
+          1
+        ],
+        "logLoss": 0.8852931271809228,
+        "brier": 0.5470584267768974,
+        "calibrationError": 0.2199310997732511,
+        "calibration": [
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 2000,
+            "said": 0.48359140171198484,
+            "happened": 0.5
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 5000,
+            "said": 0.5502543023130421,
+            "happened": 0.8
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 2000,
+            "said": 0.608882656360842,
+            "happened": 0.5
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 1000,
+            "said": 0.7000000000000064,
+            "happened": 0
+          }
+        ]
+      },
+      "prophecy": {
+        "fights": 1000,
+        "spokenPerFight": 10,
+        "hitRate": 0.6,
+        "chargesPerFight": 6,
+        "rewindReached": 1,
+        "firstRewindRound": 7
+      }
+    },
+    {
+      "style": "switcher",
+      "name": "Switcher",
+      "plays": "Shoot for four turns, then Strike for the rest of the fight",
+      "forecast": {
+        "turns": 40000,
+        "accuracy": 0.525,
+        "accuracyByPhase": [
+          0.4166666666666667,
+          0.3333333333333333,
+          0.75
+        ],
+        "logLoss": 1.2362444373349646,
+        "brier": 0.6232889557633885,
+        "calibrationError": 0.08998383900456743,
+        "calibration": [
+          {
+            "from": 0.3,
+            "to": 0.4,
+            "turns": 2000,
+            "said": 0.3166106441493203,
+            "happened": 0
+          },
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 11000,
+            "said": 0.42328858903887456,
+            "happened": 0.45454545454545453
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 14000,
+            "said": 0.5438258380751546,
+            "happened": 0.5
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 5000,
+            "said": 0.6212139409134818,
+            "happened": 0.8
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 5000,
+            "said": 0.7194526364329729,
+            "happened": 0.6
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "turns": 3000,
+            "said": 0.8391838468873521,
+            "happened": 0.6666666666666666
+          }
+        ]
+      },
+      "named": {
+        "turns": 10000,
+        "accuracy": 0.7,
+        "accuracyByPhase": [
+          1,
+          0.3333333333333333,
+          0.75
+        ],
+        "logLoss": 0.8355510073657768,
+        "brier": 0.4548118783256805,
+        "calibrationError": 0.12976236234617886,
+        "calibration": [
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 1000,
+            "said": 0.5817338358466017,
+            "happened": 1
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 2000,
+            "said": 0.6295345504056429,
+            "happened": 0.5
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 4000,
+            "said": 0.724315795541238,
+            "happened": 0.75
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "turns": 3000,
+            "said": 0.8391838468873521,
+            "happened": 0.6666666666666666
+          }
+        ]
+      },
+      "prophecy": {
+        "fights": 1000,
+        "spokenPerFight": 10,
+        "hitRate": 0.7,
+        "chargesPerFight": 7,
+        "rewindReached": 1,
+        "firstRewindRound": 3
+      }
+    },
+    {
+      "style": "contrarian",
+      "name": "Contrarian",
+      "plays": "by the book, but never its subclass's main action when named",
+      "forecast": {
+        "turns": 40000,
+        "accuracy": 0.442,
+        "accuracyByPhase": [
+          0.43616666666666665,
+          0.44083333333333335,
+          0.44725
+        ],
+        "logLoss": 1.4928416776988278,
+        "brier": 0.748233222786619,
+        "calibrationError": 0.1523439097351374,
+        "calibration": [
+          {
+            "from": 0.2,
+            "to": 0.3,
+            "turns": 23,
+            "said": 0.28483284000781006,
+            "happened": 0.391304347826087
+          },
+          {
+            "from": 0.3,
+            "to": 0.4,
+            "turns": 1304,
+            "said": 0.37272109567827827,
+            "happened": 0.48466257668711654
+          },
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 9883,
+            "said": 0.4605340802095734,
+            "happened": 0.53040574724274
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 17336,
+            "said": 0.5471069661415876,
+            "happened": 0.49440470696815875
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 7825,
+            "said": 0.6341377099265348,
+            "happened": 0.30555910543130993
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 3608,
+            "said": 0.71726394574527,
+            "happened": 0.22893569844789358
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "turns": 21,
+            "said": 0.815805083177787,
+            "happened": 0.42857142857142855
+          }
+        ]
+      },
+      "named": {
+        "turns": 10000,
+        "accuracy": 0.0388,
+        "accuracyByPhase": [
+          0.0036666666666666666,
+          0.036,
+          0.06725
+        ],
+        "logLoss": 2.3654831298038093,
+        "brier": 1.1837536012157228,
+        "calibrationError": 0.5965167887150187,
+        "calibration": [
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 167,
+            "said": 0.48381036902806557,
+            "happened": 0.04790419161676647
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 3046,
+            "said": 0.5630546919225632,
+            "happened": 0.036769533814839134
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 4245,
+            "said": 0.6396015150013401,
+            "happened": 0.04075382803297998
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 2522,
+            "said": 0.7239764226345419,
+            "happened": 0.03409992069785884
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "turns": 20,
+            "said": 0.816499743068461,
+            "happened": 0.45
+          }
+        ]
+      },
+      "prophecy": {
+        "fights": 1000,
+        "spokenPerFight": 10,
+        "hitRate": 0.0388,
+        "chargesPerFight": 0.388,
+        "rewindReached": 0.058,
+        "firstRewindRound": 7.896551724137931
+      }
+    },
+    {
+      "style": "second-guesser",
+      "name": "Second-guesser",
+      "plays": "by the book, but when named avoids whatever it has done most so far",
+      "forecast": {
+        "turns": 40000,
+        "accuracy": 0.43315,
+        "accuracyByPhase": [
+          0.4349166666666667,
+          0.439,
+          0.4274375
+        ],
+        "logLoss": 1.5010384111220776,
+        "brier": 0.7538375836962079,
+        "calibrationError": 0.15412340718143935,
+        "calibration": [
+          {
+            "from": 0.2,
+            "to": 0.3,
+            "turns": 24,
+            "said": 0.29090312611269603,
+            "happened": 0.5833333333333334
+          },
+          {
+            "from": 0.3,
+            "to": 0.4,
+            "turns": 1332,
+            "said": 0.37267282415514713,
+            "happened": 0.47147147147147145
+          },
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 9773,
+            "said": 0.45978454933915053,
+            "happened": 0.5199017701831576
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 17717,
+            "said": 0.547130385555417,
+            "happened": 0.49709318733419877
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 7760,
+            "said": 0.633758173642798,
+            "happened": 0.26984536082474225
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 3394,
+            "said": 0.7160636701228688,
+            "happened": 0.20683559222156747
+          }
+        ]
+      },
+      "named": {
+        "turns": 10000,
+        "accuracy": 0.0222,
+        "accuracyByPhase": [
+          0.015666666666666666,
+          0.037333333333333336,
+          0.01575
+        ],
+        "logLoss": 2.378220148787178,
+        "brier": 1.196104366287144,
+        "calibrationError": 0.6107106660609453,
+        "calibration": [
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 142,
+            "said": 0.48244722164519876,
+            "happened": 0.14084507042253522
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 3135,
+            "said": 0.5634998404393068,
+            "happened": 0.05996810207336523
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 4356,
+            "said": 0.6388992214999974,
+            "happened": 0.0032139577594123047
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 2367,
+            "said": 0.7228483931155975,
+            "happened": 0
+          }
+        ]
+      },
+      "prophecy": {
+        "fights": 1000,
+        "spokenPerFight": 10,
+        "hitRate": 0.0222,
+        "chargesPerFight": 0.222,
+        "rewindReached": 0.007,
+        "firstRewindRound": 9
+      }
+    },
+    {
+      "style": "adaptive",
+      "name": "Adaptive",
+      "plays": "by the book, but shies away from any action a prophecy caught it doing, and slowly forgets",
+      "forecast": {
+        "turns": 40000,
+        "accuracy": 0.524075,
+        "accuracyByPhase": [
+          0.5591666666666667,
+          0.5078333333333334,
+          0.5099375
+        ],
+        "logLoss": 1.3476532079801957,
+        "brier": 0.6712144215775818,
+        "calibrationError": 0.09152446225156997,
+        "calibration": [
+          {
+            "from": 0.2,
+            "to": 0.3,
+            "turns": 28,
+            "said": 0.2848865804325845,
+            "happened": 0.32142857142857145
+          },
+          {
+            "from": 0.3,
+            "to": 0.4,
+            "turns": 1203,
+            "said": 0.37161803163816726,
+            "happened": 0.46716541978387366
+          },
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 7107,
+            "said": 0.45925223082151523,
+            "happened": 0.5000703531729281
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 12519,
+            "said": 0.5470290166073615,
+            "happened": 0.5469286684239956
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 10273,
+            "said": 0.6440092245874909,
+            "happened": 0.5254550764139005
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 7297,
+            "said": 0.7306493689108471,
+            "happened": 0.5506372481841852
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "turns": 1569,
+            "said": 0.8244746240672264,
+            "happened": 0.36647546207775655
+          },
+          {
+            "from": 0.9,
+            "to": 1,
+            "turns": 4,
+            "said": 0.9013144063384892,
+            "happened": 0
+          }
+        ]
+      },
+      "named": {
+        "turns": 10000,
+        "accuracy": 0.4863,
+        "accuracyByPhase": [
+          0.5826666666666667,
+          0.4523333333333333,
+          0.4395
+        ],
+        "logLoss": 1.5490168470115169,
+        "brier": 0.7638495412138546,
+        "calibrationError": 0.22329374519019754,
+        "calibration": [
+          {
+            "from": 0.4,
+            "to": 0.5,
+            "turns": 9,
+            "said": 0.4817699724764419,
+            "happened": 0.1111111111111111
+          },
+          {
+            "from": 0.5,
+            "to": 0.6,
+            "turns": 700,
+            "said": 0.571175961028376,
+            "happened": 0.5228571428571429
+          },
+          {
+            "from": 0.6,
+            "to": 0.7,
+            "turns": 3249,
+            "said": 0.6547133388894549,
+            "happened": 0.48107109879963067
+          },
+          {
+            "from": 0.7,
+            "to": 0.8,
+            "turns": 4671,
+            "said": 0.7348986392204813,
+            "happened": 0.5262256476129309
+          },
+          {
+            "from": 0.8,
+            "to": 0.9,
+            "turns": 1367,
+            "said": 0.8253825237408658,
+            "happened": 0.3474762253108998
+          },
+          {
+            "from": 0.9,
+            "to": 1,
+            "turns": 4,
+            "said": 0.9013144063384892,
+            "happened": 0
+          }
+        ]
+      },
+      "prophecy": {
+        "fights": 1000,
+        "spokenPerFight": 10,
+        "hitRate": 0.4863,
+        "chargesPerFight": 4.863,
+        "rewindReached": 0.983,
+        "firstRewindRound": 5.323499491353001
+      }
+    }
+  ],
+  "pooled": {
+    "turns": 320000,
+    "accuracy": 0.4987625,
+    "accuracyByPhase": [
+      0.43877083333333333,
+      0.45267708333333334,
+      0.5783203125
+    ],
+    "logLoss": 1.3824577008126233,
+    "brier": 0.6822052005856937,
+    "calibrationError": 0.06711264653541077,
+    "calibration": [
+      {
+        "from": 0.2,
+        "to": 0.3,
+        "turns": 2534,
+        "said": 0.28027435239249343,
+        "happened": 0.19652722967640096
+      },
+      {
+        "from": 0.3,
+        "to": 0.4,
+        "turns": 30079,
+        "said": 0.35742507580473537,
+        "happened": 0.30376674756474614
+      },
+      {
+        "from": 0.4,
+        "to": 0.5,
+        "turns": 69691,
+        "said": 0.4516093037461024,
+        "happened": 0.4667747628818642
+      },
+      {
+        "from": 0.5,
+        "to": 0.6,
+        "turns": 104958,
+        "said": 0.5456276139081626,
+        "happened": 0.5439318584576688
+      },
+      {
+        "from": 0.6,
+        "to": 0.7,
+        "turns": 54406,
+        "said": 0.6382336685328991,
+        "happened": 0.5181781421166783
+      },
+      {
+        "from": 0.7,
+        "to": 0.8,
+        "turns": 44072,
+        "said": 0.7274176793385103,
+        "happened": 0.5213287347976039
+      },
+      {
+        "from": 0.8,
+        "to": 0.9,
+        "turns": 13544,
+        "said": 0.8366955636307875,
+        "happened": 0.6422031896042528
+      },
+      {
+        "from": 0.9,
+        "to": 1,
+        "turns": 716,
+        "said": 0.906796181860068,
+        "happened": 0.6745810055865922
+      }
+    ]
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "underweave",
+  "private": true,
+  "description": "The Underweave boss brain: a Bayesian decision engine for bosses, and the harness that measures it.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.18"
+  },
+  "scripts": {
+    "harness": "node src/harness/cli.ts",
+    "compare": "node src/harness/compare.ts",
+    "test": "node --test \"test/**/*.test.ts\"",
+    "check": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "typescript": "~6.0.2"
+  }
+}

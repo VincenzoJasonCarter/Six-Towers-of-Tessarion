@@ -8,7 +8,8 @@ from pathlib import Path
 
 import yaml
 
-from engine import Creature, attack, d, d20, deal, move, p_hit, roll_damage, saving_throw, cage_over
+from engine import (R, TACTICS, Creature, attack, cage_over, d, d20, deal, move, p_hit, roll_damage,
+                    saving_throw)
 
 ENEMIES = Path(__file__).resolve().parent.parent / "data" / "enemies.yaml"
 
@@ -79,14 +80,24 @@ class Monster(Creature):
         if not foes:
             return None
         if self.targeting == "weakest":            # dives for the softest target
-            return min(foes, key=lambda e: (e.ac(), e.hp))
+            return self.softest(foes)
         if self.targeting == "sniper":             # shoots the softest target it can reach
             rng = max(a["long"] for a in self.attacks)
             near = [e for e in foes if self.dist_to(e) <= rng] or foes
-            return min(near, key=lambda e: (e.ac(), e.hp))
+            return self.softest(near)
         if self.targeting == "cluster":            # blasts where the most heroes stand
             return max(foes, key=lambda e: (sum(1 for o in foes if o.dist_to(e) <= 10), -e.hp))
         return self.nearest(foes)
+
+    def softest(self, foes):
+        """The lowest-AC hero. With sight_targeting it can see armour but not hit
+        points: it keeps last turn's pick if that is still among the softest,
+        otherwise picks one of them at random."""
+        if "sight_targeting" not in TACTICS:
+            return min(foes, key=lambda e: (e.ac(), e.hp))
+        low = min(e.ac() for e in foes)
+        soft = [e for e in foes if e.ac() == low]
+        return self.foe if self.foe in soft else R.choice(soft)
 
     def attack_mods(self, tgt, ctx):
         return bool(self.frenzy and tgt.caster), False   # Slag Ghoul's Mana-Frenzy

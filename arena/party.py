@@ -12,9 +12,11 @@ Usage, from the repo root:
     uv run arena/party.py --repeats       # allow the same subclass more than once in a party
     uv run arena/party.py --n 50          # quicker, noisier
     uv run arena/party.py --recalibrate   # re-tune the encounters first
+    uv run arena/party.py --legacy        # the bots and arena from before the tactics fixes
 
 Writes arena/party_results.json and arena/party_report.md (party6_* etc. for
-other sizes, party4r_* etc. with repeats, each with its own encounter tuning).
+other sizes, party4r_* etc. with repeats, *_legacy with --legacy, each with its
+own encounter tuning).
 """
 import argparse
 import itertools
@@ -30,7 +32,7 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE))
 
-from engine import Fight, seed  # noqa: E402
+from engine import ALL_TACTICS, TACTICS, Fight, seed, set_tactics  # noqa: E402
 from foes import ENCOUNTERS, TIERS, encounter, lineup  # noqa: E402
 from heroes import BY_KEY, ROSTER  # noqa: E402
 
@@ -38,16 +40,17 @@ LEVELS = (3, 7, 10, 15)
 SOLO = HERE / "results.json"
 KEYS = [c.key for c in ROSTER]
 PARTY_SIZE = 4
-REPEATS = False
+REPEATS = LEGACY = False
 CALIBRATION = RESULTS = REPORT = None
 PARTIES = []
 
 
-def setup(size, repeats=False):
+def setup(size, repeats=False, legacy=False):
     """Point the module at one kind of party: its party list and its output files."""
-    global PARTY_SIZE, REPEATS, CALIBRATION, RESULTS, REPORT, PARTIES
-    PARTY_SIZE, REPEATS = size, repeats
+    global PARTY_SIZE, REPEATS, LEGACY, CALIBRATION, RESULTS, REPORT, PARTIES
+    PARTY_SIZE, REPEATS, LEGACY = size, repeats, legacy
     stem = f"party{size}r" if repeats else "party" if size == 4 else f"party{size}"
+    stem += "_legacy" if legacy else ""
     CALIBRATION = HERE / f"{stem}_calibration.json"
     RESULTS = HERE / f"{stem}_results.json"
     REPORT = HERE / f"{stem}_report.md"
@@ -121,7 +124,8 @@ def calibrate(pool, sample=48, n=40):
 def run_all(pool, scales, n, only=None, previous=None):
     """Simulate every party, or with `only`, just the parties containing that
     subclass, merged into `previous` (for testing a change to one subclass)."""
-    results = previous or {"n": n, "size": PARTY_SIZE, "repeats": REPEATS, "levels": list(LEVELS), "encounters": list(ENCOUNTERS), "scales": scales,
+    results = previous or {"n": n, "size": PARTY_SIZE, "repeats": REPEATS, "tactics": sorted(TACTICS),
+                           "levels": list(LEVELS), "encounters": list(ENCOUNTERS), "scales": scales,
                            "subclasses": [dict(key=c.key, label=c.label, chassis=c.chassis,
                                                patched=c.patch_sensitive) for c in ROSTER], "fights": {}}
     for level in LEVELS:
@@ -217,7 +221,8 @@ def solo_ranks():
 
 
 def write_report(results):
-    setup(results.get("size", 4), results.get("repeats", False))
+    tactics = set(results.get("tactics", ()))   # results from before the fixes have none
+    setup(results.get("size", 4), results.get("repeats", False), LEGACY)
     a = analyse(results)
     levels, encs = results["levels"], results["encounters"]
     label = {s["key"]: s["label"] for s in results["subclasses"]}
@@ -237,7 +242,14 @@ def write_report(results):
              f"{PARTY_SIZE} of the 11 subclasses, values are relative to the field.")
     L.append("- **Survives** is how often that character is still standing at the end. **Damage** and **Taken** "
              f"are its share of the party's damage dealt and taken ({100 / PARTY_SIZE:.0f}% is an even share).")
-    L.append("- Every fight starts fresh with full resources, as in the one-on-one run.\n")
+    L.append("- Every fight starts fresh with full resources, as in the one-on-one run.")
+    if tactics == ALL_TACTICS:
+        L.append("- Bots and arena: current (area spells aimed off-centre, staggered formation, monsters "
+                 "judge targets by armour, Legendary Resistance refunds Hold tries; see README.md).\n")
+    elif tactics:
+        L.append(f"- Bots and arena: only these fixes: {', '.join(sorted(tactics))}.\n")
+    else:
+        L.append("- Bots and arena: legacy, from before the tactics fixes (`--legacy`).\n")
 
     solo = solo_ranks()
     mean_delta = {k: statistics.mean(a[lv]["subs"][k]["delta"] for lv in levels) for k in KEYS}
@@ -358,16 +370,22 @@ def main():
     ap.add_argument("--report-only", action="store_true", help="rebuild party_report.md from party_results.json")
     ap.add_argument("--size", type=int, default=4, help="heroes per party (default 4); enemies scale to match")
     ap.add_argument("--repeats", action="store_true", help="allow the same subclass more than once in a party")
+    ap.add_argument("--legacy", action="store_true",
+                    help="turn off the tactics fixes, to reproduce reports from before them (*_legacy files)")
     ap.add_argument("--workers", type=int, default=os.cpu_count())
     args = ap.parse_args()
-    setup(args.size, args.repeats)
+    setup(args.size, args.repeats, args.legacy)
+    tactics = set() if args.legacy else set(ALL_TACTICS)
+    set_tactics(tactics)
     if args.report_only:
         write_report(json.loads(RESULTS.read_text(encoding="utf-8")))
         print(f"wrote {REPORT.relative_to(HERE.parent)}")
         return
-    with Pool(args.workers) as pool:
+    with Pool(args.workers, initializer=set_tactics, initargs=(tactics,)) as pool:
         if args.only:
             previous = json.loads(RESULTS.read_text(encoding="utf-8"))
+            if set(previous.get("tactics", ())) != tactics:
+                sys.exit("the saved results used different tactics; rerun everything instead of --only")
             scales, n = previous["scales"], previous["n"]
             print(f"rerunning the parties with {args.only}, {n} fights each...", flush=True)
             results = run_all(pool, scales, n, only=args.only, previous=previous)

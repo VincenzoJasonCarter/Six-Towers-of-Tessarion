@@ -1,0 +1,3 @@
+node_modules
+# smoke tests, not results
+reports/*-quick.*

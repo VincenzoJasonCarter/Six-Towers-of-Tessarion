@@ -28,6 +28,7 @@ uv run arena/party.py --recalibrate
 uv run arena/party.py --only gunman   # rerun just the parties with one subclass, after changing it
 uv run arena/party.py --size 6        # six-hero parties against six-creature encounters (party6_* files)
 uv run arena/party.py --size 6 --repeats --n 10   # the same subclass may appear more than once (party6r_* files)
+uv run arena/party.py --legacy        # the bots and arena from before the tactics fixes (party_legacy_* files)
 uv run arena/run.py --report-only     # rebuild a report from its saved results
 ```
 
@@ -54,6 +55,15 @@ three or more copies of each subclass, and how much the second copy adds.
 With this many parties and few fights each, a single party's win rate is
 noisy, so the best and worst lists flatter lucky parties. The per-subclass
 numbers are solid.
+
+`--legacy` turns off four fixes to the bots and the arena that undersold
+the Wizards in parties: area spells could only be centred on an enemy (so
+any ally fighting nearby blocked them), the whole back rank started on one
+spot, Skirmishers and Snipers always knew which hero had the fewest hit
+points, and Holds that Legendary Resistance ate used up the bot's two tries.
+They are switches in `TACTICS` in `engine.py`. Legacy runs write
+`*_legacy_*` files with their own encounter tuning; the report says which
+version produced it.
 The tuned foe sizes are kept in `calibration.json` and
 `party_calibration.json`, so results stay comparable between runs until you
 recalibrate.
@@ -92,8 +102,9 @@ recalibrate.
   Each encounter is scaled until the average party wins half its fights.
 - Monsters pick targets by type. Brutes and Soldiers take the nearest hero.
   Skirmishers run past the front rank to the lowest-AC hero. Snipers shoot
-  the lowest-AC hero in range. Casters blast wherever the most heroes stand
-  together.
+  the lowest-AC hero in range. Both can see armour but not hit points, so
+  among heroes tied for the lowest AC they keep last turn's pick or choose at
+  random. Casters blast wherever the most heroes stand together.
 - **Value** of a subclass: the win rate of parties that include it minus the
   win rate of parties that don't. The report also lists each subclass's
   survival rate and its share of damage dealt and taken, the best and worst
@@ -116,8 +127,9 @@ rules instead, add the change behind a flag the way `patched` works.
 ## The arena
 
 Combatants stand on a 120-foot line with a wall at each end. One-on-one, they
-start 60 feet apart. In a party fight, melee heroes start at 30 feet and
-everyone else at 10, and the enemy mirrors that at 90 and 110 feet. Creatures
+start 60 feet apart. In a party fight, melee heroes form a front rank around
+30 feet and everyone else a back rank around 10, staggered 5 feet apart (10,
+15, 5, 20, ...), and the enemy mirrors that around 90 and 110 feet. Creatures
 can pass each other, as they could step around each other on a real map.
 
 Movement is in 5-foot steps. Entering difficult terrain costs double, and
@@ -142,7 +154,10 @@ The combatants are bots:
   dangerous enemy when it's likely to land and nothing is held yet. Otherwise
   they cast whatever has the highest expected damage this turn, so they spend
   their biggest slots first. Area spells go where they catch the most enemies
-  and no allies, and aren't cast if every spot would hit a friend.
+  and no allies, centred on any point in range (so a fireball can sit behind
+  an enemy to miss the ally fighting it), and aren't cast if every spot would
+  hit a friend. The bot gives up on Holds after two tries, but a try that
+  Legendary Resistance shrugs off doesn't count, since the table hears about it.
 - Ammunition and other choices are also picked by expected value.
 
 ## Builds and gear

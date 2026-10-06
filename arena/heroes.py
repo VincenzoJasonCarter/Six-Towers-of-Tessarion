@@ -6,7 +6,7 @@ patched=False rebuilds the rules as they stood before Patch 1
 ignore the flag. Everything works one-on-one and in a party; features that
 help allies only do something when there are allies.
 """
-from engine import (Conc, Creature, Zone, attack, attack_adv, avg, cage_over, d, d20, deal, mod,
+from engine import (TACTICS, Conc, Creature, Zone, attack, attack_adv, avg, cage_over, d, d20, deal, mod,
                     move, move_to, p_fail, p_hit, push, roll_damage, room_behind, saving_throw)
 
 
@@ -21,6 +21,11 @@ def item(level):
 
 def tier(level):
     return 1 + (level >= 5) + (level >= 11) + (level >= 17)
+
+
+def legendary_left(creatures):
+    """Legendary Resistances the creatures still have (heroes have none)."""
+    return sum(getattr(c, "legendary", 0) for c in creatures)
 
 
 def scores_at(base, primary, level, asi_levels):
@@ -274,9 +279,17 @@ class Wizard(Hero):
             return
         ctx = {"spell": True, "level": level, "name": name, "control": True, "single": True}
         abil = self.save_ability(foe, "wis", ctx, commit=True)
+        lr = legendary_left([foe])
         if not saving_throw(foe, abil, self.dc, self, ctx):
             e = foe.add("paralyzed", self, value=(abil, self.dc, self))
             self.conc = Conc(name, [(foe, e)])
+        self.refund_if_resisted(lr, [foe])
+
+    def refund_if_resisted(self, before, targets):
+        """Legendary Resistance is announced at the table, so a control spell it
+        shrugged off doesn't count toward the bot's two tries."""
+        if "legendary_refund" in TACTICS and legendary_left(targets) < before:
+            self.control_tries -= 1
 
     def toll_the_dead(self):
         die = 12 if self.foe.hp < self.foe.max_hp else 8
@@ -428,12 +441,14 @@ class VerdantMage(Wizard):
         self.drop_conc()
         self.control_tries += 1
         held = []
+        lr = legendary_left(hit)
         for t in hit:
             if not saving_throw(t, "str", self.dc, self, {"spell": True, "level": 1, "control": True,
                                                           "name": "entangle"}):
                 held.append((t, t.add("restrained", self, value=("escape", self.dc))))
         if held:
             self.conc = Conc("entangle", held)
+        self.refund_if_resisted(lr, hit)
 
     def extra_controls(self):
         if not (self.free.get("entangle") or self.avail(1)):
