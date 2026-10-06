@@ -14,6 +14,8 @@ export interface PlayerView {
   readonly round: number;
   /** The boss named this hero this round. */
   readonly named: boolean;
+  /** The hero can see something coming at them this round (a wind-up, DESIGN.md 6.1). */
+  readonly warned: boolean;
   /** This hero's own actions so far this fight. */
   readonly history: readonly Action[];
   /** Past prophecies about this hero, revealed after their rounds. */
@@ -29,7 +31,18 @@ export interface Style {
   readonly id: string;
   readonly name: string;
   readonly plays: string;
+  /** Plays on even when it sees a blow coming (only Random). */
+  readonly ignoresWarnings?: boolean;
   make(subclass: SubclassId, rng: Rng): Player;
+}
+
+/** How often a warned synthetic player Guards instead of its usual turn (DESIGN.md 6.1). */
+export const HEED = 0.5;
+
+/** The style's player, made to heed warnings unless the style ignores them. */
+export function heeding(style: Style, player: Player, rng: Rng): Player {
+  if (style.ignoresWarnings) return player;
+  return { act: (view) => (view.warned && rng.next() < HEED ? GUARD : player.act(view)) };
 }
 
 const draw = (rng: Rng, weights: readonly number[]): Action => rng.weighted(weights) as Action;
@@ -76,6 +89,7 @@ export const RANDOM: Style = {
   id: "random",
   name: "Random",
   plays: "uniformly at random, ignoring everything (the floor)",
+  ignoresWarnings: true,
   make(_subclass, rng) {
     return { act: () => rng.int(K) as Action };
   },

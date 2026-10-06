@@ -3,8 +3,8 @@
 A Bayesian decision engine for bosses: it watches how the players play,
 builds a belief about each of them, and picks whatever move it judges most
 profitable for the boss, played as well as its temperament lets it: best
-when cold (Ruthless), worse when Curious or Bloodlusted. The
-Threadkeeper Failed Prophet is the first boss to use it. The why and the how
+when cold (Ruthless), worse when Curious or Bloodlusted. It is meant for
+any boss; the Threadkeeper Failed Prophet is one of the first planned. The why and the how
 are in [DESIGN.md](DESIGN.md); this file covers running the code.
 
 Where the project is (DESIGN.md section 10): **M0 design**, **M1 harness**
@@ -13,8 +13,10 @@ and **M2 belief** are done; the chosen belief model is C, the ensemble
 players who read the boss and kept C as it was
 ([reports/m2b-wary.md](reports/m2b-wary.md)). **M3**, decision and
 temperament, is done: the five steps are calibrated
-([reports/m3-temperament.md](reports/m3-temperament.md)). M4, the Prophet
-module, is next.
+([reports/m3-temperament.md](reports/m3-temperament.md)). **M4**, the module
+interface and four abstract reference modules, is done
+([reports/m4-modules.md](reports/m4-modules.md)). Next is M5, the table tool;
+real bosses such as the Prophet come after (M7).
 
 ## Layout
 
@@ -31,6 +33,10 @@ src/engine/            what the real engine will be built from
   belief/ensemble.ts   model C: Bayesian model averaging over other models
   decision/temperament.ts  the temperament steps and their levers (DESIGN.md 5)
   decision/decide.ts   expected utility, care, mixing, sharpness, rashness, exploration
+  module.ts            the module interface: moments, options, announce, resolve
+  brain.ts             one boss in one fight: belief + temperament + module
+src/modules/reference/ the four abstract reference modules (DESIGN.md 6.1)
+  bet.ts, punish.ts, spend.ts, telegraph.ts, common.ts (fight values, reads)
 src/harness/           the research harness (DESIGN.md 8)
   players.ts           synthetic players, nine styles (M2 used the first eight)
   fight.ts             one simulated fight, for any Prophet; the spike's prophecy policy
@@ -42,6 +48,8 @@ src/harness/           the research harness (DESIGN.md 8)
   m2b.ts               the M2b protocol: should the belief read players who read the boss?
   bettor.ts            M3's baseline module: one bet a round, chosen under a temperament
   m3.ts                the M3 protocol: calibrate the temperament steps
+  bout.ts              one fight against any module, and its suite and scores
+  m4.ts                the M4 protocol: the interface and the reference modules
 test/                  unit tests, including one that pins the spike's numbers
 reports/               harness output: <name>.md to read, <name>.json raw
 prophet/model.js       the original throwaway spike, kept for reference
@@ -66,6 +74,7 @@ npm run compare                                  # the M2 protocol → reports/m
 npm run compare -- --quick                       # smoke test of the protocol; not results, not committed
 npm run compare:m2b                              # the M2b protocol → reports/m2b-wary.md (several minutes)
 npm run compare:m3                               # the M3 protocol → reports/m3-temperament.md (about 15 minutes)
+npm run compare:m4                               # the M4 protocol → reports/m4-modules.md (about half an hour)
 ```
 
 Or from the repo root: `make boss-brain-test` and `make boss-brain-harness
@@ -92,7 +101,7 @@ read.
 
 **Prophecies** runs the spike's policy on top of the belief: each round,
 foretell the most likely action of the most predictable hero. It is a fixed
-yardstick for comparing belief models, not the Prophet's design; that is M4.
+yardstick for comparing belief models, not the Prophet's design (DESIGN.md 6.2).
 
 **Named turns** (in the JSON, and in the M2 report) score only the turns
 where the boss had named the hero. That is where defiance shows.

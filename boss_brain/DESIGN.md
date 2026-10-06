@@ -5,7 +5,9 @@ M1 and M2 are done: the harness is in `src/harness/`, and the belief model
 is chosen, model C (see [M2 results](#m2-results)). 1.1 redesigns the
 temperament dial as a bell curve (section 5) and adds the
 [M2b](#m2b-protocol) and [M3](#m3-protocol) protocols. M3 is done: the
-steps are calibrated ([M3 results](#m3-results)). The code in `prophet/` is the throwaway spike
+steps are calibrated ([M3 results](#m3-results)). M4 is done: the module
+interface holds, and the calibration carries over to other shapes of boss
+decision ([M4 results](#m4-results)). The code in `prophet/` is the throwaway spike
 (see [Spike results](#spike-results)), kept for reference only.
 
 ## 1. What this is
@@ -26,9 +28,11 @@ each turn. Instead of guessing, it acts on what it believes.
 
 One engine, many bosses. The engine owns belief, decision and temperament.
 Each boss is a **module** that supplies only what is unique to it: the moves it
-has and what it counts as winning. The Threadkeeper Failed Prophet is the first
-module. The Coin-Mad Hoardwyrm and the Sangrith Debt-Collector are the test of
-whether the module interface is general enough (section 6.2).
+has and what it counts as winning. The engine is proven first on abstract
+reference modules, one per shape of boss decision (section 6.1). Real
+bosses come after: the Threadkeeper Failed Prophet, the Coin-Mad Hoardwyrm
+and the Sangrith Debt-Collector, and none of them may need an engine change
+(section 6.2).
 
 ## 2. Goals and non-goals
 
@@ -209,7 +213,8 @@ can learn to play around it.
   keeping its bets to itself.
 - **Bloodlusted** is enraged. It jumps to conclusions from one turn, fixes on
   one player and won't let go, and roars its intentions so the table hears
-  them. It wants blood more than anything else on the dial, so what it does
+  them. It shouts, but it doesn't wind up: no pause for theatre, just the
+  blow, and the next one. It wants blood more than anything else on the dial, so what it does
   land is the most lethal; it just lands less. A party can bait it.
 
 What the dial moves:
@@ -265,11 +270,12 @@ bold, and the rest are the design's choice:
 | Curious | 30% | **0.15** | 0.2 | 1.0 | 1.0 | 0.5 | **0.9** | 0 | 0.5 | full |
 | Hunting | **40%** | **0.15** | 0.5 | 0.5 | 0.4 | 0.8 | **0.95** | 0 | 0.2 | name only |
 | **Ruthless** | 5% | **0.03** | 0.8 | 0.2 | 0 | 1.0 | 1.0 | 0 | 0.1 | hidden |
-| Wrathful | 2% | 0.05 | 0.9 | −0.1 | 0.3 | 1.0 | 1.0 | **0.6** | 0 | name only |
-| Bloodlusted | 0% | 0 | 1.0 | −0.6 | 0.5 | 0.8 | 1.0 | **0.8** | 0 | full |
+| Wrathful | 2% | 0.05 | 0.9 | −0.1 | 0.1 | 1.0 | 1.0 | **0.6** | 0 | name only |
+| Bloodlusted | 0% | 0 | 1.0 | −0.6 | 0 | 0.8 | 1.0 | **0.8** | 0 | full |
 
-`lethal` and `show` are not calibrated yet: the M3 module has neither
-(M4). The placeholders M3 started from:
+On the hot side `show` is all but gone (0.1, then 0): rage shouts its
+intentions (disclosure) but has no patience to wind up (drama). `lethal` and `show` were checked in M4 against modules that have them, and
+kept ([M4 results](#m4-results)). The placeholders M3 started from:
 
 | Step | Slack | Mixing temp. | `lethal` | `spread` | `show` | `tempo` | β | Rashness | Explore | Disclosure |
 |---|---|---|---|---|---|---|---|---|---|---|
@@ -307,7 +313,83 @@ boss-maximiser, so it is an opt-in DM setting, off by default (Q4).
 
 ## 6. Modules
 
-### 6.1 The Threadkeeper Failed Prophet (first module)
+A module is a boss (4.3). There are two kinds. **Reference modules** are
+small and abstract, with no lore: each is one *shape* of boss decision, and
+together they are the engine's test bench (M4). **Boss modules** are real
+bosses from the bestiary, built on an engine the reference modules have
+already proven (M7).
+
+### 6.1 Reference modules (M4)
+
+| Module | Each round, the boss may | Pays off |
+|---|---|---|
+| **Bet** | bet that a hero will take an action (M3's baseline module) | `tempo` 1 if right; `spread` for a new target |
+| **Punish** | ready a *cut* against a hero's action: if they take it, it is cut | `lethal` = the action's fight value |
+| | or *press*: a plain blow on a hero | `lethal` 0.5, sure |
+| **Spend or hold** | starts with 3 charges that don't come back; *hold* them | `tempo` = the share of the fight still to come |
+| | or *spend* one on a cut, as in Punish (no exploration bonus: a spend is no probe) | `lethal` = the action's fight value |
+| **Telegraph** | *wind up* a big blow on a hero, who sees it coming | `lethal` 1.5 unless they Guard; `show` 1 |
+| | or a *quick blow*, unseen | `lethal` 1 unless they Guard |
+
+Every module may also do nothing, and every option about a hero carries
+`spread` as in Bet. Each covers what the others don't: Bet is reading,
+Punish is reading weighted by what an action is worth, Spend or hold is
+timing (patience against impatience), and Telegraph is drama against
+efficiency.
+
+**Fight values** stand in for a combat model, which the harness doesn't have
+(Q8). What an action is worth to the party: Strike, Shoot and Cast 1, Mend
+1.5 (denying a heal is `lethal`, 4.3), Guard 0.25. Placeholders, to come from
+playtests.
+
+**Warnings.** A wind-up is seen by its nature, whatever the step's
+disclosure: disclosure rules what the boss says about its reads, not
+whether a raised axe is visible. A warned synthetic player Guards with
+probability 0.5 instead of its usual turn (Random ignores warnings). The
+belief knows nothing of warnings, so the Telegraph module keeps its own
+outcome model of the heeding: per hero, a Beta(1, 1) on heeding a warning.
+A warned hero guards if they heed it, or else as often as the belief says
+they guard anyway, so both blows read the player through the same tempered
+belief. The Beta learns from the untempered belief: learning stays honest,
+and only choices are tempered. A module may model its own outcomes; the
+engine doesn't care where an outcome's probability comes from.
+
+In Bet, Punish and Spend or hold, the step's disclosure decides whether the
+hero hears the read before acting. Every move about a hero is revealed to
+the table once its round is over, as in M3.
+
+### 6.2 Boss modules (M7)
+
+Each must be writable against the interface with no engine change; M4
+writes all three out as sketches, without code, to check. If one can't be
+written, the interface is wrong.
+
+**The interface** (`src/engine/module.ts`). A module offers *options* at a
+*moment* (the start of a round, or right after a hero's turn), each option
+with its outcomes, their probabilities and their utility on the shared axes.
+It *announces* the chosen move (whom it names, whom it warns, what is said)
+and *resolves* it once the heroes have acted, from their actions and any
+*module events* the DM records outside the five categories. A resolution
+gives the utility realised and the bets the table now learns of. A module
+may keep its own state and outcome models. The engine supplies the belief,
+tempered by the step, and does the choosing.
+
+| | Prophet | Hoardwyrm | Debt-Collector |
+|---|---|---|---|
+| Moments | round (prophecy); turn (rewind) | round | round 1 (clauses), then none |
+| Options | prophecy per (hero, action), dice prophecy, silence; after a turn, rewind it or hold | demand a toll of each size from the party, or none | one assignment of clauses to heroes, out of all of them |
+| Outcomes | prophecy: tempered forecast; dice: fixed odds; rewind: sure | paid or refused: its own model of greed, per party, nudged by desperation events | each clause breached with the tempered forecast of its forbidden action, as named |
+| Utility | fulfilled: `tempo` (a charge); rewind: `lethal` by what it unmakes, `tempo` for a plain hit; holding for a big moment: `show` | paid: coin is `tempo`, a poorer party `lethal`; the skipped attack is negative `tempo` | a breach: `lethal` by its penalty; a fair-looking spread of clauses: `show`, `spread` |
+| Announce | the prophecy at the step's disclosure; a rewind is seen | the toll and its price, always open | the clauses, always open |
+| Resolve | from the heroes' actions; killing blows and crits are module events | "paid" or "refused" is a module event | a breach is the forbidden action taken; each clause is a bet the table sees |
+
+Writing these out found two gaps in the first draft of the interface, which
+took one decision a round from round-start options only. The Prophet's
+rewind is decided after a hero's turn, hence *moments*; the Hoardwyrm's coin
+and the Prophet's killing blows are not action categories, hence *module
+events*. Both were added before any M4 run.
+
+#### The Threadkeeper Failed Prophet
 
 From `data/enemies.yaml`: at round start the Prophet declares a prediction, and
 each one that comes true gives an Echo Charge. At 3 charges it rewinds the
@@ -336,18 +418,23 @@ fall") predict dice, not choices. Dice outcomes need no learning, so they
 stay as a separate, fixed-odds kind of prophecy that the Prophet can choose
 alongside prophecies about choices (Q7).
 
-### 6.2 Interface checks (not to be built yet)
+Its economy is the module's to tune: a rewind about once every 4–5 rounds
+was the target. With one prophecy a round and a rewind costing 3 charges,
+that needs a hit rate of 60–75%; M3's steps hit 28–65%, so whoever builds
+the Prophet has to change the cost, the prophecies per round or the target.
 
-These exist to keep the interface honest. If either one can't be written as a
-module, the interface is wrong.
+#### Coin-Mad Hoardwyrm
 
-- **Coin-Mad Hoardwyrm.** Options: offer a bribe, at what price, or none.
-  Belief: how greedy the party is, and how desperate they are right now.
-  Utility: attacks skipped (negative `tempo`) against coin gained and the
-  chance the party is too poor to fight on (`lethal`).
-- **Sangrith Debt-Collector.** Options: which Oath Clause goes to whom. Belief:
-  who is most likely to break which clause. Utility: expected breaches times
-  their cost (`lethal`), against how fair it looks (`show`).
+Options: offer a bribe, at what price, or none. Belief: how greedy the
+party is, and how desperate they are right now. Utility: attacks skipped
+(negative `tempo`) against coin gained and the chance the party is too poor
+to fight on (`lethal`).
+
+#### Sangrith Debt-Collector
+
+Options: which Oath Clause goes to whom. Belief: who is most likely to break
+which clause. Utility: expected breaches times their cost (`lethal`),
+against how fair it looks (`show`).
 
 ## 7. The table tool
 
@@ -381,8 +468,8 @@ players** and measures it.
 The Adaptive player reacts to being caught; the Tell-reader reads the boss's
 habits and moves first, so a boss that keeps making the same bet pays for
 it. Both see only what the boss reveals, which is every bet once its round
-is over. Reading a module's own tells (a wind-up, a stance) is left for
-when there is a real module with tells to study (M4).
+is over. Reading a module's own tells (a stance, a habit of the boss's) is
+left for when there is a real boss with tells to study (M7).
 
 **Metrics:** forecast accuracy (and calibration: is 60% right 60% of the
 time?), prophecy hit rate, charges per round, rounds to first rewind, how
@@ -414,11 +501,8 @@ rashly, so Bloodlusted sits at it, level with Wrathful and below it (target
 2). Curious was 15–25% and Bloodlusted 20–30% until the first M3 run showed
 why neither could work (M3 results, points 1 and 4).
 
-A module's own economy is the module's to tune, not the engine's. For the
-Prophet (M4): a rewind about once every 4–5 rounds. With one prophecy a
-round and a rewind costing 3 charges, that needs a hit rate of 60–75%, above
-any band here, so M4 will have to change the cost, the prophecies per round
-or the target.
+A module's own economy is the module's to tune, not the engine's (for the
+Prophet's, see 6.2).
 
 Party win rate per temperament step is the number the DM would care about
 most, but it needs a combat model, which the harness doesn't have. It is
@@ -677,8 +761,8 @@ them afterwards.
 engine, with the five steps of 5.2 as data. The engine knows nothing about
 prophecies: it sees options, outcome probabilities and axis scores.
 
-**The baseline module.** A minimal Prophet, used only as a yardstick (the
-real one is M4):
+**The baseline module.** A minimal Prophet, used only as a yardstick (it
+became the Bet reference module, 6.1):
 
 - *Options:* each round, one bet per (hero, action), plus silence, disclosed
   at the step's level. One bet a round.
@@ -858,7 +942,8 @@ What M4 and later have to know:
    grid and settled at 40%, above Curious's 30%. The targets hold, but care
    no longer rises from Curious to Ruthless, and Curious and Hunting now
    differ mostly in exploration, values and disclosure. Worth revisiting
-   with a real module (M4), whose options may spread out differently.
+   against the other reference modules (M4), whose options spread out
+   differently.
 2. **The calibration holds only at model C's defiance prior.** With both
    priors at 25%, four steps leave their bands (Curious 32%, Hunting 45%,
    Wrathful 56%, Bloodlusted 48%); only Ruthless, which names nobody, stays
@@ -875,6 +960,172 @@ What M4 and later have to know:
 5. **`lethal` and `show` are uncalibrated.** Bloodlusted's danger is meant to
    be `lethal`, and the M3 module has no lethal outcomes. M4 calibrates them
    against a module that does.
+
+### M4 protocol
+
+Written before any M4 numbers existed. M4 replaces the Prophet milestone:
+the engine is for any boss, so before it carries a real one it has to show
+that its interface and its temperament hold across different shapes of
+decision.
+
+**What is built.**
+
+- The module interface of 4.3 in the engine: a module offers options (each
+  with its outcomes and their utility), announces a move at a disclosure
+  level, and resolves it once the heroes have acted. The fight loop runs any
+  module.
+- The four reference modules of 6.1, with Bet ported from M3's baseline.
+- Written sketches of the three boss modules of 6.2 against the interface.
+
+**Interface targets.**
+
+1. Nothing in `src/engine/` imports a module, and all four reference
+   modules run through the same fight loop.
+2. The Prophet, the Hoardwyrm and the Debt-Collector are each written out in
+   6.2 as options, outcomes, utility, announce and resolve, with no engine
+   change. If one can't be, the interface changes, and the change is written
+   down here, before any calibration run.
+3. Bet on the new interface reproduces M3's held-out numbers exactly.
+
+**Measures**, per step, against ordinary play, mean over the two parties:
+
+- In Punish, Spend or hold and Telegraph: `lethal` dealt per fight.
+- In Spend or hold: the mean round of a spend, and the mean fight value of
+  the action each spend was aimed at.
+- In Telegraph: the wind-ups' share of the boss's moves.
+
+**Value targets**, on the held-out data:
+
+1. *The bell carries over.* In Punish and Spend or hold, `lethal` per fight
+   rises from Curious to Ruthless, and Ruthless is above both hot steps. The
+   same steps on a different boss: the calibration is general or it isn't.
+2. *Rage is frightening.* In each of those three, Bloodlusted deals more
+   `lethal` per fight than Curious.
+3. *Patience.* In Spend or hold, Bloodlusted spends earliest.
+4. *Wind-ups.* In Telegraph, the wind-up share is highest at Curious, and
+   under 10% at Ruthless, Wrathful and Bloodlusted.
+
+**Amended before the first run (2026-10-06).** Sketching the three bosses
+(interface target 2) added moments and module events to the interface (6.2).
+And "the mean fight value of what the spends cut" is made exact: the mean
+fight value of the action each spend was aimed at, hit or miss, so that it
+measures patience, not accuracy.
+
+**Calibration.** Only the `lethal` and `show` weights may change; everything
+M3 calibrated stays. The placeholders of 5.2 are run first on the tuning
+data (seed 1, 300 fights per style, the spike's party, the three ordinary
+styles). If every value target holds there, nothing is tuned. If one fails,
+the fix is a change to those weights, written down here with its reason,
+before the held-out run. There is no grid search: the weights are the
+design's intent, and the targets are orderings, not bands.
+
+**Amended after the tuning check (2026-10-06).** The first check
+([reports/m4-modules-check1.md](reports/m4-modules-check1.md)) failed
+targets 1 and 3, and passed 4 only by accident. All three failures were in
+the modules or the targets, not in the weights, so the weights stayed and
+these changed, before the held-out data was touched:
+
+- *Telegraph's wind-up is worth 1.5, not 2.* At 2, with warned heroes
+  guarding about 58% of the time, a wind-up was worth as much as a quick
+  blow before any `show`, so every step wound up (86–100%) and the module
+  posed no trade.
+- *Spend or hold has a budget.* With a charge a round up to a cap, holding
+  at the cap wasted the next charge, so every step spent every round from
+  the third (8 spends of 10) and patience had no room. Now three charges
+  last the fight, holding is worth the share of the fight still to come,
+  and a spend carries no exploration bonus (Curious had spent on every
+  round because spends counted as probes).
+- *Target 3 measures timing.* With a budget, spends per fight saturate, so
+  impatience is now the mean round of a spend.
+- *Target 1 asks for a peak, not a strict fall,* and only of the modules
+  whose moves are reads. M3 found the hot side a plateau (39% and 37%), and
+  the first check found Bloodlusted a little above Wrathful in `lethal`,
+  which its weights intend; requiring an order inside a plateau tests noise.
+  Telegraph's moves are not reads, so the bell of reading doesn't apply.
+
+**Amended after the second tuning check.** The second check
+([reports/m4-modules-check2.md](reports/m4-modules-check2.md)) passed every
+target but one half: Ruthless's spends aimed at the *lowest* mean value
+(1.01 against 1.11–1.24). That half measured the wrong thing. A sharp reader
+maximises probability times value, so it spends on the sure main action
+(worth 1, about 80% likely) rather than gamble on a heal (1.5, about 25%);
+blurrier readers find the heal's size tempting. The half is dropped, and
+the aimed value is reported, not targeted. `lethal` per spend, which does
+show patience paying (Ruthless 0.64, the others 0.26–0.49), was only seen
+after the check, so it is reported too, not made a target the run already
+knows the answer to.
+
+**Amended after the held-out run, by design (2026-10-06).** The first full
+run ([reports/m4-modules-run1.md](reports/m4-modules-run1.md)) passed every
+target, with Wrathful and Bloodlusted winding up 93% and 98% of the time.
+That was the design's mistake, not the numbers': it had merged shouting
+(disclosure, which rage does) with winding up (drama that takes a beat of
+patience, which rage lacks, as Spend or hold showed). `show` on the hot side
+goes from 0.3 and 0.5 to 0.1 and 0, and target 4 now asks for the cold and
+the enraged to skip the wind-up, where it had asked for a U. `show` enters no
+other module, so Bet, Punish and Spend or hold are unchanged, and so is M3.
+
+**Amended after a third tuning check.** With the hot side's `show` gone, the
+check ([reports/m4-modules-check3.md](reports/m4-modules-check3.md)) still
+found Bloodlusted winding up 19% of the time. Not for drama: Telegraph read
+the quick blow's odds through the tempered belief but the wind-up's through
+its own Beta alone, which no temperament touched. When a rash boss's target
+had just guarded, it expected another guard, so the quick blow looked poor
+and the wind-up, blind to that, looked better. Both blows now read Guard
+through the tempered belief, the Beta models only the heeding, and modules
+get the untempered belief for their own learning (6.1).
+
+**Evaluation.** Seed 2, 1000 fights per style, all nine styles, on both
+parties of M2. Belief: model C at its M2 settings. Steps: as M3 calibrated
+them. Every fight is 10 rounds. Written to `reports/m4-modules.md` and
+`.json`.
+
+### M4 results
+
+Run with `npm run compare:m4`, as amended; full numbers in
+[reports/m4-modules.md](reports/m4-modules.md). **Every target holds; M4 is
+done.** The interface is in `src/engine/module.ts` and `brain.ts`, the
+reference modules in `src/modules/reference/`. The `lethal` weights stay at
+their placeholders; `show` on the hot side was cut by design after the first
+held-out run (protocol, last amendment), and nothing else asked for a change.
+
+| | Curious | Hunting | Ruthless | Wrathful | Bloodlusted |
+|---|---|---|---|---|---|
+| Bet: success | 28% | 35% | **65%** | 39% | 37% |
+| Punish: `lethal` / fight | 2.42 | 3.42 | **6.77** | 4.98 | 4.43 |
+| Spend or hold: `lethal` / fight | 0.84 | 1.00 | **2.08** | 1.49 | 1.62 |
+| Spend or hold: mean round of a spend | 9.0 | 7.2 | 5.1 | 3.9 | **3.1** |
+| Telegraph: wind-ups | **100%** | 89% | 0% | 0% | 0% |
+| Telegraph: `lethal` / fight | 6.70 | 6.93 | **9.06** | 9.05 | 9.05 |
+
+Against ordinary play, mean over both parties. Bet on the new interface
+reproduced M3's held-out numbers in all 90 (step, party, style) cells.
+
+What M5 and later have to know:
+
+1. **The calibration is general, as far as four shapes of decision go.** The
+   steps were tuned on Bet alone, and the bell came out the same in Punish
+   and Spend or hold, on held-out data, with no retuning.
+2. **The hot side is a plateau, and which of its two steps hurts more
+   depends on the boss.** Wrathful out-damages Bloodlusted in Punish (4.98
+   to 4.43) and the other way round in Spend or hold (1.49 to 1.62). They
+   differ in timing and in fixation, not in how much they deal.
+3. **Patience pays, but not by aiming high.** Ruthless spends mid-fight and
+   gets the most from each charge (0.69 `lethal` per spend against
+   0.31–0.54), by spending on what it is sure of, not on what is big.
+   Curious holds longest (round 9) out of indifference, not patience: its
+   `lethal` weight is low.
+4. **Telegraph is drama with a price, and only the cool steps pay it.**
+   Curious and Hunting wind up nearly every round and deal about a quarter
+   less; the cold and the enraged strike at once (9.05 a fight). Rage is
+   frightening here by not stopping to pose. The first held-out run had the
+   hot side winding up 93–98% of the time, because the design had merged
+   shouting with winding up; separating them, and making both blows read
+   the player the same way, is what the protocol's last two amendments did.
+5. **Players who ignore warnings pay for it.** Random, which ignores them,
+   takes nearly twice the wind-up damage (about 12 a fight against 6.7).
+   The 50% heed rate is an assumption, and the size of every Telegraph
+   number rests on it; playtests (M6) should measure it.
 
 ## 9. Data and persistence
 
@@ -894,10 +1145,10 @@ What M4 and later have to know:
 | M2 | Belief | Done: model C chosen ([M2 results](#m2-results)) |
 | M2b | Belief reads learners | Done: model C stays; wary types kept, switched off ([M2b results](#m2b-results)) |
 | M3 | Decision + temperament | Done: five steps calibrated, every target held ([M3 results](#m3-results)) |
-| M4 | Prophet module | The Prophet runs end to end in the harness |
-| M5 | Table tool | Usable at a real session |
+| M4 | Module interface | Done: the interface in code, four reference modules on it, every target held ([M4 results](#m4-results)) |
+| M5 | Table tool | Usable at a real session; which module it carries first is open |
 | M6 | Playtest loop | Logs from real sessions retune the priors |
-| M7 | Second module | Hoardwyrm or Debt-Collector, with no engine changes needed |
+| M7 | Boss modules | Prophet, Hoardwyrm or Debt-Collector, with no engine changes needed |
 
 ## 11. Decisions
 

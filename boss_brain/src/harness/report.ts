@@ -59,7 +59,7 @@ export function toMarkdown(result: SuiteResult, title: string): string {
 
   out.push("## Prophecies (baseline policy)", "");
   out.push(
-    `The spike's policy, standing in for the Prophet module until M4: each round it names ` +
+    `The spike's policy, the fixed yardstick for belief models: each round it names ` +
       `${perRound === 1 ? "the hero" : `the ${perRound} heroes`} it reads most clearly and foretells ` +
       `their most likely action, or stays silent if no forecast reaches ${pct(threshold)}. ` +
       `A rewind becomes available at ${rewindCost} Echo Charges; charges are counted, never spent.`,

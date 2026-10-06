@@ -6,9 +6,8 @@ import type { Player, Told } from "./players.ts";
 /**
  * The spike's prophecy policy: each round, name whoever the belief reads most
  * clearly and foretell their most likely action, unless nobody clears the
- * threshold. It has no temperament and no defiance model; it stands in for
- * the Prophet module until M4 so the harness can measure belief models
- * against a fixed policy.
+ * threshold. It has no temperament and no defiance model; it is the fixed
+ * policy the harness measures belief models against.
  */
 export interface BaselineProphet {
   /** Stay silent unless some forecast is at least this sure. */
@@ -102,7 +101,7 @@ export function runFight({ heroes, players, belief, rounds, prophet, rewindCost 
       const context = { round, named: prophecy !== undefined && !prophecy.hidden };
       const forecast = belief.forecast(hero.id, context);
       const own = history.get(hero.id)!;
-      const action = players.get(hero.id)!.act({ ...context, history: own, told: told.get(hero.id)! });
+      const action = players.get(hero.id)!.act({ ...context, warned: false, history: own, told: told.get(hero.id)! });
       turns.push({ round, hero: hero.id, named: context.named, forecast, action });
       belief.observe(hero.id, action, context);
       own.push(action);

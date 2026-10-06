@@ -1,0 +1,1510 @@
+{
+  "protocol": {
+    "tune": {
+      "seed": 1,
+      "trials": 300,
+      "party": [
+        "gunman",
+        "bulwark",
+        "verdant",
+        "hellbound"
+      ],
+      "styles": [
+        "habitual",
+        "by-the-book",
+        "adaptive"
+      ]
+    }
+  },
+  "tuneChecks": [
+    {
+      "target": "1. Bell carries over: Punish",
+      "passed": false,
+      "detail": "2.22 → 3.25 → 6.32 → 4.17 → 4.39"
+    },
+    {
+      "target": "1. Bell carries over: Spend or hold",
+      "passed": false,
+      "detail": "2.17 → 2.46 → 5.03 → 3.54 → 3.99"
+    },
+    {
+      "target": "1. Bell carries over: Telegraph",
+      "passed": false,
+      "detail": "8.39 → 8.50 → 8.56 → 8.50 → 8.97"
+    },
+    {
+      "target": "2. Rage is frightening: Punish",
+      "passed": true,
+      "detail": "Bloodlusted 4.39 against Curious 2.22"
+    },
+    {
+      "target": "2. Rage is frightening: Spend or hold",
+      "passed": true,
+      "detail": "Bloodlusted 3.99 against Curious 2.17"
+    },
+    {
+      "target": "2. Rage is frightening: Telegraph",
+      "passed": true,
+      "detail": "Bloodlusted 8.97 against Curious 8.39"
+    },
+    {
+      "target": "3. Patience: Bloodlusted spends most, Ruthless aims highest",
+      "passed": false,
+      "detail": "spends 9.9 → 8.0 → 8.0 → 8.0 → 8.3; aimed value 0.98 → 1.05 → 1.02 → 1.17 → 1.09"
+    },
+    {
+      "target": "4. Show's U: wind-ups highest at Curious, lowest at Ruthless",
+      "passed": true,
+      "detail": "100% → 97% → 86% → 100% → 100%"
+    }
+  ],
+  "tuneCells": [
+    {
+      "module": "punish",
+      "step": "curious",
+      "byParty": [
+        {
+          "step": {
+            "id": "curious",
+            "name": "Curious",
+            "slack": 0.3,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.2,
+              "spread": 1,
+              "show": 1,
+              "tempo": 0.5
+            },
+            "sharpness": 0.9,
+            "rashness": 0,
+            "explore": 0.5,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 9.796666666666667,
+                "success": 0.23681524328002723,
+                "fixation": 0.35952777777777745,
+                "predictability": 0.1220159151193634
+              },
+              "perFight": {
+                "lethal": 2.430833333333333,
+                "spread": 9,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 9.796666666666667,
+                "press": 0.20333333333333334
+              },
+              "detail": {}
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 9.846666666666666,
+                "success": 0.22545700744752878,
+                "fixation": 0.36450925925925914,
+                "predictability": 0.11831198191409194
+              },
+              "perFight": {
+                "lethal": 2.2066666666666666,
+                "spread": 9,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 9.846666666666666,
+                "press": 0.15333333333333332
+              },
+              "detail": {}
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 9.883333333333333,
+                "success": 0.21382799325463744,
+                "fixation": 0.3635833333333333,
+                "predictability": 0.11932457786116323
+              },
+              "perFight": {
+                "lethal": 2.026666666666667,
+                "spread": 9,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 9.883333333333333,
+                "press": 0.11666666666666667
+              },
+              "detail": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "punish",
+      "step": "hunting",
+      "byParty": [
+        {
+          "step": {
+            "id": "hunting",
+            "name": "Hunting",
+            "slack": 0.4,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.5,
+              "spread": 0.5,
+              "show": 0.4,
+              "tempo": 0.8
+            },
+            "sharpness": 0.95,
+            "rashness": 0,
+            "explore": 0.2,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8.813333333333333,
+                "success": 0.3161875945537065,
+                "fixation": 0.38283201058201005,
+                "predictability": 0.13737201365187712
+              },
+              "perFight": {
+                "lethal": 3.4225,
+                "spread": 9,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 8.813333333333333,
+                "press": 1.1866666666666668
+              },
+              "detail": {}
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8.693333333333333,
+                "success": 0.2848926380368098,
+                "fixation": 0.3899391534391529,
+                "predictability": 0.14558058925476602
+              },
+              "perFight": {
+                "lethal": 3.1933333333333334,
+                "spread": 9,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 8.693333333333333,
+                "press": 1.3066666666666666
+              },
+              "detail": {}
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8.663333333333334,
+                "success": 0.2804924971142747,
+                "fixation": 0.38745767195767156,
+                "predictability": 0.13962592431491952
+              },
+              "perFight": {
+                "lethal": 3.120833333333333,
+                "spread": 9,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 8.663333333333334,
+                "press": 1.3366666666666667
+              },
+              "detail": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "punish",
+      "step": "ruthless",
+      "byParty": [
+        {
+          "step": {
+            "id": "ruthless",
+            "name": "Ruthless",
+            "slack": 0.05,
+            "mixing": 0.03,
+            "weights": {
+              "lethal": 0.8,
+              "spread": 0.2,
+              "show": 0,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0,
+            "explore": 0.1,
+            "disclosure": "hidden"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 9.996666666666666,
+                "success": 0.6835611870623541,
+                "fixation": 0.44285185185185244,
+                "predictability": 0.37977028529084844
+              },
+              "perFight": {
+                "lethal": 6.836666666666667,
+                "spread": 8.956666666666667,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 9.996666666666666,
+                "press": 0.0033333333333333335
+              },
+              "detail": {}
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 9.993333333333334,
+                "success": 0.6574382921947965,
+                "fixation": 0.4713333333333341,
+                "predictability": 0.4106745737583395
+              },
+              "perFight": {
+                "lethal": 6.623333333333333,
+                "spread": 8.866666666666667,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 9.993333333333334,
+                "press": 0.006666666666666667
+              },
+              "detail": {}
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 9.983333333333333,
+                "success": 0.545575959933222,
+                "fixation": 0.4430740740740751,
+                "predictability": 0.3758812615955473
+              },
+              "perFight": {
+                "lethal": 5.508333333333334,
+                "spread": 8.943333333333333,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 9.983333333333333,
+                "press": 0.016666666666666666
+              },
+              "detail": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "punish",
+      "step": "wrathful",
+      "byParty": [
+        {
+          "step": {
+            "id": "wrathful",
+            "name": "Wrathful",
+            "slack": 0.02,
+            "mixing": 0.05,
+            "weights": {
+              "lethal": 0.9,
+              "spread": -0.1,
+              "show": 0.3,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0.6,
+            "explore": 0,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 10,
+                "success": 0.44133333333333336,
+                "fixation": 0.6543333333333332,
+                "predictability": 0.3907407407407407
+              },
+              "perFight": {
+                "lethal": 4.531666666666666,
+                "spread": 2.66,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 10
+              },
+              "detail": {}
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 9.996666666666666,
+                "success": 0.3947982660886962,
+                "fixation": 0.7040000000000001,
+                "predictability": 0.3897739903668025
+              },
+              "perFight": {
+                "lethal": 4.355,
+                "spread": 2.6166666666666667,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 9.996666666666666,
+                "press": 0.0033333333333333335
+              },
+              "detail": {}
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 10,
+                "success": 0.32133333333333336,
+                "fixation": 0.6830000000000004,
+                "predictability": 0.32592592592592595
+              },
+              "perFight": {
+                "lethal": 3.611666666666667,
+                "spread": 2.89,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 10
+              },
+              "detail": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "punish",
+      "step": "bloodlusted",
+      "byParty": [
+        {
+          "step": {
+            "id": "bloodlusted",
+            "name": "Bloodlusted",
+            "slack": 0,
+            "mixing": 0,
+            "weights": {
+              "lethal": 1,
+              "spread": -0.6,
+              "show": 0.5,
+              "tempo": 0.8
+            },
+            "sharpness": 1,
+            "rashness": 0.8,
+            "explore": 0,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 9.44,
+                "success": 0.509180790960452,
+                "fixation": 0.9635661375661377,
+                "predictability": 0.6295418641390206
+              },
+              "perFight": {
+                "lethal": 5.1433333333333335,
+                "spread": 0.11666666666666667,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 9.44,
+                "press": 0.56
+              },
+              "detail": {}
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 9.13,
+                "success": 0.38079591091639287,
+                "fixation": 0.9645806878306881,
+                "predictability": 0.5104551045510455
+              },
+              "perFight": {
+                "lethal": 4.303333333333334,
+                "spread": 0.16333333333333333,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 9.13,
+                "press": 0.87
+              },
+              "detail": {}
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 9.013333333333334,
+                "success": 0.3128698224852071,
+                "fixation": 0.9547195767195763,
+                "predictability": 0.43302828618968386
+              },
+              "perFight": {
+                "lethal": 3.7133333333333334,
+                "spread": 0.19666666666666666,
+                "show": 0,
+                "tempo": 0
+              },
+              "kinds": {
+                "cut": 9.013333333333334,
+                "press": 0.9866666666666667
+              },
+              "detail": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "spend-or-hold",
+      "step": "curious",
+      "byParty": [
+        {
+          "step": {
+            "id": "curious",
+            "name": "Curious",
+            "slack": 0.3,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.2,
+              "spread": 1,
+              "show": 1,
+              "tempo": 0.5
+            },
+            "sharpness": 0.9,
+            "rashness": 0,
+            "explore": 0.5,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 9.926666666666666,
+                "success": 0.24748153122901276,
+                "fixation": 0.3546203703703699,
+                "predictability": 0.11837191934279313
+              },
+              "perFight": {
+                "lethal": 2.445,
+                "spread": 8.926666666666666,
+                "show": 0,
+                "tempo": 0.07333333333333333
+              },
+              "kinds": {
+                "spend": 9.926666666666666,
+                "hold": 0.07333333333333333
+              },
+              "detail": {
+                "aimedValue": 9.8125
+              }
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 9.953333333333333,
+                "success": 0.22069658405894174,
+                "fixation": 0.36154629629629637,
+                "predictability": 0.11392405063291139
+              },
+              "perFight": {
+                "lethal": 2.098333333333333,
+                "spread": 8.953333333333333,
+                "show": 0,
+                "tempo": 0.04666666666666667
+              },
+              "kinds": {
+                "spend": 9.953333333333333,
+                "hold": 0.04666666666666667
+              },
+              "detail": {
+                "aimedValue": 9.765833333333333
+              }
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 9.963333333333333,
+                "success": 0.2107728337236534,
+                "fixation": 0.35670370370370363,
+                "predictability": 0.11416883599851246
+              },
+              "perFight": {
+                "lethal": 1.9741666666666666,
+                "spread": 8.963333333333333,
+                "show": 0,
+                "tempo": 0.03666666666666667
+              },
+              "kinds": {
+                "spend": 9.963333333333333,
+                "hold": 0.03666666666666667
+              },
+              "detail": {
+                "aimedValue": 9.816666666666666
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "spend-or-hold",
+      "step": "hunting",
+      "byParty": [
+        {
+          "step": {
+            "id": "hunting",
+            "name": "Hunting",
+            "slack": 0.4,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.5,
+              "spread": 0.5,
+              "show": 0.4,
+              "tempo": 0.8
+            },
+            "sharpness": 0.95,
+            "rashness": 0,
+            "explore": 0.2,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8,
+                "success": 0.31375,
+                "fixation": 0.38666666666666666,
+                "predictability": 0.1438095238095238
+              },
+              "perFight": {
+                "lethal": 2.535833333333333,
+                "spread": 6.996666666666667,
+                "show": 0,
+                "tempo": 2
+              },
+              "kinds": {
+                "hold": 2,
+                "spend": 8
+              },
+              "detail": {
+                "aimedValue": 8.399166666666666
+              }
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8.02,
+                "success": 0.30798004987531175,
+                "fixation": 0.38574074074074066,
+                "predictability": 0.15004748338081672
+              },
+              "perFight": {
+                "lethal": 2.4966666666666666,
+                "spread": 7.01,
+                "show": 0,
+                "tempo": 1.98
+              },
+              "kinds": {
+                "hold": 1.98,
+                "spend": 8.02
+              },
+              "detail": {
+                "aimedValue": 8.411666666666667
+              }
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8.016666666666667,
+                "success": 0.2864864864864865,
+                "fixation": 0.38129629629629624,
+                "predictability": 0.1368171021377672
+              },
+              "perFight": {
+                "lethal": 2.335,
+                "spread": 7,
+                "show": 0,
+                "tempo": 1.9833333333333334
+              },
+              "kinds": {
+                "hold": 1.9833333333333334,
+                "spend": 8.016666666666667
+              },
+              "detail": {
+                "aimedValue": 8.421666666666667
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "spend-or-hold",
+      "step": "ruthless",
+      "byParty": [
+        {
+          "step": {
+            "id": "ruthless",
+            "name": "Ruthless",
+            "slack": 0.05,
+            "mixing": 0.03,
+            "weights": {
+              "lethal": 0.8,
+              "spread": 0.2,
+              "show": 0,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0,
+            "explore": 0.1,
+            "disclosure": "hidden"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8,
+                "success": 0.6866666666666666,
+                "fixation": 0.44875,
+                "predictability": 0.36952380952380953
+              },
+              "perFight": {
+                "lethal": 5.493333333333333,
+                "spread": 6.966666666666667,
+                "show": 0,
+                "tempo": 2
+              },
+              "kinds": {
+                "hold": 2,
+                "spend": 8
+              },
+              "detail": {
+                "aimedValue": 8.043333333333333
+              }
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8,
+                "success": 0.6479166666666667,
+                "fixation": 0.48,
+                "predictability": 0.4014285714285714
+              },
+              "perFight": {
+                "lethal": 5.22,
+                "spread": 6.87,
+                "show": 0,
+                "tempo": 2
+              },
+              "kinds": {
+                "hold": 2,
+                "spend": 8
+              },
+              "detail": {
+                "aimedValue": 8.161666666666667
+              }
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8,
+                "success": 0.5420833333333334,
+                "fixation": 0.4533333333333333,
+                "predictability": 0.3719047619047619
+              },
+              "perFight": {
+                "lethal": 4.38,
+                "spread": 6.92,
+                "show": 0,
+                "tempo": 2
+              },
+              "kinds": {
+                "hold": 2,
+                "spend": 8
+              },
+              "detail": {
+                "aimedValue": 8.21
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "spend-or-hold",
+      "step": "wrathful",
+      "byParty": [
+        {
+          "step": {
+            "id": "wrathful",
+            "name": "Wrathful",
+            "slack": 0.02,
+            "mixing": 0.05,
+            "weights": {
+              "lethal": 0.9,
+              "spread": -0.1,
+              "show": 0.3,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0.6,
+            "explore": 0,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8,
+                "success": 0.475,
+                "fixation": 0.69875,
+                "predictability": 0.44285714285714284
+              },
+              "perFight": {
+                "lethal": 3.8833333333333333,
+                "spread": 1.87,
+                "show": 0,
+                "tempo": 2
+              },
+              "kinds": {
+                "hold": 2,
+                "spend": 8
+              },
+              "detail": {
+                "aimedValue": 9.058333333333334
+              }
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8,
+                "success": 0.43,
+                "fixation": 0.6575,
+                "predictability": 0.4061904761904762
+              },
+              "perFight": {
+                "lethal": 3.6966666666666668,
+                "spread": 2.3466666666666667,
+                "show": 0,
+                "tempo": 2
+              },
+              "kinds": {
+                "hold": 2,
+                "spend": 8
+              },
+              "detail": {
+                "aimedValue": 9.493333333333334
+              }
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8,
+                "success": 0.345,
+                "fixation": 0.6195833333333334,
+                "predictability": 0.3180952380952381
+              },
+              "perFight": {
+                "lethal": 3.04,
+                "spread": 2.54,
+                "show": 0,
+                "tempo": 2
+              },
+              "kinds": {
+                "hold": 2,
+                "spend": 8
+              },
+              "detail": {
+                "aimedValue": 9.546666666666667
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "spend-or-hold",
+      "step": "bloodlusted",
+      "byParty": [
+        {
+          "step": {
+            "id": "bloodlusted",
+            "name": "Bloodlusted",
+            "slack": 0,
+            "mixing": 0,
+            "weights": {
+              "lethal": 1,
+              "spread": -0.6,
+              "show": 0.5,
+              "tempo": 0.8
+            },
+            "sharpness": 1,
+            "rashness": 0.8,
+            "explore": 0,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8.55,
+                "success": 0.5337231968810916,
+                "fixation": 0.9104166666666667,
+                "predictability": 0.6525386313465784
+              },
+              "perFight": {
+                "lethal": 4.601666666666667,
+                "spread": 0.09333333333333334,
+                "show": 0,
+                "tempo": 1.45
+              },
+              "kinds": {
+                "hold": 1.45,
+                "spend": 8.55
+              },
+              "detail": {
+                "aimedValue": 9.026666666666667
+              }
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8.323333333333334,
+                "success": 0.49979975971165397,
+                "fixation": 0.8333333333333334,
+                "predictability": 0.5780609922621757
+              },
+              "perFight": {
+                "lethal": 4.305,
+                "spread": 0.32,
+                "show": 0,
+                "tempo": 1.6766666666666667
+              },
+              "kinds": {
+                "hold": 1.6766666666666667,
+                "spend": 8.323333333333334
+              },
+              "detail": {
+                "aimedValue": 9.105833333333333
+              }
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 8.15,
+                "success": 0.35460122699386504,
+                "fixation": 0.7554166666666666,
+                "predictability": 0.41818181818181815
+              },
+              "perFight": {
+                "lethal": 3.066666666666667,
+                "spread": 0.5266666666666666,
+                "show": 0,
+                "tempo": 1.85
+              },
+              "kinds": {
+                "hold": 1.85,
+                "spend": 8.15
+              },
+              "detail": {
+                "aimedValue": 9.078333333333333
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "telegraph",
+      "step": "curious",
+      "byParty": [
+        {
+          "step": {
+            "id": "curious",
+            "name": "Curious",
+            "slack": 0.3,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.2,
+              "spread": 1,
+              "show": 1,
+              "tempo": 0.5
+            },
+            "sharpness": 0.9,
+            "rashness": 0,
+            "explore": 0.5,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 8.86,
+                "spread": 9,
+                "show": 10,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 10
+              },
+              "detail": {}
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 8.366666666666667,
+                "spread": 9,
+                "show": 10,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 10
+              },
+              "detail": {}
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 7.933333333333334,
+                "spread": 9,
+                "show": 10,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 10
+              },
+              "detail": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "telegraph",
+      "step": "hunting",
+      "byParty": [
+        {
+          "step": {
+            "id": "hunting",
+            "name": "Hunting",
+            "slack": 0.4,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.5,
+              "spread": 0.5,
+              "show": 0.4,
+              "tempo": 0.8
+            },
+            "sharpness": 0.95,
+            "rashness": 0,
+            "explore": 0.2,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 8.98,
+                "spread": 8.796666666666667,
+                "show": 9.693333333333333,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.693333333333333,
+                "quick": 0.30666666666666664
+              },
+              "detail": {}
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 8.39,
+                "spread": 8.81,
+                "show": 9.703333333333333,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.703333333333333,
+                "quick": 0.2966666666666667
+              },
+              "detail": {}
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 8.126666666666667,
+                "spread": 8.82,
+                "show": 9.656666666666666,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.656666666666666,
+                "quick": 0.3433333333333333
+              },
+              "detail": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "telegraph",
+      "step": "ruthless",
+      "byParty": [
+        {
+          "step": {
+            "id": "ruthless",
+            "name": "Ruthless",
+            "slack": 0.05,
+            "mixing": 0.03,
+            "weights": {
+              "lethal": 0.8,
+              "spread": 0.2,
+              "show": 0,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0,
+            "explore": 0.1,
+            "disclosure": "hidden"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 9.036666666666667,
+                "spread": 5.663333333333333,
+                "show": 8.753333333333334,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 8.753333333333334,
+                "quick": 1.2466666666666666
+              },
+              "detail": {}
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 8.433333333333334,
+                "spread": 5.83,
+                "show": 8.616666666666667,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 8.616666666666667,
+                "quick": 1.3833333333333333
+              },
+              "detail": {}
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 8.203333333333333,
+                "spread": 5.956666666666667,
+                "show": 8.51,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 8.51,
+                "quick": 1.49
+              },
+              "detail": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "telegraph",
+      "step": "wrathful",
+      "byParty": [
+        {
+          "step": {
+            "id": "wrathful",
+            "name": "Wrathful",
+            "slack": 0.02,
+            "mixing": 0.05,
+            "weights": {
+              "lethal": 0.9,
+              "spread": -0.1,
+              "show": 0.3,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0.6,
+            "explore": 0,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 8.903333333333334,
+                "spread": 2.1733333333333333,
+                "show": 9.996666666666666,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.996666666666666,
+                "quick": 0.0033333333333333335
+              },
+              "detail": {}
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 8.336666666666666,
+                "spread": 2.43,
+                "show": 9.99,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.99,
+                "quick": 0.01
+              },
+              "detail": {}
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 8.246666666666666,
+                "spread": 2.42,
+                "show": 9.98,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.98,
+                "quick": 0.02
+              },
+              "detail": {}
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "module": "telegraph",
+      "step": "bloodlusted",
+      "byParty": [
+        {
+          "step": {
+            "id": "bloodlusted",
+            "name": "Bloodlusted",
+            "slack": 0,
+            "mixing": 0,
+            "weights": {
+              "lethal": 1,
+              "spread": -0.6,
+              "show": 0.5,
+              "tempo": 0.8
+            },
+            "sharpness": 1,
+            "rashness": 0.8,
+            "explore": 0,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 8.98,
+                "spread": 0.1,
+                "show": 10,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 10
+              },
+              "detail": {}
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 8.966666666666667,
+                "spread": 0.11,
+                "show": 10,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 10
+              },
+              "detail": {}
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 300,
+              "bets": {
+                "fights": 300,
+                "betsPerFight": 0,
+                "success": 0,
+                "fixation": 0,
+                "predictability": 0
+              },
+              "perFight": {
+                "lethal": 8.953333333333333,
+                "spread": 0.11666666666666667,
+                "show": 10,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 10
+              },
+              "detail": {}
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

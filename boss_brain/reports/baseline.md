@@ -20,7 +20,7 @@ Every hero turn, scored on the forecast the belief made just before it. Guessing
 
 ## Prophecies (baseline policy)
 
-The spike's policy, standing in for the Prophet module until M4: each round it names the hero it reads most clearly and foretells their most likely action, or stays silent if no forecast reaches 40%. A rewind becomes available at 3 Echo Charges; charges are counted, never spent.
+The spike's policy, the fixed yardstick for belief models: each round it names the hero it reads most clearly and foretells their most likely action, or stays silent if no forecast reaches 40%. A rewind becomes available at 3 Echo Charges; charges are counted, never spent.
 
 | Player | Spoken / fight | Hit rate | Charges / fight | Fights reaching a rewind | Avg. round of first rewind |
 | --- | ---: | ---: | ---: | ---: | ---: |

@@ -51,8 +51,9 @@ export const PLACEHOLDER_STEPS: readonly Temperament[] = [
   step("curious", "Curious", 0.3, 0.3, [0.2, 1.0, 1.0, 0.5], 0.6, 0, 0.5, "full"),
   step("hunting", "Hunting", 0.15, 0.15, [0.5, 0.5, 0.4, 0.8], 0.85, 0, 0.2, "name"),
   step("ruthless", "Ruthless", 0.05, 0.15, [0.8, 0.2, 0, 1.0], 1.0, 0, 0.1, "hidden"),
-  step("wrathful", "Wrathful", 0.02, 0.05, [0.9, -0.1, 0.3, 1.0], 1.0, 0.4, 0, "name"),
-  step("bloodlusted", "Bloodlusted", 0, 0, [1.0, -0.6, 0.5, 0.8], 1.0, 0.8, 0, "full"),
+  // Rage shouts but doesn't wind up: `show` is all but gone on the hot side (DESIGN.md 5.2).
+  step("wrathful", "Wrathful", 0.02, 0.05, [0.9, -0.1, 0.1, 1.0], 1.0, 0.4, 0, "name"),
+  step("bloodlusted", "Bloodlusted", 0, 0, [1.0, -0.6, 0, 0.8], 1.0, 0.8, 0, "full"),
 ];
 
 const calibrated = (id: string, levers: Partial<Temperament>): Temperament => ({

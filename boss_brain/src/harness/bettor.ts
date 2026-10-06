@@ -11,7 +11,7 @@ import { hash } from "./suite.ts";
 /**
  * The M3 baseline module (DESIGN.md 8, "M3 protocol"): a minimal Prophet that
  * makes one bet a round, or none, chosen by the decision layer under a
- * temperament. It is a yardstick for temperament, not the Prophet (M4).
+ * temperament. It is a yardstick for temperament, not the Prophet (DESIGN.md 6.2).
  *
  * It reads `belief`, the same watched belief the fight observes into.
  */
@@ -69,7 +69,11 @@ export class BetScore {
   #repeatable = 0;
 
   addFight(fight: FightRecord): void {
-    const bets = fight.prophecies;
+    this.addBets(fight.prophecies);
+  }
+
+  /** One fight's bets, in the order they were made. */
+  addBets(bets: readonly { readonly hero: string; readonly action: number; readonly fulfilled: boolean }[]): void {
     this.#fights += 1;
     this.#bets += bets.length;
     this.#hits += bets.filter((b) => b.fulfilled).length;
@@ -150,4 +154,4 @@ export function runBetSuite(opts: BetSuiteOptions): BetSuiteResult {
 }
 
 /** The boss's seed path, clear of the heroes' (0, 1, 2, ...). */
-const BOSS_STREAM = 1_000_003;
+export const BOSS_STREAM = 1_000_003;

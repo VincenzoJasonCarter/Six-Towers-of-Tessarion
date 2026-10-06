@@ -18,7 +18,7 @@ import {
   type Told,
 } from "../src/harness/players.ts";
 
-const view = (over: Partial<PlayerView> = {}): PlayerView => ({ round: 1, named: false, history: [], told: [], ...over });
+const view = (over: Partial<PlayerView> = {}): PlayerView => ({ round: 1, named: false, warned: false, history: [], told: [], ...over });
 
 function frequencies(act: () => Action, n = 20000): number[] {
   const counts = new Array<number>(K).fill(0);
