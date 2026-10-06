@@ -12,6 +12,8 @@
     "compare:m2b": "node src/harness/m2b.ts",
     "compare:m3": "node src/harness/m3.ts",
     "compare:m4": "node src/harness/m4.ts",
+    "compare:m4b": "node src/harness/m4b.ts",
+    "compare:m4c": "node src/harness/m4c.ts",
     "test": "node --test \"test/**/*.test.ts\"",
     "check": "tsc"
   },

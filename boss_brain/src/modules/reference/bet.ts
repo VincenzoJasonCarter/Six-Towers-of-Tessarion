@@ -1,5 +1,5 @@
 import type { ModuleFactory } from "../../engine/module.ts";
-import { announceRead, readOptions, SILENT, spreadFor, type Read } from "./common.ts";
+import { announceRead, readOptions, SILENT, spreadFor, type Read } from "../common.ts";
 
 /**
  * Bet (DESIGN.md 6.1): each round, bet that a hero will take an action, or

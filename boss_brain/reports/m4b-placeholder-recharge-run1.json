@@ -1,0 +1,2632 @@
+{
+  "data": {
+    "seed": 2,
+    "trials": 1000,
+    "parties": [
+      [
+        "gunman",
+        "bulwark",
+        "verdant",
+        "hellbound"
+      ],
+      [
+        "warbound",
+        "sanguine_aegis",
+        "crystal_archer",
+        "aether"
+      ]
+    ]
+  },
+  "rounds": 10,
+  "variant": {
+    "id": "recharge",
+    "name": "signature on Recharge 5–6",
+    "config": {
+      "signature": {
+        "recharge": 0.3333333333333333
+      }
+    }
+  },
+  "checks": [
+    {
+      "check": "1. The bell",
+      "passed": true,
+      "detail": "6.60 → 7.57 → 14.32 → 10.91 → 10.09"
+    },
+    {
+      "check": "2. Rage is frightening",
+      "passed": true,
+      "detail": "Bloodlusted 10.09 against Curious 6.60"
+    },
+    {
+      "check": "3. Impatience: Bloodlusted signs earliest",
+      "passed": false,
+      "detail": "mean round of a signature never → 8.0 → 4.8 → 5.0 → 5.0"
+    },
+    {
+      "check": "4. Wind-ups: highest at Curious, under 10% from Ruthless on",
+      "passed": true,
+      "detail": "96% → 63% → 0% → 0% → 0%"
+    },
+    {
+      "check": "5. No dead move (each at least 5% of some step's moves)",
+      "passed": true,
+      "detail": "strike up to 8%, wind-up up to 96%, interrupt up to 58%, signature up to 40%"
+    }
+  ],
+  "results": [
+    {
+      "id": "curious",
+      "name": "Curious",
+      "byParty": [
+        {
+          "step": {
+            "id": "curious",
+            "name": "Curious",
+            "slack": 0.3,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.2,
+              "spread": 1,
+              "show": 1,
+              "tempo": 0.5
+            },
+            "sharpness": 0.9,
+            "rashness": 0,
+            "explore": 0.5,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.431,
+                "success": 0.31322505800464034,
+                "fixation": 0.9135802469135803,
+                "predictability": 0.0125
+              },
+              "perFight": {
+                "lethal": 6.817875,
+                "spread": 9,
+                "show": 9.569,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.569,
+                "interrupt": 0.431
+              },
+              "detail": {}
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.358,
+                "success": 0.35195530726256985,
+                "fixation": 0.938978494623656,
+                "predictability": 0.08333333333333333
+              },
+              "perFight": {
+                "lethal": 6.308625,
+                "spread": 9,
+                "show": 9.642,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.642,
+                "interrupt": 0.358
+              },
+              "detail": {}
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.542,
+                "success": 0.18450184501845018,
+                "fixation": 0.9126794258373208,
+                "predictability": 0.12903225806451613
+              },
+              "perFight": {
+                "lethal": 11.461125,
+                "spread": 9,
+                "show": 9.458,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.458,
+                "interrupt": 0.542
+              },
+              "detail": {}
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.656,
+                "success": 0.2027439024390244,
+                "fixation": 0.895451459606246,
+                "predictability": 0.07878787878787878
+              },
+              "perFight": {
+                "lethal": 3.670125,
+                "spread": 9,
+                "show": 9.344,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.344,
+                "interrupt": 0.656
+              },
+              "detail": {}
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.46,
+                "success": 0.25,
+                "fixation": 0.9166666666666666,
+                "predictability": 0.06097560975609756
+              },
+              "perFight": {
+                "lethal": 7.329,
+                "spread": 9,
+                "show": 9.54,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.54,
+                "interrupt": 0.46
+              },
+              "detail": {}
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.359,
+                "success": 0.19498607242339833,
+                "fixation": 0.9455231930960087,
+                "predictability": 0.14
+              },
+              "perFight": {
+                "lethal": 6.130875,
+                "spread": 9,
+                "show": 9.641,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.641,
+                "interrupt": 0.359
+              },
+              "detail": {}
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.343,
+                "success": 0.24198250728862974,
+                "fixation": 0.9389269406392693,
+                "predictability": 0.09803921568627451
+              },
+              "perFight": {
+                "lethal": 6.245625,
+                "spread": 9,
+                "show": 9.657,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.657,
+                "interrupt": 0.343
+              },
+              "detail": {}
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.358,
+                "success": 0.2737430167597765,
+                "fixation": 0.9429678848283499,
+                "predictability": 0.15789473684210525
+              },
+              "perFight": {
+                "lethal": 6.113625,
+                "spread": 9,
+                "show": 9.642,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.642,
+                "interrupt": 0.358
+              },
+              "detail": {}
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.371,
+                "success": 0.30997304582210244,
+                "fixation": 0.9364316239316238,
+                "predictability": 0.0847457627118644
+              },
+              "perFight": {
+                "lethal": 6.17025,
+                "spread": 9,
+                "show": 9.629,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.629,
+                "interrupt": 0.371
+              },
+              "detail": {}
+            }
+          ]
+        },
+        {
+          "step": {
+            "id": "curious",
+            "name": "Curious",
+            "slack": 0.3,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.2,
+              "spread": 1,
+              "show": 1,
+              "tempo": 0.5
+            },
+            "sharpness": 0.9,
+            "rashness": 0,
+            "explore": 0.5,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.498,
+                "success": 0.29116465863453816,
+                "fixation": 0.9160493827160495,
+                "predictability": 0.043010752688172046
+              },
+              "perFight": {
+                "lethal": 6.853125,
+                "spread": 9,
+                "show": 9.502,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.502,
+                "interrupt": 0.498
+              },
+              "detail": {}
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.394,
+                "success": 0.36548223350253806,
+                "fixation": 0.911042944785276,
+                "predictability": 0.014705882352941176
+              },
+              "perFight": {
+                "lethal": 6.850125,
+                "spread": 9,
+                "show": 9.606,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.606,
+                "interrupt": 0.394
+              },
+              "detail": {}
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.545,
+                "success": 0.22385321100917432,
+                "fixation": 0.9004407051282052,
+                "predictability": 0.09302325581395349
+              },
+              "perFight": {
+                "lethal": 11.4615,
+                "spread": 9,
+                "show": 9.455,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.455,
+                "interrupt": 0.545
+              },
+              "detail": {}
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.574,
+                "success": 0.18641114982578397,
+                "fixation": 0.909860191317145,
+                "predictability": 0.0743801652892562
+              },
+              "perFight": {
+                "lethal": 3.7815,
+                "spread": 9,
+                "show": 9.426,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.426,
+                "interrupt": 0.574
+              },
+              "detail": {}
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.474,
+                "success": 0.2721518987341772,
+                "fixation": 0.9097938144329897,
+                "predictability": 0.046511627906976744
+              },
+              "perFight": {
+                "lethal": 7.3665,
+                "spread": 9,
+                "show": 9.526,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.526,
+                "interrupt": 0.474
+              },
+              "detail": {}
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.389,
+                "success": 0.2699228791773779,
+                "fixation": 0.9328282828282828,
+                "predictability": 0.03389830508474576
+              },
+              "perFight": {
+                "lethal": 6.6825,
+                "spread": 9,
+                "show": 9.611,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.611,
+                "interrupt": 0.389
+              },
+              "detail": {}
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.387,
+                "success": 0.26098191214470284,
+                "fixation": 0.9219077568134171,
+                "predictability": 0.07246376811594203
+              },
+              "perFight": {
+                "lethal": 6.72825,
+                "spread": 9,
+                "show": 9.613,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.613,
+                "interrupt": 0.387
+              },
+              "detail": {}
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.392,
+                "success": 0.3647959183673469,
+                "fixation": 0.9195402298850576,
+                "predictability": 0.0821917808219178
+              },
+              "perFight": {
+                "lethal": 6.661125,
+                "spread": 9,
+                "show": 9.608,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.608,
+                "interrupt": 0.392
+              },
+              "detail": {}
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 0.381,
+                "success": 0.29658792650918636,
+                "fixation": 0.929100529100529,
+                "predictability": 0.045454545454545456
+              },
+              "perFight": {
+                "lethal": 6.64575,
+                "spread": 9,
+                "show": 9.619,
+                "tempo": 0
+              },
+              "kinds": {
+                "wind-up": 9.619,
+                "interrupt": 0.381
+              },
+              "detail": {}
+            }
+          ]
+        }
+      ],
+      "lethal": 6.60075,
+      "share": {
+        "strike": 0,
+        "wind-up": 0.9594833333333332,
+        "interrupt": 0.04051666666666667,
+        "signature": 0
+      },
+      "signatureRound": null
+    },
+    {
+      "id": "hunting",
+      "name": "Hunting",
+      "byParty": [
+        {
+          "step": {
+            "id": "hunting",
+            "name": "Hunting",
+            "slack": 0.4,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.5,
+              "spread": 0.5,
+              "show": 0.4,
+              "tempo": 0.8
+            },
+            "sharpness": 0.95,
+            "rashness": 0,
+            "explore": 0.2,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.794,
+                "success": 0.36578382247673585,
+                "fixation": 0.6623642882391552,
+                "predictability": 0.2225823878984333
+              },
+              "perFight": {
+                "lethal": 7.439625,
+                "spread": 8.912,
+                "show": 6.411,
+                "tempo": -0.1146000000000004
+              },
+              "kinds": {
+                "wind-up": 6.411,
+                "strike": 0.795,
+                "interrupt": 1.932,
+                "signature": 0.862
+              },
+              "detail": {
+                "signatureRound": 6.901
+              }
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.938,
+                "success": 0.3730428863172226,
+                "fixation": 0.6556418219461697,
+                "predictability": 0.24290060851926978
+              },
+              "perFight": {
+                "lethal": 7.271625,
+                "spread": 8.931,
+                "show": 6.349,
+                "tempo": -0.14366666666666686
+              },
+              "kinds": {
+                "wind-up": 6.349,
+                "interrupt": 1.925,
+                "signature": 1.013,
+                "strike": 0.713
+              },
+              "detail": {
+                "signatureRound": 7.975
+              }
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.341,
+                "success": 0.21529260999572833,
+                "fixation": 0.6628498329156224,
+                "predictability": 0.158852344296711
+              },
+              "perFight": {
+                "lethal": 10.00375,
+                "spread": 8.884,
+                "show": 7.019,
+                "tempo": -0.0661333333333335
+              },
+              "kinds": {
+                "wind-up": 7.019,
+                "interrupt": 1.843,
+                "strike": 0.64,
+                "signature": 0.498
+              },
+              "detail": {
+                "signatureRound": 3.988
+              }
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 3.506,
+                "success": 0.18853394181403307,
+                "fixation": 0.5498947116535051,
+                "predictability": 0.12425328554360812
+              },
+              "perFight": {
+                "lethal": 3.842375,
+                "spread": 8.972,
+                "show": 5.826,
+                "tempo": -0.06286666666666699
+              },
+              "kinds": {
+                "wind-up": 5.826,
+                "signature": 0.738,
+                "interrupt": 2.768,
+                "strike": 0.668
+              },
+              "detail": {
+                "signatureRound": 6.437
+              }
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.396,
+                "success": 0.3944073455759599,
+                "fixation": 0.7023783728009081,
+                "predictability": 0.1384928716904277
+              },
+              "perFight": {
+                "lethal": 7.879,
+                "spread": 8.927,
+                "show": 6.73,
+                "tempo": -0.06460000000000027
+              },
+              "kinds": {
+                "interrupt": 1.713,
+                "wind-up": 6.73,
+                "signature": 0.683,
+                "strike": 0.874
+              },
+              "detail": {
+                "signatureRound": 5.861
+              }
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.933,
+                "success": 0.2915103989089669,
+                "fixation": 0.6694071009996555,
+                "predictability": 0.30061037639877924
+              },
+              "perFight": {
+                "lethal": 7.23825,
+                "spread": 8.947,
+                "show": 6.371,
+                "tempo": -0.1411333333333337
+              },
+              "kinds": {
+                "interrupt": 1.986,
+                "wind-up": 6.371,
+                "signature": 0.947,
+                "strike": 0.696
+              },
+              "detail": {
+                "signatureRound": 7.353
+              }
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.859,
+                "success": 0.29555788737320743,
+                "fixation": 0.6579586220453094,
+                "predictability": 0.26931216931216934
+              },
+              "perFight": {
+                "lethal": 7.082125,
+                "spread": 8.927,
+                "show": 6.365,
+                "tempo": -0.1358000000000003
+              },
+              "kinds": {
+                "wind-up": 6.365,
+                "strike": 0.776,
+                "signature": 0.937,
+                "interrupt": 1.922
+              },
+              "detail": {
+                "signatureRound": 7.333
+              }
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.922,
+                "success": 0.3528405201916496,
+                "fixation": 0.6630939993062774,
+                "predictability": 0.2508924018357981
+              },
+              "perFight": {
+                "lethal": 6.946875,
+                "spread": 8.933,
+                "show": 6.304,
+                "tempo": -0.1461333333333335
+              },
+              "kinds": {
+                "wind-up": 6.304,
+                "strike": 0.774,
+                "interrupt": 1.928,
+                "signature": 0.994
+              },
+              "detail": {
+                "signatureRound": 7.748
+              }
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.946,
+                "success": 0.34453496266123557,
+                "fixation": 0.6458049886621308,
+                "predictability": 0.21868686868686868
+              },
+              "perFight": {
+                "lethal": 6.81025,
+                "spread": 8.93,
+                "show": 6.306,
+                "tempo": -0.1393333333333338
+              },
+              "kinds": {
+                "wind-up": 6.306,
+                "interrupt": 1.978,
+                "signature": 0.968,
+                "strike": 0.748
+              },
+              "detail": {
+                "signatureRound": 7.59
+              }
+            }
+          ]
+        },
+        {
+          "step": {
+            "id": "hunting",
+            "name": "Hunting",
+            "slack": 0.4,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.5,
+              "spread": 0.5,
+              "show": 0.4,
+              "tempo": 0.8
+            },
+            "sharpness": 0.95,
+            "rashness": 0,
+            "explore": 0.2,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.957,
+                "success": 0.4058167061210686,
+                "fixation": 0.6600824271314358,
+                "predictability": 0.23873873873873874
+              },
+              "perFight": {
+                "lethal": 8.2855,
+                "spread": 8.932,
+                "show": 6.181,
+                "tempo": -0.12133333333333401
+              },
+              "kinds": {
+                "wind-up": 6.181,
+                "interrupt": 2.02,
+                "signature": 0.937,
+                "strike": 0.862
+              },
+              "detail": {
+                "signatureRound": 7.55
+              }
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.89,
+                "success": 0.40484429065743943,
+                "fixation": 0.6512076583210598,
+                "predictability": 0.21666666666666667
+              },
+              "perFight": {
+                "lethal": 7.83675,
+                "spread": 8.954,
+                "show": 6.321,
+                "tempo": -0.13293333333333376
+              },
+              "kinds": {
+                "wind-up": 6.321,
+                "signature": 0.997,
+                "strike": 0.789,
+                "interrupt": 1.893
+              },
+              "detail": {
+                "signatureRound": 7.976
+              }
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.313,
+                "success": 0.21530479896238652,
+                "fixation": 0.6673236623567748,
+                "predictability": 0.12508884150675195
+              },
+              "perFight": {
+                "lethal": 10.03175,
+                "spread": 8.922,
+                "show": 6.983,
+                "tempo": -0.05246666666666678
+              },
+              "kinds": {
+                "wind-up": 6.983,
+                "strike": 0.704,
+                "interrupt": 1.866,
+                "signature": 0.447
+              },
+              "detail": {
+                "signatureRound": 3.683
+              }
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 3.495,
+                "success": 0.19313304721030042,
+                "fixation": 0.5558286483109888,
+                "predictability": 0.1269968051118211
+              },
+              "perFight": {
+                "lethal": 3.850875,
+                "spread": 8.977,
+                "show": 5.81,
+                "tempo": -0.06566666666666691
+              },
+              "kinds": {
+                "wind-up": 5.81,
+                "interrupt": 2.669,
+                "signature": 0.826,
+                "strike": 0.695
+              },
+              "detail": {
+                "signatureRound": 7.275
+              }
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.507,
+                "success": 0.40446749102512963,
+                "fixation": 0.6903184778184771,
+                "predictability": 0.158497772119669
+              },
+              "perFight": {
+                "lethal": 7.9685,
+                "spread": 8.937,
+                "show": 6.621,
+                "tempo": -0.0673333333333337
+              },
+              "kinds": {
+                "interrupt": 1.756,
+                "wind-up": 6.621,
+                "strike": 0.872,
+                "signature": 0.751
+              },
+              "detail": {
+                "signatureRound": 6.5
+              }
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.65,
+                "success": 0.25471698113207547,
+                "fixation": 0.6345374931581826,
+                "predictability": 0.1577082102776137
+              },
+              "perFight": {
+                "lethal": 6.59575,
+                "spread": 8.942,
+                "show": 6.55,
+                "tempo": -0.10866666666666715
+              },
+              "kinds": {
+                "strike": 0.8,
+                "wind-up": 6.55,
+                "interrupt": 1.857,
+                "signature": 0.793
+              },
+              "detail": {
+                "signatureRound": 6.3
+              }
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.784,
+                "success": 0.28412356321839083,
+                "fixation": 0.6377561627561623,
+                "predictability": 0.18111964873765093
+              },
+              "perFight": {
+                "lethal": 6.997,
+                "spread": 8.951,
+                "show": 6.408,
+                "tempo": -0.11160000000000028
+              },
+              "kinds": {
+                "wind-up": 6.408,
+                "signature": 0.833,
+                "strike": 0.808,
+                "interrupt": 1.951
+              },
+              "detail": {
+                "signatureRound": 6.656
+              }
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.886,
+                "success": 0.402979902979903,
+                "fixation": 0.6570612668743501,
+                "predictability": 0.21684867394695787
+              },
+              "perFight": {
+                "lethal": 7.622875,
+                "spread": 8.95,
+                "show": 6.287,
+                "tempo": -0.12580000000000036
+              },
+              "kinds": {
+                "wind-up": 6.287,
+                "interrupt": 1.943,
+                "strike": 0.827,
+                "signature": 0.943
+              },
+              "detail": {
+                "signatureRound": 7.543
+              }
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 2.89,
+                "success": 0.40415224913494807,
+                "fixation": 0.6554969474969474,
+                "predictability": 0.218798955613577
+              },
+              "perFight": {
+                "lethal": 7.711875,
+                "spread": 8.945,
+                "show": 6.312,
+                "tempo": -0.13506666666666697
+              },
+              "kinds": {
+                "wind-up": 6.312,
+                "interrupt": 1.919,
+                "strike": 0.798,
+                "signature": 0.971
+              },
+              "detail": {
+                "signatureRound": 7.684
+              }
+            }
+          ]
+        }
+      ],
+      "lethal": 7.567208333333333,
+      "share": {
+        "strike": 0.07933333333333333,
+        "wind-up": 0.6308833333333334,
+        "interrupt": 0.19401666666666667,
+        "signature": 0.09576666666666667
+      },
+      "signatureRound": 7.952140619561434
+    },
+    {
+      "id": "ruthless",
+      "name": "Ruthless",
+      "byParty": [
+        {
+          "step": {
+            "id": "ruthless",
+            "name": "Ruthless",
+            "slack": 0.05,
+            "mixing": 0.03,
+            "weights": {
+              "lethal": 0.8,
+              "spread": 0.2,
+              "show": 0,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0,
+            "explore": 0.1,
+            "disclosure": "hidden"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.895,
+                "success": 0.6900454775138959,
+                "fixation": 0.48587976190476073,
+                "predictability": 0.42619449128724
+              },
+              "perFight": {
+                "lethal": 14.60575,
+                "spread": 7.965,
+                "show": 0,
+                "tempo": -1.405933333333332
+              },
+              "kinds": {
+                "signature": 4.01,
+                "interrupt": 5.885,
+                "strike": 0.105
+              },
+              "detail": {
+                "signatureRound": 19.011
+              }
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.87,
+                "success": 0.6656534954407295,
+                "fixation": 0.5266658730158729,
+                "predictability": 0.47068771138669674
+              },
+              "perFight": {
+                "lethal": 14.153,
+                "spread": 7.573,
+                "show": 0,
+                "tempo": -1.3989333333333358
+              },
+              "kinds": {
+                "signature": 4.018,
+                "interrupt": 5.852,
+                "strike": 0.13
+              },
+              "detail": {
+                "signatureRound": 19.196
+              }
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 7.06,
+                "success": 0.20637393767705384,
+                "fixation": 0.5282484126984127,
+                "predictability": 0.37491749174917494
+              },
+              "perFight": {
+                "lethal": 6.22425,
+                "spread": 7.747,
+                "show": 0,
+                "tempo": -1.346066666666672
+              },
+              "kinds": {
+                "signature": 3.952,
+                "interrupt": 3.108,
+                "strike": 2.94
+              },
+              "detail": {
+                "signatureRound": 19.329
+              }
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 6.377,
+                "success": 0.523757252626627,
+                "fixation": 0.6419785714285676,
+                "predictability": 0.5588618188580993
+              },
+              "perFight": {
+                "lethal": 7.602,
+                "spread": 8.995,
+                "show": 0,
+                "tempo": -1.3136000000000008
+              },
+              "kinds": {
+                "signature": 3.807,
+                "interrupt": 2.57,
+                "strike": 3.623
+              },
+              "detail": {
+                "signatureRound": 18.366
+              }
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.618,
+                "success": 0.7397587856103139,
+                "fixation": 0.39312777777777763,
+                "predictability": 0.28115572058482247
+              },
+              "perFight": {
+                "lethal": 15.295,
+                "spread": 7.263,
+                "show": 0,
+                "tempo": -1.3945999999999967
+              },
+              "kinds": {
+                "signature": 4.007,
+                "interrupt": 5.611,
+                "strike": 0.382
+              },
+              "detail": {
+                "signatureRound": 19.151
+              }
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.851,
+                "success": 0.66368896558725,
+                "fixation": 0.5252873015873019,
+                "predictability": 0.4693254999435092
+              },
+              "perFight": {
+                "lethal": 14.004,
+                "spread": 7.625,
+                "show": 0,
+                "tempo": -1.3994666666666706
+              },
+              "kinds": {
+                "signature": 3.983,
+                "interrupt": 5.868,
+                "strike": 0.149
+              },
+              "detail": {
+                "signatureRound": 18.838
+              }
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.839,
+                "success": 0.6656164244333774,
+                "fixation": 0.5332527777777786,
+                "predictability": 0.4783346532413169
+              },
+              "perFight": {
+                "lethal": 14.08075,
+                "spread": 7.563,
+                "show": 0,
+                "tempo": -1.4032666666666676
+              },
+              "kinds": {
+                "signature": 3.987,
+                "interrupt": 5.852,
+                "strike": 0.161
+              },
+              "detail": {
+                "signatureRound": 18.821
+              }
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.662,
+                "success": 0.5405713102877251,
+                "fixation": 0.47488373015872876,
+                "predictability": 0.40891249134149155
+              },
+              "perFight": {
+                "lethal": 11.54925,
+                "spread": 7.96,
+                "show": 0,
+                "tempo": -1.394866666666667
+              },
+              "kinds": {
+                "signature": 3.974,
+                "interrupt": 5.688,
+                "strike": 0.338
+              },
+              "detail": {
+                "signatureRound": 18.817
+              }
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.446,
+                "success": 0.45352530171501165,
+                "fixation": 0.4571674603174594,
+                "predictability": 0.3808903623016813
+              },
+              "perFight": {
+                "lethal": 9.79525,
+                "spread": 7.777,
+                "show": 0,
+                "tempo": -1.3952000000000035
+              },
+              "kinds": {
+                "signature": 3.966,
+                "interrupt": 5.48,
+                "strike": 0.554
+              },
+              "detail": {
+                "signatureRound": 18.732
+              }
+            }
+          ]
+        },
+        {
+          "step": {
+            "id": "ruthless",
+            "name": "Ruthless",
+            "slack": 0.05,
+            "mixing": 0.03,
+            "weights": {
+              "lethal": 0.8,
+              "spread": 0.2,
+              "show": 0,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0,
+            "explore": 0.1,
+            "disclosure": "hidden"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.938,
+                "success": 0.6920909639766553,
+                "fixation": 0.5800067460317465,
+                "predictability": 0.5327813828597001
+              },
+              "perFight": {
+                "lethal": 18.23525,
+                "spread": 6.019,
+                "show": 0,
+                "tempo": -1.4036666666666655
+              },
+              "kinds": {
+                "signature": 4.009,
+                "strike": 0.062,
+                "interrupt": 5.929
+              },
+              "detail": {
+                "signatureRound": 19.035
+              }
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.868,
+                "success": 0.649067693554925,
+                "fixation": 0.5194924603174597,
+                "predictability": 0.4642534957149301
+              },
+              "perFight": {
+                "lethal": 14.97525,
+                "spread": 7.412,
+                "show": 0,
+                "tempo": -1.3966000000000034
+              },
+              "kinds": {
+                "signature": 4.012,
+                "interrupt": 5.856,
+                "strike": 0.132
+              },
+              "detail": {
+                "signatureRound": 19.171
+              }
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 7.079,
+                "success": 0.21231812402881764,
+                "fixation": 0.5467753968253974,
+                "predictability": 0.4142128639578878
+              },
+              "perFight": {
+                "lethal": 6.53325,
+                "spread": 7.588,
+                "show": 0,
+                "tempo": -1.3528666666666758
+              },
+              "kinds": {
+                "signature": 3.975,
+                "strike": 2.921,
+                "interrupt": 3.104
+              },
+              "detail": {
+                "signatureRound": 19.457
+              }
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 8.472,
+                "success": 0.4140698772426818,
+                "fixation": 0.5925186507936472,
+                "predictability": 0.5326552462526767
+              },
+              "perFight": {
+                "lethal": 7.7715,
+                "spread": 7.999,
+                "show": 0,
+                "tempo": -1.3926000000000025
+              },
+              "kinds": {
+                "signature": 3.95,
+                "interrupt": 4.522,
+                "strike": 1.528
+              },
+              "detail": {
+                "signatureRound": 18.611
+              }
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.604,
+                "success": 0.7917534360683048,
+                "fixation": 0.41505555555555323,
+                "predictability": 0.346931659693166
+              },
+              "perFight": {
+                "lethal": 16.797,
+                "spread": 7.27,
+                "show": 0,
+                "tempo": -1.3945999999999967
+              },
+              "kinds": {
+                "signature": 4.007,
+                "strike": 0.396,
+                "interrupt": 5.597
+              },
+              "detail": {
+                "signatureRound": 19.151
+              }
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.85,
+                "success": 0.6487309644670051,
+                "fixation": 0.527750793650793,
+                "predictability": 0.4724293785310735
+              },
+              "perFight": {
+                "lethal": 15.01175,
+                "spread": 7.354,
+                "show": 0,
+                "tempo": -1.3978000000000044
+              },
+              "kinds": {
+                "signature": 3.983,
+                "interrupt": 5.867,
+                "strike": 0.15
+              },
+              "detail": {
+                "signatureRound": 18.863
+              }
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.839,
+                "success": 0.642544974082732,
+                "fixation": 0.5248706349206345,
+                "predictability": 0.46928385563977826
+              },
+              "perFight": {
+                "lethal": 14.79125,
+                "spread": 7.388,
+                "show": 0,
+                "tempo": -1.4024000000000012
+              },
+              "kinds": {
+                "signature": 3.985,
+                "interrupt": 5.854,
+                "strike": 0.161
+              },
+              "detail": {
+                "signatureRound": 18.814
+              }
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.741,
+                "success": 0.5361872497690175,
+                "fixation": 0.467276587301585,
+                "predictability": 0.40109827250886626
+              },
+              "perFight": {
+                "lethal": 12.37625,
+                "spread": 7.749,
+                "show": 0,
+                "tempo": -1.3924666666666674
+              },
+              "kinds": {
+                "signature": 3.968,
+                "interrupt": 5.773,
+                "strike": 0.259
+              },
+              "detail": {
+                "signatureRound": 18.793
+              }
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.514,
+                "success": 0.44828673533739755,
+                "fixation": 0.45241507936507785,
+                "predictability": 0.37961005402865866
+              },
+              "perFight": {
+                "lethal": 10.46575,
+                "spread": 7.628,
+                "show": 0,
+                "tempo": -1.3911333333333373
+              },
+              "kinds": {
+                "signature": 3.959,
+                "interrupt": 5.555,
+                "strike": 0.486
+              },
+              "detail": {
+                "signatureRound": 18.723
+              }
+            }
+          ]
+        }
+      ],
+      "lethal": 14.315791666666666,
+      "share": {
+        "strike": 0.0171,
+        "wind-up": 0,
+        "interrupt": 0.5830500000000001,
+        "signature": 0.39985
+      },
+      "signatureRound": 4.752740611062482
+    },
+    {
+      "id": "wrathful",
+      "name": "Wrathful",
+      "byParty": [
+        {
+          "step": {
+            "id": "wrathful",
+            "name": "Wrathful",
+            "slack": 0.02,
+            "mixing": 0.05,
+            "weights": {
+              "lethal": 0.9,
+              "spread": -0.1,
+              "show": 0.1,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0.6,
+            "explore": 0,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.4538,
+                "fixation": 0.6186999999999998,
+                "predictability": 0.3997777777777778
+              },
+              "perFight": {
+                "lethal": 9.51,
+                "spread": 3.354,
+                "show": 0,
+                "tempo": -1.4066666666666654
+              },
+              "kinds": {
+                "signature": 4.012,
+                "interrupt": 5.988
+              },
+              "detail": {
+                "signatureRound": 19.02
+              }
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.991,
+                "success": 0.4302872585326794,
+                "fixation": 0.6586000000000007,
+                "predictability": 0.4028472917361806
+              },
+              "perFight": {
+                "lethal": 9.87675,
+                "spread": 3.371,
+                "show": 0.005,
+                "tempo": -1.3988666666666691
+              },
+              "kinds": {
+                "signature": 4.017,
+                "interrupt": 5.974,
+                "wind-up": 0.005,
+                "strike": 0.004
+              },
+              "detail": {
+                "signatureRound": 19.187
+              }
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.984,
+                "success": 0.203125,
+                "fixation": 0.4868952380952363,
+                "predictability": 0.25066785396260016
+              },
+              "perFight": {
+                "lethal": 5.73575,
+                "spread": 4.704,
+                "show": 0.011,
+                "tempo": -1.4090666666666705
+              },
+              "kinds": {
+                "signature": 4.083,
+                "interrupt": 5.901,
+                "wind-up": 0.011,
+                "strike": 0.005
+              },
+              "detail": {
+                "signatureRound": 19.694
+              }
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 6.523,
+                "success": 0.03418672390004599,
+                "fixation": 0.5336511904761896,
+                "predictability": 0.3116060112257831
+              },
+              "perFight": {
+                "lethal": 2.9505,
+                "spread": 2.127,
+                "show": 3.477,
+                "tempo": -1.269133333333333
+              },
+              "kinds": {
+                "signature": 3.718,
+                "interrupt": 2.805,
+                "wind-up": 3.477
+              },
+              "detail": {
+                "signatureRound": 18.143
+              }
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.8,
+                "fixation": 0.8059999999999939,
+                "predictability": 0.3847777777777778
+              },
+              "perFight": {
+                "lethal": 16.0305,
+                "spread": 1.307,
+                "show": 0,
+                "tempo": -1.3945999999999967
+              },
+              "kinds": {
+                "signature": 4.007,
+                "interrupt": 5.993
+              },
+              "detail": {
+                "signatureRound": 19.151
+              }
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.966,
+                "success": 0.2994180212723259,
+                "fixation": 0.560469444444444,
+                "predictability": 0.4152353334820433
+              },
+              "perFight": {
+                "lethal": 9.433125,
+                "spread": 4.392,
+                "show": 0.006,
+                "tempo": -1.3994000000000038
+              },
+              "kinds": {
+                "signature": 3.982,
+                "interrupt": 5.984,
+                "wind-up": 0.006,
+                "strike": 0.028
+              },
+              "detail": {
+                "signatureRound": 18.829
+              }
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.958,
+                "success": 0.16147820847559752,
+                "fixation": 0.5596583333333333,
+                "predictability": 0.2988390265684305
+              },
+              "perFight": {
+                "lethal": 5.3195,
+                "spread": 4.391,
+                "show": 0.013,
+                "tempo": -1.4040000000000006
+              },
+              "kinds": {
+                "signature": 3.988,
+                "interrupt": 5.97,
+                "strike": 0.029,
+                "wind-up": 0.013
+              },
+              "detail": {
+                "signatureRound": 18.82
+              }
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.992,
+                "success": 0.34727782225780623,
+                "fixation": 0.614277777777778,
+                "predictability": 0.31995106761565834
+              },
+              "perFight": {
+                "lethal": 8.212,
+                "spread": 3.608,
+                "show": 0.004,
+                "tempo": -1.3952666666666667
+              },
+              "kinds": {
+                "signature": 3.974,
+                "interrupt": 6.018,
+                "wind-up": 0.004,
+                "strike": 0.004
+              },
+              "detail": {
+                "signatureRound": 18.811
+              }
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9.989,
+                "success": 0.3659024927420162,
+                "fixation": 0.5528777777777778,
+                "predictability": 0.27010790966737125
+              },
+              "perFight": {
+                "lethal": 8.315,
+                "spread": 3.761,
+                "show": 0.008,
+                "tempo": -1.3954000000000035
+              },
+              "kinds": {
+                "signature": 3.966,
+                "interrupt": 6.023,
+                "wind-up": 0.008,
+                "strike": 0.003
+              },
+              "detail": {
+                "signatureRound": 18.729
+              }
+            }
+          ]
+        },
+        {
+          "step": {
+            "id": "wrathful",
+            "name": "Wrathful",
+            "slack": 0.02,
+            "mixing": 0.05,
+            "weights": {
+              "lethal": 0.9,
+              "spread": -0.1,
+              "show": 0.1,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0.6,
+            "explore": 0,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 8.997,
+                "success": 0.5894186951205957,
+                "fixation": 0.7293888888888921,
+                "predictability": 0.6313617606602476
+              },
+              "perFight": {
+                "lethal": 16.60775,
+                "spread": 3.643,
+                "show": 0,
+                "tempo": -1.1611333333333365
+              },
+              "kinds": {
+                "strike": 1.003,
+                "signature": 3.683,
+                "interrupt": 5.314
+              },
+              "detail": {
+                "signatureRound": 19.413
+              }
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9,
+                "success": 0.458,
+                "fixation": 0.6240000000000001,
+                "predictability": 0.430625
+              },
+              "perFight": {
+                "lethal": 11.57375,
+                "spread": 4.1,
+                "show": 0,
+                "tempo": -1.1554000000000038
+              },
+              "kinds": {
+                "strike": 1,
+                "signature": 3.659,
+                "interrupt": 5.341
+              },
+              "detail": {
+                "signatureRound": 19.259
+              }
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 8.981,
+                "success": 0.20376350072375013,
+                "fixation": 0.49849603174603246,
+                "predictability": 0.2415737376268638
+              },
+              "perFight": {
+                "lethal": 5.8795,
+                "spread": 4.795,
+                "show": 0.013,
+                "tempo": -1.1606000000000039
+              },
+              "kinds": {
+                "strike": 1.006,
+                "signature": 3.727,
+                "interrupt": 5.254,
+                "wind-up": 0.013
+              },
+              "detail": {
+                "signatureRound": 19.861
+              }
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 5.083,
+                "success": 0.023608105449537675,
+                "fixation": 0.4961166666666646,
+                "predictability": 0.3032084251775655
+              },
+              "perFight": {
+                "lethal": 4.0675,
+                "spread": 3.177,
+                "show": 3.917,
+                "tempo": -1.0063999999999842
+              },
+              "kinds": {
+                "strike": 1,
+                "signature": 3.345,
+                "wind-up": 3.917,
+                "interrupt": 1.738
+              },
+              "detail": {
+                "signatureRound": 18.354
+              }
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9,
+                "success": 0.8888888888888888,
+                "fixation": 1,
+                "predictability": 0.5
+              },
+              "perFight": {
+                "lethal": 17.983,
+                "spread": 0.62,
+                "show": 0,
+                "tempo": -1.1504000000000059
+              },
+              "kinds": {
+                "strike": 1,
+                "signature": 3.663,
+                "interrupt": 5.337
+              },
+              "detail": {
+                "signatureRound": 19.374
+              }
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 8.986,
+                "success": 0.28689071889606055,
+                "fixation": 0.5315753968253971,
+                "predictability": 0.290007513148009
+              },
+              "perFight": {
+                "lethal": 6.72675,
+                "spread": 4.934,
+                "show": 0,
+                "tempo": -1.1550666666666696
+              },
+              "kinds": {
+                "strike": 1.014,
+                "signature": 3.668,
+                "interrupt": 5.318
+              },
+              "detail": {
+                "signatureRound": 19.354
+              }
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 8.982,
+                "success": 0.1655533288799822,
+                "fixation": 0.5394920634920636,
+                "predictability": 0.2510648960160361
+              },
+              "perFight": {
+                "lethal": 4.625,
+                "spread": 4.791,
+                "show": 0.005,
+                "tempo": -1.1594666666666742
+              },
+              "kinds": {
+                "strike": 1.013,
+                "signature": 3.677,
+                "interrupt": 5.305,
+                "wind-up": 0.005
+              },
+              "detail": {
+                "signatureRound": 19.378
+              }
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 8.999,
+                "success": 0.37793088120902324,
+                "fixation": 0.5720000000000016,
+                "predictability": 0.3394174271783973
+              },
+              "perFight": {
+                "lethal": 9.68225,
+                "spread": 4.257,
+                "show": 0,
+                "tempo": -1.1538666666666704
+              },
+              "kinds": {
+                "strike": 1.001,
+                "signature": 3.621,
+                "interrupt": 5.378
+              },
+              "detail": {
+                "signatureRound": 18.902
+              }
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 8.993,
+                "success": 0.3864116535082842,
+                "fixation": 0.5189166666666671,
+                "predictability": 0.2808707619166771
+              },
+              "perFight": {
+                "lethal": 9.44575,
+                "spread": 4.25,
+                "show": 0.002,
+                "tempo": -1.1524000000000036
+              },
+              "kinds": {
+                "strike": 1.005,
+                "signature": 3.645,
+                "interrupt": 5.348,
+                "wind-up": 0.002
+              },
+              "detail": {
+                "signatureRound": 19.164
+              }
+            }
+          ]
+        }
+      ],
+      "lethal": 10.910416666666666,
+      "share": {
+        "strike": 0.0502,
+        "wind-up": 0.00015,
+        "interrupt": 0.5668833333333334,
+        "signature": 0.3827666666666666
+      },
+      "signatureRound": 4.989636854480537
+    },
+    {
+      "id": "bloodlusted",
+      "name": "Bloodlusted",
+      "byParty": [
+        {
+          "step": {
+            "id": "bloodlusted",
+            "name": "Bloodlusted",
+            "slack": 0,
+            "mixing": 0,
+            "weights": {
+              "lethal": 1,
+              "spread": -0.6,
+              "show": 0,
+              "tempo": 0.8
+            },
+            "sharpness": 1,
+            "rashness": 0.8,
+            "explore": 0,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.4613,
+                "fixation": 0.7343000000000002,
+                "predictability": 0.4528888888888889
+              },
+              "perFight": {
+                "lethal": 9.3135,
+                "spread": 1.429,
+                "show": 0,
+                "tempo": -1.4066666666666654
+              },
+              "kinds": {
+                "signature": 4.012,
+                "interrupt": 5.988
+              },
+              "detail": {
+                "signatureRound": 19.02
+              }
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.4133,
+                "fixation": 0.7479,
+                "predictability": 0.4201111111111111
+              },
+              "perFight": {
+                "lethal": 9.26475,
+                "spread": 1.808,
+                "show": 0,
+                "tempo": -1.3992666666666693
+              },
+              "kinds": {
+                "signature": 4.018,
+                "interrupt": 5.982
+              },
+              "detail": {
+                "signatureRound": 19.191
+              }
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2034,
+                "fixation": 0.5143999999999989,
+                "predictability": 0.24466666666666667
+              },
+              "perFight": {
+                "lethal": 5.632875,
+                "spread": 3.96,
+                "show": 0,
+                "tempo": -1.4094666666666706
+              },
+              "kinds": {
+                "signature": 4.083,
+                "interrupt": 5.917
+              },
+              "detail": {
+                "signatureRound": 19.688
+              }
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0,
+                "fixation": 1,
+                "predictability": 0.4444444444444444
+              },
+              "perFight": {
+                "lethal": 0,
+                "spread": 0,
+                "show": 0,
+                "tempo": -1.3369333333333335
+              },
+              "kinds": {
+                "signature": 3.857,
+                "interrupt": 6.143
+              },
+              "detail": {
+                "signatureRound": 18.516
+              }
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.8,
+                "fixation": 1,
+                "predictability": 0.4444444444444444
+              },
+              "perFight": {
+                "lethal": 16.0305,
+                "spread": 0,
+                "show": 0,
+                "tempo": -1.3945999999999967
+              },
+              "kinds": {
+                "signature": 4.007,
+                "interrupt": 5.993
+              },
+              "detail": {
+                "signatureRound": 19.151
+              }
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3126,
+                "fixation": 0.6242999999999983,
+                "predictability": 0.4272222222222222
+              },
+              "perFight": {
+                "lethal": 9.7335,
+                "spread": 3.407,
+                "show": 0,
+                "tempo": -1.3996000000000037
+              },
+              "kinds": {
+                "signature": 3.983,
+                "interrupt": 6.017
+              },
+              "detail": {
+                "signatureRound": 18.836
+              }
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.1438,
+                "fixation": 0.6523999999999991,
+                "predictability": 0.30277777777777776
+              },
+              "perFight": {
+                "lethal": 4.8,
+                "spread": 3.165,
+                "show": 0,
+                "tempo": -1.4043333333333339
+              },
+              "kinds": {
+                "signature": 3.989,
+                "interrupt": 6.011
+              },
+              "detail": {
+                "signatureRound": 18.825
+              }
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3288,
+                "fixation": 0.7099999999999997,
+                "predictability": 0.33144444444444443
+              },
+              "perFight": {
+                "lethal": 7.698,
+                "spread": 2.091,
+                "show": 0,
+                "tempo": -1.3952666666666667
+              },
+              "kinds": {
+                "signature": 3.974,
+                "interrupt": 6.026
+              },
+              "detail": {
+                "signatureRound": 18.811
+              }
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3551,
+                "fixation": 0.6358000000000003,
+                "predictability": 0.28244444444444444
+              },
+              "perFight": {
+                "lethal": 7.9305,
+                "spread": 2.375,
+                "show": 0,
+                "tempo": -1.3954000000000035
+              },
+              "kinds": {
+                "signature": 3.966,
+                "interrupt": 6.034
+              },
+              "detail": {
+                "signatureRound": 18.729
+              }
+            }
+          ]
+        },
+        {
+          "step": {
+            "id": "bloodlusted",
+            "name": "Bloodlusted",
+            "slack": 0,
+            "mixing": 0,
+            "weights": {
+              "lethal": 1,
+              "spread": -0.6,
+              "show": 0,
+              "tempo": 0.8
+            },
+            "sharpness": 1,
+            "rashness": 0.8,
+            "explore": 0,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9,
+                "success": 0.5424444444444444,
+                "fixation": 0.7840000000000036,
+                "predictability": 0.6005
+              },
+              "perFight": {
+                "lethal": 15.32225,
+                "spread": 2.403,
+                "show": 0,
+                "tempo": -1.1611333333333365
+              },
+              "kinds": {
+                "strike": 1,
+                "signature": 3.683,
+                "interrupt": 5.317
+              },
+              "detail": {
+                "signatureRound": 19.413
+              }
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9,
+                "success": 0.4152222222222222,
+                "fixation": 0.6971111111111128,
+                "predictability": 0.411875
+              },
+              "perFight": {
+                "lethal": 10.34,
+                "spread": 2.443,
+                "show": 0,
+                "tempo": -1.1554000000000038
+              },
+              "kinds": {
+                "strike": 1,
+                "signature": 3.659,
+                "interrupt": 5.341
+              },
+              "detail": {
+                "signatureRound": 19.259
+              }
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9,
+                "success": 0.20466666666666666,
+                "fixation": 0.530000000000001,
+                "predictability": 0.23475
+              },
+              "perFight": {
+                "lethal": 5.8135,
+                "spread": 3.976,
+                "show": 0,
+                "tempo": -1.1606666666666703
+              },
+              "kinds": {
+                "strike": 1,
+                "signature": 3.727,
+                "interrupt": 5.273
+              },
+              "detail": {
+                "signatureRound": 19.86
+              }
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9,
+                "success": 0,
+                "fixation": 1,
+                "predictability": 0.5
+              },
+              "perFight": {
+                "lethal": 1,
+                "spread": 0,
+                "show": 0,
+                "tempo": -1.0902666666666654
+              },
+              "kinds": {
+                "strike": 1,
+                "signature": 3.534,
+                "interrupt": 5.466
+              },
+              "detail": {
+                "signatureRound": 18.986
+              }
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9,
+                "success": 0.8888888888888888,
+                "fixation": 1,
+                "predictability": 0.5
+              },
+              "perFight": {
+                "lethal": 17.983,
+                "spread": 0,
+                "show": 0,
+                "tempo": -1.1504000000000059
+              },
+              "kinds": {
+                "strike": 1,
+                "signature": 3.663,
+                "interrupt": 5.337
+              },
+              "detail": {
+                "signatureRound": 19.374
+              }
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9,
+                "success": 0.3214444444444444,
+                "fixation": 0.611000000000001,
+                "predictability": 0.321625
+              },
+              "perFight": {
+                "lethal": 7.18075,
+                "spread": 3.426,
+                "show": 0,
+                "tempo": -1.1550666666666696
+              },
+              "kinds": {
+                "strike": 1,
+                "signature": 3.668,
+                "interrupt": 5.332
+              },
+              "detail": {
+                "signatureRound": 19.354
+              }
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9,
+                "success": 0.15166666666666667,
+                "fixation": 0.6025555555555573,
+                "predictability": 0.240875
+              },
+              "perFight": {
+                "lethal": 4.20825,
+                "spread": 3.397,
+                "show": 0,
+                "tempo": -1.1594666666666742
+              },
+              "kinds": {
+                "strike": 1,
+                "signature": 3.677,
+                "interrupt": 5.323
+              },
+              "detail": {
+                "signatureRound": 19.378
+              }
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9,
+                "success": 0.33866666666666667,
+                "fixation": 0.6435555555555568,
+                "predictability": 0.319625
+              },
+              "perFight": {
+                "lethal": 8.61975,
+                "spread": 2.767,
+                "show": 0,
+                "tempo": -1.1538666666666704
+              },
+              "kinds": {
+                "strike": 1,
+                "signature": 3.621,
+                "interrupt": 5.379
+              },
+              "detail": {
+                "signatureRound": 18.902
+              }
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "bets": {
+                "fights": 1000,
+                "betsPerFight": 9,
+                "success": 0.36177777777777775,
+                "fixation": 0.5986666666666667,
+                "predictability": 0.27275
+              },
+              "perFight": {
+                "lethal": 8.72525,
+                "spread": 2.817,
+                "show": 0,
+                "tempo": -1.1524000000000036
+              },
+              "kinds": {
+                "strike": 1,
+                "signature": 3.645,
+                "interrupt": 5.355
+              },
+              "detail": {
+                "signatureRound": 19.164
+              }
+            }
+          ]
+        }
+      ],
+      "lethal": 10.093041666666664,
+      "share": {
+        "strike": 0.05000000000000001,
+        "wind-up": 0,
+        "interrupt": 0.5672166666666667,
+        "signature": 0.38278333333333325
+      },
+      "signatureRound": 4.989593764967127
+    }
+  ]
+}

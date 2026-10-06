@@ -1,5 +1,5 @@
 import type { ModuleFactory } from "../../engine/module.ts";
-import { announceRead, FIGHT_VALUE, readOptions, SILENT, spreadFor, type Read } from "./common.ts";
+import { announceRead, FIGHT_VALUE, readOptions, SILENT, spreadFor, type Read } from "../common.ts";
 
 /** Charges the boss starts a fight with; they don't come back. */
 export const BUDGET = 3;

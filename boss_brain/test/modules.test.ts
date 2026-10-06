@@ -13,8 +13,9 @@ import { runBetSuite } from "../src/harness/bettor.ts";
 import { runBout, runModuleSuite } from "../src/harness/bout.ts";
 import { heeding, HABITUAL, RANDOM, STYLES, type Player, type PlayerView } from "../src/harness/players.ts";
 import { bet, punish, spendOrHold, telegraph } from "../src/modules/reference/index.ts";
-import { FIGHT_VALUE } from "../src/modules/reference/common.ts";
+import { FIGHT_VALUE } from "../src/modules/common.ts";
 import { PRESS } from "../src/modules/reference/punish.ts";
+import { placeholder, SIGNATURE_BUDGET } from "../src/modules/placeholder.ts";
 import { BUDGET } from "../src/modules/reference/spend.ts";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -127,5 +128,29 @@ describe("Telegraph", () => {
     assert.equal(r.utility.lethal, 0);
     assert.equal(r.utility.show, 1);
     assert.ok(lands() < 0.5, "after a guard, it expects fewer wind-ups to land");
+  });
+});
+
+describe("Placeholder Boss", () => {
+  const round = (r: number) => ({ kind: "round", round: r }) as const;
+  const ctx = { heroes: [gunman], view: new CountsBelief([gunman]), belief: new CountsBelief([gunman]), step: ruthless };
+
+  it("offers all four moves, and a signature only while uses remain", () => {
+    const m = placeholder([gunman], new Rng(1));
+    const kinds = () => new Set(m.options(round(1), ctx).map((o) => o.move.kind));
+    assert.deepEqual([...kinds()].sort(), ["interrupt", "signature", "strike", "wind-up"]);
+    for (let r = 1; r <= SIGNATURE_BUDGET; r++) m.resolve({ kind: "signature", hero: "g", action: MEND }, round(r), { actions: actions(MEND), events: [] });
+    assert.equal(kinds().has("signature"), false);
+  });
+
+  it("pays an interrupt 1.5 times what it cuts, and charges a signature the tempo of holding it", () => {
+    const m = placeholder([gunman], new Rng(1));
+    const cut = m.resolve({ kind: "interrupt", hero: "g", action: MEND }, round(1), { actions: actions(MEND), events: [] });
+    assert.equal(cut.utility.lethal, 1.5 * FIGHT_VALUE[MEND]!);
+    const sig = m.resolve({ kind: "signature", hero: "g", action: STRIKE }, round(4), { actions: actions(GUARD), events: [] });
+    assert.equal(sig.utility.lethal, 0);
+    assert.equal(sig.utility.tempo, -0.6);
+    assert.deepEqual(sig.detail, { signatureRound: 4 });
+    assert.deepEqual(m.announce({ kind: "strike", hero: "g" }, ruthless), { named: [], warned: [], text: "" });
   });
 });

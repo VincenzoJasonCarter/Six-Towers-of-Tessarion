@@ -32,6 +32,8 @@ export interface Temperament {
   /** Exploration: the bonus for betting where the forecast is unsure. */
   readonly explore: number;
   readonly disclosure: Disclosure;
+  /** Patience: whether it will wait for a trigger (ready a reaction, wind up). A rule of character, like disclosure. */
+  readonly waits: boolean;
 }
 
 const step = (
@@ -44,7 +46,8 @@ const step = (
   rashness: number,
   explore: number,
   disclosure: Disclosure,
-): Temperament => ({ id, name, slack, mixing, weights: { lethal, spread, show, tempo }, sharpness, rashness, explore, disclosure });
+  waits = true,
+): Temperament => ({ id, name, slack, mixing, weights: { lethal, spread, show, tempo }, sharpness, rashness, explore, disclosure, waits });
 
 /** The five steps with the placeholder values of DESIGN.md 5.2, before M3 calibrates them. */
 export const PLACEHOLDER_STEPS: readonly Temperament[] = [
@@ -53,7 +56,8 @@ export const PLACEHOLDER_STEPS: readonly Temperament[] = [
   step("ruthless", "Ruthless", 0.05, 0.15, [0.8, 0.2, 0, 1.0], 1.0, 0, 0.1, "hidden"),
   // Rage shouts but doesn't wind up: `show` is all but gone on the hot side (DESIGN.md 5.2).
   step("wrathful", "Wrathful", 0.02, 0.05, [0.9, -0.1, 0.1, 1.0], 1.0, 0.4, 0, "name"),
-  step("bloodlusted", "Bloodlusted", 0, 0, [1.0, -0.6, 0, 0.8], 1.0, 0.8, 0, "full"),
+  // Past caring for strategy: it won't wait for anything (DESIGN.md 5.1, patience).
+  step("bloodlusted", "Bloodlusted", 0, 0, [1.0, -0.6, 0, 0.8], 1.0, 0.8, 0, "full", false),
 ];
 
 const calibrated = (id: string, levers: Partial<Temperament>): Temperament => ({

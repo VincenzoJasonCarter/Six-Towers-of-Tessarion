@@ -20,6 +20,8 @@ export interface Option<T> {
   readonly outcomes: readonly Outcome[];
   /** The player this option bets on, if any, for the exploration bonus. */
   readonly about?: { readonly hero: string; readonly context: ObservationContext };
+  /** It waits for a trigger (a readied reaction, a wind-up): offered only to a step that waits. */
+  readonly waiting?: boolean;
 }
 
 export interface Scored<T> {

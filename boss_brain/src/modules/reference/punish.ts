@@ -1,5 +1,5 @@
 import type { ModuleFactory } from "../../engine/module.ts";
-import { announceRead, FIGHT_VALUE, readOptions, SILENT, spreadFor, type Read } from "./common.ts";
+import { announceRead, FIGHT_VALUE, readOptions, SILENT, spreadFor, type Read } from "../common.ts";
 
 /** Press: a plain blow on a hero, `lethal` 0.5 and sure. */
 export const PRESS = 0.5;

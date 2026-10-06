@@ -1,7 +1,8 @@
-import { ACTIONS, type Action } from "../../engine/actions.ts";
-import type { Option } from "../../engine/decision/decide.ts";
-import type { Disclosure, Utility } from "../../engine/decision/temperament.ts";
-import type { Announcement, ModuleContext } from "../../engine/module.ts";
+import { ACTIONS, GUARD, type Action } from "../engine/actions.ts";
+import type { Option } from "../engine/decision/decide.ts";
+import type { Disclosure, Utility } from "../engine/decision/temperament.ts";
+import type { Announcement, ModuleContext } from "../engine/module.ts";
+import type { HeroSpec } from "../engine/subclasses.ts";
 
 /**
  * What each action is worth to the party (DESIGN.md 6.1), standing in for a
@@ -74,3 +75,39 @@ export function announceRead(read: Read, disclosure: Disclosure, verb: string): 
 }
 
 export const SILENT: Announcement = { named: [], warned: [], text: "" };
+
+/**
+ * How likely a warned hero is to Guard (DESIGN.md 6.1): they heed the warning,
+ * or else guard as often as they usually would. The heeding is the module's
+ * own outcome model, a Beta(1, 1) per hero, since the belief knows nothing of
+ * warnings; the usual guarding is the belief's, so a warned and an unwarned
+ * blow read the player through the same tempered belief. It learns from the
+ * untempered belief: learning stays honest, and only choices are tempered.
+ */
+export function heedModel(heroes: readonly HeroSpec[]) {
+  const heeds = new Map(heroes.map((h) => [h.id, [1, 1] as [number, number]]));
+  /** The untempered chance each hero would have guarded anyway, as of the last look. */
+  const anyway = new Map<string, number>();
+  const rate = (hero: string) => {
+    const [yes, no] = heeds.get(hero)!;
+    return yes / (yes + no);
+  };
+  return {
+    /** For one hero this round: how likely an unwarned and a warned blow are to be guarded. */
+    look(hero: string, round: number, ctx: ModuleContext): { readonly unwarned: number; readonly warned: number } {
+      const context = { round, named: false };
+      const guards = ctx.view.forecast(hero, context)[GUARD]!;
+      anyway.set(hero, ctx.belief.forecast(hero, context)[GUARD]!);
+      const h = rate(hero);
+      return { unwarned: guards, warned: h + (1 - h) * guards };
+    },
+    /** After a warned blow: how much of a guard was heeding, rather than guarding anyway. */
+    learn(hero: string, guarded: boolean): void {
+      const h = rate(hero);
+      const heeded = guarded ? h / (h + (1 - h) * anyway.get(hero)!) : 0;
+      const beta = heeds.get(hero)!;
+      beta[0] += heeded;
+      beta[1] += 1 - heeded;
+    },
+  };
+}

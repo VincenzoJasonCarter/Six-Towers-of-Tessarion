@@ -1,0 +1,2643 @@
+{
+  "data": {
+    "seed": 2,
+    "trials": 1000,
+    "parties": [
+      [
+        "gunman",
+        "bulwark",
+        "verdant",
+        "hellbound"
+      ],
+      [
+        "warbound",
+        "sanguine_aegis",
+        "crystal_archer",
+        "aether"
+      ]
+    ]
+  },
+  "rounds": 10,
+  "bossHp": 30,
+  "checks": [
+    {
+      "check": "1. The enrage happens (at least 90% reach Wrathful, before Bloodlusted)",
+      "passed": true,
+      "detail": "Wrathful in 100% of fights, round 6.8; Bloodlusted in 90%, round 9.1"
+    },
+    {
+      "check": "2. Fixation is higher in the Bloodlusted phase than in the Ruthless phase",
+      "passed": true,
+      "detail": "Ruthless 0.55, Wrathful 0.80, Bloodlusted 1.00"
+    },
+    {
+      "check": "3. The enrage opens a window against players who switch",
+      "passed": false,
+      "detail": "read success against Alternator and Second-guesser: Ruthless 57%, Wrathful 10%, Bloodlusted –"
+    },
+    {
+      "check": "4. Defiance angers the boss",
+      "passed": true,
+      "detail": "insults per fight: defiers 0.19, ordinary play 0.13"
+    }
+  ],
+  "enrage": [
+    {
+      "step": {
+        "id": "ruthless",
+        "name": "Ruthless",
+        "slack": 0.05,
+        "mixing": 0.03,
+        "weights": {
+          "lethal": 0.8,
+          "spread": 0.2,
+          "show": 0,
+          "tempo": 1
+        },
+        "sharpness": 1,
+        "rashness": 0,
+        "explore": 0.1,
+        "disclosure": "hidden",
+        "waits": true
+      },
+      "styles": [
+        {
+          "style": "habitual",
+          "name": "Habitual",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 7.073,
+            "success": 0.6218012158914181,
+            "fixation": 0.559894444444445,
+            "predictability": 0.4276304956364235
+          },
+          "perFight": {
+            "lethal": 12.424,
+            "spread": 4.021,
+            "show": 0,
+            "tempo": -1.8219999999999945
+          },
+          "kinds": {
+            "interrupt": 4.073,
+            "signature": 3,
+            "strike": 2.927
+          },
+          "detail": {
+            "signatureRound": 11.78
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 5078,
+              "lethalPerMove": 1.611608901142182,
+              "kinds": {
+                "interrupt": 0.4269397400551398,
+                "signature": 0.5580937376920048,
+                "strike": 0.014966522252855455
+              },
+              "betSuccess": 0.6903238704518193,
+              "fixation": 0.5514071428571443
+            },
+            "wrathful": {
+              "moves": 2070,
+              "lethalPerMove": 0.7663043478260869,
+              "kinds": {
+                "interrupt": 0.9202898550724637,
+                "signature": 0.07971014492753623
+              },
+              "betSuccess": 0.45603864734299515,
+              "fixation": 0.8423333333333326
+            },
+            "bloodlusted": {
+              "moves": 2852,
+              "lethalPerMove": 0.9305750350631136,
+              "kinds": {
+                "strike": 0.9996493688639552,
+                "signature": 0.0003506311360448808
+              },
+              "betSuccess": 1,
+              "fixation": 1
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 6.078
+            },
+            "bloodlusted": {
+              "rate": 0.999,
+              "round": 8.145145145145145
+            }
+          },
+          "shiftsPerFight": 1.999
+        },
+        {
+          "style": "by-the-book",
+          "name": "By the book",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 8.199,
+            "success": 0.6020246371508721,
+            "fixation": 0.5411952380952377,
+            "predictability": 0.43214335324350606
+          },
+          "perFight": {
+            "lethal": 12.19125,
+            "spread": 4.886,
+            "show": 0.001,
+            "tempo": -1.8041999999999951
+          },
+          "kinds": {
+            "interrupt": 5.199,
+            "signature": 3,
+            "strike": 1.8,
+            "wind-up": 0.001
+          },
+          "detail": {
+            "signatureRound": 11.958
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 5902,
+              "lethalPerMove": 1.502202643171806,
+              "kinds": {
+                "interrupt": 0.48237885462555063,
+                "signature": 0.5006777363605558,
+                "strike": 0.016943409013893594
+              },
+              "betSuccess": 0.6618407445708376,
+              "fixation": 0.5682738095238106
+            },
+            "wrathful": {
+              "moves": 2399,
+              "lethalPerMove": 0.757919966652772,
+              "kinds": {
+                "interrupt": 0.980408503543143,
+                "signature": 0.018757815756565235,
+                "wind-up": 0.00041684035014589413,
+                "strike": 0.00041684035014589413
+              },
+              "betSuccess": 0.4572382144347101,
+              "fixation": 0.8018166666666646
+            },
+            "bloodlusted": {
+              "moves": 1699,
+              "lethalPerMove": 0.886992348440259,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 6.902
+            },
+            "bloodlusted": {
+              "rate": 0.911,
+              "round": 9.135016465422613
+            }
+          },
+          "shiftsPerFight": 1.911
+        },
+        {
+          "style": "random",
+          "name": "Random",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 7.682,
+            "success": 0.2029419422025514,
+            "fixation": 0.5139964285714285,
+            "predictability": 0.2849446273570787
+          },
+          "perFight": {
+            "lethal": 5.762,
+            "spread": 6.393,
+            "show": 0.001,
+            "tempo": -1.355000000000001
+          },
+          "kinds": {
+            "interrupt": 4.683,
+            "strike": 2.317,
+            "signature": 2.999,
+            "wind-up": 0.001
+          },
+          "detail": {
+            "signatureRound": 16.44
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 7064,
+              "lethalPerMove": 0.6014297848244621,
+              "kinds": {
+                "interrupt": 0.3851925254813137,
+                "strike": 0.2579275198187995,
+                "signature": 0.35687995469988676
+              },
+              "betSuccess": 0.2052651659671881,
+              "fixation": 0.5580035714285717
+            },
+            "wrathful": {
+              "moves": 2435,
+              "lethalPerMove": 0.4548254620123203,
+              "kinds": {
+                "interrupt": 0.8057494866529774,
+                "signature": 0.19301848049281314,
+                "wind-up": 0.0004106776180698152,
+                "strike": 0.0008213552361396304
+              },
+              "betSuccess": 0.1981907894736842,
+              "fixation": 0.728848114169214
+            },
+            "bloodlusted": {
+              "moves": 501,
+              "lethalPerMove": 0.810379241516966,
+              "kinds": {
+                "strike": 0.9840319361277445,
+                "signature": 0.015968063872255488
+              },
+              "betSuccess": 0.125,
+              "fixation": 1
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 0.981,
+              "round": 8.007135575942915
+            },
+            "bloodlusted": {
+              "rate": 0.378,
+              "round": 9.674603174603174
+            }
+          },
+          "shiftsPerFight": 1.359
+        },
+        {
+          "style": "alternator",
+          "name": "Alternator",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 6.472,
+            "success": 0.3907601977750309,
+            "fixation": 0.7053749999999972,
+            "predictability": 0.64546783625731
+          },
+          "perFight": {
+            "lethal": 8.0625,
+            "spread": 6.468,
+            "show": 1,
+            "tempo": -1.035999999999995
+          },
+          "kinds": {
+            "interrupt": 3.472,
+            "strike": 2.528,
+            "signature": 3,
+            "wind-up": 1
+          },
+          "detail": {
+            "signatureRound": 19.64
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 7000,
+              "lethalPerMove": 1.0377857142857143,
+              "kinds": {
+                "interrupt": 0.3274285714285714,
+                "strike": 0.36114285714285715,
+                "signature": 0.31142857142857144
+              },
+              "betSuccess": 0.5655187835420393,
+              "fixation": 0.6812000000000047
+            },
+            "wrathful": {
+              "moves": 3000,
+              "lethalPerMove": 0.266,
+              "kinds": {
+                "interrupt": 0.3933333333333333,
+                "wind-up": 0.3333333333333333,
+                "signature": 0.2733333333333333
+              },
+              "betSuccess": 0,
+              "fixation": 0.766
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 8
+            }
+          },
+          "shiftsPerFight": 1
+        },
+        {
+          "style": "switcher",
+          "name": "Switcher",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 5.67,
+            "success": 0.7361552028218695,
+            "fixation": 0.9173333333333398,
+            "predictability": 0.6796573875802998
+          },
+          "perFight": {
+            "lethal": 13.888,
+            "spread": 1.156,
+            "show": 0,
+            "tempo": -1.8593999999999926
+          },
+          "kinds": {
+            "interrupt": 2.67,
+            "signature": 3,
+            "strike": 4.33
+          },
+          "detail": {
+            "signatureRound": 11.406
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 4000,
+              "lethalPerMove": 2.097,
+              "kinds": {
+                "interrupt": 0.368,
+                "signature": 0.5495,
+                "strike": 0.0825
+              },
+              "betSuccess": 0.864850136239782,
+              "fixation": 0.876
+            },
+            "wrathful": {
+              "moves": 2000,
+              "lethalPerMove": 0.75,
+              "kinds": {
+                "signature": 0.401,
+                "interrupt": 0.599
+              },
+              "betSuccess": 0.5,
+              "fixation": 1
+            },
+            "bloodlusted": {
+              "moves": 4000,
+              "lethalPerMove": 1,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 5
+            },
+            "bloodlusted": {
+              "rate": 1,
+              "round": 7
+            }
+          },
+          "shiftsPerFight": 2
+        },
+        {
+          "style": "contrarian",
+          "name": "Contrarian",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 8.525,
+            "success": 0.5142521994134898,
+            "fixation": 0.5190623015873014,
+            "predictability": 0.38099667774086377
+          },
+          "perFight": {
+            "lethal": 11.23725,
+            "spread": 5.508,
+            "show": 0,
+            "tempo": -1.811199999999994
+          },
+          "kinds": {
+            "interrupt": 5.525,
+            "signature": 3,
+            "strike": 1.475
+          },
+          "detail": {
+            "signatureRound": 11.888
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 5908,
+              "lethalPerMove": 1.484174001354096,
+              "kinds": {
+                "interrupt": 0.48070412999322953,
+                "signature": 0.5016926201760324,
+                "strike": 0.017603249830737983
+              },
+              "betSuccess": 0.6560992419021364,
+              "fixation": 0.5658869047619066
+            },
+            "wrathful": {
+              "moves": 2725,
+              "lethalPerMove": 0.45825688073394494,
+              "kinds": {
+                "interrupt": 0.9853211009174312,
+                "signature": 0.013211009174311927,
+                "strike": 0.0014678899082568807
+              },
+              "betSuccess": 0.21168687982359427,
+              "fixation": 0.6704833333333339
+            },
+            "bloodlusted": {
+              "moves": 1367,
+              "lethalPerMove": 0.8924652523774689,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 6.908
+            },
+            "bloodlusted": {
+              "rate": 0.808,
+              "round": 9.308168316831683
+            }
+          },
+          "shiftsPerFight": 1.808
+        },
+        {
+          "style": "second-guesser",
+          "name": "Second-guesser",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 8.428,
+            "success": 0.5072377788324632,
+            "fixation": 0.5225476190476191,
+            "predictability": 0.38260635433494883
+          },
+          "perFight": {
+            "lethal": 11.04725,
+            "spread": 5.325,
+            "show": 0.002,
+            "tempo": -1.8052999999999955
+          },
+          "kinds": {
+            "interrupt": 5.428,
+            "signature": 3,
+            "strike": 1.57,
+            "wind-up": 0.002
+          },
+          "detail": {
+            "signatureRound": 11.947
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 5906,
+              "lethalPerMove": 1.4827717575347104,
+              "kinds": {
+                "interrupt": 0.4817135116830342,
+                "signature": 0.5003386386725364,
+                "strike": 0.017947849644429394
+              },
+              "betSuccess": 0.6543103448275862,
+              "fixation": 0.5675273809523824
+            },
+            "wrathful": {
+              "moves": 2634,
+              "lethalPerMove": 0.37813211845102507,
+              "kinds": {
+                "interrupt": 0.9806378132118451,
+                "signature": 0.017084282460136675,
+                "wind-up": 0.0007593014426727411,
+                "strike": 0.0015186028853454822
+              },
+              "betSuccess": 0.182648401826484,
+              "fixation": 0.6912999999999989
+            },
+            "bloodlusted": {
+              "moves": 1460,
+              "lethalPerMove": 0.8863013698630137,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 6.906
+            },
+            "bloodlusted": {
+              "rate": 0.878,
+              "round": 9.337129840546696
+            }
+          },
+          "shiftsPerFight": 1.878
+        },
+        {
+          "style": "adaptive",
+          "name": "Adaptive",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 8.582,
+            "success": 0.4751806105802843,
+            "fixation": 0.4903865079365081,
+            "predictability": 0.34595093642838304
+          },
+          "perFight": {
+            "lethal": 9.738,
+            "spread": 5.492,
+            "show": 0.002,
+            "tempo": -1.7813999999999959
+          },
+          "kinds": {
+            "interrupt": 5.582,
+            "signature": 3,
+            "strike": 1.416,
+            "wind-up": 0.002
+          },
+          "detail": {
+            "signatureRound": 12.186
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 6230,
+              "lethalPerMove": 1.1940609951845906,
+              "kinds": {
+                "interrupt": 0.4985553772070626,
+                "signature": 0.47383627608346707,
+                "strike": 0.027608346709470304
+              },
+              "betSuccess": 0.5515021459227468,
+              "fixation": 0.5127849206349213
+            },
+            "wrathful": {
+              "moves": 2530,
+              "lethalPerMove": 0.49960474308300395,
+              "kinds": {
+                "interrupt": 0.9786561264822135,
+                "signature": 0.018972332015810278,
+                "wind-up": 0.0007905138339920949,
+                "strike": 0.0015810276679841897
+              },
+              "betSuccess": 0.29199683042789226,
+              "fixation": 0.7581833333333322
+            },
+            "bloodlusted": {
+              "moves": 1240,
+              "lethalPerMove": 0.8346774193548387,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 7.23
+            },
+            "bloodlusted": {
+              "rate": 0.793,
+              "round": 9.436317780580076
+            }
+          },
+          "shiftsPerFight": 1.793
+        },
+        {
+          "style": "tell-reader",
+          "name": "Tell-reader",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 8.889,
+            "success": 0.4456069299133761,
+            "fixation": 0.48111785714285665,
+            "predictability": 0.31664342755735836
+          },
+          "perFight": {
+            "lethal": 9.27575,
+            "spread": 5.723,
+            "show": 0.005,
+            "tempo": -1.7842999999999964
+          },
+          "kinds": {
+            "interrupt": 5.889,
+            "signature": 3,
+            "strike": 1.106,
+            "wind-up": 0.005
+          },
+          "detail": {
+            "signatureRound": 12.157
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 6392,
+              "lethalPerMove": 1.1357165206508135,
+              "kinds": {
+                "interrupt": 0.4990613266583229,
+                "signature": 0.46495619524405507,
+                "strike": 0.03598247809762203
+              },
+              "betSuccess": 0.5197987666342097,
+              "fixation": 0.5243031746031764
+            },
+            "wrathful": {
+              "moves": 2737,
+              "lethalPerMove": 0.4962550237486299,
+              "kinds": {
+                "interrupt": 0.9861161856046766,
+                "signature": 0.010230179028132993,
+                "strike": 0.001826817683595177,
+                "wind-up": 0.001826817683595177
+              },
+              "betSuccess": 0.277961129446278,
+              "fixation": 0.7275937081659963
+            },
+            "bloodlusted": {
+              "moves": 871,
+              "lethalPerMove": 0.7554535017221584,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 0.996,
+              "round": 7.377510040160643
+            },
+            "bloodlusted": {
+              "rate": 0.582,
+              "round": 9.503436426116838
+            }
+          },
+          "shiftsPerFight": 1.578
+        }
+      ]
+    },
+    {
+      "step": {
+        "id": "ruthless",
+        "name": "Ruthless",
+        "slack": 0.05,
+        "mixing": 0.03,
+        "weights": {
+          "lethal": 0.8,
+          "spread": 0.2,
+          "show": 0,
+          "tempo": 1
+        },
+        "sharpness": 1,
+        "rashness": 0,
+        "explore": 0.1,
+        "disclosure": "hidden",
+        "waits": true
+      },
+      "styles": [
+        {
+          "style": "habitual",
+          "name": "Habitual",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 8.564,
+            "success": 0.6581036898645493,
+            "fixation": 0.6187011904761911,
+            "predictability": 0.5445531464833422
+          },
+          "perFight": {
+            "lethal": 16.2585,
+            "spread": 4.182,
+            "show": 0,
+            "tempo": -1.9808999999999741
+          },
+          "kinds": {
+            "interrupt": 5.564,
+            "strike": 1.436,
+            "signature": 3
+          },
+          "detail": {
+            "signatureRound": 10.191
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 6109,
+              "lethalPerMove": 1.9439351776068097,
+              "kinds": {
+                "interrupt": 0.5022098543133082,
+                "strike": 0.00818464560484531,
+                "signature": 0.48960550008184645
+              },
+              "betSuccess": 0.6892226440006601,
+              "fixation": 0.605438095238094
+            },
+            "wrathful": {
+              "moves": 2505,
+              "lethalPerMove": 1.2359281437125749,
+              "kinds": {
+                "interrupt": 0.9964071856287425,
+                "signature": 0.003592814371257485
+              },
+              "betSuccess": 0.5828343313373253,
+              "fixation": 0.8286666666666653
+            },
+            "bloodlusted": {
+              "moves": 1386,
+              "lethalPerMove": 0.9285714285714286,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 7.109
+            },
+            "bloodlusted": {
+              "rate": 0.872,
+              "round": 9.410550458715596
+            }
+          },
+          "shiftsPerFight": 1.872
+        },
+        {
+          "style": "by-the-book",
+          "name": "By the book",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 8.097,
+            "success": 0.5835494627639867,
+            "fixation": 0.5380845238095237,
+            "predictability": 0.4265182471466817
+          },
+          "perFight": {
+            "lethal": 12.9325,
+            "spread": 4.687,
+            "show": 0,
+            "tempo": -1.9249999999999814
+          },
+          "kinds": {
+            "interrupt": 5.097,
+            "signature": 3,
+            "strike": 1.903
+          },
+          "detail": {
+            "signatureRound": 10.75
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 5816,
+              "lethalPerMove": 1.5888497248968363,
+              "kinds": {
+                "interrupt": 0.4736932599724897,
+                "signature": 0.5101444291609354,
+                "strike": 0.016162310866574967
+              },
+              "betSuccess": 0.6321216357916812,
+              "fixation": 0.5670416666666674
+            },
+            "wrathful": {
+              "moves": 2376,
+              "lethalPerMove": 0.8719486531986532,
+              "kinds": {
+                "interrupt": 0.9856902356902357,
+                "signature": 0.013888888888888888,
+                "strike": 0.00042087542087542086
+              },
+              "betSuccess": 0.4665263157894737,
+              "fixation": 0.7884166666666648
+            },
+            "bloodlusted": {
+              "moves": 1808,
+              "lethalPerMove": 0.8960176991150443,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 6.816
+            },
+            "bloodlusted": {
+              "rate": 0.939,
+              "round": 9.074547390841321
+            }
+          },
+          "shiftsPerFight": 1.939
+        },
+        {
+          "style": "random",
+          "name": "Random",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 7.612,
+            "success": 0.20756699947451393,
+            "fixation": 0.517356746031746,
+            "predictability": 0.3191167574107683
+          },
+          "perFight": {
+            "lethal": 6.09475,
+            "spread": 6.288,
+            "show": 0,
+            "tempo": -1.4718999999999955
+          },
+          "kinds": {
+            "interrupt": 4.612,
+            "strike": 2.388,
+            "signature": 3
+          },
+          "detail": {
+            "signatureRound": 15.281
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 7064,
+              "lethalPerMove": 0.6464113816534541,
+              "kinds": {
+                "interrupt": 0.37046998867497166,
+                "strike": 0.26727066817667045,
+                "signature": 0.3622593431483579
+              },
+              "betSuccess": 0.2098145285935085,
+              "fixation": 0.5792261904761905
+            },
+            "wrathful": {
+              "moves": 2435,
+              "lethalPerMove": 0.46098562628336753,
+              "kinds": {
+                "interrupt": 0.8193018480492813,
+                "signature": 0.1782340862422998,
+                "strike": 0.0024640657084188913
+              },
+              "betSuccess": 0.20296418279127212,
+              "fixation": 0.7260958205912323
+            },
+            "bloodlusted": {
+              "moves": 501,
+              "lethalPerMove": 0.810379241516966,
+              "kinds": {
+                "strike": 0.9860279441117764,
+                "signature": 0.013972055888223553
+              },
+              "betSuccess": 0.14285714285714285,
+              "fixation": 1
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 0.981,
+              "round": 8.007135575942915
+            },
+            "bloodlusted": {
+              "rate": 0.378,
+              "round": 9.674603174603174
+            }
+          },
+          "shiftsPerFight": 1.359
+        },
+        {
+          "style": "alternator",
+          "name": "Alternator",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 7.571,
+            "success": 0.30973451327433627,
+            "fixation": 0.5938273809523786,
+            "predictability": 0.5285344696393243
+          },
+          "perFight": {
+            "lethal": 7.786,
+            "spread": 6.473,
+            "show": 1,
+            "tempo": -1.2457999999999854
+          },
+          "kinds": {
+            "interrupt": 4.571,
+            "strike": 1.429,
+            "signature": 3,
+            "wind-up": 1
+          },
+          "detail": {
+            "signatureRound": 17.542
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 7000,
+              "lethalPerMove": 0.9993571428571428,
+              "kinds": {
+                "interrupt": 0.43814285714285717,
+                "strike": 0.20414285714285715,
+                "signature": 0.3577142857142857
+              },
+              "betSuccess": 0.42092981511398314,
+              "fixation": 0.7254285714285648
+            },
+            "wrathful": {
+              "moves": 3000,
+              "lethalPerMove": 0.2635,
+              "kinds": {
+                "signature": 0.16533333333333333,
+                "wind-up": 0.3333333333333333,
+                "interrupt": 0.5013333333333333
+              },
+              "betSuccess": 0,
+              "fixation": 0.7635
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 8
+            }
+          },
+          "shiftsPerFight": 1
+        },
+        {
+          "style": "switcher",
+          "name": "Switcher",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 6,
+            "success": 0.7906666666666666,
+            "fixation": 0.9573333333333373,
+            "predictability": 0.7488
+          },
+          "perFight": {
+            "lethal": 15.1165,
+            "spread": 0.256,
+            "show": 0,
+            "tempo": -2.0000999999999745
+          },
+          "kinds": {
+            "interrupt": 3,
+            "signature": 3,
+            "strike": 4
+          },
+          "detail": {
+            "signatureRound": 9.999
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 4000,
+              "lethalPerMove": 2.404125,
+              "kinds": {
+                "interrupt": 0.33325,
+                "signature": 0.66675
+              },
+              "betSuccess": 0.936,
+              "fixation": 0.936
+            },
+            "wrathful": {
+              "moves": 2000,
+              "lethalPerMove": 0.75,
+              "kinds": {
+                "interrupt": 0.8335,
+                "signature": 0.1665
+              },
+              "betSuccess": 0.5,
+              "fixation": 1
+            },
+            "bloodlusted": {
+              "moves": 4000,
+              "lethalPerMove": 1,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 5
+            },
+            "bloodlusted": {
+              "rate": 1,
+              "round": 7
+            }
+          },
+          "shiftsPerFight": 2
+        },
+        {
+          "style": "contrarian",
+          "name": "Contrarian",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 8.081,
+            "success": 0.5183764385595843,
+            "fixation": 0.5381789682539689,
+            "predictability": 0.39288236124841125
+          },
+          "perFight": {
+            "lethal": 11.954,
+            "spread": 4.939,
+            "show": 0.001,
+            "tempo": -1.9309999999999805
+          },
+          "kinds": {
+            "interrupt": 5.081,
+            "signature": 3,
+            "strike": 1.918,
+            "wind-up": 0.001
+          },
+          "detail": {
+            "signatureRound": 10.69
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 5812,
+              "lethalPerMove": 1.617730557467309,
+              "kinds": {
+                "interrupt": 0.47229869236063315,
+                "signature": 0.5101514108740537,
+                "strike": 0.017549896765313145
+              },
+              "betSuccess": 0.6392294220665499,
+              "fixation": 0.5756571428571445
+            },
+            "wrathful": {
+              "moves": 2374,
+              "lethalPerMove": 0.3840564448188711,
+              "kinds": {
+                "interrupt": 0.9839932603201348,
+                "signature": 0.014743049705139006,
+                "strike": 0.0008424599831508003,
+                "wind-up": 0.00042122999157540015
+              },
+              "betSuccess": 0.22733024040489244,
+              "fixation": 0.7201666666666661
+            },
+            "bloodlusted": {
+              "moves": 1814,
+              "lethalPerMove": 0.9040793825799338,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 6.812
+            },
+            "bloodlusted": {
+              "rate": 0.944,
+              "round": 9.078389830508474
+            }
+          },
+          "shiftsPerFight": 1.944
+        },
+        {
+          "style": "second-guesser",
+          "name": "Second-guesser",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 8.121,
+            "success": 0.5056027582809999,
+            "fixation": 0.5313793650793652,
+            "predictability": 0.39053503721387445
+          },
+          "perFight": {
+            "lethal": 11.7115,
+            "spread": 4.959,
+            "show": 0,
+            "tempo": -1.9366999999999794
+          },
+          "kinds": {
+            "interrupt": 5.121,
+            "signature": 3,
+            "strike": 1.879
+          },
+          "detail": {
+            "signatureRound": 10.633
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 5798,
+              "lethalPerMove": 1.5791652293894447,
+              "kinds": {
+                "interrupt": 0.46998965160400136,
+                "signature": 0.5120731286650569,
+                "strike": 0.017937219730941704
+              },
+              "betSuccess": 0.6322444678609063,
+              "fixation": 0.5726345238095241
+            },
+            "wrathful": {
+              "moves": 2429,
+              "lethalPerMove": 0.39172498970769865,
+              "kinds": {
+                "interrupt": 0.9864141622066694,
+                "signature": 0.012762453684643887,
+                "strike": 0.0008233841086867024
+              },
+              "betSuccess": 0.20848784507622578,
+              "fixation": 0.723916666666666
+            },
+            "bloodlusted": {
+              "moves": 1773,
+              "lethalPerMove": 0.9046813310772701,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 6.798
+            },
+            "bloodlusted": {
+              "rate": 0.943,
+              "round": 9.11983032873807
+            }
+          },
+          "shiftsPerFight": 1.943
+        },
+        {
+          "style": "adaptive",
+          "name": "Adaptive",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 8.295,
+            "success": 0.47968655816757083,
+            "fixation": 0.49871865079365146,
+            "predictability": 0.35681973954763535
+          },
+          "perFight": {
+            "lethal": 10.69825,
+            "spread": 5.068,
+            "show": 0,
+            "tempo": -1.9194999999999802
+          },
+          "kinds": {
+            "interrupt": 5.295,
+            "signature": 3,
+            "strike": 1.705
+          },
+          "detail": {
+            "signatureRound": 10.805
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 5963,
+              "lethalPerMove": 1.3177930571859802,
+              "kinds": {
+                "interrupt": 0.4791212476941137,
+                "signature": 0.4979037397283247,
+                "strike": 0.02297501257756163
+              },
+              "betSuccess": 0.5475454857535187,
+              "fixation": 0.5196107142857149
+            },
+            "wrathful": {
+              "moves": 2469,
+              "lethalPerMove": 0.5914337788578372,
+              "kinds": {
+                "interrupt": 0.987444309437019,
+                "signature": 0.012555690562980963
+              },
+              "betSuccess": 0.3195625759416768,
+              "fixation": 0.7562666666666653
+            },
+            "bloodlusted": {
+              "moves": 1568,
+              "lethalPerMove": 0.8801020408163265,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 6.963
+            },
+            "bloodlusted": {
+              "rate": 0.904,
+              "round": 9.265486725663717
+            }
+          },
+          "shiftsPerFight": 1.904
+        },
+        {
+          "style": "tell-reader",
+          "name": "Tell-reader",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 8.359,
+            "success": 0.45794951549228374,
+            "fixation": 0.4828789682539685,
+            "predictability": 0.3177062100828917
+          },
+          "perFight": {
+            "lethal": 10.154,
+            "spread": 5.192,
+            "show": 0.003,
+            "tempo": -1.9171999999999825
+          },
+          "kinds": {
+            "interrupt": 5.359,
+            "signature": 3,
+            "strike": 1.638,
+            "wind-up": 0.003
+          },
+          "detail": {
+            "signatureRound": 10.828
+          },
+          "phases": {
+            "ruthless": {
+              "moves": 5955,
+              "lethalPerMove": 1.268639798488665,
+              "kinds": {
+                "interrupt": 0.4762384550797649,
+                "signature": 0.4979009235936188,
+                "strike": 0.02586062132661629
+              },
+              "betSuccess": 0.5235304257886572,
+              "fixation": 0.5213000000000004
+            },
+            "wrathful": {
+              "moves": 2565,
+              "lethalPerMove": 0.5517543859649123,
+              "kinds": {
+                "interrupt": 0.9836257309941521,
+                "signature": 0.01364522417153996,
+                "strike": 0.0015594541910331384,
+                "wind-up": 0.0011695906432748538
+              },
+              "betSuccess": 0.3092259577795152,
+              "fixation": 0.7259999999999985
+            },
+            "bloodlusted": {
+              "moves": 1480,
+              "lethalPerMove": 0.8,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "wrathful": {
+              "rate": 1,
+              "round": 6.955
+            },
+            "bloodlusted": {
+              "rate": 0.861,
+              "round": 9.281068524970964
+            }
+          },
+          "shiftsPerFight": 1.861
+        }
+      ]
+    }
+  ],
+  "insult": [
+    {
+      "step": {
+        "id": "hunting",
+        "name": "Hunting",
+        "slack": 0.4,
+        "mixing": 0.15,
+        "weights": {
+          "lethal": 0.5,
+          "spread": 0.5,
+          "show": 0.4,
+          "tempo": 0.8
+        },
+        "sharpness": 0.95,
+        "rashness": 0,
+        "explore": 0.2,
+        "disclosure": "name",
+        "waits": true
+      },
+      "styles": [
+        {
+          "style": "habitual",
+          "name": "Habitual",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 2.908,
+            "success": 0.4109353507565337,
+            "fixation": 0.6653456166317907,
+            "predictability": 0.2379746835443038
+          },
+          "perFight": {
+            "lethal": 7.77175,
+            "spread": 8.865,
+            "show": 6.31,
+            "tempo": -0.12699999999999964
+          },
+          "kinds": {
+            "wind-up": 6.31,
+            "interrupt": 1.998,
+            "strike": 0.782,
+            "signature": 0.91
+          },
+          "detail": {
+            "signatureRound": 7.83
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9631,
+              "lethalPerMove": 0.7417454054615304,
+              "kinds": {
+                "wind-up": 0.6551759941854428,
+                "interrupt": 0.19665662963347524,
+                "strike": 0.08109230609490188,
+                "signature": 0.06707507008618005
+              },
+              "betSuccess": 0.37401574803149606,
+              "fixation": 0.6771066197111218
+            },
+            "ruthless": {
+              "moves": 366,
+              "lethalPerMove": 1.7049180327868851,
+              "kinds": {
+                "signature": 0.7213114754098361,
+                "interrupt": 0.2786885245901639
+              },
+              "betSuccess": 0.6639344262295082,
+              "fixation": 0.6893742621015346
+            },
+            "wrathful": {
+              "moves": 3,
+              "lethalPerMove": 1.3333333333333333,
+              "kinds": {
+                "interrupt": 0.6666666666666666,
+                "strike": 0.3333333333333333
+              },
+              "betSuccess": 1,
+              "fixation": 1
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.121,
+              "round": 7.950413223140496
+            },
+            "wrathful": {
+              "rate": 0.002,
+              "round": 9.5
+            }
+          },
+          "shiftsPerFight": 0.123
+        },
+        {
+          "style": "by-the-book",
+          "name": "By the book",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 3.11,
+            "success": 0.4090032154340836,
+            "fixation": 0.6512722362618306,
+            "predictability": 0.2536063285248953
+          },
+          "perFight": {
+            "lethal": 7.616,
+            "spread": 8.872,
+            "show": 6.205,
+            "tempo": -0.15919999999999937
+          },
+          "kinds": {
+            "wind-up": 6.205,
+            "interrupt": 2.02,
+            "signature": 1.09,
+            "strike": 0.685
+          },
+          "detail": {
+            "signatureRound": 9.308
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9628,
+              "lethalPerMove": 0.7234887827170752,
+              "kinds": {
+                "wind-up": 0.6444744495222269,
+                "interrupt": 0.2000415454923141,
+                "signature": 0.0847528043207312,
+                "strike": 0.07073120066472788
+              },
+              "betSuccess": 0.37345003646973013,
+              "fixation": 0.6640429116495711
+            },
+            "ruthless": {
+              "moves": 366,
+              "lethalPerMove": 1.7663934426229508,
+              "kinds": {
+                "signature": 0.7486338797814208,
+                "interrupt": 0.24043715846994534,
+                "strike": 0.01092896174863388
+              },
+              "betSuccess": 0.6795580110497238,
+              "fixation": 0.7493796109993293
+            },
+            "wrathful": {
+              "moves": 6,
+              "lethalPerMove": 0.625,
+              "kinds": {
+                "interrupt": 1
+              },
+              "betSuccess": 0.3333333333333333,
+              "fixation": 0.8888888888888888
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.142,
+              "round": 8.380281690140846
+            },
+            "wrathful": {
+              "rate": 0.003,
+              "round": 9
+            }
+          },
+          "shiftsPerFight": 0.145
+        },
+        {
+          "style": "random",
+          "name": "Random",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 2.569,
+            "success": 0.21409108602569094,
+            "fixation": 0.672616419636287,
+            "predictability": 0.1900180396873121
+          },
+          "perFight": {
+            "lethal": 9.883875,
+            "spread": 8.785,
+            "show": 6.772,
+            "tempo": -0.09549999999999997
+          },
+          "kinds": {
+            "wind-up": 6.772,
+            "interrupt": 1.875,
+            "strike": 0.659,
+            "signature": 0.694
+          },
+          "detail": {
+            "signatureRound": 5.985
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9502,
+              "lethalPerMove": 1.0052225847190066,
+              "kinds": {
+                "wind-up": 0.7106924857924647,
+                "interrupt": 0.18974952641549148,
+                "strike": 0.06440749315933487,
+                "signature": 0.035150494632708904
+              },
+              "betSuccess": 0.2171268132896584,
+              "fixation": 0.6796015978135185
+            },
+            "ruthless": {
+              "moves": 445,
+              "lethalPerMove": 0.6853932584269663,
+              "kinds": {
+                "signature": 0.8089887640449438,
+                "strike": 0.10337078651685393,
+                "wind-up": 0.029213483146067417,
+                "interrupt": 0.058426966292134834
+              },
+              "betSuccess": 0.19689119170984457,
+              "fixation": 0.7374509803921573
+            },
+            "wrathful": {
+              "moves": 52,
+              "lethalPerMove": 0.5048076923076923,
+              "kinds": {
+                "interrupt": 0.8846153846153846,
+                "wind-up": 0.11538461538461539
+              },
+              "betSuccess": 0.21739130434782608,
+              "fixation": 0.9047619047619048
+            },
+            "bloodlusted": {
+              "moves": 1,
+              "lethalPerMove": 1,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.17,
+              "round": 8.070588235294117
+            },
+            "wrathful": {
+              "rate": 0.03,
+              "round": 9.233333333333333
+            },
+            "bloodlusted": {
+              "rate": 0.001,
+              "round": 10
+            }
+          },
+          "shiftsPerFight": 0.201
+        },
+        {
+          "style": "alternator",
+          "name": "Alternator",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 3.807,
+            "success": 0.24717625426845286,
+            "fixation": 0.5543087892433962,
+            "predictability": 0.1795236402417348
+          },
+          "perFight": {
+            "lethal": 4.565,
+            "spread": 8.898,
+            "show": 5.478,
+            "tempo": -0.15099999999999908
+          },
+          "kinds": {
+            "wind-up": 5.478,
+            "signature": 1.259,
+            "interrupt": 2.548,
+            "strike": 0.715
+          },
+          "detail": {
+            "signatureRound": 11.08
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9041,
+              "lethalPerMove": 0.37578807654020574,
+              "kinds": {
+                "wind-up": 0.6050215684105741,
+                "signature": 0.05519300962282933,
+                "interrupt": 0.27397411790731113,
+                "strike": 0.06581130405928548
+              },
+              "betSuccess": 0.18010752688172044,
+              "fixation": 0.571562709590878
+            },
+            "ruthless": {
+              "moves": 959,
+              "lethalPerMove": 1.2174139728884255,
+              "kinds": {
+                "signature": 0.7924921793534933,
+                "interrupt": 0.0740354535974974,
+                "strike": 0.1251303441084463,
+                "wind-up": 0.008342022940563087
+              },
+              "betSuccess": 0.48736462093862815,
+              "fixation": 0.668905472636815
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.335,
+              "round": 8.137313432835821
+            }
+          },
+          "shiftsPerFight": 0.335
+        },
+        {
+          "style": "switcher",
+          "name": "Switcher",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 2.533,
+            "success": 0.44966442953020136,
+            "fixation": 0.6879613534204243,
+            "predictability": 0.16390423572744015
+          },
+          "perFight": {
+            "lethal": 8.278,
+            "spread": 8.877,
+            "show": 6.623,
+            "tempo": -0.07869999999999998
+          },
+          "kinds": {
+            "interrupt": 1.751,
+            "wind-up": 6.623,
+            "signature": 0.782,
+            "strike": 0.844
+          },
+          "detail": {
+            "signatureRound": 7.033
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9755,
+              "lethalPerMove": 0.7866222450025628,
+              "kinds": {
+                "interrupt": 0.17447462839569453,
+                "wind-up": 0.6789338800615069,
+                "signature": 0.060071758072783185,
+                "strike": 0.08651973347001538
+              },
+              "betSuccess": 0.39903846153846156,
+              "fixation": 0.6983170037926675
+            },
+            "ruthless": {
+              "moves": 245,
+              "lethalPerMove": 2.4673469387755103,
+              "kinds": {
+                "signature": 0.8,
+                "interrupt": 0.2
+              },
+              "betSuccess": 0.9224489795918367,
+              "fixation": 0.7457352171637885
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.091,
+              "round": 8.307692307692308
+            }
+          },
+          "shiftsPerFight": 0.091
+        },
+        {
+          "style": "contrarian",
+          "name": "Contrarian",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 3.192,
+            "success": 0.3358395989974937,
+            "fixation": 0.6468332424888094,
+            "predictability": 0.2837292693859256
+          },
+          "perFight": {
+            "lethal": 7.472,
+            "spread": 8.829,
+            "show": 6.108,
+            "tempo": -0.16829999999999934
+          },
+          "kinds": {
+            "interrupt": 2.042,
+            "wind-up": 6.108,
+            "strike": 0.7,
+            "signature": 1.15
+          },
+          "detail": {
+            "signatureRound": 9.817
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9433,
+              "lethalPerMove": 0.6833987066680801,
+              "kinds": {
+                "interrupt": 0.20195059896109402,
+                "wind-up": 0.6474080356196332,
+                "strike": 0.07378352591964381,
+                "signature": 0.07685783949962896
+              },
+              "betSuccess": 0.26083650190114066,
+              "fixation": 0.6654638025865917
+            },
+            "ruthless": {
+              "moves": 562,
+              "lethalPerMove": 1.8220640569395017,
+              "kinds": {
+                "signature": 0.7562277580071174,
+                "interrupt": 0.23487544483985764,
+                "strike": 0.0071174377224199285,
+                "wind-up": 0.0017793594306049821
+              },
+              "betSuccess": 0.6912028725314183,
+              "fixation": 0.7585921325051757
+            },
+            "wrathful": {
+              "moves": 5,
+              "lethalPerMove": 0.3,
+              "kinds": {
+                "interrupt": 1
+              },
+              "betSuccess": 0.2,
+              "fixation": 0.875
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.207,
+              "round": 8.26086956521739
+            },
+            "wrathful": {
+              "rate": 0.004,
+              "round": 9.75
+            }
+          },
+          "shiftsPerFight": 0.211
+        },
+        {
+          "style": "second-guesser",
+          "name": "Second-guesser",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 3.102,
+            "success": 0.35009671179883944,
+            "fixation": 0.6533823651624702,
+            "predictability": 0.2729389846297159
+          },
+          "perFight": {
+            "lethal": 7.422625,
+            "spread": 8.853,
+            "show": 6.146,
+            "tempo": -0.16279999999999917
+          },
+          "kinds": {
+            "wind-up": 6.146,
+            "strike": 0.752,
+            "signature": 1.157,
+            "interrupt": 1.945
+          },
+          "detail": {
+            "signatureRound": 9.942
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9508,
+              "lethalPerMove": 0.6848311947833403,
+              "kinds": {
+                "wind-up": 0.6464030290281868,
+                "strike": 0.07909129154396298,
+                "signature": 0.08129995793016408,
+                "interrupt": 0.19320572149768617
+              },
+              "betSuccess": 0.28620689655172415,
+              "fixation": 0.6687210172026925
+            },
+            "ruthless": {
+              "moves": 487,
+              "lethalPerMove": 1.8711498973305956,
+              "kinds": {
+                "signature": 0.7885010266940452,
+                "interrupt": 0.21149897330595482
+              },
+              "betSuccess": 0.6960985626283368,
+              "fixation": 0.7476190476190476
+            },
+            "wrathful": {
+              "moves": 5,
+              "lethalPerMove": 0,
+              "kinds": {
+                "interrupt": 1
+              },
+              "betSuccess": 0,
+              "fixation": 0.5833333333333333
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.189,
+              "round": 8.396825396825397
+            },
+            "wrathful": {
+              "rate": 0.002,
+              "round": 8.5
+            }
+          },
+          "shiftsPerFight": 0.191
+        },
+        {
+          "style": "adaptive",
+          "name": "Adaptive",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 3.141,
+            "success": 0.3769500159184973,
+            "fixation": 0.6472426470588241,
+            "predictability": 0.24897213339424396
+          },
+          "perFight": {
+            "lethal": 7.210125,
+            "spread": 8.869,
+            "show": 6.144,
+            "tempo": -0.17419999999999927
+          },
+          "kinds": {
+            "wind-up": 6.144,
+            "interrupt": 2.009,
+            "strike": 0.715,
+            "signature": 1.132
+          },
+          "detail": {
+            "signatureRound": 9.578
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9556,
+              "lethalPerMove": 0.6893705525324404,
+              "kinds": {
+                "wind-up": 0.6429468396818753,
+                "interrupt": 0.1976768522394307,
+                "strike": 0.0744035161155295,
+                "signature": 0.0849727919631645
+              },
+              "betSuccess": 0.35172158459829694,
+              "fixation": 0.6609793917567028
+            },
+            "ruthless": {
+              "moves": 437,
+              "lethalPerMove": 1.414187643020595,
+              "kinds": {
+                "signature": 0.7299771167048055,
+                "interrupt": 0.2608695652173913,
+                "strike": 0.009153318077803204
+              },
+              "betSuccess": 0.5334872979214781,
+              "fixation": 0.7237784002489885
+            },
+            "wrathful": {
+              "moves": 7,
+              "lethalPerMove": 0.6428571428571429,
+              "kinds": {
+                "interrupt": 0.8571428571428571,
+                "signature": 0.14285714285714285
+              },
+              "betSuccess": 0.42857142857142855,
+              "fixation": 0.875
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.153,
+              "round": 8.098039215686274
+            },
+            "wrathful": {
+              "rate": 0.004,
+              "round": 9.25
+            }
+          },
+          "shiftsPerFight": 0.157
+        },
+        {
+          "style": "tell-reader",
+          "name": "Tell-reader",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 3.113,
+            "success": 0.38387407645358174,
+            "fixation": 0.651863551525362,
+            "predictability": 0.22908921933085502
+          },
+          "perFight": {
+            "lethal": 7.135875,
+            "spread": 8.852,
+            "show": 6.138,
+            "tempo": -0.16569999999999924
+          },
+          "kinds": {
+            "wind-up": 6.138,
+            "interrupt": 2.004,
+            "signature": 1.109,
+            "strike": 0.749
+          },
+          "detail": {
+            "signatureRound": 9.433
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9581,
+              "lethalPerMove": 0.6777345788539818,
+              "kinds": {
+                "wind-up": 0.6406429391504018,
+                "interrupt": 0.19736979438471977,
+                "signature": 0.08412483039348712,
+                "strike": 0.07786243607139129
+              },
+              "betSuccess": 0.35372636262513907,
+              "fixation": 0.6646614802702209
+            },
+            "ruthless": {
+              "moves": 406,
+              "lethalPerMove": 1.5652709359605912,
+              "kinds": {
+                "signature": 0.7463054187192119,
+                "interrupt": 0.24876847290640394,
+                "strike": 0.0049261083743842365
+              },
+              "betSuccess": 0.5866336633663366,
+              "fixation": 0.7368243243243245
+            },
+            "wrathful": {
+              "moves": 13,
+              "lethalPerMove": 0.5384615384615384,
+              "kinds": {
+                "interrupt": 0.9230769230769231,
+                "strike": 0.07692307692307693
+              },
+              "betSuccess": 0.3333333333333333,
+              "fixation": 0.8928571428571429
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.148,
+              "round": 8.16891891891892
+            },
+            "wrathful": {
+              "rate": 0.007,
+              "round": 9.142857142857142
+            }
+          },
+          "shiftsPerFight": 0.155
+        }
+      ]
+    },
+    {
+      "step": {
+        "id": "hunting",
+        "name": "Hunting",
+        "slack": 0.4,
+        "mixing": 0.15,
+        "weights": {
+          "lethal": 0.5,
+          "spread": 0.5,
+          "show": 0.4,
+          "tempo": 0.8
+        },
+        "sharpness": 0.95,
+        "rashness": 0,
+        "explore": 0.2,
+        "disclosure": "name",
+        "waits": true
+      },
+      "styles": [
+        {
+          "style": "habitual",
+          "name": "Habitual",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 3.133,
+            "success": 0.44206830513884454,
+            "fixation": 0.659042188805347,
+            "predictability": 0.26706367384333485
+          },
+          "perFight": {
+            "lethal": 8.629875,
+            "spread": 8.792,
+            "show": 6.064,
+            "tempo": -0.14759999999999943
+          },
+          "kinds": {
+            "wind-up": 6.064,
+            "interrupt": 2.08,
+            "signature": 1.053,
+            "strike": 0.803
+          },
+          "detail": {
+            "signatureRound": 9.054
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9625,
+              "lethalPerMove": 0.8043506493506494,
+              "kinds": {
+                "wind-up": 0.630025974025974,
+                "interrupt": 0.20467532467532468,
+                "signature": 0.08187012987012987,
+                "strike": 0.08342857142857144
+              },
+              "betSuccess": 0.4028281363306744,
+              "fixation": 0.6614686716791982
+            },
+            "ruthless": {
+              "moves": 370,
+              "lethalPerMove": 2.3756756756756756,
+              "kinds": {
+                "signature": 0.7162162162162162,
+                "interrupt": 0.28378378378378377
+              },
+              "betSuccess": 0.7297297297297297,
+              "fixation": 0.7780423280423281
+            },
+            "wrathful": {
+              "moves": 5,
+              "lethalPerMove": 1.8,
+              "kinds": {
+                "interrupt": 1
+              },
+              "betSuccess": 0.8,
+              "fixation": 0.8333333333333334
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.126,
+              "round": 8.023809523809524
+            },
+            "wrathful": {
+              "rate": 0.003,
+              "round": 9.333333333333334
+            }
+          },
+          "shiftsPerFight": 0.129
+        },
+        {
+          "style": "by-the-book",
+          "name": "By the book",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 2.901,
+            "success": 0.43157531885556705,
+            "fixation": 0.6557623400977829,
+            "predictability": 0.23246287762416795
+          },
+          "perFight": {
+            "lethal": 8.014875,
+            "spread": 8.909,
+            "show": 6.31,
+            "tempo": -0.12759999999999969
+          },
+          "kinds": {
+            "wind-up": 6.31,
+            "strike": 0.789,
+            "interrupt": 1.877,
+            "signature": 1.024
+          },
+          "detail": {
+            "signatureRound": 8.964
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9742,
+              "lethalPerMove": 0.775597926503798,
+              "kinds": {
+                "wind-up": 0.6477109423116403,
+                "strike": 0.0809895298706631,
+                "interrupt": 0.18774378977622666,
+                "signature": 0.08355573804146993
+              },
+              "betSuccess": 0.4139235716988271,
+              "fixation": 0.6629797066505924
+            },
+            "ruthless": {
+              "moves": 258,
+              "lethalPerMove": 1.7790697674418605,
+              "kinds": {
+                "signature": 0.813953488372093,
+                "interrupt": 0.18604651162790697
+              },
+              "betSuccess": 0.6124031007751938,
+              "fixation": 0.7672294372294374
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.11,
+              "round": 8.654545454545454
+            }
+          },
+          "shiftsPerFight": 0.11
+        },
+        {
+          "style": "random",
+          "name": "Random",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 2.548,
+            "success": 0.19976452119309263,
+            "fixation": 0.6659182912538614,
+            "predictability": 0.1777509068923821
+          },
+          "perFight": {
+            "lethal": 9.791875,
+            "spread": 8.777,
+            "show": 6.752,
+            "tempo": -0.08879999999999998
+          },
+          "kinds": {
+            "wind-up": 6.752,
+            "strike": 0.7,
+            "signature": 0.656,
+            "interrupt": 1.892
+          },
+          "detail": {
+            "signatureRound": 5.672
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9493,
+              "lethalPerMove": 0.9946407879490151,
+              "kinds": {
+                "wind-up": 0.7090487727799432,
+                "strike": 0.06878752765195408,
+                "signature": 0.030548825450331822,
+                "interrupt": 0.19161487411777098
+              },
+              "betSuccess": 0.2024656235182551,
+              "fixation": 0.6700676467454991
+            },
+            "ruthless": {
+              "moves": 448,
+              "lethalPerMove": 0.7170758928571429,
+              "kinds": {
+                "signature": 0.8147321428571429,
+                "strike": 0.10267857142857142,
+                "interrupt": 0.03794642857142857,
+                "wind-up": 0.044642857142857144
+              },
+              "betSuccess": 0.1806282722513089,
+              "fixation": 0.7816056910569108
+            },
+            "wrathful": {
+              "moves": 58,
+              "lethalPerMove": 0.49137931034482757,
+              "kinds": {
+                "interrupt": 0.9655172413793104,
+                "signature": 0.017241379310344827,
+                "wind-up": 0.017241379310344827
+              },
+              "betSuccess": 0.22807017543859648,
+              "fixation": 0.8440860215053764
+            },
+            "bloodlusted": {
+              "moves": 1,
+              "lethalPerMove": 0,
+              "kinds": {
+                "strike": 1
+              },
+              "betSuccess": null,
+              "fixation": null
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.167,
+              "round": 7.9640718562874255
+            },
+            "wrathful": {
+              "rate": 0.032,
+              "round": 9.15625
+            },
+            "bloodlusted": {
+              "rate": 0.001,
+              "round": 10
+            }
+          },
+          "shiftsPerFight": 0.2
+        },
+        {
+          "style": "alternator",
+          "name": "Alternator",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 3.909,
+            "success": 0.24609874648247634,
+            "fixation": 0.544076909496525,
+            "predictability": 0.17191780821917807
+          },
+          "perFight": {
+            "lethal": 4.551375,
+            "spread": 8.893,
+            "show": 5.409,
+            "tempo": -0.17289999999999894
+          },
+          "kinds": {
+            "wind-up": 5.409,
+            "interrupt": 2.591,
+            "signature": 1.318,
+            "strike": 0.682
+          },
+          "detail": {
+            "signatureRound": 11.451
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9023,
+              "lethalPerMove": 0.37652388340906573,
+              "kinds": {
+                "wind-up": 0.599357198271085,
+                "interrupt": 0.26343788097085225,
+                "signature": 0.0643910007757952,
+                "strike": 0.07281391998226754
+              },
+              "betSuccess": 0.18492224475997296,
+              "fixation": 0.5680196446627185
+            },
+            "ruthless": {
+              "moves": 977,
+              "lethalPerMove": 1.1811668372569089,
+              "kinds": {
+                "signature": 0.7543500511770727,
+                "interrupt": 0.21903787103377687,
+                "strike": 0.0255885363357216,
+                "wind-up": 0.0010235414534288639
+              },
+              "betSuccess": 0.4363827549947424,
+              "fixation": 0.6409462166743716
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.309,
+              "round": 7.8381877022653725
+            }
+          },
+          "shiftsPerFight": 0.309
+        },
+        {
+          "style": "switcher",
+          "name": "Switcher",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 2.611,
+            "success": 0.46074301034086557,
+            "fixation": 0.675234802800305,
+            "predictability": 0.17817109144542773
+          },
+          "perFight": {
+            "lethal": 8.4095,
+            "spread": 8.886,
+            "show": 6.556,
+            "tempo": -0.09159999999999993
+          },
+          "kinds": {
+            "interrupt": 1.752,
+            "wind-up": 6.556,
+            "strike": 0.833,
+            "signature": 0.859
+          },
+          "detail": {
+            "signatureRound": 7.674
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9730,
+              "lethalPerMove": 0.7959917780061665,
+              "kinds": {
+                "interrupt": 0.17399794450154163,
+                "wind-up": 0.6737923946557041,
+                "strike": 0.0856115107913669,
+                "signature": 0.06659815005138746
+              },
+              "betSuccess": 0.40666381888082015,
+              "fixation": 0.6820856726970266
+            },
+            "ruthless": {
+              "moves": 270,
+              "lethalPerMove": 2.4611111111111112,
+              "kinds": {
+                "signature": 0.7814814814814814,
+                "interrupt": 0.21851851851851853
+              },
+              "betSuccess": 0.9296296296296296,
+              "fixation": 0.7124941065535125
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.101,
+              "round": 8.326732673267326
+            }
+          },
+          "shiftsPerFight": 0.101
+        },
+        {
+          "style": "contrarian",
+          "name": "Contrarian",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 2.853,
+            "success": 0.30564318261479145,
+            "fixation": 0.6380288892269721,
+            "predictability": 0.20950888192267503
+          },
+          "perFight": {
+            "lethal": 7.089875,
+            "spread": 8.862,
+            "show": 6.35,
+            "tempo": -0.12159999999999979
+          },
+          "kinds": {
+            "strike": 0.797,
+            "wind-up": 6.35,
+            "interrupt": 1.935,
+            "signature": 0.918
+          },
+          "detail": {
+            "signatureRound": 7.964
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9542,
+              "lethalPerMove": 0.6539902536155943,
+              "kinds": {
+                "strike": 0.08331586669461329,
+                "wind-up": 0.6654789352337036,
+                "interrupt": 0.19314609096625446,
+                "signature": 0.05805910710542863
+              },
+              "betSuccess": 0.24363788068418857,
+              "fixation": 0.6448349307774227
+            },
+            "ruthless": {
+              "moves": 455,
+              "lethalPerMove": 1.867032967032967,
+              "kinds": {
+                "signature": 0.8,
+                "interrupt": 0.1956043956043956,
+                "strike": 0.004395604395604396
+              },
+              "betSuccess": 0.6357615894039735,
+              "fixation": 0.7562292358803989
+            },
+            "wrathful": {
+              "moves": 3,
+              "lethalPerMove": 0,
+              "kinds": {
+                "interrupt": 1
+              },
+              "betSuccess": 0,
+              "fixation": 1
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.172,
+              "round": 8.337209302325581
+            },
+            "wrathful": {
+              "rate": 0.003,
+              "round": 10
+            }
+          },
+          "shiftsPerFight": 0.175
+        },
+        {
+          "style": "second-guesser",
+          "name": "Second-guesser",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 2.955,
+            "success": 0.34483925549915395,
+            "fixation": 0.6399486119412904,
+            "predictability": 0.21410705352676337
+          },
+          "perFight": {
+            "lethal": 7.47225,
+            "spread": 8.894,
+            "show": 6.23,
+            "tempo": -0.12439999999999968
+          },
+          "kinds": {
+            "wind-up": 6.23,
+            "interrupt": 1.979,
+            "signature": 0.976,
+            "strike": 0.815
+          },
+          "detail": {
+            "signatureRound": 8.516
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9573,
+              "lethalPerMove": 0.6973258121800898,
+              "kinds": {
+                "wind-up": 0.6507886764859501,
+                "interrupt": 0.19743027264180507,
+                "signature": 0.06675023503603886,
+                "strike": 0.085030815836206
+              },
+              "betSuccess": 0.29537366548042704,
+              "fixation": 0.6494471010161387
+            },
+            "ruthless": {
+              "moves": 426,
+              "lethalPerMove": 1.8703051643192488,
+              "kinds": {
+                "signature": 0.7910798122065728,
+                "interrupt": 0.20657276995305165,
+                "strike": 0.002347417840375587
+              },
+              "betSuccess": 0.64,
+              "fixation": 0.7470728291316527
+            },
+            "wrathful": {
+              "moves": 1,
+              "lethalPerMove": 0,
+              "kinds": {
+                "interrupt": 1
+              },
+              "betSuccess": 0,
+              "fixation": 1
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.17,
+              "round": 8.488235294117647
+            },
+            "wrathful": {
+              "rate": 0.001,
+              "round": 10
+            }
+          },
+          "shiftsPerFight": 0.171
+        },
+        {
+          "style": "adaptive",
+          "name": "Adaptive",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 3.032,
+            "success": 0.4046833773087071,
+            "fixation": 0.6437535806962567,
+            "predictability": 0.23349282296650717
+          },
+          "perFight": {
+            "lethal": 7.69125,
+            "spread": 8.875,
+            "show": 6.173,
+            "tempo": -0.1445999999999994
+          },
+          "kinds": {
+            "wind-up": 6.173,
+            "interrupt": 1.972,
+            "signature": 1.06,
+            "strike": 0.795
+          },
+          "detail": {
+            "signatureRound": 9.154
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9650,
+              "lethalPerMove": 0.7411139896373057,
+              "kinds": {
+                "wind-up": 0.6395854922279792,
+                "interrupt": 0.19544041450777203,
+                "signature": 0.0827979274611399,
+                "strike": 0.08217616580310881
+              },
+              "betSuccess": 0.38584729981378024,
+              "fixation": 0.6561823880295222
+            },
+            "ruthless": {
+              "moves": 343,
+              "lethalPerMove": 1.5575801749271136,
+              "kinds": {
+                "signature": 0.760932944606414,
+                "interrupt": 0.2303206997084548,
+                "strike": 0.0058309037900874635,
+                "wind-up": 0.0029154518950437317
+              },
+              "betSuccess": 0.5529411764705883,
+              "fixation": 0.7613275613275614
+            },
+            "wrathful": {
+              "moves": 7,
+              "lethalPerMove": 0.75,
+              "kinds": {
+                "interrupt": 1
+              },
+              "betSuccess": 0.42857142857142855,
+              "fixation": 1
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.132,
+              "round": 8.348484848484848
+            },
+            "wrathful": {
+              "rate": 0.005,
+              "round": 9.6
+            }
+          },
+          "shiftsPerFight": 0.137
+        },
+        {
+          "style": "tell-reader",
+          "name": "Tell-reader",
+          "fights": 1000,
+          "bets": {
+            "fights": 1000,
+            "betsPerFight": 3.013,
+            "success": 0.41885164288084964,
+            "fixation": 0.6479288862378628,
+            "predictability": 0.21995133819951337
+          },
+          "perFight": {
+            "lethal": 7.824625,
+            "spread": 8.88,
+            "show": 6.186,
+            "tempo": -0.13709999999999958
+          },
+          "kinds": {
+            "wind-up": 6.186,
+            "interrupt": 1.991,
+            "strike": 0.801,
+            "signature": 1.022
+          },
+          "detail": {
+            "signatureRound": 8.849
+          },
+          "phases": {
+            "hunting": {
+              "moves": 9694,
+              "lethalPerMove": 0.7556349288219517,
+              "kinds": {
+                "wind-up": 0.638023519702909,
+                "interrupt": 0.19713224675056737,
+                "strike": 0.08252527336496802,
+                "signature": 0.0823189601815556
+              },
+              "betSuccess": 0.4034699150978221,
+              "fixation": 0.6547842727905359
+            },
+            "ruthless": {
+              "moves": 296,
+              "lethalPerMove": 1.6722972972972974,
+              "kinds": {
+                "signature": 0.7567567567567568,
+                "interrupt": 0.23986486486486486,
+                "strike": 0.0033783783783783786
+              },
+              "betSuccess": 0.5661016949152542,
+              "fixation": 0.717026055705301
+            },
+            "wrathful": {
+              "moves": 10,
+              "lethalPerMove": 0.45,
+              "kinds": {
+                "interrupt": 0.9,
+                "wind-up": 0.1
+              },
+              "betSuccess": 0.2222222222222222,
+              "fixation": 0.9444444444444445
+            }
+          },
+          "shifts": {
+            "ruthless": {
+              "rate": 0.106,
+              "round": 8.11320754716981
+            },
+            "wrathful": {
+              "rate": 0.007,
+              "round": 9.571428571428571
+            }
+          },
+          "shiftsPerFight": 0.113
+        }
+      ]
+    }
+  ]
+}

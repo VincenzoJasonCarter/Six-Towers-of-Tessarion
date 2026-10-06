@@ -33,10 +33,13 @@ src/engine/            what the real engine will be built from
   belief/ensemble.ts   model C: Bayesian model averaging over other models
   decision/temperament.ts  the temperament steps and their levers (DESIGN.md 5)
   decision/decide.ts   expected utility, care, mixing, sharpness, rashness, exploration
+  decision/shift.ts    temperament shifting mid-fight: triggers, the enrage, the insult
   module.ts            the module interface: moments, options, announce, resolve
   brain.ts             one boss in one fight: belief + temperament + module
-src/modules/reference/ the four abstract reference modules (DESIGN.md 6.1)
-  bet.ts, punish.ts, spend.ts, telegraph.ts, common.ts (fight values, reads)
+src/modules/           modules: what each boss supplies
+  common.ts            fight values, reads, the warning model
+  placeholder.ts       the Placeholder Boss, a lore-free boss for the table (DESIGN.md 6.2)
+  reference/           the four abstract reference modules (DESIGN.md 6.1)
 src/harness/           the research harness (DESIGN.md 8)
   players.ts           synthetic players, nine styles (M2 used the first eight)
   fight.ts             one simulated fight, for any Prophet; the spike's prophecy policy
@@ -50,6 +53,8 @@ src/harness/           the research harness (DESIGN.md 8)
   m3.ts                the M3 protocol: calibrate the temperament steps
   bout.ts              one fight against any module, and its suite and scores
   m4.ts                the M4 protocol: the interface and the reference modules
+  m4b.ts               the M4b check: the Placeholder Boss, on several fittings
+  m4c.ts               the M4c check: temperament shifting mid-fight
 test/                  unit tests, including one that pins the spike's numbers
 reports/               harness output: <name>.md to read, <name>.json raw
 prophet/model.js       the original throwaway spike, kept for reference
@@ -75,6 +80,9 @@ npm run compare -- --quick                       # smoke test of the protocol; n
 npm run compare:m2b                              # the M2b protocol → reports/m2b-wary.md (several minutes)
 npm run compare:m3                               # the M3 protocol → reports/m3-temperament.md (about 15 minutes)
 npm run compare:m4                               # the M4 protocol → reports/m4-modules.md (about half an hour)
+npm run compare:m4b                              # the Placeholder check → reports/m4b-placeholder.md (a few minutes)
+npm run compare:m4b -- --variant typical         # the same on another fitting: no-interrupt, recharge, typical, multiattack
+npm run compare:m4c                              # the shift check → reports/m4c-shift.md (a few minutes)
 ```
 
 Or from the repo root: `make boss-brain-test` and `make boss-brain-harness

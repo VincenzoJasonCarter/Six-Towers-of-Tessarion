@@ -228,6 +228,7 @@ What the dial moves:
 | **Rashness** | Stakes a share r of each forecast on the player doing their last action again | none → none → most of it: it jumps to conclusions |
 | **Exploration** | Bonus for betting where the forecast is unsure (its entropy), to learn | high → none → none |
 | **Disclosure** | Which level `announce` uses | full → hidden → full |
+| **Patience** | Whether it will wait for a trigger: ready a reaction, wind up | waits → waits → Bloodlusted won't |
 
 **Care and mixing are different things.** A boss can be careful and still
 hard to read: against players who learn the boss, always making the same
@@ -243,6 +244,13 @@ same bet at any β: it would be more sure, not more wrong. Jumping to
 conclusions has to change *what* the boss believes. A rash boss reads a
 player by their last move ("you struck me, you'll strike again"), and a
 party can use that: do something once, then do something else.
+
+**Patience** is a rule of character too, like disclosure. A module marks
+the moves that wait for a trigger (a readied reaction, a wind-up), and a step
+that won't wait is never offered them. Every step waits but Bloodlusted:
+Wrathful is angry and still counter-punches ("do that again, I dare you"),
+Bloodlusted is past caring for strategy and only hits. It is also what tells
+the two hot steps apart where their bet success doesn't (M3, point 4).
 
 **Values** rise in one direction: `lethal` grows from one end of the dial to
 the other. A negative `spread` weight is **fixation**: the boss is rewarded
@@ -265,13 +273,13 @@ it.
 As calibrated in M3 ([M3 results](#m3-results)); the tuned levers are in
 bold, and the rest are the design's choice:
 
-| Step | Slack | Mixing temp. | `lethal` | `spread` | `show` | `tempo` | β | Rashness | Explore | Disclosure |
-|---|---|---|---|---|---|---|---|---|---|---|
-| Curious | 30% | **0.15** | 0.2 | 1.0 | 1.0 | 0.5 | **0.9** | 0 | 0.5 | full |
-| Hunting | **40%** | **0.15** | 0.5 | 0.5 | 0.4 | 0.8 | **0.95** | 0 | 0.2 | name only |
-| **Ruthless** | 5% | **0.03** | 0.8 | 0.2 | 0 | 1.0 | 1.0 | 0 | 0.1 | hidden |
-| Wrathful | 2% | 0.05 | 0.9 | −0.1 | 0.1 | 1.0 | 1.0 | **0.6** | 0 | name only |
-| Bloodlusted | 0% | 0 | 1.0 | −0.6 | 0 | 0.8 | 1.0 | **0.8** | 0 | full |
+| Step | Slack | Mixing temp. | `lethal` | `spread` | `show` | `tempo` | β | Rashness | Explore | Disclosure | Waits |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| Curious | 30% | **0.15** | 0.2 | 1.0 | 1.0 | 0.5 | **0.9** | 0 | 0.5 | full | yes |
+| Hunting | **40%** | **0.15** | 0.5 | 0.5 | 0.4 | 0.8 | **0.95** | 0 | 0.2 | name only | yes |
+| **Ruthless** | 5% | **0.03** | 0.8 | 0.2 | 0 | 1.0 | 1.0 | 0 | 0.1 | hidden | yes |
+| Wrathful | 2% | 0.05 | 0.9 | −0.1 | 0.1 | 1.0 | 1.0 | **0.6** | 0 | name only | yes |
+| Bloodlusted | 0% | 0 | 1.0 | −0.6 | 0 | 0.8 | 1.0 | **0.8** | 0 | full | **no** |
 
 On the hot side `show` is all but gone (0.1, then 0): rage shouts its
 intentions (disclosure) but has no patience to wind up (drama). `lethal` and `show` were checked in M4 against modules that have them, and
@@ -305,7 +313,30 @@ Temperament can move by itself in response to the fight, for example:
 - an insult to the boss (a minion slain, a prophecy defied three times),
 - a round count (the boss tires of playing).
 
-Each module declares its triggers. A separate and more contentious idea
+Each module declares its triggers. As built (`src/engine/decision/shift.ts`):
+
+- A **trigger** has a condition and a target: a step ("below a quarter HP:
+  Bloodlusted"), or one step hotter or cooler ("foiled three times running:
+  hotter"). Triggers are checked at the start of each round, before the
+  boss chooses. One fires once a fight unless it repeats; one that repeats
+  fires each time its condition turns true again, not every round it stays
+  true.
+- Triggers see only **generic signals**: the round, the boss's HP as a
+  share of its maximum (a module event the DM records), the bets the table
+  has seen and how many came true, the bets foiled in a row, and the module
+  events so far. Escalating when the party impresses Setanta is a module
+  event ("impressed") and a trigger on it.
+- A shift changes **only the temperament**. The belief carries on, so a boss
+  that loses its temper still remembers everything it read.
+- Two ready-made sets: the **enrage** (Wrathful below half HP, Bloodlusted
+  below a quarter) and the **insult** (each third bet foiled in a row: one
+  step hotter).
+
+The brain's enrage makes the boss sloppier and easier to read, not
+stronger: its moves pay what they pay. If an enraged boss should also hit
+harder, that is its stat block's to say, not the brain's.
+
+A separate and more contentious idea
 is a **director** mode, as in Left 4 Dead's AI Director: shift temperament to
 keep the fight tense, easing off when the party is near a wipe and tightening
 when they are coasting. That makes the brain a fun-maximiser rather than a
@@ -389,7 +420,46 @@ rewind is decided after a hero's turn, hence *moments*; the Hoardwyrm's coin
 and the Prophet's killing blows are not action categories, hence *module
 events*. Both were added before any M4 run.
 
-#### The Threadkeeper Failed Prophet
+#### Placeholder Boss
+
+A boss with no lore (`src/modules/placeholder.ts`), to drape over any
+monster's stat block until a real boss module exists, so the table tool
+(M5) has something to run. It combines the reference modules: the shapes
+of decision M4 tested one at a time compete in one choice. Each round it
+makes one move:
+
+| Move | At the table | Pays off |
+|---|---|---|
+| **Strike** | the monster's ordinary attack | `lethal` 1 unless the target Guards |
+| **Wind-up** | its big attack, announced at the start of the round, made on its turn; waits | `lethal` 1.5 unless the target Guards; `show` 1 |
+| **Interrupt** | a readied reaction against one hero's action ("if Kael heals, I cut it"), announced at the step's disclosure; waits | `lethal` 1.5 × the action's fight value |
+| **Signature** | its limited ability (legendary, recharge), three uses a fight | `lethal` 3 × the action's fight value; spending a use costs the `tempo` of holding it, the share of the fight still to come |
+
+An interrupt pays 1.5 times what it cuts so that a sure read beats a plain
+strike (about 0.8 against 0.9 at par) and reading matters; at par, a
+strike would win nearly every round. All five numbers are placeholders.
+
+**Fitting the Placeholder** to a stat block (`placeholderWith`): Strike's
+`lethal` (2 for a two-attack Multiattack), whether the monster has a
+reaction to ready (most don't), and whether its limited ability has a
+number of uses or a 5e recharge. The bestiary's bosses and elites, fitted:
+
+| Monster | Strike | Wind-up | Interrupt | Signature | What doesn't fit |
+|---|---|---|---|---|---|
+| Resonance Construct | Ledger Crush | Gravity Well | none | Gravity Well, recharge 5–6 | the Stabilizer pillars; its phases |
+| Setanta | Heavy Kick | Heavy Kick | none | Gae Bolg | escalating when the party impresses him |
+| Smuggler-King Hydraform | Bite ×2 | | none | | hiding to set up an ambush |
+| Scavenger Leader | Greataxe ×2 | | Scrap Shield | | |
+| Iron-Hound | Saw Bite | | none | Wire-Net, recharge 5–6 | |
+| Blighted Audit Drone | Correction Beam | | none | Mana Flash, recharge 5–6 | Mana Flash is an area |
+| Alpha Mite | Static Chain | | none | | Static Chain hits several targets |
+
+What doesn't fit falls in three kinds, none of them the Placeholder's to
+solve: **areas and several targets** (every option names one hero),
+**escalation and phases** (temperament shifting mid-fight, 5.3, designed
+but not built), and **objectives and set-ups** (pillars to guard, hiding
+for an ambush: decisions that aren't about a hero, for a real boss module).
+
 
 From `data/enemies.yaml`: at round start the Prophet declares a prediction, and
 each one that comes true gives an Echo Charge. At 3 charges it rewinds the
@@ -1127,6 +1197,174 @@ What M5 and later have to know:
    The 50% heed rate is an assumption, and the size of every Telegraph
    number rests on it; playtests (M6) should measure it.
 
+### M4b: Placeholder Boss check
+
+Written before any numbers existed. There is nothing to tune: the check
+runs the M3 steps through the Placeholder Boss (6.2) and asks whether the
+behaviour M4 found in each shape survives when the shapes compete. A failed
+check is a question for the design, answered before the boss goes to the
+table.
+
+**Checks**, against ordinary play, mean over the two parties:
+
+1. *The bell.* `lethal` per fight rises from Curious to Ruthless, and
+   Ruthless is above both hot steps.
+2. *Rage is frightening.* Bloodlusted deals more `lethal` per fight than
+   Curious.
+3. *Impatience.* Bloodlusted uses its signature earliest (the mean round of
+   a signature is lowest).
+4. *Wind-ups.* Highest at Curious, under 10% at Ruthless, Wrathful and
+   Bloodlusted.
+5. *No dead move.* Every one of the four moves is at least 5% of some
+   step's moves.
+
+**Data.** Seed 2, 1000 fights per style, all nine styles, both parties of
+M2, 10 rounds. Belief: model C at its M2 settings; steps as calibrated.
+Written to `reports/m4b-placeholder.md` and `.json`.
+
+### M4b results
+
+Run with `npm run compare:m4b`; full numbers in
+[reports/m4b-placeholder.md](reports/m4b-placeholder.md). **Every check
+holds.** The same checks were then run on four other fittings
+(`--variant`), each a shape the bestiary's stat blocks actually have:
+
+| Fitting | Bell | Rage | Impatience | Wind-ups | No dead move |
+|---|---|---|---|---|---|
+| default: a reaction, three signature uses | yes | yes | yes | yes | yes |
+| `no-interrupt`: no reaction | yes | yes | yes | yes | yes |
+| `recharge`: signature on Recharge 5–6 | yes | yes | **no** | yes | yes |
+| `typical`: no reaction, recharge | yes | yes | **no** | yes | yes |
+| `multiattack`: Strike 2, no reaction, recharge | yes | yes | yes | yes | yes |
+
+| Default fitting | Curious | Hunting | Ruthless | Wrathful | Bloodlusted |
+|---|---|---|---|---|---|
+| `lethal` / fight | 6.60 | 7.51 | **13.17** | 10.59 | 9.55 |
+| Strike / Wind-up / Interrupt / Signature | 0 / 96 / 4 / 0% | 8 / 64 / 20 / 9% | 2 / 0 / 68 / 30% | 10 / 0 / 60 / 30% | 5 / 0 / 65 / 30% |
+
+What M5 and later have to know:
+
+1. **The steps keep their character on every fitting.** The peak at
+   Ruthless, rage above curiosity, and wind-ups only from the cool steps
+   hold on all five, so the Placeholder can be draped over any monster in
+   the bestiary shaped like "attack, big attack, limited ability".
+2. **A recharge leaves no room for patience, and that is right.** On
+   Recharge 5–6, Ruthless, Wrathful and Bloodlusted all use the signature as
+   soon as it is back (mean round 4.8–5.0): holding a recharge ability
+   wastes the rolls that bring it back, so even the cold boss spends it.
+   Impatience only shows with a fixed number of uses; check 3 means
+   something only for those.
+3. **Without a reaction, the hot side just hits** (Strike 62–70%). Most of
+   the bestiary has no reaction, so this is the common case.
+4. **With a reaction, the hot side lies in wait.** In the default fitting,
+   Bloodlusted readies an interrupt 65% of the time: its rashness is sure
+   the player will do it again, and an interrupt pays 1.5 times when right.
+   It reads as "do that again, I dare you", and it is exploitable the way
+   rashness should be (players who switch every turn beat it), but it is
+   not the all-out swinging the hot side does elsewhere. A question for the
+   design before the table (M5).
+5. **Curious is very gentle against a strong strike.** With Multiattack it
+   still winds up every round (1.5 against a Strike of 2), dealing less
+   than half of Hunting. It stays in character; the gap is widest here.
+
+### M4c: temperament shift check
+
+Written before any numbers existed. Nothing is tuned; the check asks whether
+shifts behave as 5.3 says they should.
+
+**Setup.** The Placeholder Boss (default fitting), starting at Ruthless,
+with the enrage triggers, against a boss of 30 HP on a crude clock: each
+Strike, Shoot or Cast a hero takes deals it 1. Separately, the insult
+trigger alone, starting at Hunting. Seed 2, 1000 fights per style, all nine
+styles, both parties, 10 rounds. Belief: model C at its M2 settings.
+Written to `reports/m4c-shift.md` and `.json`.
+
+**Checks**, against ordinary play unless said otherwise, mean over the
+parties:
+
+1. *The enrage happens.* At least 90% of fights reach Wrathful, and
+   Wrathful comes before Bloodlusted (its mean round is earlier).
+2. *Each phase keeps its step's character.* Fixation is higher in the
+   Bloodlusted phase than in the Ruthless phase.
+3. *The enrage opens a window.* Against the players who switch (Alternator
+   and Second-guesser), read success is lower in each hot phase than in the
+   Ruthless phase.
+4. *Defiance angers the boss.* The insult fires more often per fight
+   against the defiers (Contrarian, Second-guesser) than against ordinary
+   play.
+
+That the belief carries through a shift is a unit test, not a check.
+
+### M4c results
+
+Run with `npm run compare:m4c`; full numbers in
+[reports/m4c-shift.md](reports/m4c-shift.md). **Every check holds.**
+
+| Enrage phase | Share of moves | Strike | Interrupt | Signature | Read success | vs switchers | Fixation |
+|---|---|---|---|---|---|---|---|
+| Ruthless | 58% | 2% | 48% | 51% | 63% | 57% | 0.55 |
+| Wrathful (from round 6.8) | 24% | 0% | 97% | 2% | 43% | 10% | 0.80 |
+| Bloodlusted (from round 9.1) | 18% | 0% | 100% | 0% | 44% | 23% | 0.94 |
+
+Every fight against ordinary play reached Wrathful, and the insult fired
+more often against the defiers (0.19 a fight) than against ordinary play
+(0.13).
+
+What M5 and later have to know:
+
+1. **The enrage is a window, and it costs the boss.** Against players who
+   switch every turn, read success falls from 57% to 10–23% once the boss
+   loses its temper, and the whole fight deals 12.1 `lethal` against 13.2
+   for a boss that stays Ruthless.
+2. **An enraged boss with a reaction lies in wait every round.** Ruthless
+   spends all three signature uses early, so after the shift the hot steps
+   are left with interrupts and strikes, and rashness picks the interrupt
+   97–100% of the time. That is the opposite of the all-out swinging the hot
+   side was designed for (M4b results, point 4, now much larger). Answered
+   by patience (5.1): Bloodlusted no longer waits, Wrathful still does; both
+   checks were rerun (below).
+3. **The crude HP clock is slow.** On 30 HP the boss enrages around round 7
+   and reaches Bloodlusted only around round 9; at the table the DM records
+   real HP, and real fights are shorter. Players who attack less shift it
+   later (Alternator never reached Bloodlusted).
+
+### M4b and M4c, rerun with patience
+
+**Amended after both checks, by design (2026-10-06).** Both found the hot
+side lying in wait with a reaction (M4b point 4, M4c point 2). Wrathful
+keeps that, as an angry counter-puncher; Bloodlusted no longer waits for
+anything (5.1, patience). The Placeholder's interrupt and wind-up are its
+waiting moves; its signature is let loose on the boss's own turn, so
+Bloodlusted can still spend it first. The reference modules are unmarked:
+they are shapes for measuring reading, not moves at a table, and M4 stands.
+Both checks are rerun unchanged; the first runs are kept as `-run1`.
+
+**Results.** Every M4b check holds as before on every fitting (the
+recharge fittings still fail check 3, as in M4b point 2), and the three
+fittings without a reaction are identical to their first runs. With a
+reaction, Bloodlusted now hits:
+
+| Default fitting | Strike | Interrupt | Signature | `lethal` / fight |
+|---|---|---|---|---|
+| Wrathful (unchanged) | 10% | 60% | 30% | 10.59 |
+| Bloodlusted, first run | 5% | 65% | 30% | 9.55 |
+| Bloodlusted, with patience | 70% | 0% | 30% | 10.51 |
+
+| M4c enrage phase | Strike | Interrupt | Signature | Fixation |
+|---|---|---|---|---|
+| Ruthless | 2% | 48% | 51% | 0.55 |
+| Wrathful | 0% | 97% | 2% | 0.80 |
+| Bloodlusted | 100% | 0% | 0% | 1.00 |
+
+The two hot steps now play differently for the first time: Wrathful
+counter-punches, Bloodlusted swings. M4c's checks 1, 2 and 4 hold; **check 3
+fails** because it can't be measured: in its phase Bloodlusted no longer
+reads anyone, so it has no read success against the players who switch.
+Its window is a different one now: it comes for the same hero every round
+with nothing but blows (fixation 1.00), so that hero can brace and the
+party can use a boss that looks at one player. Whether check 3 should apply
+only to the hot phases that still read is a question for the design.
+
 ## 9. Data and persistence
 
 - **Event log** per fight, as JSON: the source of truth.
@@ -1146,7 +1384,9 @@ What M5 and later have to know:
 | M2b | Belief reads learners | Done: model C stays; wary types kept, switched off ([M2b results](#m2b-results)) |
 | M3 | Decision + temperament | Done: five steps calibrated, every target held ([M3 results](#m3-results)) |
 | M4 | Module interface | Done: the interface in code, four reference modules on it, every target held ([M4 results](#m4-results)) |
-| M5 | Table tool | Usable at a real session; which module it carries first is open |
+| M4b | Placeholder Boss | Done: every check held, on five fittings ([M4b results](#m4b-results)) |
+| M4c | Temperament shift | Done: every check held ([M4c results](#m4c-results)) |
+| M5 | Table tool | Usable at a real session, carrying the Placeholder Boss |
 | M6 | Playtest loop | Logs from real sessions retune the priors |
 | M7 | Boss modules | Prophet, Hoardwyrm or Debt-Collector, with no engine changes needed |
 
