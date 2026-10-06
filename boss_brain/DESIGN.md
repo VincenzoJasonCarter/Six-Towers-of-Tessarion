@@ -4,7 +4,8 @@
 M1 and M2 are done: the harness is in `src/harness/`, and the belief model
 is chosen, model C (see [M2 results](#m2-results)). 1.1 redesigns the
 temperament dial as a bell curve (section 5) and adds the
-[M2b](#m2b-protocol) and [M3](#m3-protocol) protocols. The code in `prophet/` is the throwaway spike
+[M2b](#m2b-protocol) and [M3](#m3-protocol) protocols. M3 is done: the
+steps are calibrated ([M3 results](#m3-results)). The code in `prophet/` is the throwaway spike
 (see [Spike results](#spike-results)), kept for reference only.
 
 ## 1. What this is
@@ -218,7 +219,8 @@ What the dial moves:
 | **Care** (slack) | Only options within this share of the best EU are considered: how bad a move it will settle for | careless → careful → careless |
 | **Mixing** (softmax temperature) | How evenly it picks among the options it considers: how hard it is to read | mixes → mixes among good moves only → never mixes |
 | **Values** | Axis weights in the utility | `show`, `spread` high → `tempo` high → `lethal` high, `spread` negative |
-| **Sharpness** | Tempers the belief before use: p^β, renormalised | β < 1, hedges → β = 1, uses all of it → β > 1, jumps to conclusions |
+| **Sharpness** | Tempers the belief before use: p^β, renormalised | β < 1, hedges → β = 1, uses all of it → β = 1 |
+| **Rashness** | Stakes a share r of each forecast on the player doing their last action again | none → none → most of it: it jumps to conclusions |
 | **Exploration** | Bonus for betting where the forecast is unsure (its entropy), to learn | high → none → none |
 | **Disclosure** | Which level `announce` uses | full → hidden → full |
 
@@ -229,6 +231,13 @@ nearly as good (a mixed strategy, in game-theory terms). So Ruthless never
 settles for a poor move but mixes among good ones, while Bloodlusted
 settles for poor moves and never mixes. Its rage is readable, and a party
 can bait it.
+
+**Why rashness, not β > 1.** Sharpening a forecast (p^β with β > 1) keeps
+the actions in the same order, so a boss that takes its best bet makes the
+same bet at any β: it would be more sure, not more wrong. Jumping to
+conclusions has to change *what* the boss believes. A rash boss reads a
+player by their last move ("you struck me, you'll strike again"), and a
+party can use that: do something once, then do something else.
 
 **Values** rise in one direction: `lethal` grows from one end of the dial to
 the other. A negative `spread` weight is **fixation**: the boss is rewarded
@@ -248,15 +257,27 @@ it.
 
 ### 5.2 The steps
 
-Placeholder values, to be calibrated in the harness ([M3 protocol](#m3-protocol)):
+As calibrated in M3 ([M3 results](#m3-results)); the tuned levers are in
+bold, and the rest are the design's choice:
 
-| Step | Slack | Mixing temp. | `lethal` | `spread` | `show` | `tempo` | β | Explore | Disclosure |
-|---|---|---|---|---|---|---|---|---|---|
-| Curious | 30% | 0.30 | 0.2 | 1.0 | 1.0 | 0.5 | 0.6 | 0.5 | full |
-| Hunting | 15% | 0.15 | 0.5 | 0.5 | 0.4 | 0.8 | 0.85 | 0.2 | name only |
-| **Ruthless** | 5% | 0.15 | 0.8 | 0.2 | 0 | 1.0 | 1.0 | 0.1 | hidden |
-| Wrathful | 2% | 0.05 | 0.9 | −0.3 | 0.3 | 1.0 | 1.5 | 0 | name only |
-| Bloodlusted | 0% | 0 | 1.0 | −0.6 | 0.5 | 0.8 | 2.5 | 0 | full |
+| Step | Slack | Mixing temp. | `lethal` | `spread` | `show` | `tempo` | β | Rashness | Explore | Disclosure |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Curious | 30% | **0.15** | 0.2 | 1.0 | 1.0 | 0.5 | **0.9** | 0 | 0.5 | full |
+| Hunting | **40%** | **0.15** | 0.5 | 0.5 | 0.4 | 0.8 | **0.95** | 0 | 0.2 | name only |
+| **Ruthless** | 5% | **0.03** | 0.8 | 0.2 | 0 | 1.0 | 1.0 | 0 | 0.1 | hidden |
+| Wrathful | 2% | 0.05 | 0.9 | −0.1 | 0.3 | 1.0 | 1.0 | **0.6** | 0 | name only |
+| Bloodlusted | 0% | 0 | 1.0 | −0.6 | 0.5 | 0.8 | 1.0 | **0.8** | 0 | full |
+
+`lethal` and `show` are not calibrated yet: the M3 module has neither
+(M4). The placeholders M3 started from:
+
+| Step | Slack | Mixing temp. | `lethal` | `spread` | `show` | `tempo` | β | Rashness | Explore | Disclosure |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Curious | 30% | 0.30 | 0.2 | 1.0 | 1.0 | 0.5 | 0.6 | 0 | 0.5 | full |
+| Hunting | 15% | 0.15 | 0.5 | 0.5 | 0.4 | 0.8 | 0.85 | 0 | 0.2 | name only |
+| **Ruthless** | 5% | 0.15 | 0.8 | 0.2 | 0 | 1.0 | 1.0 | 0 | 0.1 | hidden |
+| Wrathful | 2% | 0.05 | 0.9 | −0.1 | 0.3 | 1.0 | 1.0 | 0.4 | 0 | name only |
+| Bloodlusted | 0% | 0 | 1.0 | −0.6 | 0.5 | 0.8 | 1.0 | 0.8 | 0 | full |
 
 Ruthless explores a little: against players who change, a belief goes
 stale, and a cold boss knows information has a price worth paying. Curious
@@ -376,14 +397,22 @@ follow the bell of section 5.1:
 
 | Step | Bet success against ordinary play |
 |---|---|
-| Curious | 15–25% |
+| Curious | 25–30% |
 | Hunting | 30–40% |
 | Ruthless | the highest of the five, at least 45% |
 | Wrathful | 30–40% |
-| Bloodlusted | 20–30% |
+| Bloodlusted | 30–40% |
 
 Against Random, every step should fall to chance, so that playing
 unpredictably works but costs the party efficiency.
+
+The bands are anchored on two reference strategies. Chance (20% with five
+actions) is the floor for a boss that has stopped reading the players, so
+Curious sits above it. "They'll do it again", betting each player repeats
+their last action, is the floor for a boss that still reads them, however
+rashly, so Bloodlusted sits at it, level with Wrathful and below it (target
+2). Curious was 15–25% and Bloodlusted 20–30% until the first M3 run showed
+why neither could work (M3 results, points 1 and 4).
 
 A module's own economy is the module's to tune, not the engine's. For the
 Prophet (M4): a rewind about once every 4–5 rounds. With one prophecy a
@@ -655,8 +684,11 @@ real one is M4):
   at the step's level. One bet a round.
 - *Outcome:* the bet comes true with the tempered forecast probability. The
   forecast is made as if named, unless the disclosure is hidden.
-- *Utility:* a bet that comes true is `tempo` 1. Betting on a hero who was
-  not bet on last round is `spread` 1. Nothing is `lethal` or `show`, so
+- *Utility:* a bet that comes true is `tempo` 1. Betting on a different
+  hero from last round's bet is `spread` 1; in the first round and after a
+  silent one there is no last bet, so no bet scores `spread` (otherwise a
+  negative `spread` weight would make every bet look bad, and a fixated boss
+  would fall silent for good). Nothing is `lethal` or `show`, so
   those weights are not calibrated in M3; they wait for modules with lethal
   outcomes and drama (M4). Silence scores 0.
 - *Exploration:* the bonus is the explore weight times the entropy of the
@@ -687,8 +719,8 @@ the mean over the two parties:
 3. Against Random, every step is at most 25%.
 4. Fixation is highest at Bloodlusted, and exploitability is higher at
    Bloodlusted than at Ruthless.
-5. Readability and predictability are both higher at Bloodlusted than at
-   Ruthless: the cold boss is harder to read than the enraged one.
+5. Predictability is higher at Bloodlusted than at Ruthless: the enraged
+   boss repeats itself more than the cold one.
 
 If a target fails, the report says which, and the fix is a change to the
 step's fixed levers, written down here before the rerun.
@@ -705,24 +737,144 @@ slack stay as in 5.2: they are the design's intent, not numbers to fit. Per
 step, β and, where the step mixes, the mixing temperature are tuned on a
 grid:
 
-| Step | β tried | Mixing temp. tried | Picked by |
+| Step | β or rashness tried | Mixing temp. tried | Picked by |
 |---|---|---|---|
-| Curious | 0.3, 0.45, 0.6, 0.75, 0.9 | 0.07, 0.15, 0.3, 0.5 | closest to the middle of its band |
-| Hunting | 0.6, 0.75, 0.85, 0.95, 1 | 0.03, 0.07, 0.15, 0.3 | closest to the middle of its band |
-| Ruthless | 1 | 0, 0.03, 0.07, 0.15, 0.3 | highest mean of bet success against ordinary play and against the Tell-reader |
-| Wrathful | 1.1, 1.3, 1.5, 2, 2.5 | 0.05 | closest to the middle of its band |
-| Bloodlusted | 1.5, 2, 2.5, 3.5, 5 | 0 | closest to the middle of its band |
+| Curious | β 0.3, 0.45, 0.6, 0.75, 0.9 | 0.07, 0.15, 0.3, 0.5 | closest to the middle of its band |
+| Hunting | β 0.6, 0.75, 0.85, 0.95, 1 | 0.03, 0.07, 0.15, 0.3 | closest to the middle of its band |
+| Ruthless | β 1 | 0, 0.03, 0.07, 0.15, 0.3 | highest mean of bet success against ordinary play and against the Tell-reader |
+| Wrathful | rashness 0.2, 0.3, 0.4, 0.5, 0.6 | 0.05 | closest to the middle of its band |
+| Bloodlusted | rashness 0.5, 0.65, 0.8, 0.9, 0.95 | 0 | closest to the middle of its band |
 
 Ruthless is picked partly on the Tell-reader so that tuning can't buy bet
-success by making it readable. Each step's β must stay on its side of the
-curve: Hunting's at least Curious's, Bloodlusted's above Wrathful's. Ties go
+success by making it readable. Each step must stay on its side of the curve:
+Hunting's β at least Curious's, Bloodlusted's rashness above Wrathful's. Ties go
 to the point closest to the placeholder in 5.2. If no point lands in the
 band, the slack joins the grid (0%, 5%, 15%, 30%, 40%); if still none does,
 the step fails and the report says which lever ran out.
 
+**Amended before the first run (2026-10-06).** A smoke test of the
+placeholders on a throwaway seed (7, 40 fights per style; neither tuning's
+seed nor the held-out one) showed two faults no tuning could fix. β > 1
+cannot change an argmax choice (above, "Why rashness"), so the grids for
+Wrathful and Bloodlusted were empty; they now tune rashness, and β is 1 on
+the hot side. And a `spread` weight of −0.3 already locked Wrathful onto one
+player as hard as Bloodlusted's −0.6, making the two steps twins; Wrathful's
+is now −0.1. Also amended before the run: `spread` only counts when there
+was a bet last round.
+
 **Evaluation.** Seed 2, 1000 fights per style, all nine styles, on both
 parties of M2. Every fight is 10 rounds. Written to
 `reports/m3-temperament.md` and `.json`.
+
+### M3 results, first run
+
+Run with `npm run compare:m3`; full numbers in
+[reports/m3-temperament-run1.md](reports/m3-temperament-run1.md). **Three targets of
+five hold; M3 is not done.**
+
+| Step | Ordinary | Random | Defiers | Tell-reader | Fixation | Predictability |
+|---|---|---|---|---|---|---|
+| Curious | 21% | 20% | 20% | 21% | 0.36 | 0.12 |
+| Hunting | 38% | 19% | 27% | 37% | 0.36 | 0.16 |
+| **Ruthless** | **65%** | 20% | 68% | 45% | 0.46 | 0.39 |
+| Wrathful | 39% | 20% | 33% | 34% | 0.88 | 0.41 |
+| Bloodlusted | 37% | 20% | 31% | 31% | 1.00 | 0.45 |
+
+| Target | Result |
+|---|---|
+| 1. Bands | **fails**: Bloodlusted 37% against 20–30%, with no lever left to move it |
+| 2. Bell | holds: 21 → 38 → 65 → 39 → 37 |
+| 3. Random | holds: 19–20% at every step |
+| 4. Fixation, exploitability | holds |
+| 5. Readability, predictability | **fails** on readability: Ruthless loses 19 points to the Tell-reader, Bloodlusted 6 |
+
+What the run shows:
+
+1. **Rashness saturates at one half.** At r ≥ 0.5, the player's last action
+   always tops the forecast, so every r from 0.5 up makes the same bets:
+   "they'll do it again". Bloodlusted's grid (0.65–0.95) and the slack it
+   then added were all one point, 38% in tuning. Against Habitual, "again"
+   is right about half the time, which keeps Bloodlusted well above its
+   band. Wrathful landed in its band only at 0.6, already saturated.
+2. **Mixing does not make Ruthless hard to read.** Its five mixing values
+   tuned within a point of each other, and the Tell-reader cost it more than
+   any other step. Within a 5% slack there is little to mix among, and the
+   boss's good bets sit on each player's main action whatever it mixes. The
+   premise of 5.1 ("care and mixing are different things") is not wrong, but
+   in this module mixing is not the defence: a belief that reads wary
+   players is (M2b's switched-off types).
+3. **A rash boss shrugs off the Tell-reader.** Betting on the last action
+   follows whatever the player has just moved to, so steering away from past
+   bets doesn't shake it. Rage is beaten by players who switch every turn
+   (Alternator 0%, Second-guesser 11–12%), not by players who study it.
+4. **Curious is indistinguishable from chance.** Its band (15–25%) sits on
+   chance (20%), so tuning picked the most diffuse point (β 0.3, mixing 0.5):
+   21% against every style, Random included. That contradicts 5.1 ("less
+   optimal must not mean random"); the band, not the levers, is the problem.
+5. **The hot side depends on the defiance prior.** With model C's defiance
+   priors at 25%, Hunting rises to 48%, Wrathful to 56% and Bloodlusted to
+   48%, all out of band, while defiers fall to 16–23%. Ruthless (hidden, so
+   nobody is named) and Curious don't move. This is the M2 risk, now
+   measured: whatever the bands, they hold only for the defiance prior they
+   were tuned at.
+
+**Amended after the first run (2026-10-06).** Changing targets after seeing
+numbers is what a protocol is meant to prevent, so only changes with a
+reason beyond the numbers were made, and nothing else moved:
+
+- *Curious's band is now 25–30%* (was 15–25%). The old band sat on chance,
+  so tuning made Curious a random boss, which 5.1 forbids.
+- *Bloodlusted's band is now 30–40%* (was 20–30%). A boss that reads
+  players can't do worse than "they'll do it again" without ceasing to read
+  them, which would make it random.
+- *Target 5 keeps predictability and drops readability.* The run falsified
+  the idea that a cold boss is harder for the Tell-reader to read; that is
+  recorded as a finding (point 2), not turned into a target the run already
+  knows the answer to.
+
+The levers, grids, seeds and the other targets are unchanged. The second run
+overwrites `reports/m3-temperament.md`; the first is kept as `-run1`.
+
+### M3 results
+
+Run with `npm run compare:m3`, as amended; full numbers in
+[reports/m3-temperament.md](reports/m3-temperament.md). **Every target
+holds; M3 is done.** The calibrated steps are in 5.2 and in
+`src/engine/decision/temperament.ts` (`STEPS`).
+
+| Step | Ordinary | Random | Defiers | Tell-reader | Fixation | Predictability |
+|---|---|---|---|---|---|---|
+| Curious | 28% | 20% | 23% | 28% | 0.36 | 0.12 |
+| Hunting | 35% | 19% | 28% | 34% | 0.37 | 0.15 |
+| **Ruthless** | **65%** | 20% | 68% | 45% | 0.46 | 0.39 |
+| Wrathful | 39% | 20% | 33% | 34% | 0.88 | 0.41 |
+| Bloodlusted | 37% | 20% | 31% | 31% | 1.00 | 0.45 |
+
+What M4 and later have to know:
+
+1. **Hunting ended up the most careless step.** Curious's β landed at 0.9,
+   and the rule that Hunting's β be at least Curious's left Hunting only 0.95
+   and 1, where it read the players too well (43–47%). The slack joined the
+   grid and settled at 40%, above Curious's 30%. The targets hold, but care
+   no longer rises from Curious to Ruthless, and Curious and Hunting now
+   differ mostly in exploration, values and disclosure. Worth revisiting
+   with a real module (M4), whose options may spread out differently.
+2. **The calibration holds only at model C's defiance prior.** With both
+   priors at 25%, four steps leave their bands (Curious 32%, Hunting 45%,
+   Wrathful 56%, Bloodlusted 48%); only Ruthless, which names nobody, stays
+   put. The order of the bell survives. The real share of defiant players is
+   the first thing playtests (M6) must measure, and the steps will need
+   recalibrating against it.
+3. **The Tell-reader hurts the cold boss most** (65% to 45%). Mixing doesn't
+   help (first run, point 2); a belief that reads wary players might, and
+   M2b's wary types are there, switched off.
+4. **The hot side is a plateau in bet success** (39% and 37%). Wrathful and
+   Bloodlusted differ in how they fall short, not how far: Bloodlusted never
+   lets go of its target (fixation 1.00 against 0.88) and loses more to
+   players who switch every turn (Second-guesser 11–12% against 17%).
+5. **`lethal` and `show` are uncalibrated.** Bloodlusted's danger is meant to
+   be `lethal`, and the M3 module has no lethal outcomes. M4 calibrates them
+   against a module that does.
 
 ## 9. Data and persistence
 
@@ -741,7 +893,7 @@ parties of M2. Every fight is 10 rounds. Written to
 | M1 | Harness | Done: synthetic players and metrics, the spike reproduced ([M1 baseline](#m1-baseline)) |
 | M2 | Belief | Done: model C chosen ([M2 results](#m2-results)) |
 | M2b | Belief reads learners | Done: model C stays; wary types kept, switched off ([M2b results](#m2b-results)) |
-| M3 | Decision + temperament | Five steps calibrated against the targets in section 8 ([M3 protocol](#m3-protocol)) |
+| M3 | Decision + temperament | Done: five steps calibrated, every target held ([M3 results](#m3-results)) |
 | M4 | Prophet module | The Prophet runs end to end in the harness |
 | M5 | Table tool | Usable at a real session |
 | M6 | Playtest loop | Logs from real sessions retune the priors |

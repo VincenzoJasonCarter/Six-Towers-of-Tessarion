@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import { describe, it } from "node:test";
 import { CountsBelief, countsBelief } from "../src/engine/belief/counts.ts";
 import { Rng } from "../src/engine/rng.ts";
-import { chooseProphecies, runFight, SPIKE_PROPHET } from "../src/harness/fight.ts";
+import { chooseProphecies, runFight, spikeProphet, SPIKE_PROPHET } from "../src/harness/fight.ts";
 import { ALTERNATOR, HABITUAL, RANDOM, STYLES, SWITCHER, BY_THE_BOOK, type Style } from "../src/harness/players.ts";
 import { runSuite } from "../src/harness/suite.ts";
 import type { SubclassId } from "../src/engine/subclasses.ts";
@@ -35,7 +35,7 @@ describe("runFight", () => {
       { id: "b", subclass: "bulwark" },
     ] as const;
     const players = new Map(heroes.map((h, i) => [h.id, HABITUAL.make(h.subclass, new Rng(i))]));
-    const fight = runFight({ heroes, players, belief: new CountsBelief(heroes), rounds: 5, policy: SPIKE_PROPHET });
+    const fight = runFight({ heroes, players, belief: new CountsBelief(heroes), rounds: 5, prophet: spikeProphet(SPIKE_PROPHET), rewindCost: 3 });
     assert.equal(fight.turns.length, 10);
     assert.equal(fight.prophecies.length, 5);
     assert.equal(fight.charges, fight.prophecies.filter((p) => p.fulfilled).length);
@@ -55,7 +55,7 @@ describe("runFight", () => {
       observe: inner.observe.bind(inner),
       reveal: (hero: string, bet: { action: number; fulfilled: boolean }) => void revealed.push({ hero, ...bet }),
     };
-    const fight = runFight({ heroes, players, belief, rounds: 6, policy: SPIKE_PROPHET });
+    const fight = runFight({ heroes, players, belief, rounds: 6, prophet: spikeProphet(SPIKE_PROPHET), rewindCost: 3 });
     assert.deepEqual(
       revealed,
       fight.prophecies.map((p) => ({ hero: p.hero, action: p.action, fulfilled: p.fulfilled })),

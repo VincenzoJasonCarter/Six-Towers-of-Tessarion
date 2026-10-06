@@ -25,7 +25,18 @@ export interface Prophecy {
   readonly hero: string;
   readonly action: Action;
   readonly p: number;
+  /** Sealed: the hero isn't told until the round is over (DESIGN.md 5.1, disclosure). */
+  readonly hidden?: boolean;
 }
+
+/** Whoever makes the prophecies: the spike's fixed policy, or a temperament (M3). */
+export interface Prophet {
+  speak(round: number, heroes: readonly HeroSpec[], belief: BeliefModel): Prophecy[];
+}
+
+export const spikeProphet = (policy: BaselineProphet): Prophet => ({
+  speak: (round, heroes, belief) => chooseProphecies(heroes, belief, round, policy),
+});
 
 export interface TurnRecord {
   readonly round: number;
@@ -66,14 +77,17 @@ export interface FightSetup {
   readonly players: ReadonlyMap<string, Player>;
   readonly belief: BeliefModel;
   readonly rounds: number;
-  readonly policy: BaselineProphet;
+  readonly prophet: Prophet;
+  /** Echo Charges that make a rewind available. */
+  readonly rewindCost: number;
 }
 
 /**
  * One fight: each round the Prophet speaks, then every hero acts once in
  * party order, and each prophecy is revealed to its hero when the round ends.
+ * A hidden prophecy doesn't name its hero, so they act as if unnamed.
  */
-export function runFight({ heroes, players, belief, rounds, policy }: FightSetup): FightRecord {
+export function runFight({ heroes, players, belief, rounds, prophet, rewindCost }: FightSetup): FightRecord {
   const turns: TurnRecord[] = [];
   const prophecies: (Prophecy & { fulfilled: boolean })[] = [];
   const history = new Map<string, Action[]>(heroes.map((h) => [h.id, []]));
@@ -82,10 +96,10 @@ export function runFight({ heroes, players, belief, rounds, policy }: FightSetup
   let firstRewindRound: number | null = null;
 
   for (let round = 1; round <= rounds; round++) {
-    const spoken = chooseProphecies(heroes, belief, round, policy);
+    const spoken = prophet.speak(round, heroes, belief);
     for (const hero of heroes) {
       const prophecy = spoken.find((p) => p.hero === hero.id);
-      const context = { round, named: prophecy !== undefined };
+      const context = { round, named: prophecy !== undefined && !prophecy.hidden };
       const forecast = belief.forecast(hero.id, context);
       const own = history.get(hero.id)!;
       const action = players.get(hero.id)!.act({ ...context, history: own, told: told.get(hero.id)! });
@@ -97,7 +111,7 @@ export function runFight({ heroes, players, belief, rounds, policy }: FightSetup
         prophecies.push({ ...prophecy, fulfilled });
         if (fulfilled) {
           charges += 1;
-          if (firstRewindRound === null && charges >= policy.rewindCost) firstRewindRound = round;
+          if (firstRewindRound === null && charges >= rewindCost) firstRewindRound = round;
         }
       }
     }

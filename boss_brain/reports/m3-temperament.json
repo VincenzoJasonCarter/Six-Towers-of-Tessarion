@@ -1,0 +1,3088 @@
+{
+  "protocol": {
+    "tune": {
+      "seed": 1,
+      "trials": 300,
+      "party": [
+        "gunman",
+        "bulwark",
+        "verdant",
+        "hellbound"
+      ],
+      "styles": [
+        "habitual",
+        "by-the-book",
+        "adaptive",
+        "tell-reader"
+      ]
+    },
+    "eval": {
+      "seed": 2,
+      "trials": 1000,
+      "parties": [
+        [
+          "gunman",
+          "bulwark",
+          "verdant",
+          "hellbound"
+        ],
+        [
+          "warbound",
+          "sanguine_aegis",
+          "crystal_archer",
+          "aether"
+        ]
+      ]
+    },
+    "rounds": 10,
+    "bands": {
+      "curious": [
+        0.25,
+        0.3
+      ],
+      "hunting": [
+        0.3,
+        0.4
+      ],
+      "ruthless": null,
+      "wrathful": [
+        0.3,
+        0.4
+      ],
+      "bloodlusted": [
+        0.3,
+        0.4
+      ]
+    },
+    "peakFloor": 0.45
+  },
+  "tuned": [
+    {
+      "id": "curious",
+      "step": {
+        "id": "curious",
+        "name": "Curious",
+        "slack": 0.3,
+        "mixing": 0.15,
+        "weights": {
+          "lethal": 0.2,
+          "spread": 1,
+          "show": 1,
+          "tempo": 0.5
+        },
+        "sharpness": 0.9,
+        "rashness": 0,
+        "explore": 0.5,
+        "disclosure": "full"
+      },
+      "tried": [
+        {
+          "levers": {
+            "sharpness": 0.3,
+            "mixing": 0.07
+          },
+          "ordinary": 0.2557777777777778,
+          "tellReader": 0.252
+        },
+        {
+          "levers": {
+            "sharpness": 0.3,
+            "mixing": 0.15
+          },
+          "ordinary": 0.2258888888888889,
+          "tellReader": 0.229
+        },
+        {
+          "levers": {
+            "sharpness": 0.3,
+            "mixing": 0.3
+          },
+          "ordinary": 0.215,
+          "tellReader": 0.20233333333333334
+        },
+        {
+          "levers": {
+            "sharpness": 0.3,
+            "mixing": 0.5
+          },
+          "ordinary": 0.20622222222222222,
+          "tellReader": 0.207
+        },
+        {
+          "levers": {
+            "sharpness": 0.45,
+            "mixing": 0.07
+          },
+          "ordinary": 0.27899999999999997,
+          "tellReader": 0.2826666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 0.45,
+            "mixing": 0.15
+          },
+          "ordinary": 0.23922222222222222,
+          "tellReader": 0.22966666666666666
+        },
+        {
+          "levers": {
+            "sharpness": 0.45,
+            "mixing": 0.3
+          },
+          "ordinary": 0.22266666666666665,
+          "tellReader": 0.22833333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 0.45,
+            "mixing": 0.5
+          },
+          "ordinary": 0.21044444444444443,
+          "tellReader": 0.21166666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 0.6,
+            "mixing": 0.07
+          },
+          "ordinary": 0.3042222222222222,
+          "tellReader": 0.31733333333333336
+        },
+        {
+          "levers": {
+            "sharpness": 0.6,
+            "mixing": 0.15
+          },
+          "ordinary": 0.25422222222222224,
+          "tellReader": 0.24333333333333335
+        },
+        {
+          "levers": {
+            "sharpness": 0.6,
+            "mixing": 0.3
+          },
+          "ordinary": 0.2263333333333333,
+          "tellReader": 0.217
+        },
+        {
+          "levers": {
+            "sharpness": 0.6,
+            "mixing": 0.5
+          },
+          "ordinary": 0.21244444444444446,
+          "tellReader": 0.21766666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 0.75,
+            "mixing": 0.07
+          },
+          "ordinary": 0.3316666666666666,
+          "tellReader": 0.32766666666666666
+        },
+        {
+          "levers": {
+            "sharpness": 0.75,
+            "mixing": 0.15
+          },
+          "ordinary": 0.26699999999999996,
+          "tellReader": 0.26266666666666666
+        },
+        {
+          "levers": {
+            "sharpness": 0.75,
+            "mixing": 0.3
+          },
+          "ordinary": 0.2356666666666667,
+          "tellReader": 0.22833333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 0.75,
+            "mixing": 0.5
+          },
+          "ordinary": 0.21977777777777777,
+          "tellReader": 0.22866666666666666
+        },
+        {
+          "levers": {
+            "sharpness": 0.9,
+            "mixing": 0.07
+          },
+          "ordinary": 0.35566666666666663,
+          "tellReader": 0.3323333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 0.9,
+            "mixing": 0.15
+          },
+          "ordinary": 0.2777777777777778,
+          "tellReader": 0.278
+        },
+        {
+          "levers": {
+            "sharpness": 0.9,
+            "mixing": 0.3
+          },
+          "ordinary": 0.2468888888888889,
+          "tellReader": 0.22966666666666666
+        },
+        {
+          "levers": {
+            "sharpness": 0.9,
+            "mixing": 0.5
+          },
+          "ordinary": 0.2278888888888889,
+          "tellReader": 0.21833333333333332
+        }
+      ],
+      "inBand": true,
+      "slackJoined": false
+    },
+    {
+      "id": "hunting",
+      "step": {
+        "id": "hunting",
+        "name": "Hunting",
+        "slack": 0.4,
+        "mixing": 0.15,
+        "weights": {
+          "lethal": 0.5,
+          "spread": 0.5,
+          "show": 0.4,
+          "tempo": 0.8
+        },
+        "sharpness": 0.95,
+        "rashness": 0,
+        "explore": 0.2,
+        "disclosure": "name"
+      },
+      "tried": [
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.03
+          },
+          "ordinary": 0.4692222222222222,
+          "tellReader": 0.409
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.07
+          },
+          "ordinary": 0.44933333333333336,
+          "tellReader": 0.4043333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.15
+          },
+          "ordinary": 0.4336666666666667,
+          "tellReader": 0.419
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.3
+          },
+          "ordinary": 0.4268888888888889,
+          "tellReader": 0.4063333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.03
+          },
+          "ordinary": 0.4653333333333334,
+          "tellReader": 0.4136666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.07
+          },
+          "ordinary": 0.4506666666666667,
+          "tellReader": 0.41333333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.15
+          },
+          "ordinary": 0.4386666666666666,
+          "tellReader": 0.42233333333333334
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.3
+          },
+          "ordinary": 0.4316666666666667,
+          "tellReader": 0.4056666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.03,
+            "slack": 0
+          },
+          "ordinary": 0.4812222222222222,
+          "tellReader": 0.4093333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.03,
+            "slack": 0.05
+          },
+          "ordinary": 0.474,
+          "tellReader": 0.4026666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.03,
+            "slack": 0.15
+          },
+          "ordinary": 0.4692222222222222,
+          "tellReader": 0.409
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.03,
+            "slack": 0.3
+          },
+          "ordinary": 0.46799999999999997,
+          "tellReader": 0.404
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.03,
+            "slack": 0.4
+          },
+          "ordinary": 0.4717777777777778,
+          "tellReader": 0.404
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.07,
+            "slack": 0
+          },
+          "ordinary": 0.4812222222222222,
+          "tellReader": 0.4093333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.07,
+            "slack": 0.05
+          },
+          "ordinary": 0.46622222222222226,
+          "tellReader": 0.401
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.07,
+            "slack": 0.15
+          },
+          "ordinary": 0.44933333333333336,
+          "tellReader": 0.4043333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.07,
+            "slack": 0.3
+          },
+          "ordinary": 0.43455555555555553,
+          "tellReader": 0.41
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.07,
+            "slack": 0.4
+          },
+          "ordinary": 0.42544444444444446,
+          "tellReader": 0.39466666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.15,
+            "slack": 0
+          },
+          "ordinary": 0.4812222222222222,
+          "tellReader": 0.4093333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.15,
+            "slack": 0.05
+          },
+          "ordinary": 0.46755555555555556,
+          "tellReader": 0.3983333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.15,
+            "slack": 0.15
+          },
+          "ordinary": 0.4336666666666667,
+          "tellReader": 0.419
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.15,
+            "slack": 0.3
+          },
+          "ordinary": 0.3761111111111111,
+          "tellReader": 0.367
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.15,
+            "slack": 0.4
+          },
+          "ordinary": 0.35000000000000003,
+          "tellReader": 0.3313333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.3,
+            "slack": 0
+          },
+          "ordinary": 0.4812222222222222,
+          "tellReader": 0.4093333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.3,
+            "slack": 0.05
+          },
+          "ordinary": 0.4683333333333333,
+          "tellReader": 0.4086666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.3,
+            "slack": 0.15
+          },
+          "ordinary": 0.4268888888888889,
+          "tellReader": 0.4063333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.3,
+            "slack": 0.3
+          },
+          "ordinary": 0.34522222222222226,
+          "tellReader": 0.33666666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 0.95,
+            "mixing": 0.3,
+            "slack": 0.4
+          },
+          "ordinary": 0.28155555555555556,
+          "tellReader": 0.2846666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.03,
+            "slack": 0
+          },
+          "ordinary": 0.48066666666666663,
+          "tellReader": 0.4096666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.03,
+            "slack": 0.05
+          },
+          "ordinary": 0.47588888888888886,
+          "tellReader": 0.401
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.03,
+            "slack": 0.15
+          },
+          "ordinary": 0.4653333333333334,
+          "tellReader": 0.4136666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.03,
+            "slack": 0.3
+          },
+          "ordinary": 0.47077777777777774,
+          "tellReader": 0.4056666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.03,
+            "slack": 0.4
+          },
+          "ordinary": 0.4714444444444445,
+          "tellReader": 0.4053333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.07,
+            "slack": 0
+          },
+          "ordinary": 0.48066666666666663,
+          "tellReader": 0.4096666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.07,
+            "slack": 0.05
+          },
+          "ordinary": 0.46844444444444444,
+          "tellReader": 0.4036666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.07,
+            "slack": 0.15
+          },
+          "ordinary": 0.4506666666666667,
+          "tellReader": 0.41333333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.07,
+            "slack": 0.3
+          },
+          "ordinary": 0.44388888888888894,
+          "tellReader": 0.41933333333333334
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.07,
+            "slack": 0.4
+          },
+          "ordinary": 0.4301111111111111,
+          "tellReader": 0.41
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.15,
+            "slack": 0
+          },
+          "ordinary": 0.48066666666666663,
+          "tellReader": 0.4096666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.15,
+            "slack": 0.05
+          },
+          "ordinary": 0.47055555555555556,
+          "tellReader": 0.4056666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.15,
+            "slack": 0.15
+          },
+          "ordinary": 0.4386666666666666,
+          "tellReader": 0.42233333333333334
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.15,
+            "slack": 0.3
+          },
+          "ordinary": 0.3901111111111111,
+          "tellReader": 0.36666666666666664
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.15,
+            "slack": 0.4
+          },
+          "ordinary": 0.35488888888888886,
+          "tellReader": 0.3393333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.3,
+            "slack": 0
+          },
+          "ordinary": 0.48066666666666663,
+          "tellReader": 0.4096666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.3,
+            "slack": 0.05
+          },
+          "ordinary": 0.47444444444444445,
+          "tellReader": 0.41
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.3,
+            "slack": 0.15
+          },
+          "ordinary": 0.4316666666666667,
+          "tellReader": 0.4056666666666667
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.3,
+            "slack": 0.3
+          },
+          "ordinary": 0.3587777777777778,
+          "tellReader": 0.3443333333333333
+        },
+        {
+          "levers": {
+            "sharpness": 1,
+            "mixing": 0.3,
+            "slack": 0.4
+          },
+          "ordinary": 0.29377777777777775,
+          "tellReader": 0.287
+        }
+      ],
+      "inBand": true,
+      "slackJoined": true
+    },
+    {
+      "id": "ruthless",
+      "step": {
+        "id": "ruthless",
+        "name": "Ruthless",
+        "slack": 0.05,
+        "mixing": 0.03,
+        "weights": {
+          "lethal": 0.8,
+          "spread": 0.2,
+          "show": 0,
+          "tempo": 1
+        },
+        "sharpness": 1,
+        "rashness": 0,
+        "explore": 0.1,
+        "disclosure": "hidden"
+      },
+      "tried": [
+        {
+          "levers": {
+            "mixing": 0
+          },
+          "ordinary": 0.6346666666666666,
+          "tellReader": 0.452
+        },
+        {
+          "levers": {
+            "mixing": 0.03
+          },
+          "ordinary": 0.6361111111111111,
+          "tellReader": 0.4523333333333333
+        },
+        {
+          "levers": {
+            "mixing": 0.07
+          },
+          "ordinary": 0.6356666666666667,
+          "tellReader": 0.447
+        },
+        {
+          "levers": {
+            "mixing": 0.15
+          },
+          "ordinary": 0.6336666666666667,
+          "tellReader": 0.447
+        },
+        {
+          "levers": {
+            "mixing": 0.3
+          },
+          "ordinary": 0.6335555555555555,
+          "tellReader": 0.447
+        }
+      ],
+      "inBand": true,
+      "slackJoined": false
+    },
+    {
+      "id": "wrathful",
+      "step": {
+        "id": "wrathful",
+        "name": "Wrathful",
+        "slack": 0.02,
+        "mixing": 0.05,
+        "weights": {
+          "lethal": 0.9,
+          "spread": -0.1,
+          "show": 0.3,
+          "tempo": 1
+        },
+        "sharpness": 1,
+        "rashness": 0.6,
+        "explore": 0,
+        "disclosure": "name"
+      },
+      "tried": [
+        {
+          "levers": {
+            "rashness": 0.2
+          },
+          "ordinary": 0.45222222222222225,
+          "tellReader": 0.385
+        },
+        {
+          "levers": {
+            "rashness": 0.3
+          },
+          "ordinary": 0.45222222222222214,
+          "tellReader": 0.38566666666666666
+        },
+        {
+          "levers": {
+            "rashness": 0.4
+          },
+          "ordinary": 0.43855555555555553,
+          "tellReader": 0.38466666666666666
+        },
+        {
+          "levers": {
+            "rashness": 0.5
+          },
+          "ordinary": 0.41900000000000004,
+          "tellReader": 0.37033333333333335
+        },
+        {
+          "levers": {
+            "rashness": 0.6
+          },
+          "ordinary": 0.3968888888888889,
+          "tellReader": 0.3476666666666667
+        }
+      ],
+      "inBand": true,
+      "slackJoined": false
+    },
+    {
+      "id": "bloodlusted",
+      "step": {
+        "id": "bloodlusted",
+        "name": "Bloodlusted",
+        "slack": 0,
+        "mixing": 0,
+        "weights": {
+          "lethal": 1,
+          "spread": -0.6,
+          "show": 0.5,
+          "tempo": 0.8
+        },
+        "sharpness": 1,
+        "rashness": 0.8,
+        "explore": 0,
+        "disclosure": "full"
+      },
+      "tried": [
+        {
+          "levers": {
+            "rashness": 0.65
+          },
+          "ordinary": 0.3808888888888889,
+          "tellReader": 0.31666666666666665
+        },
+        {
+          "levers": {
+            "rashness": 0.8
+          },
+          "ordinary": 0.3808888888888889,
+          "tellReader": 0.31666666666666665
+        },
+        {
+          "levers": {
+            "rashness": 0.9
+          },
+          "ordinary": 0.3808888888888889,
+          "tellReader": 0.31666666666666665
+        },
+        {
+          "levers": {
+            "rashness": 0.95
+          },
+          "ordinary": 0.3808888888888889,
+          "tellReader": 0.31666666666666665
+        }
+      ],
+      "inBand": true,
+      "slackJoined": false
+    }
+  ],
+  "results": [
+    {
+      "id": "curious",
+      "name": "Curious",
+      "byParty": [
+        {
+          "step": {
+            "id": "curious",
+            "name": "Curious",
+            "slack": 0.3,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.2,
+              "spread": 1,
+              "show": 1,
+              "tempo": 0.5
+            },
+            "sharpness": 0.9,
+            "rashness": 0,
+            "explore": 0.5,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2786,
+              "fixation": 0.3576000000000011,
+              "predictability": 0.12577777777777777
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2872,
+              "fixation": 0.3596000000000008,
+              "predictability": 0.12844444444444444
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.197,
+              "fixation": 0.3606000000000009,
+              "predictability": 0.11811111111111111
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2416,
+              "fixation": 0.36670000000000014,
+              "predictability": 0.11933333333333333
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2894,
+              "fixation": 0.3482000000000023,
+              "predictability": 0.116
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2344,
+              "fixation": 0.36320000000000063,
+              "predictability": 0.12366666666666666
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2409,
+              "fixation": 0.3704,
+              "predictability": 0.125
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2799,
+              "fixation": 0.3610000000000015,
+              "predictability": 0.12755555555555556
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2761,
+              "fixation": 0.3610000000000008,
+              "predictability": 0.12522222222222223
+            }
+          ]
+        },
+        {
+          "step": {
+            "id": "curious",
+            "name": "Curious",
+            "slack": 0.3,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.2,
+              "spread": 1,
+              "show": 1,
+              "tempo": 0.5
+            },
+            "sharpness": 0.9,
+            "rashness": 0,
+            "explore": 0.5,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2717,
+              "fixation": 0.35760000000000125,
+              "predictability": 0.12555555555555556
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.293,
+              "fixation": 0.3588000000000015,
+              "predictability": 0.1288888888888889
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.1963,
+              "fixation": 0.36000000000000126,
+              "predictability": 0.11855555555555555
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2396,
+              "fixation": 0.3626000000000009,
+              "predictability": 0.12011111111111111
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3071,
+              "fixation": 0.35330000000000145,
+              "predictability": 0.12222222222222222
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2286,
+              "fixation": 0.3667000000000008,
+              "predictability": 0.12211111111111111
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2354,
+              "fixation": 0.3655000000000005,
+              "predictability": 0.12277777777777778
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.279,
+              "fixation": 0.35740000000000144,
+              "predictability": 0.13266666666666665
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2786,
+              "fixation": 0.3574000000000011,
+              "predictability": 0.12577777777777777
+            }
+          ]
+        }
+      ],
+      "ordinary": 0.2815666666666667,
+      "random": 0.19665,
+      "defiers": 0.234825,
+      "tellReader": 0.27735,
+      "fixation": 0.3604222222222232,
+      "predictability": 0.12376543209876542,
+      "exploitability": 0.04674166666666668,
+      "readability": 0.004216666666666702,
+      "betsPerFight": 10
+    },
+    {
+      "id": "hunting",
+      "name": "Hunting",
+      "byParty": [
+        {
+          "step": {
+            "id": "hunting",
+            "name": "Hunting",
+            "slack": 0.4,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.5,
+              "spread": 0.5,
+              "show": 0.4,
+              "tempo": 0.8
+            },
+            "sharpness": 0.95,
+            "rashness": 0,
+            "explore": 0.2,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.349,
+              "fixation": 0.3695000000000004,
+              "predictability": 0.16044444444444445
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3578,
+              "fixation": 0.36890000000000045,
+              "predictability": 0.1638888888888889
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.1919,
+              "fixation": 0.36410000000000103,
+              "predictability": 0.12422222222222222
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2758,
+              "fixation": 0.36490000000000117,
+              "predictability": 0.14122222222222222
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3663,
+              "fixation": 0.36640000000000067,
+              "predictability": 0.13733333333333334
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2892,
+              "fixation": 0.3628000000000007,
+              "predictability": 0.147
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2751,
+              "fixation": 0.3663000000000006,
+              "predictability": 0.14844444444444443
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3355,
+              "fixation": 0.3649000000000005,
+              "predictability": 0.159
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3265,
+              "fixation": 0.36650000000000055,
+              "predictability": 0.15355555555555556
+            }
+          ]
+        },
+        {
+          "step": {
+            "id": "hunting",
+            "name": "Hunting",
+            "slack": 0.4,
+            "mixing": 0.15,
+            "weights": {
+              "lethal": 0.5,
+              "spread": 0.5,
+              "show": 0.4,
+              "tempo": 0.8
+            },
+            "sharpness": 0.95,
+            "rashness": 0,
+            "explore": 0.2,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3449,
+              "fixation": 0.36570000000000075,
+              "predictability": 0.16233333333333333
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3788,
+              "fixation": 0.3673000000000003,
+              "predictability": 0.17277777777777778
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.1978,
+              "fixation": 0.3612000000000013,
+              "predictability": 0.12622222222222224
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2695,
+              "fixation": 0.3600000000000014,
+              "predictability": 0.13266666666666665
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.4086,
+              "fixation": 0.3687000000000002,
+              "predictability": 0.1451111111111111
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2779,
+              "fixation": 0.35940000000000105,
+              "predictability": 0.13622222222222222
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2591,
+              "fixation": 0.3642000000000007,
+              "predictability": 0.1411111111111111
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3456,
+              "fixation": 0.3688000000000003,
+              "predictability": 0.164
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3497,
+              "fixation": 0.3658000000000003,
+              "predictability": 0.16133333333333333
+            }
+          ]
+        }
+      ],
+      "ordinary": 0.3519333333333333,
+      "random": 0.19485,
+      "defiers": 0.275325,
+      "tellReader": 0.3381,
+      "fixation": 0.36530000000000074,
+      "predictability": 0.14871604938271607,
+      "exploitability": 0.07660833333333333,
+      "readability": 0.013833333333333309,
+      "betsPerFight": 10
+    },
+    {
+      "id": "ruthless",
+      "name": "Ruthless",
+      "byParty": [
+        {
+          "step": {
+            "id": "ruthless",
+            "name": "Ruthless",
+            "slack": 0.05,
+            "mixing": 0.03,
+            "weights": {
+              "lethal": 0.8,
+              "spread": 0.2,
+              "show": 0,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0,
+            "explore": 0.1,
+            "disclosure": "hidden"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.6923,
+              "fixation": 0.4527999999999978,
+              "predictability": 0.39144444444444443
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.6663,
+              "fixation": 0.4863999999999991,
+              "predictability": 0.4278888888888889
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.1988,
+              "fixation": 0.42899999999999755,
+              "predictability": 0.302
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.5179,
+              "fixation": 0.41929999999999495,
+              "predictability": 0.3333333333333333
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.7504,
+              "fixation": 0.37169999999999953,
+              "predictability": 0.24344444444444444
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.6643,
+              "fixation": 0.488499999999999,
+              "predictability": 0.43044444444444446
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.6668,
+              "fixation": 0.49319999999999914,
+              "predictability": 0.4361111111111111
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.5547,
+              "fixation": 0.4514999999999977,
+              "predictability": 0.38866666666666666
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.4562,
+              "fixation": 0.43219999999999775,
+              "predictability": 0.362
+            }
+          ]
+        },
+        {
+          "step": {
+            "id": "ruthless",
+            "name": "Ruthless",
+            "slack": 0.05,
+            "mixing": 0.03,
+            "weights": {
+              "lethal": 0.8,
+              "spread": 0.2,
+              "show": 0,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0,
+            "explore": 0.1,
+            "disclosure": "hidden"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.6874,
+              "fixation": 0.4805999999999994,
+              "predictability": 0.42144444444444445
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.6981,
+              "fixation": 0.5265000000000005,
+              "predictability": 0.4732222222222222
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2052,
+              "fixation": 0.4398999999999982,
+              "predictability": 0.3118888888888889
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.6154,
+              "fixation": 0.4673999999999973,
+              "predictability": 0.4078888888888889
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.776,
+              "fixation": 0.39149999999999624,
+              "predictability": 0.30666666666666664
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.6915,
+              "fixation": 0.5292000000000012,
+              "predictability": 0.4756666666666667
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.6979,
+              "fixation": 0.5276000000000008,
+              "predictability": 0.47444444444444445
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.5745,
+              "fixation": 0.5030000000000001,
+              "predictability": 0.4458888888888889
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.4514,
+              "fixation": 0.4764999999999984,
+              "predictability": 0.4108888888888889
+            }
+          ]
+        }
+      ],
+      "ordinary": 0.6455500000000001,
+      "random": 0.202,
+      "defiers": 0.680125,
+      "tellReader": 0.4538,
+      "fixation": 0.46482222222222086,
+      "predictability": 0.3912962962962963,
+      "exploitability": -0.03457499999999991,
+      "readability": 0.1917500000000001,
+      "betsPerFight": 10
+    },
+    {
+      "id": "wrathful",
+      "name": "Wrathful",
+      "byParty": [
+        {
+          "step": {
+            "id": "wrathful",
+            "name": "Wrathful",
+            "slack": 0.02,
+            "mixing": 0.05,
+            "weights": {
+              "lethal": 0.9,
+              "spread": -0.1,
+              "show": 0.3,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0.6,
+            "explore": 0,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.469,
+              "fixation": 0.9157999999999997,
+              "predictability": 0.5485555555555556
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3957,
+              "fixation": 0.8973000000000005,
+              "predictability": 0.45911111111111114
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.1986,
+              "fixation": 0.9653000000000008,
+              "predictability": 0.2961111111111111
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0,
+              "fixation": 1,
+              "predictability": 0.4444444444444444
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.8,
+              "fixation": 1,
+              "predictability": 0.4444444444444444
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.5186,
+              "fixation": 0.7999000000000004,
+              "predictability": 0.5923333333333334
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.1718,
+              "fixation": 0.7307000000000019,
+              "predictability": 0.30566666666666664
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3178,
+              "fixation": 0.8609000000000008,
+              "predictability": 0.3751111111111111
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3409,
+              "fixation": 0.816900000000001,
+              "predictability": 0.3128888888888889
+            }
+          ]
+        },
+        {
+          "step": {
+            "id": "wrathful",
+            "name": "Wrathful",
+            "slack": 0.02,
+            "mixing": 0.05,
+            "weights": {
+              "lethal": 0.9,
+              "spread": -0.1,
+              "show": 0.3,
+              "tempo": 1
+            },
+            "sharpness": 1,
+            "rashness": 0.6,
+            "explore": 0,
+            "disclosure": "name"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.4707,
+              "fixation": 0.9122000000000006,
+              "predictability": 0.5525555555555556
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3702,
+              "fixation": 0.864700000000001,
+              "predictability": 0.43444444444444447
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2021,
+              "fixation": 0.9527000000000005,
+              "predictability": 0.2927777777777778
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0,
+              "fixation": 1,
+              "predictability": 0.4444444444444444
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.8,
+              "fixation": 1,
+              "predictability": 0.4444444444444444
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.4601,
+              "fixation": 0.7887000000000011,
+              "predictability": 0.5245555555555556
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.1739,
+              "fixation": 0.7109000000000016,
+              "predictability": 0.27655555555555555
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3098,
+              "fixation": 0.8361000000000006,
+              "predictability": 0.3531111111111111
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3391,
+              "fixation": 0.7884000000000014,
+              "predictability": 0.2956666666666667
+            }
+          ]
+        }
+      ],
+      "ordinary": 0.3888666666666667,
+      "random": 0.20035,
+      "defiers": 0.33109999999999995,
+      "tellReader": 0.33999999999999997,
+      "fixation": 0.8800277777777785,
+      "predictability": 0.41095679012345676,
+      "exploitability": 0.057766666666666744,
+      "readability": 0.048866666666666725,
+      "betsPerFight": 10
+    },
+    {
+      "id": "bloodlusted",
+      "name": "Bloodlusted",
+      "byParty": [
+        {
+          "step": {
+            "id": "bloodlusted",
+            "name": "Bloodlusted",
+            "slack": 0,
+            "mixing": 0,
+            "weights": {
+              "lethal": 1,
+              "spread": -0.6,
+              "show": 0.5,
+              "tempo": 0.8
+            },
+            "sharpness": 1,
+            "rashness": 0.8,
+            "explore": 0,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.455,
+              "fixation": 1,
+              "predictability": 0.5808888888888889
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3753,
+              "fixation": 1,
+              "predictability": 0.4875555555555556
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.1998,
+              "fixation": 1,
+              "predictability": 0.30577777777777776
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0,
+              "fixation": 1,
+              "predictability": 0.4444444444444444
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.8,
+              "fixation": 1,
+              "predictability": 0.4444444444444444
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.5396,
+              "fixation": 1,
+              "predictability": 0.7024444444444444
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.1052,
+              "fixation": 1,
+              "predictability": 0.39766666666666667
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3013,
+              "fixation": 1,
+              "predictability": 0.4157777777777778
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.315,
+              "fixation": 1,
+              "predictability": 0.34655555555555556
+            }
+          ]
+        },
+        {
+          "step": {
+            "id": "bloodlusted",
+            "name": "Bloodlusted",
+            "slack": 0,
+            "mixing": 0,
+            "weights": {
+              "lethal": 1,
+              "spread": -0.6,
+              "show": 0.5,
+              "tempo": 0.8
+            },
+            "sharpness": 1,
+            "rashness": 0.8,
+            "explore": 0,
+            "disclosure": "full"
+          },
+          "styles": [
+            {
+              "style": "habitual",
+              "name": "Habitual",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.4586,
+              "fixation": 1,
+              "predictability": 0.5823333333333334
+            },
+            {
+              "style": "by-the-book",
+              "name": "By the book",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.335,
+              "fixation": 1,
+              "predictability": 0.461
+            },
+            {
+              "style": "random",
+              "name": "Random",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.1948,
+              "fixation": 1,
+              "predictability": 0.30266666666666664
+            },
+            {
+              "style": "alternator",
+              "name": "Alternator",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0,
+              "fixation": 1,
+              "predictability": 0.4444444444444444
+            },
+            {
+              "style": "switcher",
+              "name": "Switcher",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.8,
+              "fixation": 1,
+              "predictability": 0.4444444444444444
+            },
+            {
+              "style": "contrarian",
+              "name": "Contrarian",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.4709,
+              "fixation": 1,
+              "predictability": 0.6322222222222222
+            },
+            {
+              "style": "second-guesser",
+              "name": "Second-guesser",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.1169,
+              "fixation": 1,
+              "predictability": 0.36333333333333334
+            },
+            {
+              "style": "adaptive",
+              "name": "Adaptive",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.2766,
+              "fixation": 1,
+              "predictability": 0.38666666666666666
+            },
+            {
+              "style": "tell-reader",
+              "name": "Tell-reader",
+              "fights": 1000,
+              "betsPerFight": 10,
+              "success": 0.3005,
+              "fixation": 1,
+              "predictability": 0.32133333333333336
+            }
+          ]
+        }
+      ],
+      "ordinary": 0.36696666666666666,
+      "random": 0.1973,
+      "defiers": 0.30815,
+      "tellReader": 0.30774999999999997,
+      "fixation": 1,
+      "predictability": 0.448,
+      "exploitability": 0.058816666666666684,
+      "readability": 0.059216666666666695,
+      "betsPerFight": 10
+    }
+  ],
+  "checks": [
+    {
+      "target": "1. Each step in its band",
+      "passed": true,
+      "detail": "Curious 28% (25%–30%); Hunting 35% (30%–40%); Ruthless 65% (highest, ≥ 45%); Wrathful 39% (30%–40%); Bloodlusted 37% (30%–40%)"
+    },
+    {
+      "target": "2. Rises to Ruthless, then falls",
+      "passed": true,
+      "detail": "28% → 35% → 65% → 39% → 37%"
+    },
+    {
+      "target": "3. Random at most 25%",
+      "passed": true,
+      "detail": "Curious 20%, Hunting 19%, Ruthless 20%, Wrathful 20%, Bloodlusted 20%"
+    },
+    {
+      "target": "4. Fixation highest at Bloodlusted; exploitability higher than Ruthless's",
+      "passed": true,
+      "detail": "fixation 1.00 (highest 1.00); exploitability 6 against -3 points"
+    },
+    {
+      "target": "5. Predictability higher at Bloodlusted than at Ruthless",
+      "passed": true,
+      "detail": "0.45 against 0.39 (readability, reported but no longer a target: 6 against 19 points)"
+    }
+  ],
+  "robustness": {
+    "results": [
+      {
+        "id": "curious",
+        "name": "Curious",
+        "byParty": [
+          {
+            "step": {
+              "id": "curious",
+              "name": "Curious",
+              "slack": 0.3,
+              "mixing": 0.15,
+              "weights": {
+                "lethal": 0.2,
+                "spread": 1,
+                "show": 1,
+                "tempo": 0.5
+              },
+              "sharpness": 0.9,
+              "rashness": 0,
+              "explore": 0.5,
+              "disclosure": "full"
+            },
+            "styles": [
+              {
+                "style": "habitual",
+                "name": "Habitual",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3322,
+                "fixation": 0.36230000000000095,
+                "predictability": 0.13733333333333334
+              },
+              {
+                "style": "by-the-book",
+                "name": "By the book",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.319,
+                "fixation": 0.3598000000000011,
+                "predictability": 0.137
+              },
+              {
+                "style": "random",
+                "name": "Random",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.1959,
+                "fixation": 0.36760000000000026,
+                "predictability": 0.12488888888888888
+              },
+              {
+                "style": "alternator",
+                "name": "Alternator",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2568,
+                "fixation": 0.36860000000000026,
+                "predictability": 0.12255555555555556
+              },
+              {
+                "style": "switcher",
+                "name": "Switcher",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3544,
+                "fixation": 0.3562000000000014,
+                "predictability": 0.12166666666666667
+              },
+              {
+                "style": "contrarian",
+                "name": "Contrarian",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2136,
+                "fixation": 0.3731999999999999,
+                "predictability": 0.12966666666666668
+              },
+              {
+                "style": "second-guesser",
+                "name": "Second-guesser",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2078,
+                "fixation": 0.3699000000000002,
+                "predictability": 0.12955555555555556
+              },
+              {
+                "style": "adaptive",
+                "name": "Adaptive",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3121,
+                "fixation": 0.3633000000000005,
+                "predictability": 0.13644444444444445
+              },
+              {
+                "style": "tell-reader",
+                "name": "Tell-reader",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3148,
+                "fixation": 0.36150000000000104,
+                "predictability": 0.13444444444444445
+              }
+            ]
+          },
+          {
+            "step": {
+              "id": "curious",
+              "name": "Curious",
+              "slack": 0.3,
+              "mixing": 0.15,
+              "weights": {
+                "lethal": 0.2,
+                "spread": 1,
+                "show": 1,
+                "tempo": 0.5
+              },
+              "sharpness": 0.9,
+              "rashness": 0,
+              "explore": 0.5,
+              "disclosure": "full"
+            },
+            "styles": [
+              {
+                "style": "habitual",
+                "name": "Habitual",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3236,
+                "fixation": 0.363700000000001,
+                "predictability": 0.13522222222222222
+              },
+              {
+                "style": "by-the-book",
+                "name": "By the book",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.324,
+                "fixation": 0.36130000000000134,
+                "predictability": 0.13966666666666666
+              },
+              {
+                "style": "random",
+                "name": "Random",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.1929,
+                "fixation": 0.3610000000000013,
+                "predictability": 0.12377777777777778
+              },
+              {
+                "style": "alternator",
+                "name": "Alternator",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2677,
+                "fixation": 0.3675000000000003,
+                "predictability": 0.12522222222222223
+              },
+              {
+                "style": "switcher",
+                "name": "Switcher",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3847,
+                "fixation": 0.3532000000000018,
+                "predictability": 0.12766666666666668
+              },
+              {
+                "style": "contrarian",
+                "name": "Contrarian",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2043,
+                "fixation": 0.37070000000000025,
+                "predictability": 0.129
+              },
+              {
+                "style": "second-guesser",
+                "name": "Second-guesser",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2092,
+                "fixation": 0.3698000000000005,
+                "predictability": 0.13255555555555557
+              },
+              {
+                "style": "adaptive",
+                "name": "Adaptive",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3123,
+                "fixation": 0.35830000000000173,
+                "predictability": 0.13833333333333334
+              },
+              {
+                "style": "tell-reader",
+                "name": "Tell-reader",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3116,
+                "fixation": 0.36750000000000077,
+                "predictability": 0.13522222222222222
+              }
+            ]
+          }
+        ],
+        "ordinary": 0.32053333333333334,
+        "random": 0.1944,
+        "defiers": 0.208725,
+        "tellReader": 0.31320000000000003,
+        "fixation": 0.36418888888888973,
+        "predictability": 0.13112345679012344,
+        "exploitability": 0.11180833333333334,
+        "readability": 0.007333333333333303,
+        "betsPerFight": 10
+      },
+      {
+        "id": "hunting",
+        "name": "Hunting",
+        "byParty": [
+          {
+            "step": {
+              "id": "hunting",
+              "name": "Hunting",
+              "slack": 0.4,
+              "mixing": 0.15,
+              "weights": {
+                "lethal": 0.5,
+                "spread": 0.5,
+                "show": 0.4,
+                "tempo": 0.8
+              },
+              "sharpness": 0.95,
+              "rashness": 0,
+              "explore": 0.2,
+              "disclosure": "name"
+            },
+            "styles": [
+              {
+                "style": "habitual",
+                "name": "Habitual",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.4693,
+                "fixation": 0.36410000000000087,
+                "predictability": 0.2048888888888889
+              },
+              {
+                "style": "by-the-book",
+                "name": "By the book",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.449,
+                "fixation": 0.3694000000000006,
+                "predictability": 0.2071111111111111
+              },
+              {
+                "style": "random",
+                "name": "Random",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2021,
+                "fixation": 0.36170000000000085,
+                "predictability": 0.13755555555555554
+              },
+              {
+                "style": "alternator",
+                "name": "Alternator",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3079,
+                "fixation": 0.36700000000000055,
+                "predictability": 0.13933333333333334
+              },
+              {
+                "style": "switcher",
+                "name": "Switcher",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.492,
+                "fixation": 0.3696000000000001,
+                "predictability": 0.14788888888888888
+              },
+              {
+                "style": "contrarian",
+                "name": "Contrarian",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2167,
+                "fixation": 0.3601000000000012,
+                "predictability": 0.14566666666666667
+              },
+              {
+                "style": "second-guesser",
+                "name": "Second-guesser",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2115,
+                "fixation": 0.36110000000000136,
+                "predictability": 0.1511111111111111
+              },
+              {
+                "style": "adaptive",
+                "name": "Adaptive",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.4124,
+                "fixation": 0.36490000000000067,
+                "predictability": 0.18788888888888888
+              },
+              {
+                "style": "tell-reader",
+                "name": "Tell-reader",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3917,
+                "fixation": 0.3652000000000008,
+                "predictability": 0.18122222222222223
+              }
+            ]
+          },
+          {
+            "step": {
+              "id": "hunting",
+              "name": "Hunting",
+              "slack": 0.4,
+              "mixing": 0.15,
+              "weights": {
+                "lethal": 0.5,
+                "spread": 0.5,
+                "show": 0.4,
+                "tempo": 0.8
+              },
+              "sharpness": 0.95,
+              "rashness": 0,
+              "explore": 0.2,
+              "disclosure": "name"
+            },
+            "styles": [
+              {
+                "style": "habitual",
+                "name": "Habitual",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.4742,
+                "fixation": 0.3661000000000007,
+                "predictability": 0.20855555555555555
+              },
+              {
+                "style": "by-the-book",
+                "name": "By the book",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.4585,
+                "fixation": 0.369,
+                "predictability": 0.21744444444444444
+              },
+              {
+                "style": "random",
+                "name": "Random",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2018,
+                "fixation": 0.3639000000000008,
+                "predictability": 0.136
+              },
+              {
+                "style": "alternator",
+                "name": "Alternator",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.329,
+                "fixation": 0.36250000000000093,
+                "predictability": 0.1487777777777778
+              },
+              {
+                "style": "switcher",
+                "name": "Switcher",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.5399,
+                "fixation": 0.3684000000000002,
+                "predictability": 0.16533333333333333
+              },
+              {
+                "style": "contrarian",
+                "name": "Contrarian",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2194,
+                "fixation": 0.36250000000000127,
+                "predictability": 0.14833333333333334
+              },
+              {
+                "style": "second-guesser",
+                "name": "Second-guesser",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2062,
+                "fixation": 0.36020000000000124,
+                "predictability": 0.14733333333333334
+              },
+              {
+                "style": "adaptive",
+                "name": "Adaptive",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.4182,
+                "fixation": 0.3616000000000008,
+                "predictability": 0.2001111111111111
+              },
+              {
+                "style": "tell-reader",
+                "name": "Tell-reader",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.4012,
+                "fixation": 0.362500000000001,
+                "predictability": 0.19055555555555556
+              }
+            ]
+          }
+        ],
+        "ordinary": 0.4469333333333334,
+        "random": 0.20195000000000002,
+        "defiers": 0.21345,
+        "tellReader": 0.39644999999999997,
+        "fixation": 0.3644333333333341,
+        "predictability": 0.17028395061728396,
+        "exploitability": 0.2334833333333334,
+        "readability": 0.050483333333333436,
+        "betsPerFight": 10
+      },
+      {
+        "id": "ruthless",
+        "name": "Ruthless",
+        "byParty": [
+          {
+            "step": {
+              "id": "ruthless",
+              "name": "Ruthless",
+              "slack": 0.05,
+              "mixing": 0.03,
+              "weights": {
+                "lethal": 0.8,
+                "spread": 0.2,
+                "show": 0,
+                "tempo": 1
+              },
+              "sharpness": 1,
+              "rashness": 0,
+              "explore": 0.1,
+              "disclosure": "hidden"
+            },
+            "styles": [
+              {
+                "style": "habitual",
+                "name": "Habitual",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.6923,
+                "fixation": 0.4527999999999978,
+                "predictability": 0.39144444444444443
+              },
+              {
+                "style": "by-the-book",
+                "name": "By the book",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.6663,
+                "fixation": 0.4863999999999991,
+                "predictability": 0.4278888888888889
+              },
+              {
+                "style": "random",
+                "name": "Random",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.1988,
+                "fixation": 0.42899999999999755,
+                "predictability": 0.302
+              },
+              {
+                "style": "alternator",
+                "name": "Alternator",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.5179,
+                "fixation": 0.41929999999999495,
+                "predictability": 0.3333333333333333
+              },
+              {
+                "style": "switcher",
+                "name": "Switcher",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.7504,
+                "fixation": 0.37169999999999953,
+                "predictability": 0.24344444444444444
+              },
+              {
+                "style": "contrarian",
+                "name": "Contrarian",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.6643,
+                "fixation": 0.488499999999999,
+                "predictability": 0.43044444444444446
+              },
+              {
+                "style": "second-guesser",
+                "name": "Second-guesser",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.6668,
+                "fixation": 0.49319999999999914,
+                "predictability": 0.4361111111111111
+              },
+              {
+                "style": "adaptive",
+                "name": "Adaptive",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.5547,
+                "fixation": 0.4514999999999977,
+                "predictability": 0.38866666666666666
+              },
+              {
+                "style": "tell-reader",
+                "name": "Tell-reader",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.4562,
+                "fixation": 0.43219999999999775,
+                "predictability": 0.362
+              }
+            ]
+          },
+          {
+            "step": {
+              "id": "ruthless",
+              "name": "Ruthless",
+              "slack": 0.05,
+              "mixing": 0.03,
+              "weights": {
+                "lethal": 0.8,
+                "spread": 0.2,
+                "show": 0,
+                "tempo": 1
+              },
+              "sharpness": 1,
+              "rashness": 0,
+              "explore": 0.1,
+              "disclosure": "hidden"
+            },
+            "styles": [
+              {
+                "style": "habitual",
+                "name": "Habitual",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.6881,
+                "fixation": 0.47989999999999927,
+                "predictability": 0.42077777777777775
+              },
+              {
+                "style": "by-the-book",
+                "name": "By the book",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.6972,
+                "fixation": 0.5266000000000006,
+                "predictability": 0.47333333333333333
+              },
+              {
+                "style": "random",
+                "name": "Random",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2059,
+                "fixation": 0.4405999999999982,
+                "predictability": 0.3128888888888889
+              },
+              {
+                "style": "alternator",
+                "name": "Alternator",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.6154,
+                "fixation": 0.4673999999999973,
+                "predictability": 0.4078888888888889
+              },
+              {
+                "style": "switcher",
+                "name": "Switcher",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.776,
+                "fixation": 0.39149999999999624,
+                "predictability": 0.30666666666666664
+              },
+              {
+                "style": "contrarian",
+                "name": "Contrarian",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.6921,
+                "fixation": 0.528800000000001,
+                "predictability": 0.4752222222222222
+              },
+              {
+                "style": "second-guesser",
+                "name": "Second-guesser",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.6977,
+                "fixation": 0.5274000000000009,
+                "predictability": 0.4742222222222222
+              },
+              {
+                "style": "adaptive",
+                "name": "Adaptive",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.5733,
+                "fixation": 0.5022000000000002,
+                "predictability": 0.445
+              },
+              {
+                "style": "tell-reader",
+                "name": "Tell-reader",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.4512,
+                "fixation": 0.47629999999999845,
+                "predictability": 0.4106666666666667
+              }
+            ]
+          }
+        ],
+        "ordinary": 0.6453166666666668,
+        "random": 0.20235,
+        "defiers": 0.6802250000000001,
+        "tellReader": 0.4537,
+        "fixation": 0.4647388888888875,
+        "predictability": 0.3912222222222222,
+        "exploitability": -0.03490833333333332,
+        "readability": 0.19161666666666677,
+        "betsPerFight": 10
+      },
+      {
+        "id": "wrathful",
+        "name": "Wrathful",
+        "byParty": [
+          {
+            "step": {
+              "id": "wrathful",
+              "name": "Wrathful",
+              "slack": 0.02,
+              "mixing": 0.05,
+              "weights": {
+                "lethal": 0.9,
+                "spread": -0.1,
+                "show": 0.3,
+                "tempo": 1
+              },
+              "sharpness": 1,
+              "rashness": 0.6,
+              "explore": 0,
+              "disclosure": "name"
+            },
+            "styles": [
+              {
+                "style": "habitual",
+                "name": "Habitual",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.6301,
+                "fixation": 0.6781000000000006,
+                "predictability": 0.5726666666666667
+              },
+              {
+                "style": "by-the-book",
+                "name": "By the book",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.6019,
+                "fixation": 0.7311999999999995,
+                "predictability": 0.5892222222222222
+              },
+              {
+                "style": "random",
+                "name": "Random",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.1989,
+                "fixation": 0.7963000000000011,
+                "predictability": 0.25922222222222224
+              },
+              {
+                "style": "alternator",
+                "name": "Alternator",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0,
+                "fixation": 1,
+                "predictability": 0.4444444444444444
+              },
+              {
+                "style": "switcher",
+                "name": "Switcher",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.8497,
+                "fixation": 1,
+                "predictability": 0.4444444444444444
+              },
+              {
+                "style": "contrarian",
+                "name": "Contrarian",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2879,
+                "fixation": 0.5598999999999993,
+                "predictability": 0.26666666666666666
+              },
+              {
+                "style": "second-guesser",
+                "name": "Second-guesser",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.1462,
+                "fixation": 0.5591000000000004,
+                "predictability": 0.236
+              },
+              {
+                "style": "adaptive",
+                "name": "Adaptive",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.428,
+                "fixation": 0.610200000000001,
+                "predictability": 0.39355555555555555
+              },
+              {
+                "style": "tell-reader",
+                "name": "Tell-reader",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.4215,
+                "fixation": 0.5654000000000006,
+                "predictability": 0.31833333333333336
+              }
+            ]
+          },
+          {
+            "step": {
+              "id": "wrathful",
+              "name": "Wrathful",
+              "slack": 0.02,
+              "mixing": 0.05,
+              "weights": {
+                "lethal": 0.9,
+                "spread": -0.1,
+                "show": 0.3,
+                "tempo": 1
+              },
+              "sharpness": 1,
+              "rashness": 0.6,
+              "explore": 0,
+              "disclosure": "name"
+            },
+            "styles": [
+              {
+                "style": "habitual",
+                "name": "Habitual",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.6329,
+                "fixation": 0.7019000000000005,
+                "predictability": 0.5935555555555555
+              },
+              {
+                "style": "by-the-book",
+                "name": "By the book",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.643,
+                "fixation": 0.770100000000001,
+                "predictability": 0.6493333333333333
+              },
+              {
+                "style": "random",
+                "name": "Random",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2015,
+                "fixation": 0.8187000000000006,
+                "predictability": 0.26711111111111113
+              },
+              {
+                "style": "alternator",
+                "name": "Alternator",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0,
+                "fixation": 0.9547999999999928,
+                "predictability": 0.3942222222222222
+              },
+              {
+                "style": "switcher",
+                "name": "Switcher",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.9,
+                "fixation": 1,
+                "predictability": 0.4444444444444444
+              },
+              {
+                "style": "contrarian",
+                "name": "Contrarian",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2801,
+                "fixation": 0.605800000000001,
+                "predictability": 0.2607777777777778
+              },
+              {
+                "style": "second-guesser",
+                "name": "Second-guesser",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.1307,
+                "fixation": 0.5920000000000003,
+                "predictability": 0.23577777777777778
+              },
+              {
+                "style": "adaptive",
+                "name": "Adaptive",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.44,
+                "fixation": 0.6378000000000026,
+                "predictability": 0.4388888888888889
+              },
+              {
+                "style": "tell-reader",
+                "name": "Tell-reader",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.4366,
+                "fixation": 0.5833000000000004,
+                "predictability": 0.3358888888888889
+              }
+            ]
+          }
+        ],
+        "ordinary": 0.56265,
+        "random": 0.2002,
+        "defiers": 0.211225,
+        "tellReader": 0.42905,
+        "fixation": 0.7313666666666667,
+        "predictability": 0.39691975308641975,
+        "exploitability": 0.351425,
+        "readability": 0.1336,
+        "betsPerFight": 10
+      },
+      {
+        "id": "bloodlusted",
+        "name": "Bloodlusted",
+        "byParty": [
+          {
+            "step": {
+              "id": "bloodlusted",
+              "name": "Bloodlusted",
+              "slack": 0,
+              "mixing": 0,
+              "weights": {
+                "lethal": 1,
+                "spread": -0.6,
+                "show": 0.5,
+                "tempo": 0.8
+              },
+              "sharpness": 1,
+              "rashness": 0.8,
+              "explore": 0,
+              "disclosure": "full"
+            },
+            "styles": [
+              {
+                "style": "habitual",
+                "name": "Habitual",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.5155,
+                "fixation": 1,
+                "predictability": 0.6902222222222222
+              },
+              {
+                "style": "by-the-book",
+                "name": "By the book",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.5356,
+                "fixation": 1,
+                "predictability": 0.7005555555555556
+              },
+              {
+                "style": "random",
+                "name": "Random",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.1934,
+                "fixation": 1,
+                "predictability": 0.3041111111111111
+              },
+              {
+                "style": "alternator",
+                "name": "Alternator",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0,
+                "fixation": 1,
+                "predictability": 0.4444444444444444
+              },
+              {
+                "style": "switcher",
+                "name": "Switcher",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.9,
+                "fixation": 1,
+                "predictability": 0.4444444444444444
+              },
+              {
+                "style": "contrarian",
+                "name": "Contrarian",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2458,
+                "fixation": 1,
+                "predictability": 0.3496666666666667
+              },
+              {
+                "style": "second-guesser",
+                "name": "Second-guesser",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.0742,
+                "fixation": 1,
+                "predictability": 0.2936666666666667
+              },
+              {
+                "style": "adaptive",
+                "name": "Adaptive",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3288,
+                "fixation": 1,
+                "predictability": 0.5262222222222223
+              },
+              {
+                "style": "tell-reader",
+                "name": "Tell-reader",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3211,
+                "fixation": 1,
+                "predictability": 0.38055555555555554
+              }
+            ]
+          },
+          {
+            "step": {
+              "id": "bloodlusted",
+              "name": "Bloodlusted",
+              "slack": 0,
+              "mixing": 0,
+              "weights": {
+                "lethal": 1,
+                "spread": -0.6,
+                "show": 0.5,
+                "tempo": 0.8
+              },
+              "sharpness": 1,
+              "rashness": 0.8,
+              "explore": 0,
+              "disclosure": "full"
+            },
+            "styles": [
+              {
+                "style": "habitual",
+                "name": "Habitual",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.5349,
+                "fixation": 1,
+                "predictability": 0.7008888888888889
+              },
+              {
+                "style": "by-the-book",
+                "name": "By the book",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.5942,
+                "fixation": 1,
+                "predictability": 0.7503333333333333
+              },
+              {
+                "style": "random",
+                "name": "Random",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.1977,
+                "fixation": 1,
+                "predictability": 0.30744444444444446
+              },
+              {
+                "style": "alternator",
+                "name": "Alternator",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0,
+                "fixation": 1,
+                "predictability": 0.4444444444444444
+              },
+              {
+                "style": "switcher",
+                "name": "Switcher",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.9,
+                "fixation": 1,
+                "predictability": 0.4444444444444444
+              },
+              {
+                "style": "contrarian",
+                "name": "Contrarian",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.2479,
+                "fixation": 1,
+                "predictability": 0.35233333333333333
+              },
+              {
+                "style": "second-guesser",
+                "name": "Second-guesser",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.0726,
+                "fixation": 1,
+                "predictability": 0.2982222222222222
+              },
+              {
+                "style": "adaptive",
+                "name": "Adaptive",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3656,
+                "fixation": 1,
+                "predictability": 0.5633333333333334
+              },
+              {
+                "style": "tell-reader",
+                "name": "Tell-reader",
+                "fights": 1000,
+                "betsPerFight": 10,
+                "success": 0.3368,
+                "fixation": 1,
+                "predictability": 0.4086666666666667
+              }
+            ]
+          }
+        ],
+        "ordinary": 0.47909999999999997,
+        "random": 0.19555,
+        "defiers": 0.16012500000000002,
+        "tellReader": 0.32894999999999996,
+        "fixation": 1,
+        "predictability": 0.4668888888888889,
+        "exploitability": 0.31897499999999995,
+        "readability": 0.15015,
+        "betsPerFight": 10
+      }
+    ],
+    "checks": [
+      {
+        "target": "1. Each step in its band",
+        "passed": false,
+        "detail": "Curious 32% (25%–30%) ✗; Hunting 45% (30%–40%) ✗; Ruthless 65% (highest, ≥ 45%); Wrathful 56% (30%–40%) ✗; Bloodlusted 48% (30%–40%) ✗"
+      },
+      {
+        "target": "2. Rises to Ruthless, then falls",
+        "passed": true,
+        "detail": "32% → 45% → 65% → 56% → 48%"
+      },
+      {
+        "target": "3. Random at most 25%",
+        "passed": true,
+        "detail": "Curious 19%, Hunting 20%, Ruthless 20%, Wrathful 20%, Bloodlusted 20%"
+      },
+      {
+        "target": "4. Fixation highest at Bloodlusted; exploitability higher than Ruthless's",
+        "passed": true,
+        "detail": "fixation 1.00 (highest 1.00); exploitability 32 against -3 points"
+      },
+      {
+        "target": "5. Predictability higher at Bloodlusted than at Ruthless",
+        "passed": true,
+        "detail": "0.47 against 0.39 (readability, reported but no longer a target: 15 against 19 points)"
+      }
+    ]
+  }
+}

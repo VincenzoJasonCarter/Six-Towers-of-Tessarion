@@ -11,8 +11,10 @@ Where the project is (DESIGN.md section 10): **M0 design**, **M1 harness**
 and **M2 belief** are done; the chosen belief model is C, the ensemble
 ([reports/m2-belief.md](reports/m2-belief.md)). **M2b** tested reading
 players who read the boss and kept C as it was
-([reports/m2b-wary.md](reports/m2b-wary.md)). M3, decision and temperament,
-is next.
+([reports/m2b-wary.md](reports/m2b-wary.md)). **M3**, decision and
+temperament, is done: the five steps are calibrated
+([reports/m3-temperament.md](reports/m3-temperament.md)). M4, the Prophet
+module, is next.
 
 ## Layout
 
@@ -27,15 +29,19 @@ src/engine/            what the real engine will be built from
   belief/dodge.ts      what "dodging a prophecy" means, shared by the defiance models
   belief/archetypes.ts model B, "archetypes": a Bayesian posterior over player types
   belief/ensemble.ts   model C: Bayesian model averaging over other models
+  decision/temperament.ts  the temperament steps and their levers (DESIGN.md 5)
+  decision/decide.ts   expected utility, care, mixing, sharpness, rashness, exploration
 src/harness/           the research harness (DESIGN.md 8)
   players.ts           synthetic players, nine styles (M2 used the first eight)
-  fight.ts             one simulated fight, with the spike's prophecy policy
+  fight.ts             one simulated fight, for any Prophet; the spike's prophecy policy
   metrics.ts           forecast and prophecy scores
   suite.ts             every style × N fights
   report.ts, cli.ts    the report and the command line
   candidates.ts        the M2 candidates and their tuning grids
   compare.ts           the M2 protocol: tune, evaluate on held-out data, choose
   m2b.ts               the M2b protocol: should the belief read players who read the boss?
+  bettor.ts            M3's baseline module: one bet a round, chosen under a temperament
+  m3.ts                the M3 protocol: calibrate the temperament steps
 test/                  unit tests, including one that pins the spike's numbers
 reports/               harness output: <name>.md to read, <name>.json raw
 prophet/model.js       the original throwaway spike, kept for reference
@@ -59,6 +65,7 @@ npm run harness -- --belief b --name archetypes      # another belief model: a, 
 npm run compare                                  # the M2 protocol → reports/m2-belief.md (several minutes)
 npm run compare -- --quick                       # smoke test of the protocol; not results, not committed
 npm run compare:m2b                              # the M2b protocol → reports/m2b-wary.md (several minutes)
+npm run compare:m3                               # the M3 protocol → reports/m3-temperament.md (about 15 minutes)
 ```
 
 Or from the repo root: `make boss-brain-test` and `make boss-brain-harness

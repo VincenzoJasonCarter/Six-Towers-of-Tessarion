@@ -1,7 +1,7 @@
 import type { BeliefFactory } from "../engine/belief/types.ts";
 import { Rng, seedFor } from "../engine/rng.ts";
 import type { HeroSpec, SubclassId } from "../engine/subclasses.ts";
-import { runFight, type BaselineProphet } from "./fight.ts";
+import { runFight, spikeProphet, type BaselineProphet } from "./fight.ts";
 import { ForecastScore, ProphecyScore, type ForecastSummary, type ProphecySummary } from "./metrics.ts";
 import type { Player, Style } from "./players.ts";
 
@@ -60,7 +60,14 @@ export function runSuite(opts: SuiteOptions): SuiteResult {
       );
       const belief = opts.belief(heroes);
       beliefId = belief.id;
-      const fight = runFight({ heroes, players, belief, rounds: opts.rounds, policy: opts.policy });
+      const fight = runFight({
+        heroes,
+        players,
+        belief,
+        rounds: opts.rounds,
+        prophet: spikeProphet(opts.policy),
+        rewindCost: opts.policy.rewindCost,
+      });
       forecast.addFight(fight);
       named.addFight(fight, (t) => t.named);
       pooled.addFight(fight);
@@ -88,7 +95,8 @@ export function runSuite(opts: SuiteOptions): SuiteResult {
   };
 }
 
-function hash(s: string): number {
+/** A stable number for a style's id, to key its seeds. */
+export function hash(s: string): number {
   let h = 2166136261;
   for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619) >>> 0;
   return h;
