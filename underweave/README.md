@@ -2,13 +2,16 @@
 
 A Bayesian decision engine for bosses: it watches how the players play,
 builds a belief about each of them, and picks whatever move it judges most
-profitable for the boss, as ruthlessly as its temperament allows. The
+profitable for the boss, played as well as its temperament lets it: best
+when cold (Ruthless), worse when Curious or Bloodlusted. The
 Threadkeeper Failed Prophet is the first boss to use it. The why and the how
 are in [DESIGN.md](DESIGN.md); this file covers running the code.
 
 Where the project is (DESIGN.md section 10): **M0 design**, **M1 harness**
 and **M2 belief** are done; the chosen belief model is C, the ensemble
-([reports/m2-belief.md](reports/m2-belief.md)). M3, decision and temperament,
+([reports/m2-belief.md](reports/m2-belief.md)). **M2b** tested reading
+players who read the boss and kept C as it was
+([reports/m2b-wary.md](reports/m2b-wary.md)). M3, decision and temperament,
 is next.
 
 ## Layout
@@ -25,13 +28,14 @@ src/engine/            what the real engine will be built from
   belief/archetypes.ts model B, "archetypes": a Bayesian posterior over player types
   belief/ensemble.ts   model C: Bayesian model averaging over other models
 src/harness/           the research harness (DESIGN.md 8)
-  players.ts           synthetic players, eight styles
+  players.ts           synthetic players, nine styles (M2 used the first eight)
   fight.ts             one simulated fight, with the spike's prophecy policy
   metrics.ts           forecast and prophecy scores
   suite.ts             every style × N fights
   report.ts, cli.ts    the report and the command line
   candidates.ts        the M2 candidates and their tuning grids
   compare.ts           the M2 protocol: tune, evaluate on held-out data, choose
+  m2b.ts               the M2b protocol: should the belief read players who read the boss?
 test/                  unit tests, including one that pins the spike's numbers
 reports/               harness output: <name>.md to read, <name>.json raw
 prophet/model.js       the original throwaway spike, kept for reference
@@ -54,6 +58,7 @@ npm run harness -- --name low-memory --memory 0.7    # an experiment → reports
 npm run harness -- --belief b --name archetypes      # another belief model: a, ad, b or c
 npm run compare                                  # the M2 protocol → reports/m2-belief.md (several minutes)
 npm run compare -- --quick                       # smoke test of the protocol; not results, not committed
+npm run compare:m2b                              # the M2b protocol → reports/m2b-wary.md (several minutes)
 ```
 
 Or from the repo root: `make underweave-test` and `make underweave-harness
@@ -88,7 +93,9 @@ where the boss had named the hero. That is where defiance shows.
 ## Adding a belief model
 
 Implement `BeliefModel` from `src/engine/belief/types.ts` and export a
-factory like `countsBelief`. To put it through the M2 protocol, add it with a
+factory like `countsBelief`. Besides `forecast` and `observe`, a model is
+told every bet the boss has revealed (`reveal`); a model that doesn't use
+them says so with an empty method, as model A does. To put it through the M2 protocol, add it with a
 tuning grid to `src/harness/candidates.ts` and `src/harness/compare.ts`. The
 harness only ever talks to the interface, so the same styles, metrics and
 seeds apply to every candidate.

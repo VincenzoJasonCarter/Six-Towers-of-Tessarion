@@ -1,6 +1,6 @@
 import { K, normalize, type Action, type Distribution } from "../actions.ts";
 import { shapeOf, type HeroSpec } from "../subclasses.ts";
-import type { BeliefFactory, BeliefModel, ObservationContext } from "./types.ts";
+import type { BeliefFactory, BeliefModel, Bet, ObservationContext } from "./types.ts";
 
 /**
  * Belief model A, "counts" (DESIGN.md 4.2), ported from the spike in
@@ -80,6 +80,9 @@ export class CountsBelief implements BeliefModel {
     if (m.last !== null) m.pattern[m.last]![action]! += 1;
     m.last = action;
   }
+
+  // Model A doesn't model players who read the boss.
+  reveal(_hero: string, _bet: Bet): void {}
 
   /** The weight on [habit, pattern], for reports and tests. */
   weights(hero: string): readonly [number, number] {

@@ -102,7 +102,9 @@ export function runFight({ heroes, players, belief, rounds, policy }: FightSetup
       }
     }
     for (const p of prophecies) {
-      if (p.round === round) told.get(p.hero)!.push({ round, action: p.action, fulfilled: p.fulfilled });
+      if (p.round !== round) continue;
+      told.get(p.hero)!.push({ round, action: p.action, fulfilled: p.fulfilled });
+      belief.reveal(p.hero, { action: p.action, fulfilled: p.fulfilled });
     }
   }
   return { turns, prophecies, charges, firstRewindRound };

@@ -1,8 +1,10 @@
   # The Underweave Boss Brain: design
 
-**Status:** 1.0, 2026-10-05. The open questions are closed (section 11).
+**Status:** 1.1, 2026-10-06. The open questions are closed (section 11).
 M1 and M2 are done: the harness is in `src/harness/`, and the belief model
-is chosen, model C (see [M2 results](#m2-results)). The code in `prophet/` is the throwaway spike
+is chosen, model C (see [M2 results](#m2-results)). 1.1 redesigns the
+temperament dial as a bell curve (section 5) and adds the
+[M2b](#m2b-protocol) and [M3](#m3-protocol) protocols. The code in `prophet/` is the throwaway spike
 (see [Spike results](#spike-results)), kept for reference only.
 
 ## 1. What this is
@@ -10,8 +12,11 @@ is chosen, model C (see [M2 results](#m2-results)). The code in `prophet/` is th
 A decision engine for bosses, run by the DM at the table. During a fight it
 watches what the players do, builds a belief about how each of them plays, and
 uses that belief to choose whatever move it judges most profitable for the
-boss. A **temperament** setting, from *Playful* to *Bloodlusted*, decides how
-ruthlessly it pursues that profit.
+boss. A **temperament** dial, from *Curious* through *Ruthless* to
+*Bloodlusted*, decides how it pursues that profit. It plays best in the
+middle, cold and focused, and worse at either end, for reasons the players
+can read: a Curious boss is still learning, a Bloodlusted one is too angry
+to think.
 
 The model is Akinator's, aimed at the party: Akinator keeps a belief over who
 you are thinking of, updates it with each answer, and guesses once it is sure
@@ -45,7 +50,7 @@ whether the module interface is general enough (section 6.2).
 - Simulating 5e combat. The arena (`../arena/`) does that and stays separate.
 - Rolling dice, tracking HP or running initiative. The DM's existing tools do
   that.
-- Playing optimally. Even at Bloodlusted, the goal is a boss that feels
+- Playing optimally. Even at Ruthless, the goal is a boss that feels
   dangerous, not one that is provably best.
 
 ## 3. Terms
@@ -124,6 +129,13 @@ comply, defy, or second-guess? The belief keeps a per-player **defiance** rate
 player shifts accordingly. A boss that knows Kael always dodges its prophecies
 can foretell the dodge. This is what makes the Prophet more than a counter.
 
+**Being read is evidence too.** Players learn the boss as the boss learns
+them. Once the table has seen what the boss bet on a player (a prophecy,
+opened or sealed, once its round is over), a wary player steers away from
+those actions, named or not. The belief is told every bet the table has
+seen, so it can recognise a player who has started playing the boss rather
+than the fight ([M2b protocol](#m2b-protocol)).
+
 **Memory.** Within a fight, older evidence fades by a forgetting factor, so a
 player who changes style is followed. Between fights and sessions, profiles
 persist, one per player rather than per character (Q5). The people at the table don't change, and a boss
@@ -148,7 +160,7 @@ temperament dial means the same thing for every boss:
 |---|---|---|
 | `lethal` | damage, downs, kills, denying healing | Prophet rewinds a heal |
 | `spread` | involving every player, not tunnelling one | Prophet names someone new |
-| `show` | drama, telegraphing, giving the table a puzzle | Prophet reveals the full prophecy |
+| `show` | drama: telegraphed attacks, theatrics, a puzzle for the table (not disclosure, which is temperament's, 5.1) | a boss winds up a big attack in plain sight |
 | `tempo` | the boss's own resources: charges, actions, position | Prophet gains an Echo Charge |
 
 ### 4.4 Decision
@@ -167,8 +179,9 @@ mixes two decision modes (Q6), with how much it explores set by temperament:
 - **Exploit:** pick by EU on the current belief. Simple and predictable.
 - **Explore/exploit:** occasionally pick an option because it would teach the
   brain the most, as Akinator picks the question that best splits its
-  candidates (expected information gain, or Thompson sampling). A Curious boss
-  probes; a Bloodlusted one cashes in.
+  candidates. A Curious boss probes; a Ruthless one cashes in; a Bloodlusted
+  one doesn't stop to ask. The engine's measure is the uncertainty of the
+  forecast an option bets on (section 5.1, Exploration).
 
 ### 4.5 Explanation
 
@@ -178,38 +191,90 @@ in force. The DM sees this; the players see only what `announce` gives them.
 
 ## 5. Temperament
 
-### 5.1 Less optimal must not mean random
+### 5.1 A bell curve, not a ramp
 
-The naive dial adds randomness as it moves toward Playful. That makes a
-Playful boss look stupid, not playful. A playful boss knows its best move and
-chooses not to make it. So the dial moves four levers at once:
+The dial sets how hot the boss runs, from cool interest to rage. How well it
+plays follows a bell curve over the dial, as performance does over arousal
+(the Yerkes–Dodson law): best in the middle, worse at both ends. The two
+ends fall short for different reasons, and neither is random. A boss that
+plays worse by rolling dice looks stupid; one that plays worse because it is
+curious, or because it is furious, looks like a character, and the players
+can learn to play around it.
 
-| Lever | What it does | Playful → Bloodlusted |
+- **Curious** is still learning. It spends bets probing players it can't
+  read yet, hedges on what it has read, and shows its hand to see how the
+  table reacts.
+- **Ruthless** is the peak: cold, focused, using everything it has read, and
+  keeping its bets to itself.
+- **Bloodlusted** is enraged. It jumps to conclusions from one turn, fixes on
+  one player and won't let go, and roars its intentions so the table hears
+  them. It wants blood more than anything else on the dial, so what it does
+  land is the most lethal; it just lands less. A party can bait it.
+
+What the dial moves:
+
+| Lever | What it does | Curious → Ruthless → Bloodlusted |
 |---|---|---|
-| **Precision** | Picks by softmax over EU, among options within a *slack* of the best | wide slack, high temperature → only the best |
-| **Values** | Axis weights in the utility | `show`, `spread` high → `lethal` high |
-| **Disclosure** | How much `announce` reveals | full telegraph → name only, or silence |
-| **Sharpness** | Tempers the belief before use (p^β, renormalised) | β < 1, it "forgets" what it read → β = 1, uses all of it |
+| **Care** (slack) | Only options within this share of the best EU are considered: how bad a move it will settle for | careless → careful → careless |
+| **Mixing** (softmax temperature) | How evenly it picks among the options it considers: how hard it is to read | mixes → mixes among good moves only → never mixes |
+| **Values** | Axis weights in the utility | `show`, `spread` high → `tempo` high → `lethal` high, `spread` negative |
+| **Sharpness** | Tempers the belief before use: p^β, renormalised | β < 1, hedges → β = 1, uses all of it → β > 1, jumps to conclusions |
+| **Exploration** | Bonus for betting where the forecast is unsure (its entropy), to learn | high → none → none |
+| **Disclosure** | Which level `announce` uses | full → hidden → full |
+
+**Care and mixing are different things.** A boss can be careful and still
+hard to read: against players who learn the boss, always making the same
+best move is a weakness, and the answer is to mix among moves that are
+nearly as good (a mixed strategy, in game-theory terms). So Ruthless never
+settles for a poor move but mixes among good ones, while Bloodlusted
+settles for poor moves and never mixes. Its rage is readable, and a party
+can bait it.
+
+**Values** rise in one direction: `lethal` grows from one end of the dial to
+the other. A negative `spread` weight is **fixation**: the boss is rewarded
+for going after the same player again, which is how a grudge looks in the
+utility.
+
+**Disclosure** has three levels. *Full* says what and who ("Kael will loose
+from afar"). *Name only* says who ("I have seen what Kael will do").
+*Hidden* commits to the bet in secret and reveals it afterwards (for the
+Prophet, a sealed prophecy), so the player can't react to it. Each step
+has one level, and it is a rule of character, not a choice made for profit:
+a boss that picked its disclosure by EU would always hide, and an enraged
+one doesn't hold its tongue. For the same reason `show` doesn't reward
+disclosure; that would count it twice. Disclosure runs in a U: the curious
+boss shows its hand to watch, the cold one hides it, the enraged one shouts
+it.
 
 ### 5.2 The steps
 
-Placeholder values, to be calibrated in the harness (section 8):
+Placeholder values, to be calibrated in the harness ([M3 protocol](#m3-protocol)):
 
-| Step | Softmax temp. | Slack | `lethal` | `spread` | `show` | `tempo` | Disclosure | β |
-|---|---|---|---|---|---|---|---|---|
-| Playful | 0.50 | 40% | 0.2 | 1.0 | 1.0 | 0.5 | full | 0.5 |
-| Curious | 0.30 | 25% | 0.4 | 0.7 | 0.7 | 0.7 | full | 0.7 |
-| Hunting | 0.15 | 15% | 0.6 | 0.4 | 0.4 | 0.9 | name only | 0.85 |
-| Ruthless | 0.07 | 5% | 0.85 | 0.15 | 0.15 | 1.0 | name only | 1.0 |
-| Bloodlusted | ~0 | 0% | 1.0 | 0 | 0 | 1.0 | name or silence | 1.0 |
+| Step | Slack | Mixing temp. | `lethal` | `spread` | `show` | `tempo` | β | Explore | Disclosure |
+|---|---|---|---|---|---|---|---|---|---|
+| Curious | 30% | 0.30 | 0.2 | 1.0 | 1.0 | 0.5 | 0.6 | 0.5 | full |
+| Hunting | 15% | 0.15 | 0.5 | 0.5 | 0.4 | 0.8 | 0.85 | 0.2 | name only |
+| **Ruthless** | 5% | 0.15 | 0.8 | 0.2 | 0 | 1.0 | 1.0 | 0.1 | hidden |
+| Wrathful | 2% | 0.05 | 0.9 | −0.3 | 0.3 | 1.0 | 1.5 | 0 | name only |
+| Bloodlusted | 0% | 0 | 1.0 | −0.6 | 0.5 | 0.8 | 2.5 | 0 | full |
 
-The DM picks a step; each lever can still be overridden by hand.
+Ruthless explores a little: against players who change, a belief goes
+stale, and a cold boss knows information has a price worth paying. Curious
+still explores most (Q6). Wrathful sits between Ruthless and Bloodlusted on
+every lever.
+
+The DM picks a step; each lever can still be overridden by hand. The two
+ends are both easier to beat than the middle, but they feel different: a
+Curious boss is a gentle fight, a Bloodlusted one a frightening fight with a
+weakness the party can find.
 
 ### 5.3 Shifting temperament mid-fight
 
 Temperament can move by itself in response to the fight, for example:
 
-- boss HP thresholds (Playful above half, Ruthless below a quarter),
+- boss HP thresholds (Ruthless above half, Wrathful below half,
+  Bloodlusted below a quarter: the classic enrage, more dangerous and easier
+  to bait),
 - an insult to the boss (a minion slain, a prophecy defied three times),
 - a round count (the boss tires of playing).
 
@@ -229,18 +294,21 @@ last player action.
 
 As a module:
 
-- **Options:** per round, a prophecy (hero × action category) or silence. A
+- **Options:** per round, a prophecy (hero × action category) or silence,
+  disclosed at the temperament's level. A
   second decision runs whenever charges allow it: rewind now, or hold the
   charges for a better moment (a crit, a killing blow, a heal on a downed
   ally).
 - **Outcomes:** the prophecy is fulfilled with the forecast probability for
   that hero, adjusted for their defiance when named.
 - **Utility:** a fulfilled prophecy is `tempo` (a charge). Naming someone not
-  named recently is `spread`. A full telegraph is `show`. A rewind is scored by
-  what it unmakes: a heal or a killing blow is `lethal`, a plain hit is
-  `tempo`.
+  named recently is `spread`. A rewind is scored by what it unmakes: a heal
+  or a killing blow is `lethal`, a plain hit is `tempo`. Holding a rewind
+  for a dramatic moment is `show`; how much the prophecy reveals is not
+  (5.1).
 - **Disclosure:** full ("Kael will loose from afar"), name only ("I have seen
-  what Kael will do"), or silence, by temperament.
+  what Kael will do"), or hidden (a sealed prophecy, written down and opened
+  when the round ends), as the temperament allows.
 
 Note that the existing yaml examples ("the archer will miss", "someone will
 fall") predict dice, not choices. Dice outcomes need no learning, so they
@@ -287,20 +355,41 @@ players** and measures it.
 | Contrarian | by the book, but never its subclass's main action when named |
 | Second-guesser | by the book, but when named avoids whatever it has done most so far |
 | Adaptive | by the book, but shies away from any action a revealed prophecy caught it doing, and slowly forgets |
+| Tell-reader | by the book, but steers away from the actions the boss has bet on about it, named or not, whether or not the bets came true (added in M2b) |
 
-The Adaptive player only reacts to prophecies that came true about itself. A
-player who studies the boss's tells more broadly is left for when there is a
-real module with tells to study (M4).
+The Adaptive player reacts to being caught; the Tell-reader reads the boss's
+habits and moves first, so a boss that keeps making the same bet pays for
+it. Both see only what the boss reveals, which is every bet once its round
+is over. Reading a module's own tells (a wind-up, a stance) is left for
+when there is a real module with tells to study (M4).
 
 **Metrics:** forecast accuracy (and calibration: is 60% right 60% of the
 time?), prophecy hit rate, charges per round, rounds to first rewind, how
 quickly each player style is detected, and how the temperament steps differ
 from each other.
 
-**Calibration targets (provisional):** the Prophet's hit rate against ordinary
-play at Hunting should be about 35–50%, a rewind about once every 4–5 rounds.
-Against Random, it should fall to chance, so that playing unpredictably works
-but costs the party efficiency.
+**Calibration targets (provisional).** Temperament is the engine's, so it is
+calibrated on a measure every module has: **bet success**, how often a bet
+the boss makes about a player comes true (for the Prophet, the prophecy hit
+rate). Against ordinary play (Habitual, By the book, Adaptive) it should
+follow the bell of section 5.1:
+
+| Step | Bet success against ordinary play |
+|---|---|
+| Curious | 15–25% |
+| Hunting | 30–40% |
+| Ruthless | the highest of the five, at least 45% |
+| Wrathful | 30–40% |
+| Bloodlusted | 20–30% |
+
+Against Random, every step should fall to chance, so that playing
+unpredictably works but costs the party efficiency.
+
+A module's own economy is the module's to tune, not the engine's. For the
+Prophet (M4): a rewind about once every 4–5 rounds. With one prophecy a
+round and a rewind costing 3 charges, that needs a hit rate of 60–75%, above
+any band here, so M4 will have to change the cost, the prophecies per round
+or the target.
 
 Party win rate per temperament step is the number the DM would care about
 most, but it needs a combat model, which the harness doesn't have. It is
@@ -477,6 +566,164 @@ What M3 and later have to know:
    not the belief's: the belief should be honest, and the policy and
    temperament decide what to do with it.
 
+### M2b protocol
+
+Written before any M2b numbers existed. M2 chose model C against players who
+react to being named; it never met a player who reads the boss. A general
+boss brain needs to, and M3 should not calibrate temperament on top of a
+belief with that hole in it.
+
+**What changes.**
+
+- *Reveals.* The belief is told every bet the table has seen: which player,
+  which action, whether it came true. Model A ignores them.
+- *Wary players.* Model B gains a third dimension, crossed with its habits
+  and its reactions to being named: a player either ignores the boss's bets
+  or is **wary** of them. A wary player's usual turn is scaled down on every
+  action the boss has bet on, by a factor that grows with each bet (fulfilled
+  or not) and fades over the following turns. Its prior is a new setting,
+  `waryPrior`; at 0, model B is exactly M2's.
+- *Players.* The Tell-reader joins the styles (section 8).
+
+**Candidates.** `c` as chosen in M2, and `c2`: the same, with a wary model
+B. `b` and `b2` are reported alongside for information.
+
+**Tuning.** Seed 1, 300 fights per style, the spike's party, all nine
+styles. Every M2 setting stays; only the new ones are tuned: `waryPrior` in
+0.1, 0.2, 0.35, 0.5, then the ensemble's memory in 0.85, 0.9, 0.95 on top of
+the best.
+
+**Evaluation and choosing.** Held out as in M2: seed 2, 1000 fights per
+style, both parties, nine styles. `c2` replaces `c` if all of these hold:
+
+1. its mean log loss over the nine styles is lower;
+2. on no style is its log loss worse than `c`'s by more than 0.02, so that
+   reading learners doesn't cost the players who aren't;
+3. its calibration error is no worse than `c`'s;
+4. it still passes M2's defier guards.
+
+Otherwise `c` stays, and the report says which rule failed. The M2 report
+keeps its eight styles, so its numbers stay reproducible.
+
+### M2b results
+
+Run with `npm run compare:m2b`; full numbers in
+[reports/m2b-wary.md](reports/m2b-wary.md). **Model C stays as chosen in
+M2.** The wary model `c2` passed three of the four rules and failed the
+calibration rule:
+
+| Rule | `c` | `c2` | Passed |
+|---|---|---|---|
+| 1. Mean log loss, nine styles | 1.2519 | 1.2503 | yes |
+| 2. Worst change on any style | | +0.006 (Contrarian) | yes |
+| 3. Calibration error | 0.021 | 0.024 | **no** |
+| 4. Defier guards (named turns) | | 1.39, 1.47 against 1.61 | yes |
+
+What M3 and later have to know:
+
+1. **The gain was small even where it was aimed.** Against the Tell-reader,
+   log loss improved by 0.011, and the baseline prophecy hit rate rose from
+   36% to 38%. With one bet a round spread over four heroes, a player sees
+   only two or three bets about themselves in a fight, so there is little
+   wariness to read.
+2. **The calibration loss may not be the wary types' fault.** Tuning also
+   moved the ensemble's memory from 0.9 to 0.85, and model B on its own
+   became *better* calibrated with wary types (0.040 to 0.032). Which change
+   cost C its calibration was not tested; testing it now would be fitting
+   the protocol to the numbers. It is a question for when playtests (M6)
+   show how much real players read the boss.
+3. **The code stays, switched off.** Reveals reach every belief model, and
+   model B's wary types are there at `waryPrior` 0, where the model is M2's
+   exactly. A module whose players see more bets per fight may want them.
+4. **The Tell-reader already costs the boss.** Even unread, it holds the
+   baseline hit rate to 36%, against 44–55% for By the book and Habitual.
+   That gap is what M3's readability measure works with.
+
+### M3 protocol
+
+Written before any M3 numbers existed, so the calibration can't be fitted to
+them afterwards.
+
+**What is built.** The decision layer of 4.4 and the levers of 5.1, in the
+engine, with the five steps of 5.2 as data. The engine knows nothing about
+prophecies: it sees options, outcome probabilities and axis scores.
+
+**The baseline module.** A minimal Prophet, used only as a yardstick (the
+real one is M4):
+
+- *Options:* each round, one bet per (hero, action), plus silence, disclosed
+  at the step's level. One bet a round.
+- *Outcome:* the bet comes true with the tempered forecast probability. The
+  forecast is made as if named, unless the disclosure is hidden.
+- *Utility:* a bet that comes true is `tempo` 1. Betting on a hero who was
+  not bet on last round is `spread` 1. Nothing is `lethal` or `show`, so
+  those weights are not calibrated in M3; they wait for modules with lethal
+  outcomes and drama (M4). Silence scores 0.
+- *Exploration:* the bonus is the explore weight times the entropy of the
+  hero's untempered forecast, divided by ln 5 so it runs from 0 to 1.
+- *Choice:* the options whose EU is within the slack of the best (a share of
+  the best EU), then a softmax at the step's temperature; at temperature 0,
+  the best.
+
+**Measures**, per step:
+
+1. *Bet success* against ordinary play (the mean over Habitual, By the book
+   and Adaptive), against Random, against the defiers (Contrarian and
+   Second-guesser) and against the Tell-reader.
+2. *Fixation:* in each fight, the share of bets on the hero bet on most;
+   averaged over fights.
+3. *Exploitability:* bet success against ordinary play minus against the
+   defiers.
+4. *Readability:* bet success against ordinary play minus against the
+   Tell-reader.
+5. *Predictability:* the share of bets that repeat the boss's most common
+   bet so far in the fight (same hero, same action).
+
+**Targets.** M3 is done when all of these hold on the held-out data, using
+the mean over the two parties:
+
+1. Bet success against ordinary play is in the step's band (section 8).
+2. It rises from Curious to Ruthless and falls from Ruthless to Bloodlusted.
+3. Against Random, every step is at most 25%.
+4. Fixation is highest at Bloodlusted, and exploitability is higher at
+   Bloodlusted than at Ruthless.
+5. Readability and predictability are both higher at Bloodlusted than at
+   Ruthless: the cold boss is harder to read than the enraged one.
+
+If a target fails, the report says which, and the fix is a change to the
+step's fixed levers, written down here before the rerun.
+
+**Robustness.** The held-out evaluation is repeated with both defiance
+priors in model C lowered to 25% (M2 results, point 1). A failure there
+doesn't block M3; it is recorded as the first thing for playtests (M6) to
+check.
+
+**Tuning.** Seed 1, 300 fights per style, the spike's party, the three
+ordinary styles and the Tell-reader (the only ones tuning looks at).
+Belief: model C at its M2 settings (M2b kept them). Axis weights, exploration, disclosure and
+slack stay as in 5.2: they are the design's intent, not numbers to fit. Per
+step, β and, where the step mixes, the mixing temperature are tuned on a
+grid:
+
+| Step | β tried | Mixing temp. tried | Picked by |
+|---|---|---|---|
+| Curious | 0.3, 0.45, 0.6, 0.75, 0.9 | 0.07, 0.15, 0.3, 0.5 | closest to the middle of its band |
+| Hunting | 0.6, 0.75, 0.85, 0.95, 1 | 0.03, 0.07, 0.15, 0.3 | closest to the middle of its band |
+| Ruthless | 1 | 0, 0.03, 0.07, 0.15, 0.3 | highest mean of bet success against ordinary play and against the Tell-reader |
+| Wrathful | 1.1, 1.3, 1.5, 2, 2.5 | 0.05 | closest to the middle of its band |
+| Bloodlusted | 1.5, 2, 2.5, 3.5, 5 | 0 | closest to the middle of its band |
+
+Ruthless is picked partly on the Tell-reader so that tuning can't buy bet
+success by making it readable. Each step's β must stay on its side of the
+curve: Hunting's at least Curious's, Bloodlusted's above Wrathful's. Ties go
+to the point closest to the placeholder in 5.2. If no point lands in the
+band, the slack joins the grid (0%, 5%, 15%, 30%, 40%); if still none does,
+the step fails and the report says which lever ran out.
+
+**Evaluation.** Seed 2, 1000 fights per style, all nine styles, on both
+parties of M2. Every fight is 10 rounds. Written to
+`reports/m3-temperament.md` and `.json`.
+
 ## 9. Data and persistence
 
 - **Event log** per fight, as JSON: the source of truth.
@@ -493,7 +740,8 @@ What M3 and later have to know:
 | M0 | This design | Done: open questions closed, doc at 1.0 |
 | M1 | Harness | Done: synthetic players and metrics, the spike reproduced ([M1 baseline](#m1-baseline)) |
 | M2 | Belief | Done: model C chosen ([M2 results](#m2-results)) |
-| M3 | Decision + temperament | Five steps calibrated against the targets in section 8 |
+| M2b | Belief reads learners | Done: model C stays; wary types kept, switched off ([M2b results](#m2b-results)) |
+| M3 | Decision + temperament | Five steps calibrated against the targets in section 8 ([M3 protocol](#m3-protocol)) |
 | M4 | Prophet module | The Prophet runs end to end in the harness |
 | M5 | Table tool | Usable at a real session |
 | M6 | Playtest loop | Logs from real sessions retune the priors |

@@ -43,6 +43,24 @@ describe("runFight", () => {
       assert.equal(t.named, fight.prophecies.some((p) => p.round === t.round && p.hero === t.hero));
     }
   });
+
+  it("reveals every prophecy to the belief once its round is over", () => {
+    const heroes = [{ id: "g", subclass: "gunman" }] as const;
+    const players = new Map(heroes.map((h) => [h.id, HABITUAL.make(h.subclass, new Rng(1))]));
+    const inner = new CountsBelief(heroes);
+    const revealed: { hero: string; action: number; fulfilled: boolean }[] = [];
+    const belief = {
+      id: "spy",
+      forecast: inner.forecast.bind(inner),
+      observe: inner.observe.bind(inner),
+      reveal: (hero: string, bet: { action: number; fulfilled: boolean }) => void revealed.push({ hero, ...bet }),
+    };
+    const fight = runFight({ heroes, players, belief, rounds: 6, policy: SPIKE_PROPHET });
+    assert.deepEqual(
+      revealed,
+      fight.prophecies.map((p) => ({ hero: p.hero, action: p.action, fulfilled: p.fulfilled })),
+    );
+  });
 });
 
 describe("runSuite", () => {

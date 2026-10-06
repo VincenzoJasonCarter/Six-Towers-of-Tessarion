@@ -9,6 +9,15 @@ export interface ObservationContext {
 }
 
 /**
+ * A bet the boss made about a hero, as the table saw it once its round was
+ * over (DESIGN.md 4.2, "being read is evidence too").
+ */
+export interface Bet {
+  readonly action: Action;
+  readonly fulfilled: boolean;
+}
+
+/**
  * A model of the players (DESIGN.md 4.2): it forecasts each hero's next
  * action and learns from each one it sees. Candidate models are compared in
  * the harness by swapping the factory.
@@ -20,6 +29,8 @@ export interface BeliefModel {
   forecast(hero: string, context: ObservationContext): Distribution;
   /** Learn from what the hero did. */
   observe(hero: string, action: Action, context: ObservationContext): void;
+  /** The table has now seen this bet about the hero. */
+  reveal(hero: string, bet: Bet): void;
 }
 
 export type BeliefFactory = (heroes: readonly HeroSpec[]) => BeliefModel;

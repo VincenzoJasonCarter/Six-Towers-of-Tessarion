@@ -9,6 +9,7 @@
   "scripts": {
     "harness": "node src/harness/cli.ts",
     "compare": "node src/harness/compare.ts",
+    "compare:m2b": "node src/harness/m2b.ts",
     "test": "node --test \"test/**/*.test.ts\"",
     "check": "tsc"
   },

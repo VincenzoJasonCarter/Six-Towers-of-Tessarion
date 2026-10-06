@@ -29,7 +29,7 @@ import {
   type ParamsC,
 } from "./candidates.ts";
 import { SPIKE_PROPHET } from "./fight.ts";
-import { STYLES } from "./players.ts";
+import { M2_STYLES as STYLES } from "./players.ts";
 import { num, pct, table } from "./report.ts";
 import { runSuite, type SuiteResult } from "./suite.ts";
 

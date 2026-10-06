@@ -12,6 +12,7 @@ import {
   SECOND_GUESSER,
   STYLES,
   SWITCHER,
+  TELL_READER,
   styleById,
   type PlayerView,
   type Told,
@@ -84,5 +85,18 @@ describe("synthetic players", () => {
     }
     // Shoot is 0.70 of the shape; burned to ×0.3 it becomes 0.21 / 0.51 ≈ 0.41.
     assert.ok(Math.abs(shots / n - 0.21 / 0.51) < 0.03, String(shots / n));
+  });
+
+  it("Tell-reader steers away from what the boss bet on, named or not, hit or miss", () => {
+    const player = TELL_READER.make("gunman", new Rng(1));
+    const free = frequencies(() => player.act(view()), 5000);
+    assert.ok(Math.abs(free[SHOOT]! - 0.7) < 0.03, "with no bets seen, it plays by the book");
+    const told: Told[] = [
+      { round: 1, action: SHOOT, fulfilled: true },
+      { round: 2, action: SHOOT, fulfilled: false },
+    ];
+    const f = frequencies(() => player.act(view({ told })), 5000);
+    // Shoot is 0.70 of the shape; two bets make it ×0.25: 0.175 / 0.475 ≈ 0.37.
+    assert.ok(Math.abs(f[SHOOT]! - 0.175 / 0.475) < 0.03, String(f[SHOOT]));
   });
 });

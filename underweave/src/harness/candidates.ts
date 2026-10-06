@@ -61,8 +61,8 @@ export const M2_TUNED = {
   a: { priorStrength: 4, memory: 0.8, patternPrior: 0.65 },
   b: { subclassPrior: 0.4, defiantPrior: 0.55, memory: 0.9 },
 } as const;
-const TUNED_AD: ParamsAD = { counts: M2_TUNED.a, defiance: { prior: [1, 1], teachInner: "all", memory: 0.9 } };
-const TUNED_C: ParamsC = { ad: TUNED_AD, b: M2_TUNED.b, ensemble: { memory: 0.9 } };
+export const TUNED_AD: ParamsAD = { counts: M2_TUNED.a, defiance: { prior: [1, 1], teachInner: "all", memory: 0.9 } };
+export const TUNED_C: ParamsC = { ad: TUNED_AD, b: M2_TUNED.b, ensemble: { memory: 0.9 } };
 
 /**
  * The candidates for `npm run harness -- --belief <id>`. Model A keeps the

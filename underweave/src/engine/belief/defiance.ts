@@ -1,7 +1,7 @@
 import type { Action, Distribution } from "../actions.ts";
 import type { HeroSpec } from "../subclasses.ts";
 import { dodge } from "./dodge.ts";
-import type { BeliefFactory, BeliefModel, ObservationContext } from "./types.ts";
+import type { BeliefFactory, BeliefModel, Bet, ObservationContext } from "./types.ts";
 
 /**
  * The defiance layer (DESIGN.md 4.2, "being named is evidence"), wrapped
@@ -66,6 +66,10 @@ export class DefianceBelief implements BeliefModel {
       if (this.config.teachInner === "unnamed") return;
     }
     this.#inner.observe(hero, action, context);
+  }
+
+  reveal(hero: string, bet: Bet): void {
+    this.#inner.reveal(hero, bet);
   }
 
   #evidence(hero: string): [number, number] {

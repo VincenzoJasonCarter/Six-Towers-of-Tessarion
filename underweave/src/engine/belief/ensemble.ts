@@ -1,6 +1,6 @@
 import { normalize, type Action, type Distribution } from "../actions.ts";
 import type { HeroSpec } from "../subclasses.ts";
-import type { BeliefFactory, BeliefModel, ObservationContext } from "./types.ts";
+import type { BeliefFactory, BeliefModel, Bet, ObservationContext } from "./types.ts";
 
 /**
  * Belief model C, "ensemble" (DESIGN.md 8, M2 protocol): Bayesian model
@@ -48,6 +48,10 @@ export class EnsembleBelief implements BeliefModel {
     const top = Math.max(...updated);
     this.#logWeights.set(hero, updated.map((x) => x - top));
     for (const m of this.members) m.observe(hero, action, context);
+  }
+
+  reveal(hero: string, bet: Bet): void {
+    for (const m of this.members) m.reveal(hero, bet);
   }
 
   #log(hero: string): number[] {

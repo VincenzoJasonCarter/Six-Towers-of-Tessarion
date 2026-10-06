@@ -19,7 +19,7 @@ const gunman = { id: "g", subclass: "gunman" } as const;
 /** A fixed forecast that never learns, for testing the layers around it. */
 const fixed = (d: number[]): BeliefModel & { seen: Action[] } => {
   const seen: Action[] = [];
-  return { id: "fixed", seen, forecast: () => d, observe: (_h, a) => void seen.push(a) };
+  return { id: "fixed", seen, forecast: () => d, observe: (_h, a) => void seen.push(a), reveal: () => {} };
 };
 
 describe("dodge", () => {
@@ -110,6 +110,40 @@ describe("ArchetypesBelief", () => {
   });
 });
 
+describe("ArchetypesBelief, wary players (M2b)", () => {
+  it("with no wary prior, is M2's model and ignores reveals", () => {
+    const belief = new ArchetypesBelief([gunman]);
+    assert.equal(belief.posterior("g").length, 18);
+    const before = belief.forecast("g", free);
+    belief.reveal("g", { action: SHOOT, fulfilled: true });
+    assert.deepEqual(belief.forecast("g", free), before);
+  });
+
+  it("with a wary prior, expects a player to steer away from what the boss bet on", () => {
+    const belief = new ArchetypesBelief([gunman], { waryPrior: 0.3 });
+    assert.equal(belief.posterior("g").length, 36);
+    const before = belief.forecast("g", free)[SHOOT]!;
+    belief.reveal("g", { action: SHOOT, fulfilled: false });
+    assert.ok(belief.forecast("g", free)[SHOOT]! < before);
+  });
+
+  it("concludes a player is wary when they keep avoiding the boss's bets", () => {
+    const watched = new ArchetypesBelief([gunman], { waryPrior: 0.2 });
+    const control = new ArchetypesBelief([gunman], { waryPrior: 0.2 });
+    for (let i = 0; i < 6; i++) {
+      watched.observe("g", SHOOT, free);
+      control.observe("g", SHOOT, free);
+    }
+    for (let i = 0; i < 6; i++) {
+      watched.reveal("g", { action: SHOOT, fulfilled: false });
+      watched.observe("g", GUARD, free);
+      control.observe("g", GUARD, free);
+    }
+    assert.ok(watched.wariness("g") > 0.5, watched.explain("g"));
+    assert.ok(watched.wariness("g") > control.wariness("g"));
+  });
+});
+
 describe("EnsembleBelief", () => {
   it("leans on whichever member reads the player better", () => {
     const good = fixed([0.8, 0.05, 0.05, 0.05, 0.05]);
@@ -119,6 +153,14 @@ describe("EnsembleBelief", () => {
     assert.ok(belief.weights("g")[0]! > 0.99);
     assert.equal(argmax(belief.forecast("g", free)), STRIKE);
     assert.equal(good.seen.length, 5, "members keep learning");
+  });
+
+  it("passes reveals on to its members", () => {
+    const member = new ArchetypesBelief([gunman], { waryPrior: 0.3 });
+    const ensemble = new EnsembleBelief([member], [gunman]);
+    ensemble.reveal("g", { action: SHOOT, fulfilled: true });
+    assert.deepEqual(ensemble.forecast("g", free), member.forecast("g", free));
+    assert.ok(member.forecast("g", free)[SHOOT]! < new ArchetypesBelief([gunman], { waryPrior: 0.3 }).forecast("g", free)[SHOOT]!);
   });
 
   it("with one member is that member", () => {

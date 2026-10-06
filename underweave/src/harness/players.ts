@@ -147,7 +147,31 @@ export const ADAPTIVE: Style = {
   },
 };
 
-export const STYLES: readonly Style[] = [
+/**
+ * How much each bet the boss has made on an action puts the Tell-reader off
+ * it. Unlike model B's wary players, it never forgets: the belief shouldn't
+ * be graded against a copy of itself.
+ */
+const TELL = 0.5;
+
+export const TELL_READER: Style = {
+  id: "tell-reader",
+  name: "Tell-reader",
+  plays: "by the book, but steers away from the actions the boss has bet on about it, named or not",
+  make(subclass, rng) {
+    const shape = shapeOf(subclass);
+    return {
+      act({ told }) {
+        const bets = new Array<number>(K).fill(0);
+        for (const t of told) bets[t.action]! += 1;
+        return draw(rng, shape.map((p, i) => p * TELL ** bets[i]!));
+      },
+    };
+  },
+};
+
+/** The eight styles M2 chose its belief model against; its report keeps to them. */
+export const M2_STYLES: readonly Style[] = [
   HABITUAL,
   BY_THE_BOOK,
   RANDOM,
@@ -157,6 +181,8 @@ export const STYLES: readonly Style[] = [
   SECOND_GUESSER,
   ADAPTIVE,
 ];
+
+export const STYLES: readonly Style[] = [...M2_STYLES, TELL_READER];
 
 export function styleById(id: string): Style {
   const style = STYLES.find((s) => s.id === id);

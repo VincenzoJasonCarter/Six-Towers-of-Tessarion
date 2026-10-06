@@ -1,17 +1,20 @@
 import { ACTIONS, K, normalize, type Action, type Distribution } from "../actions.ts";
 import { shapeOf, type HeroSpec } from "../subclasses.ts";
 import { dodge } from "./dodge.ts";
-import type { BeliefFactory, BeliefModel, ObservationContext } from "./types.ts";
+import type { BeliefFactory, BeliefModel, Bet, ObservationContext } from "./types.ts";
 
 /**
  * Belief model B, "archetypes" (DESIGN.md 4.2): Akinator's approach. A fixed
  * set of hypotheses about what kind of player this is, each a complete model
  * of their turn, and an exact Bayesian posterior over them. Every hypothesis
- * is a habit crossed with a reaction to being named:
+ * is a habit crossed with a reaction to being named and, from M2b, with a
+ * reaction to the boss's revealed bets:
  *
  *   habits     follows the subclass · favours one action (×5) · chaotic ·
  *              repeats itself · avoids repeating itself
  *   reactions  complies when named · defies when named (dodges their usual action)
+ *   wariness   ignores the boss's bets · wary of them (steers away from what
+ *              the boss has bet on, named or not)
  *
  * The forecast is the posterior-weighted average of the hypotheses, and the
  * posterior is the explanation ("72% favours Shoot, 64% defies when named").
@@ -23,6 +26,8 @@ export interface ArchetypesConfig {
   readonly subclassPrior: number;
   /** Prior probability that a player defies when named. */
   readonly defiantPrior: number;
+  /** Prior probability that a player is wary of the boss's bets. At 0 the model is M2's exactly. */
+  readonly waryPrior: number;
   /** Each turn, the evidence so far counts this much (1 = never forgets). */
   readonly memory: number;
   /** Share of the forecast spread evenly, so nothing is ever impossible. */
@@ -32,6 +37,7 @@ export interface ArchetypesConfig {
 export const ARCHETYPES_DEFAULTS: ArchetypesConfig = {
   subclassPrior: 0.4,
   defiantPrior: 0.25,
+  waryPrior: 0,
   memory: 0.9,
   floor: 0.01,
 };
@@ -47,6 +53,10 @@ interface Habit {
 const FAVOURED = 0.75;
 const REPEAT = 0.7;
 const AVOID = 0.05;
+/** How hard a wary player steers away from an action, per bet on it: e^-1.2 ≈ 0.3. */
+const WARY = 1.2;
+/** Each of its own turns, a wary player's memory of the bets fades by this. */
+const WARY_FADE = 0.8;
 
 const HABITS: readonly Habit[] = [
   { id: "subclass", label: "follows the subclass", share: 0, predict: (shape) => [...shape] },
@@ -77,6 +87,7 @@ export interface Hypothesis {
   readonly habit: string;
   readonly label: string;
   readonly defies: boolean;
+  readonly wary: boolean;
   readonly p: number;
 }
 
@@ -85,26 +96,43 @@ interface Mind {
   readonly logPrior: number[];
   logPost: number[];
   last: Action | null;
+  /** The boss's revealed bets on each action, fading. */
+  bets: number[];
 }
 
 export class ArchetypesBelief implements BeliefModel {
   readonly id = "archetypes";
   readonly config: ArchetypesConfig;
   readonly #minds = new Map<string, Mind>();
-  /** Every (habit, reaction) pair, in a fixed order. */
-  readonly #pairs: readonly { habit: Habit; defies: boolean; prior: number }[];
+  /** Every (habit, reaction, wariness) hypothesis, in a fixed order. */
+  readonly #pairs: readonly { habit: Habit; defies: boolean; wary: boolean; prior: number }[];
 
   constructor(heroes: readonly HeroSpec[], config: Partial<ArchetypesConfig> = {}) {
     this.config = { ...ARCHETYPES_DEFAULTS, ...config };
-    const { subclassPrior, defiantPrior } = this.config;
+    const { subclassPrior, defiantPrior, waryPrior } = this.config;
     const habitPrior = (h: Habit) => (h.id === "subclass" ? subclassPrior : (1 - subclassPrior) * h.share);
-    this.#pairs = HABITS.flatMap((habit) => [
-      { habit, defies: false, prior: habitPrior(habit) * (1 - defiantPrior) },
-      { habit, defies: true, prior: habitPrior(habit) * defiantPrior },
-    ]);
+    // With no prior on wariness, leave the wary hypotheses out, so the model is M2's exactly.
+    const wariness = waryPrior > 0 ? [false, true] : [false];
+    this.#pairs = HABITS.flatMap((habit) =>
+      [false, true].flatMap((defies) =>
+        wariness.map((wary) => ({
+          habit,
+          defies,
+          wary,
+          prior:
+            habitPrior(habit) * (defies ? defiantPrior : 1 - defiantPrior) * (wary ? waryPrior : 1 - waryPrior),
+        })),
+      ),
+    );
     for (const hero of heroes) {
       const logPrior = this.#pairs.map((h) => Math.log(h.prior));
-      this.#minds.set(hero.id, { shape: shapeOf(hero.subclass), logPrior, logPost: [...logPrior], last: null });
+      this.#minds.set(hero.id, {
+        shape: shapeOf(hero.subclass),
+        logPrior,
+        logPost: [...logPrior],
+        last: null,
+        bets: new Array<number>(K).fill(0),
+      });
     }
   }
 
@@ -128,13 +156,21 @@ export class ArchetypesBelief implements BeliefModel {
     const top = Math.max(...m.logPost);
     m.logPost = m.logPost.map((lp) => lp - top);
     m.last = action;
+    m.bets = m.bets.map((b) => b * WARY_FADE);
+  }
+
+  reveal(hero: string, bet: Bet): void {
+    this.#mind(hero).bets[bet.action]! += 1;
   }
 
   /** The posterior over hypotheses, most likely first. */
   posterior(hero: string): Hypothesis[] {
     const m = this.#mind(hero);
     return this.#posterior(m)
-      .map((p, h) => ({ habit: this.#pairs[h]!.habit.id, label: this.#pairs[h]!.habit.label, defies: this.#pairs[h]!.defies, p }))
+      .map((p, h) => {
+        const { habit, defies, wary } = this.#pairs[h]!;
+        return { habit: habit.id, label: habit.label, defies, wary, p };
+      })
       .sort((x, y) => y.p - x.p);
   }
 
@@ -143,12 +179,19 @@ export class ArchetypesBelief implements BeliefModel {
     return this.posterior(hero).reduce((s, h) => s + (h.defies ? h.p : 0), 0);
   }
 
-  /** One line for the DM: the most likely habit and the chance of defiance. */
+  /** How likely this player is to be wary of the boss's bets, summed over the rest. */
+  wariness(hero: string): number {
+    return this.posterior(hero).reduce((s, h) => s + (h.wary ? h.p : 0), 0);
+  }
+
+  /** One line for the DM: the most likely habit, the chance of defiance and, if modelled, of wariness. */
   explain(hero: string): string {
     const byHabit = new Map<string, number>();
     for (const h of this.posterior(hero)) byHabit.set(h.label, (byHabit.get(h.label) ?? 0) + h.p);
     const [label, p] = [...byHabit].sort((x, y) => y[1] - x[1])[0]!;
-    return `${Math.round(p * 100)}% ${label}, ${Math.round(this.defiance(hero) * 100)}% defies when named`;
+    const pct = (x: number) => `${Math.round(x * 100)}%`;
+    const wary = this.config.waryPrior > 0 ? `, ${pct(this.wariness(hero))} wary of the boss` : "";
+    return `${pct(p)} ${label}, ${pct(this.defiance(hero))} defies when named${wary}`;
   }
 
   #mind(hero: string): Mind {
@@ -162,8 +205,10 @@ export class ArchetypesBelief implements BeliefModel {
   }
 
   #predictions(m: Mind, context: ObservationContext): number[][] {
-    return this.#pairs.map(({ habit, defies }) => {
-      const usual = habit.predict(m.shape, m.last);
+    const steer = m.bets.map((b) => Math.exp(-WARY * b));
+    return this.#pairs.map(({ habit, defies, wary }) => {
+      const habitual = habit.predict(m.shape, m.last);
+      const usual = wary ? normalize(habitual.map((p, i) => p * steer[i]!)) : habitual;
       return defies && context.named ? dodge(usual) : usual;
     });
   }
