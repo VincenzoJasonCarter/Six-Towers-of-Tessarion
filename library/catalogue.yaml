@@ -35,6 +35,7 @@ shelves:
       - classes
       - crystals
       - subclasses-skill
+      - on-threshold-assimilation
 
   - id: soulforge
     name: The Soulforge & the Market

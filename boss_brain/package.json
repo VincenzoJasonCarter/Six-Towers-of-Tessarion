@@ -15,10 +15,12 @@
     "compare:m4b": "node src/harness/m4b.ts",
     "compare:m4c": "node src/harness/m4c.ts",
     "test": "node --test \"test/**/*.test.ts\"",
-    "check": "tsc"
+    "check": "tsc",
+    "table:build": "node scripts/build-table.ts"
   },
   "devDependencies": {
     "@types/node": "^24.0.0",
+    "esbuild": "^0.28.2",
     "typescript": "~6.0.2"
   }
 }

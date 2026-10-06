@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2023",
+    "lib": ["es2023", "dom"],
     "module": "nodenext",
     "moduleResolution": "nodenext",
     "types": ["node"],
@@ -12,5 +13,5 @@
     "noUncheckedIndexedAccess": true,
     "skipLibCheck": true
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "scripts"]
 }

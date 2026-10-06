@@ -516,6 +516,39 @@ against how fair it looks (`show`).
   is fine.
 - Works offline; state saved locally; the event log can be exported.
 
+**As built (M5).** `make boss-table` builds `table/dist/boss-table.html`,
+one self-contained file (the engine, the Placeholder Boss and the screen
+bundled inline, nothing fetched), and opens it. It is not in the hub and
+`web/build.py` doesn't copy it.
+
+- **Setup:** the party in initiative order (name and subclass), how the
+  Placeholder fits the monster (Strike 1 or 2, a reaction or not, signature
+  uses or Recharge 5–6, 6.2), the starting step, and the enrage (with the
+  boss's max HP) and insult triggers.
+- **Each round:** the boss's planned move in a line ("Ready a reaction: cut
+  Kael's Shoot"), what to tell the table, and *Why?*: every option it
+  weighed with its EU, any of which the DM can pick instead before the first
+  hero acts. Then one row per hero, in order: the brain's forecast for their
+  turn, the archetype model's one line about them, and five buttons, one tap
+  each (or the keys 1–5). When the last hero has acted, the round settles
+  and the next plan appears.
+- **HP** is typed in when it changes; below half or a quarter, the enrage
+  shifts the step from the next round. The DM can also set the step by
+  hand.
+- **Proclaim** (P) fills the screen with what the players may hear and
+  nothing else. **Undo** (U) drops the last event. **Export** saves the event
+  log as JSON; **Import** brings one back, replayed to the same fight.
+
+The fight *is* its event log (4.1): every tap appends an event, the screen
+is rebuilt by replaying the log, and the brain is seeded from the setup, so
+a replay makes the same choices the DM saw. The core (`src/table/session.ts`)
+has no DOM in it and is unit-tested; the screen was driven end to end in a
+headless browser (setup, taps, keys, undo, HP and enrage, proclaim, reload).
+
+Not built yet: carrying a player's profile from one fight to the next
+(Q5; each fight starts the belief afresh), the Placeholder's recharge rolled
+by the DM rather than by the brain, and module events beyond HP.
+
 ## 8. Validation: the research harness
 
 Before any model is chosen, a harness plays the brain against **synthetic
@@ -1362,8 +1395,10 @@ fails** because it can't be measured: in its phase Bloodlusted no longer
 reads anyone, so it has no read success against the players who switch.
 Its window is a different one now: it comes for the same hero every round
 with nothing but blows (fixation 1.00), so that hero can brace and the
-party can use a boss that looks at one player. Whether check 3 should apply
-only to the hot phases that still read is a question for the design.
+party can use a boss that looks at one player. **Check 3 is amended** to
+apply to the hot phases that still read, which is Wrathful: it holds there
+(57% to 10%). Bloodlusted's window is recorded as the finding above, not
+made a target the run already knows the answer to.
 
 ## 9. Data and persistence
 
@@ -1386,7 +1421,7 @@ only to the hot phases that still read is a question for the design.
 | M4 | Module interface | Done: the interface in code, four reference modules on it, every target held ([M4 results](#m4-results)) |
 | M4b | Placeholder Boss | Done: every check held, on five fittings ([M4b results](#m4b-results)) |
 | M4c | Temperament shift | Done: every check held ([M4c results](#m4c-results)) |
-| M5 | Table tool | Usable at a real session, carrying the Placeholder Boss |
+| M5 | Table tool | Built, carrying the Placeholder Boss (7, "As built"); done once used at a real session |
 | M6 | Playtest loop | Logs from real sessions retune the priors |
 | M7 | Boss modules | Prophet, Hoardwyrm or Debt-Collector, with no engine changes needed |
 

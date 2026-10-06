@@ -14,6 +14,14 @@ two modes:
 
 Raw numbers go to `results.json` and `party_results.json`.
 
+A third mode, **evolution** (`evolve.py` → [evolution_report.md](evolution_report.md)),
+tests the draft Ascendant and Corrupted branches in `evolution.py`, which open
+at 6th level. For each subclass and branch, every party containing it fights
+the party encounters twice with the same seeds, once with that hero evolved,
+and the report gives the change in win rate (`make arena-evolution`; `--only
+gunman/ascendant` reruns one branch against the saved baseline, `--uses 3`
+lets Corrupted heroes burn three powers a fight).
+
 ## Running it
 
 From the repo root:

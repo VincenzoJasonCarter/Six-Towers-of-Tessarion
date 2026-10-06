@@ -6,6 +6,60 @@ Changes to the class and subclass rules in the lore-book, newest patch first. Th
 
 ---
 
+## Patch 2 — 2026-10-07
+
+### Subclass Evolution [new]
+
+> *Why:* After six Crystallizations a practitioner's body starts to form soulstone, and it has to settle one of two ways: contain the mana or pass it on (the lore is in *On Threshold Assimilation*, on the *Rites of Ascension* shelf). Every subclass now chooses a branch at 6th level. **Ascendant** gives support with no cost. **Corrupted** gives damage paid for with Assimilation. Both branches were tested in the Proving Grounds (`arena/evolution_report.md`): within each pillar, every subclass's Ascendant lands within 2 points of the others in party win rate, and so does every Corrupted.
+
+**How it works**
+
+- [new] At **6th level**, choose **Ascendant** or **Corrupted**. An Ascendant can later become Corrupted; a Corrupted character can never become Ascendant.
+- [new] **Ascendant** (pre-assimilation): a support feature built on one you already have. No cost.
+- [new] **Corrupted** (full assimilation): one Corrupted power. Each use adds **1 Assimilation**. No other limit, but at most once per turn.
+- [new] Every Corrupted power deals the same **burst**: d8s equal to half your level (rounded down).
+
+| Level | 6–7 | 8–9 | 10–11 | 12–13 | 14–15 | 16–17 | 18–19 | 20 |
+|---|---|---|---|---|---|---|---|---|
+| Burst | 3d8 | 4d8 | 5d8 | 6d8 | 7d8 | 8d8 | 9d8 | 10d8 |
+
+**Assimilation (0–6)**
+
+| Assimilation | Effect |
+|---|---|
+| Long rest | −1 |
+| 2 | **Marking:** your crystal's physical signs show in full and don't fade. |
+| 4 | **Fracture:** your crystal's long-term side effect becomes a rule, not a roleplay note (text to come). |
+| 6 | **Loss:** at the start of each combat, DC 15 Constitution save or the DM controls you for that fight. Only a rite at an Aether Hall brings you back, and it sets Assimilation to 3. |
+
+**Crystal Mages**
+
+| Subclass | Ascendant | Corrupted |
+|---|---|---|
+| Verdant Mage | **Grovekeeper.** Memory of the Grove can reroll **any** failed saving throw (you or a creature within 30 feet), not only Perception, charm and fear. +1 use. | **Thornblood.** When a creature fails its Strength save against your *rootbind* or *entangle* on your turn: burst piercing, and it is **restrained** until the end of its next turn. |
+| Warbound Mage | **Drumwarden.** Bonus action: each ally within 30 feet gains temporary HP equal to your Intelligence modifier (minimum 1) and **advantage** on its next attack roll before the end of its next turn. Proficiency bonus uses per long rest. | **Ironblood.** When you use Blood for Power, the empowered spell also deals the burst in fire to one damage roll. |
+| Stonewarden Mage | **Runekeeper.** Runic Bulwark reaches **60 feet** (was 30). | **Splinterskin.** When you use Runic Bulwark, the creature that dealt the damage takes the burst in force, no save. |
+| Hellbound Mage | **Ashwarden.** A creature under your Shadow Mark has **disadvantage** on its next attack roll before the end of your next turn. | **Debtcaller.** When a creature under your Shadow Mark fails a save against your spell: burst necrotic, its speed drops by 10 feet until the end of your next turn, and it has disadvantage on its next attack roll. No reaction, no Curseweaver use. |
+| Sanguine Mage | **Penitent.** Soul Tether's drain heals you **or a creature of your choice within 30 feet**, for the damage + your Intelligence modifier. | **Prism-Burst.** Bonus action, with a tether active: detonate it for the burst in necrotic, and regain **half** the damage. The tether ends. Doesn't use a Soul Tether use. |
+| Aether Mage | **Steadying Pulse.** Stabilizing Pulse is a **bonus action**, and the creature also gains temporary HP equal to your wizard level, even if no condition is ended. | **Hollow Mirror.** Reaction, when you or a creature within 30 feet takes damage from a hostile spell: that damage is **halved**, and the caster takes the burst in force. |
+
+**Aegisbound**
+
+| Subclass | Ascendant | Corrupted |
+|---|---|---|
+| Sanguine Aegis | **Leashed.** When Leeching Strikes heals you, one ally within 30 feet regains **twice your proficiency bonus** in hit points. | **Bloodfused.** When you hit with a melee weapon attack on your turn: burst necrotic, and you gain Blood Charges equal to your proficiency bonus (up to your maximum). |
+| Bulwark Aegis | **Shieldbearer.** Living Wall's reaction protects allies within **10 feet** (was 5), and the protected ally gains temporary HP equal to your proficiency bonus + Constitution modifier. | **Spiteplate.** When a melee attack hits you (no reaction): you take **half** its damage, and the attacker takes the burst in thunder. |
+| Warden Aegis | **Peacekeeper.** A creature hit by Shackle Strike also has **disadvantage** on its next attack roll before the start of your next turn. | **Gravewell.** Bonus action: your Gravitic Anchor collapses and ends. Each enemy within 10 feet of it is pulled up to 10 feet toward it and makes a Strength save against your Gravitic Anchor DC: the burst in force and speed 0 until the start of your next turn on a failure, half damage on a success. |
+
+**Range**
+
+| Subclass | Ascendant | Corrupted |
+|---|---|---|
+| Crystal Archer | **Spotter's Mark.** When you hit a creature with a special arrow, your allies have **advantage** on attack rolls against it until the start of your next turn. | **Shardblood.** When you hit with a bow on your turn: the burst in force. |
+| Gunman | **Covering Fire.** Reaction, when a creature you can see within your firearm's normal range makes an attack roll against an ally: that roll takes a **−1d4** penalty. Uses per long rest: half your proficiency bonus + 1 (rounded down). | **Powderveins.** When you hit with a firearm on your turn: the burst in force, rolled as **d10s** instead of d8s. |
+
+---
+
 ## Patch 1 — 2026-10-04
 
 ### Crystal Archer [buff]

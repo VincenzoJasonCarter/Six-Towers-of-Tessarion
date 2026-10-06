@@ -1,4 +1,4 @@
-import { GUARD } from "../engine/actions.ts";
+import { ACTIONS, GUARD } from "../engine/actions.ts";
 import type { Option } from "../engine/decision/decide.ts";
 import type { ModuleFactory } from "../engine/module.ts";
 import { announceRead, FIGHT_VALUE, heedModel, readOptions, spreadFor, type Read } from "./common.ts";
@@ -118,6 +118,18 @@ export const placeholderWith = (over: Partial<PlaceholderConfig> = {}): ModuleFa
         options.push(...uses.map((o) => ({ ...o, outcomes: o.outcomes.map((x) => ({ ...x, utility: { ...x.utility, tempo: -cost } })) })));
       }
       return options;
+    },
+    describe(move) {
+      switch (move.kind) {
+        case "strike":
+          return `Strike ${move.hero}`;
+        case "wind-up":
+          return `Wind up the big attack at ${move.hero}`;
+        case "interrupt":
+          return `Ready a reaction: cut ${move.hero}'s ${ACTIONS[move.action]!.label}`;
+        case "signature":
+          return `Signature on ${move.hero}'s ${ACTIONS[move.action]!.label}`;
+      }
     },
     announce(move, step) {
       switch (move.kind) {

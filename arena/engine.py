@@ -522,6 +522,11 @@ def attack_adv(att, tgt, ctx):
         dis = True   # Verdant Veil
     if ctx.get("spell") and ctx["kind"] == "ranged" and cage_over(tgt)[0]:
         dis = True   # Mana Cage
+    if att.has("inspired"):
+        adv = True   # Drumwarden (evolution.py)
+    spot = tgt.get("spotted")
+    if spot and spot.source is not att and spot.source.side == att.side:
+        adv = True   # Spotter's Mark (evolution.py)
     return adv, dis
 
 
@@ -541,6 +546,10 @@ def attack(att, tgt, *, bonus, parts, kind, spell=False, level=0, magical=False,
                 break
     att.take("next_atk_disadv")
     att.take("hunger")
+    att.take("inspired")
+    spot = tgt.get("spotted")
+    if spot and spot.source is not att and spot.source.side == att.side and spot.value != "all":
+        tgt.remove(effect=spot)
     pen = att.take("next_atk_pen")
     roll = d20(adv, dis)
     total = roll + bonus - (d(1, 4) if pen else 0)

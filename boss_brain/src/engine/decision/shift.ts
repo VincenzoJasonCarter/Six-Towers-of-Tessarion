@@ -81,6 +81,14 @@ export class TemperamentTrack {
     }
   }
 
+  /** The DM sets the step by hand; it counts as a shift, from the given round. */
+  set(step: string, round: number): void {
+    const to = this.#indexOf(step);
+    if (to === this.#index) return;
+    this.shifts.push({ round, from: this.current.id, to: this.#steps[to]!.id, trigger: "dm", reason: "set by the DM" });
+    this.#index = to;
+  }
+
   #target(to: ShiftTarget): number {
     if (to === "hotter") return Math.min(this.#steps.length - 1, this.#index + 1);
     if (to === "cooler") return Math.max(0, this.#index - 1);

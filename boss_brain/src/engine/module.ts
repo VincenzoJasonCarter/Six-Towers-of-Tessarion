@@ -72,6 +72,8 @@ export interface Module<M> {
   /** The moves open at this moment, each with its outcomes and their utility. */
   options(moment: Moment, ctx: ModuleContext): Option<M>[];
   announce(move: M, step: Temperament): Announcement;
+  /** For the DM view: what the move is, in a few words ("interrupt Kael's Mend"). */
+  describe?(move: M): string;
   /** Settles a chosen move: a round's move once every hero has acted, a turn's move at once. */
   resolve(move: M, moment: Moment, observed: Observed): Resolution;
 }

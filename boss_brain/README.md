@@ -40,6 +40,11 @@ src/modules/           modules: what each boss supplies
   common.ts            fight values, reads, the warning model
   placeholder.ts       the Placeholder Boss, a lore-free boss for the table (DESIGN.md 6.2)
   reference/           the four abstract reference modules (DESIGN.md 6.1)
+src/table/             the DM's table tool (DESIGN.md 7)
+  session.ts           a fight as an event log, replayed into what the screen shows
+  main.ts              the screen
+table/                 its page and stylesheet; dist/boss-table.html is the built tool
+scripts/build-table.ts bundles the table tool into one offline file
 src/harness/           the research harness (DESIGN.md 8)
   players.ts           synthetic players, nine styles (M2 used the first eight)
   fight.ts             one simulated fight, for any Prophet; the spike's prophecy policy
@@ -84,6 +89,16 @@ npm run compare:m4b                              # the Placeholder check → rep
 npm run compare:m4b -- --variant typical         # the same on another fitting: no-interrupt, recharge, typical, multiattack
 npm run compare:m4c                              # the shift check → reports/m4c-shift.md (a few minutes)
 ```
+
+The table tool, for running a boss at a real session:
+
+```
+npm run table:build                              # → table/dist/boss-table.html; open it in a browser
+```
+
+or `make boss-table` from the repo root, which builds it and opens it. It is
+one file that works offline and keeps the fight in the browser; export the
+log to keep it.
 
 Or from the repo root: `make boss-brain-test` and `make boss-brain-harness
 ARGS="--trials 200"`.
