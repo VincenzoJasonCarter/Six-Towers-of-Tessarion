@@ -82,9 +82,9 @@ There are two. Every observed host has reached one of them. ███ hosts are 
 
 ### **3.2 The Vessel State (common usage: Corrupted)**
 
-In the Vessel state the containment seals. Absorbed mana settles and accumulates inside the host, and the host's output rises sharply, because the host can now draw on the forming stone directly. The effect is strongest in short bursts of exertion, which field reports describe as the crystal "coming through."
+In the Vessel state the containment seals. Absorbed mana settles and accumulates inside the host, and the host can draw on the forming stone directly. It does not do so constantly. Vessel hosts describe holding the stone shut and, when a fight warrants it, "opening the seal": for the length of that engagement, every ability the host already had turns toward harm, and the field reports describe the crystal "coming through."
 
-Each such draw advances the formation by a measurable step. The Arcanum tracks this on the **Assimilation Index**, a six-stage scale. Rest reverses the Index slowly, about one stage per full night of non-exertion, and only while the host refrains from drawing on the stone. A host that draws more often than it rests advances.
+Each engagement fought with the seal open advances the formation by a measurable step. The Arcanum tracks this on the **Assimilation Index**, a six-stage scale. Rest reverses the Index slowly, about one stage per full night of non-exertion, and only while the host refrains from drawing on the stone. A host that opens the seal more often than it rests advances.
 
 **Table 1\. The Assimilation Index**
 
@@ -129,16 +129,16 @@ Each path expresses the two states through the abilities it already had. Table 2
 
 | Path | Conduit (Ascendant) | Vessel (Corrupted) |
 | :---- | :---- | :---- |
-| Verdant Mage | **Grovekeeper.** The grove's memory steadies every mind nearby, not only against fear. | **Thornblood.** Roots that bind the host's enemies grow from the host's own veins. |
-| Warbound Mage | **Drumwarden.** The war-drum is heard by allies, and they strike on its beat. | **Ironblood.** Blood spent to empower a spell burns twice. |
-| Stonewarden Mage | **Runekeeper.** Wards reach twice as far as before. | **Splinterskin.** The ward breaks outward into whoever struck it. |
-| Hellbound Mage | **Ashwarden.** A creature under the host's mark cannot strike true. | **Debtcaller.** A creature under the host's mark pays the whole debt at once. |
-| Sanguine Mage | **Penitent.** What the soul tether drains is given to another. | **Prism-Burst.** The tether is detonated inside the bound creature. |
-| Aether Mage | **Steadying Pulse.** Calm is given as a shield. | **Hollow Mirror.** A spell is returned to its caster. |
-| Sanguine Aegis | **Leashed.** The armour feeds the wearer's companions as it feeds the wearer. | **Bloodfused.** The armour drinks from the wound directly. |
-| Bulwark Aegis | **Shieldbearer.** The wall extends to everyone standing behind it. | **Spiteplate.** The plates bite back. |
-| Warden Aegis | **Peacekeeper.** The shackled lose their aim. | **Gravewell.** The anchor collapses inward on everything near it. |
-| Crystal Archer | **Spotter's Mark.** A struck target is lit for every ally. | **Shardblood.** The dust rides in the archer's blood, not the arrowhead. |
+| Verdant Mage | **Grovekeeper.** The grove's memory steadies every mind nearby, not only against fear. | **Thornblood.** Roots tear out of the host's own veins into whatever its magic has caught. |
+| Warbound Mage | **Drumwarden.** The war-drum is heard by allies, and they strike on its beat. | **Ironblood.** Every drumbeat carries fire, and blood spent on a spell burns three times over. |
+| Stonewarden Mage | **Runekeeper.** Wards reach twice as far as before. | **Splinterskin.** The ward keeps what it stops and releases it in the host's next working. |
+| Hellbound Mage | **Ashwarden.** A creature under the host's mark cannot strike true. | **Debtcaller.** Every wound the marked creature takes, from anyone, is entered against it, and the host collects the whole debt at once. |
+| Sanguine Mage | **Penitent.** What the soul tether drains is given to another. | **Prism-Burst.** The tether no longer feeds the host. It drains harder, and when the bound creature dies it leaps to the next. |
+| Aether Mage | **Steadying Pulse.** Calm is given as a shield. | **Hollow Mirror.** Calm turned inside out unmakes whatever it touches, and a spell is returned to its caster. |
+| Sanguine Aegis | **Leashed.** The armour feeds the wearer's companions as it feeds the wearer. | **Bloodfused.** The armour drinks from the wound directly, and the pact's blood runs hotter. |
+| Bulwark Aegis | **Shieldbearer.** The wall extends to everyone standing behind it. | **Spiteplate.** The plates bite back at anyone who strikes the wearer or those beside it. |
+| Warden Aegis | **Peacekeeper.** The shackled lose their aim. | **Gravewell.** The anchor crushes whatever it holds, and the shackles bite. |
+| Crystal Archer | **Spotter's Mark.** A struck target is lit for every ally. | **Shardblood.** The dust rides in the archer's blood, and the arrowhead bursts on impact. |
 | Gunman | **Covering Fire.** The warning shot. | **Powderveins.** The powder is in the veins as well as the casing. |
 
 Two cases deserve comment. Before ███, it was held that an Aether host could not enter the Vessel state at all, aetherite being formed from "unclaimed" souls with no single resonance to settle along. The Hollow Mirror hosts disproved this. And Prismatic hosts, whose crystal already carries the blood of four peoples, report the second presence as four voices that do not agree. No Prismatic Vessel past Index III has been available for interview.

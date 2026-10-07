@@ -6,6 +6,139 @@ Changes to the class and subclass rules in the lore-book, newest patch first. Th
 
 ---
 
+## Patch 3 — 2026-10-07
+
+Three changes, tested together in the Proving Grounds (`arena/party_report.md`, `arena/evolution_report.md`):
+
+1. **Resonance Rank:** subclass dice now grow as the subclass grows.
+2. **Subclass Evolution reworked:** Corrupted is now the subclass's own kit turned to raw damage for one fight at a time, and each subclass's two branches are matched in value.
+3. **Base-kit rebalance** for the subclasses furthest from the middle of their pillar.
+
+### Resonance Rank [new]
+
+> *Why:* Many subclass features rolled the same dice from 2nd or 3rd level to 20th (Soul Tether's 1d6, Shadow Mark's flat damage, the special arrows and rounds), so they faded as enemies grew. Now every time a subclass gains a subclass feature, its dice step up.
+
+| Resonance Rank | Crystal Mages | Aegisbound and Range |
+|---|---|---|
+| 1 | 2nd level | 3rd level |
+| 2 | 6th | 7th |
+| 3 | 10th | 10th |
+| 4 | 14th | 15th |
+
+- [new] A feature that says "per Resonance Rank" rolls that many dice: 1d6 per Rank is 1d6 at Rank 1 and 4d6 at Rank 4.
+- Flat bonuses keep following the proficiency bonus. Effects that fire on every hit (War Drum's Beats, Spiteplate) don't scale, because they already grow with the number of attacks.
+
+**Base-kit features that now scale**
+
+- **Hellbound Mage, Shadow Mark** [buff]: Intelligence necrotic → **1d6 per Rank + Intelligence**
+- **Sanguine Mage, Soul Tether** [buff]: 1d6 → **1d6 per Rank**
+- **Crystal Archer, Crystal Sight** [buff]: +1d6 → **+1d6 per Rank**
+- **Crystal Archer, Red Dust and Prismatic Dust** [buff]: +1d4 → **+1d4 per Rank** (Prismatic still heals what it deals)
+- **Crystal Archer, Amber Dust** [buff]: 1d4 + proficiency bonus temporary HP → **1d4 per Rank** + proficiency bonus
+- **Gunman, Red Impact and Prismatic Round** [change]: +1d6 → **+1d4 per Rank** (a little weaker at Rank 1, stronger from Rank 2)
+
+### Base-kit rebalance
+
+> *Why:* After Resonance Rank, the Crystal Mages spread from Stonewarden (+5.7) to Hellbound (−6.8) in party value, and the Aegisbound left the Sanguine Aegis behind. Values below are each subclass's party value as written, averaged over 7th, 10th and 15th level.
+
+**Crystal Mages**
+
+- **Hellbound Mage, Curseweaver (6th level)** [buff]: costs your reaction → **no reaction**, uses unchanged
+- **Hellbound Mage, Pact Nexus (14th level)** [buff]: Intelligence necrotic → **Intelligence + 1d6 per Rank** necrotic
+- **Warbound Mage, Crimson Attunement (2nd level)** [buff]: your martial melee weapon now uses **Intelligence** for its attack and damage rolls
+- **Stonewarden Mage, Runic Bulwark (6th level)** [nerf]: uses equal to your Intelligence modifier → **half your Intelligence modifier, rounded up** (minimum 1)
+- **Sanguine Mage, Flux Manipulation (6th level)** [nerf]: changing a save's ability score → **once per long rest**; changing the damage type keeps its Intelligence-modifier uses
+
+**Aegisbound**
+
+- **Sanguine Aegis, Bloodwell Armor (3rd level)** [buff]: 1d4 per Blood Charge spent on healing → **1d6**
+- **Bulwark Aegis, Unmoving Bastion (7th level)** [buff]: +1 AC to allies within 10 feet → **+2 from 15th level**
+
+**Range**
+
+- **Crystal Archer, Marksman's Focus** unchanged at +2. Under Resonance Rank alone it was briefly tested at + proficiency bonus, which put the Range pillar about 10 points above the others.
+
+| Subclass | Before | After |
+|---|---:|---:|
+| Stonewarden Mage | +5.7 | +4.9 |
+| Sanguine Mage | +4.9 | +3.1 |
+| Verdant Mage | −2.3 | −2.0 |
+| Hellbound Mage | −6.8 | **−2.5** |
+| Aether Mage | −3.7 | −3.5 |
+| Warbound Mage | −6.6 | −6.0 |
+| Bulwark Aegis | −2.0 | −1.4 |
+| Warden Aegis | −1.2 | −1.9 |
+| Sanguine Aegis | −5.8 | −5.2 |
+| Gunman | +8.4 | +8.9 |
+| Crystal Archer | +9.3 | +5.8 |
+
+Spread within each pillar: Crystal Mages 12.5 → 10.9 points, Aegisbound 4.6 → 3.8, Range 0.9 → 3.1.
+
+### Subclass Evolution: the seal and the Corrupted kits [change]
+
+> *Why:* Patch 2's Corrupted powers were one bolt-on burst each, nearly identical across subclasses, and some still carried utility. Corrupted is now the subclass's **own kit turned to raw damage** for one fight at a time, so each one plays differently. For the Aegisbound, the damage carries the role: lifesteal, punishing hits on allies, crushing what the anchor holds. The goal is no longer that every evolution is worth the same. It is that **each subclass's Ascendant and Corrupted are worth the same over a day**, so a subclass is balanced once, as a whole (base kit + evolution).
+
+**Opening the seal**
+
+- [change] Each use of a Corrupted power adds 1 Assimilation → at the start of a fight, a Corrupted character may **open the seal**. For that fight their kit changes as listed below, and Assimilation goes up by **1**. With the seal closed, they fight with their base kit.
+- A long rest still takes 1 Assimilation off, so opening the seal once a day holds steady. The kits are tuned for a day of two hard fights with the seal opened for one: in that fight, a Corrupted kit is worth about **twice** its Ascendant.
+- [change] Patch 2's burst dice and its once-per-turn limit are gone. Marking, Fracture and Loss are unchanged.
+
+**Crystal Mages**
+
+| Subclass | Ascendant | Corrupted, seal open |
+|---|---|---|
+| Verdant Mage | **Grovekeeper** [buff]: also gives allies within 30 feet a bonus to saving throws equal to your **Resonance Rank**. | **Thornblood:** *rootbind* deals **1d8 piercing per Rank** on a failed save. A creature restrained by one of your spells takes **1d10 per Rank + 1d10 + your Intelligence modifier** in piercing at the start of each of its turns. |
+| Warbound Mage | **Drumwarden** [nerf]: uses per long rest: proficiency bonus → **half your proficiency bonus, rounded up**. | **Ironblood:** each Beat you hold adds **1d8 fire** to your attack roll hits. Blood for Power adds **three times** the hit points you lose. |
+| Stonewarden Mage | **Runekeeper:** unchanged. | **Splinterskin:** damage your Runic Bulwark prevents is stored as shards, and added as **force** to the next damaging spell you cast. |
+| Hellbound Mage | **Ashwarden:** unchanged. | **Debtcaller:** your Shadow Mark lasts until collected; a failed save no longer ends it unless you collect. Each time the marked creature takes damage from you or an ally, its debt grows by **1d10**. Collect the whole debt as **necrotic** when it fails a save against your spell, or as a **bonus action**. |
+| Sanguine Mage | **Penitent** [buff]: Soul Tether drains **d8s per Rank** instead of d6s and heals a creature of your choice within 30 feet for the damage + your Intelligence modifier. | **Prism-Burst:** Soul Tether drains an **extra 1d6 per Rank** in necrotic (the extra doesn't heal you) and has **no use limit** this fight. When the tethered creature drops to 0 hit points, the tether **leaps** to the nearest enemy within 30 feet of it, which takes **2d6 per Rank** at once. |
+| Aether Mage | **Steadying Pulse:** unchanged. | **Hollow Mirror:** Stabilizing Pulse turns inside out. Bonus action: a creature within 30 feet makes a Constitution save, taking **1d8 + 1d8 per Rank + your Intelligence modifier** in force on a failure (half on a success), with twice the dice against a spellcaster. Same uses as Stabilizing Pulse. Also, reaction: when you or a creature within 30 feet takes damage from a hostile spell, the caster takes **half-level d6s** of force. |
+
+**Aegisbound**
+
+| Subclass | Ascendant | Corrupted, seal open |
+|---|---|---|
+| Sanguine Aegis | **Leashed:** unchanged. | **Bloodfused:** your first melee hit each turn deals extra necrotic equal to **twice your proficiency bonus**. Red Pact's dice are **d8s** instead of d6s. |
+| Bulwark Aegis | **Shieldbearer** [buff]: temporary HP → **twice your proficiency bonus + your Constitution modifier**. | **Spiteplate:** while your Anchored Stance holds, a creature that hits you or an ally within 5 feet of you with a melee attack takes **2d6 + your Constitution modifier + your proficiency bonus** in thunder. |
+| Warden Aegis | **Peacekeeper:** unchanged. | **Gravewell:** a creature that fails its save against your Gravitic Anchor takes **1d6 force per Rank**. A Shackle Strike hit deals an extra **1d4 force per Rank**. |
+
+**Range**
+
+| Subclass | Ascendant | Corrupted, seal open |
+|---|---|---|
+| Crystal Archer | **Spotter's Mark** [buff]: from **Rank 3**, the first ally hit on the marked creature also deals **1d6 per Rank**. | **Shardblood:** a special arrow deals an extra **1d6 force per Rank** and bursts: each other enemy within 5 feet of the target takes **1d4 force per Rank**. |
+| Gunman | **Covering Fire** [buff]: the penalty die grows with Rank: **d4 / d6 / d8 / d10** at Rank 1 to 4. | **Powderveins:** a special shot deals an extra **1d6 force per Rank**. A creature that fails its save against Powder Disruption or Soulshot Barrage takes **1d6 thunder per Rank**. |
+
+**Ascendant vs Corrupted per day** (party win-rate uplift, mean of 7th, 10th and 15th level; Corrupted counted at half, for one opened fight in two):
+
+| Subclass | Ascendant | Corrupted per day | Gap |
+|---|---:|---:|---:|
+| Verdant Mage | +2.8 | +2.2 | −0.6 |
+| Warbound Mage | +3.0 | +2.2 | −0.8 |
+| Stonewarden Mage | +1.4 | +2.1 | +0.7 |
+| Hellbound Mage | +3.1 | +2.8 | −0.3 |
+| Sanguine Mage | +4.7 | +3.4 | −1.3 |
+| Aether Mage | +3.1 | +2.8 | −0.3 |
+| Sanguine Aegis | +3.0 | +2.4 | −0.7 |
+| Bulwark Aegis | +2.7 | +2.0 | −0.8 |
+| Warden Aegis | +2.0 | +3.2 | +1.2 |
+| Crystal Archer | +3.7 | +3.3 | −0.4 |
+| Gunman | +3.3 | +2.5 | −0.8 |
+
+Differences under about 1.5 points are noise. Sanguine Mage and Warden Aegis drifted after the base-kit rebalance and are the next to retune.
+
+### Known issues, not yet addressed
+
+- **Crystal Archer falls off after 7th level** (+16 at 7th, −1 at 15th) even though its share of the party's damage keeps rising (37% to 42%). At high level the fights are decided by enemy spellcasters, and the Archer has no answer to them; the Gunman's Powder Disruption does. Candidate fixes: a way for the Archer to break concentration (Violet or White Dust), and a Silent Volley that protects allies, not just the Archer.
+- **Warbound Mage is still the weakest Crystal Mage** (−6.0). The Intelligence weapon barely helped, because Warbound Mages rarely choose melee over a spell.
+- **Bulwark Aegis** is strong at 3rd level (+17) and weak at 15th (−11).
+- **The Range pillar sits well above the other two** (+6 to +9 against roughly −6 to +5). This is across pillars, so it doesn't break the within-pillar rule, but parties with a Range character win noticeably more often.
+- Fracture text (Assimilation 4) is still to be written.
+- The simulator tests 7th, 10th and 15th level; the Rank steps at 14th (Mages) and the evolutions above 15th are untested.
+
+---
+
 ## Patch 2 — 2026-10-07
 
 ### Subclass Evolution [new]
