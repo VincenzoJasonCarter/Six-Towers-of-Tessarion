@@ -3,7 +3,10 @@ const TOOLS = {
   library: { app: "library", name: "The Library" },
   bestiary: { app: "bestiary", name: "The Bestiary" },
   // charasheet, hosted by its author rather than by us: always open, at this address.
-  barracks: { app: "barracks", name: "The Barracks", url: "https://charasheet.rayy.dev/" },
+  // It leaves: the hall is its own site, opened in this tab rather than a frame,
+  // since in a frame the browser keeps its storage apart and its Google Drive
+  // sign-in never gets back to it.
+  barracks: { app: "barracks", name: "The Barracks", url: "https://charasheet.rayy.dev/", leaves: true },
   memoria: { app: "memoria", name: "The Memoria" },
 };
 const STATE_TEXT = { ready: "Open", external: "Open", starting: "Lighting the lamps…", stopped: "Closed" };
@@ -483,7 +486,9 @@ function render() {
   const view = currentView();
   const from = lastView;
   lastView = view;
-  if (motion && from === "desk" && view !== "desk") return walkIn(view);
+  const walksIn = motion && from === "desk" && view !== "desk";
+  if (TOOLS[view] && TOOLS[view].leaves && !walksIn) return leave(view);
+  if (walksIn) return walkIn(view);
   if (motion && from !== null && from !== "desk" && view === "desk") return walkOut(from);
   applyView(view, from !== null && from !== view);
 }
@@ -562,6 +567,7 @@ function preload() {
   preloaded = true;
   setTimeout(() => {
     for (const [view, tool] of Object.entries(TOOLS)) {
+      if (tool.leaves) continue;
       const s = status.apps[tool.app].state;
       if (s === "ready" || s === "external") frameFor(view);
     }
@@ -799,6 +805,7 @@ function walkIn(view) {
       }
       w.inside(cz, t);
     });
+    if (TOOLS[view].leaves) return leave(view, w);
     // Only now, with the camera stopped and the light filling the view, is the
     // tool switched on underneath (the GPU may need a moment for it), then
     // the light fades into it.
@@ -807,6 +814,31 @@ function walkIn(view) {
     await w.fadeTunnel(1, 0);
   });
 }
+
+// A hall that is a site of its own (a tool with leaves): go there in this tab,
+// in place of its entry in the history, so Back comes out at reception. After
+// a walk the light stays up until the site arrives, so the walk never ends.
+let leaving = null;
+function leave(view, w = null) {
+  leaving = { w };
+  location.replace(TOOLS[view].url);
+  return new Promise(() => {});
+}
+
+// Back from such a site, the browser may hand over this page as it was left,
+// light and all: put reception back, as if the visitor had walked out.
+addEventListener("pageshow", () => {
+  if (!leaving) return;
+  const { w } = leaving;
+  leaving = null;
+  if (w) {
+    w.closeTunnel();
+    w.leaveHall();
+  }
+  walking = false;
+  lastView = null;
+  dispatchEvent(new HashChangeEvent("hashchange"));  // render(), and a word from Hessa
+});
 
 function walkOut(view) {
   return walk(view, async w => {

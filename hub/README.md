@@ -7,7 +7,7 @@ One page for the Tessarion tools:
 - **Memoria**: the museum of Tessarion's history, room by room in lit cases
   (`memoria/`)
 - **Barracks**: character sheets, [charasheet](https://github.com/SonicRay241/charasheet)
-  by SonicRay241, loaded from https://charasheet.rayy.dev/
+  by SonicRay241, at https://charasheet.rayy.dev/ (it opens in place of the desk)
 
 ## Running it
 
@@ -60,7 +60,7 @@ browser and is on unless switched off there, whatever the system's
 reduce-motion setting says.
 
 It starts the tools on their usual ports (library 8767, bestiary 8766,
-Memoria 8769). The Barracks isn't started: it is loaded from its own site.
+Memoria 8769). The Barracks isn't started: it is its own site.
 A tool keeps its place while you look at the other. **Open in its own tab**
 opens the current tool without the desk around it.
 
@@ -89,12 +89,15 @@ list item, a table cell) and it shows as a coloured badge with an arrow:
 
 The Barracks is charasheet as its author hosts it, at the `url` given for it
 in `TOOLS` (app.js). A tool with a `url` isn't started or asked after: its
-hall is always open and its frame loads that address, here and on the public
-website alike. It needs a network connection.
+hall is always open, here and on the public website alike. It needs a network
+connection.
 
-Its sheets are kept in the browser by charasheet's site. Browsers keep a
-frame's storage apart per site it's framed in, so the desk on 127.0.0.1, the
-public website and charasheet.rayy.dev opened directly each have their own.
+It also `leaves`: walking into it goes on to that address in the same tab,
+in place of the desk, rather than loading it in a frame, and Back comes out
+at reception. In a frame from another site, browsers keep charasheet's
+storage apart from its own site's, and its Google Drive sign-in (a popup
+that reports back over a BroadcastChannel) never reaches the frame. Opened
+as itself, its sheets and its Drive sync are the same wherever you come from.
 
 The public website (`web/`) uses this same page as its front door, without
 serve.py: there every hall is always open, and the other tools load from

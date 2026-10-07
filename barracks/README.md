@@ -1,16 +1,17 @@
 # The Barracks
 
 The character sheets: [charasheet](https://github.com/SonicRay241/charasheet)
-by SonicRay241, hosted by its author at https://charasheet.rayy.dev/. The hub
-loads it in a frame like the other halls (the address is `TOOLS.barracks.url`
-in `hub/app.js`), both locally and on the public site, so there is no copy of
-charasheet here and nothing to build or serve for it. Our changes to it live
-in [VincenzoJasonCarter/charasheet](https://github.com/VincenzoJasonCarter/charasheet).
+by SonicRay241, hosted by its author at https://charasheet.rayy.dev/. Walking
+into the Barracks in the hub goes on to that address in the same tab (it is
+`TOOLS.barracks.url` in `hub/app.js`), both locally and on the public site,
+so there is no copy of charasheet here and nothing to build or serve for it.
+Our changes to it live in
+[VincenzoJasonCarter/charasheet](https://github.com/VincenzoJasonCarter/charasheet).
 
-Its sheets are kept in the browser by charasheet's own site. Inside the hub
-they sit in a frame from another site, which most browsers give storage of
-its own: sheets made there and sheets made on charasheet.rayy.dev directly
-don't see each other. Export and import moves them across.
+It isn't loaded in a frame like the other halls: framed by another site,
+charasheet gets storage apart from its own site's and its Google Drive
+sign-in fails ("Google authorization window was closed."). See "The
+Barracks" in `hub/README.md`.
 
 ## The item index
 
