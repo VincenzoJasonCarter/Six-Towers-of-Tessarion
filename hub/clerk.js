@@ -303,11 +303,114 @@ function go(view) {
   location.hash = view;
 }
 
+/* ---------- round and round ---------- */
+
+// Circle the pointer round her head and her eyes follow it. Keep going and
+// she gets suspicious, then dizzy; stop (or keep going far too long) and she's
+// cross about it. How often she's been spun is remembered in the browser.
+const WOOZY = bag([
+  "Wh... what are you... the room's going round...",
+  "Why are there two of you. One of you is plenty.",
+  "Oh, I don't... the ledger's moving. Is the ledger moving?",
+  "Is the Spire spinning? Tell me it's the Spire.",
+]);
+const CROSS = bag([
+  "Eleven years at this desk. Nobody has ever spun me. Until you. Repeatedly.",
+  "If I fall over, I'm falling over onto you.",
+  "I will confiscate the pointer. Don't think I can't.",
+  "The Bestiary is right there. Go and spin something in there. See how that goes.",
+]);
+function crossLine(n) {
+  if (n === 1) return "...Did you just spin me? Do NOT spin the registrar.";
+  if (n === 2) return "Again? That's going in your file. Your file has a new section now.";
+  if (n === 3) return "Right. Form 27-B, Malicious Rotation of Civic Staff. In triplicate. You're filling it in.";
+  return CROSS();
+}
+
+// The middle of her face on screen (it's at 80, 84 in the svg's viewBox, 0 -12 160 202).
+function faceAt() {
+  const r = clerk.getBoundingClientRect(), k = r.width / 160;
+  return [r.left + 80 * k, r.top + 96 * k, k];
+}
+// Her eyes turn towards a point on the screen, or back to the front with none.
+const pupils = clerk.querySelector(".pupils");
+function lookAt(x, y) {
+  if (x === undefined) return void (pupils.style.transform = "");
+  const [fx, fy] = faceAt(), dist = Math.hypot(x - fx, y - fy) || 1;
+  pupils.style.transform = `translate(${(x - fx) / dist * 3.6}px, ${(y - fy) / dist * 3.6}px)`;
+}
+
+// With the pointer near her she watches it; further off, she glances at the
+// doorway it's over (not the ones right behind her).
+const NEARBY = 240;  // how near counts as near, in the svg's units
+let nearby = false, overDoor = null;
+function glance() {
+  if (!overDoor || stage >= 2) return lookAt();
+  const d = overDoor.getBoundingClientRect(), c = clerk.getBoundingClientRect(), x = d.left + d.width / 2;
+  if (Math.abs(x - (c.left + c.width / 2)) < c.width / 2) lookAt();
+  else lookAt(x, d.top + d.height / 2);
+}
+
+const TURN = 2 * Math.PI;
+let spun = 0, lastAngle = null, stage = 0, stillTimer = null, sulking = false;  // stage: 1 suspicious, 2+ dizzy
+
+function settle() {
+  const dizzy = stage >= 2;
+  clearTimeout(stillTimer);
+  spun = 0; lastAngle = null; stage = 0;
+  clerk.classList.remove("dizzy");
+  if (!dizzy) return;
+  const n = (Number(stored("hub.clerk.spun")) || 0) + 1;
+  stored("hub.clerk.spun", String(n));
+  sulking = true;
+  setTimeout(() => { sulking = false; }, 8000);
+  speak(["angry", crossLine(n)], [], false);
+}
+
+addEventListener("pointermove", ev => {
+  if (ev.pointerType === "touch" || currentView() !== "desk" || $("#patchnotes").open) return;
+  const [fx, fy, k] = faceAt();
+  const dx = ev.clientX - fx, dy = ev.clientY - fy, dist = Math.hypot(dx, dy), was = nearby;
+  nearby = dist <= NEARBY * k;
+  clerk.classList.toggle("watching", nearby);
+  if (nearby && stage < 2) lookAt(ev.clientX, ev.clientY);
+  else if (was) glance();
+  if (sulking) return;  // she glares, but she won't be spun again just yet
+  if (!nearby || dist < 14 * k) { lastAngle = null; return; }
+  const a = Math.atan2(dy, dx);
+  if (lastAngle !== null) {
+    let d = a - lastAngle;
+    if (d > Math.PI) d -= TURN; else if (d < -Math.PI) d += TURN;
+    spun += d;
+    // Stop circling (or wander off) for a moment and it's over.
+    if (Math.abs(d) > .01) { clearTimeout(stillTimer); stillTimer = setTimeout(settle, 700); }
+  }
+  lastAngle = a;
+  const turns = Math.abs(spun) / TURN;
+  if (turns >= 1.6 && stage < 1) { stage = 1; speak(["frown", "...What are you doing."], [], false); }
+  if (turns >= 3 && stage < 2) {
+    stage = 2;
+    clerk.classList.add("dizzy");
+    lookAt();
+    speak(["flat", WOOZY()], [], false);
+  }
+  if (turns >= 4.5 && stage < 3) { stage = 3; speak(["flat", WOOZY()], [], false); }
+  if (turns >= 6) settle();
+}, { passive: true });
+// The pointer leaving the window counts as wandering off.
+document.addEventListener("pointerout", ev => {
+  if (ev.relatedTarget || !nearby) return;
+  nearby = false;
+  clerk.classList.remove("watching");
+  glance();
+});
+
 /* ---------- wiring ---------- */
 
 // kbd: started from the keyboard, so the first reply takes the focus.
 clerk.addEventListener("click", ev => {
   if (talking) return hide();
+  if (sulking) return speak(["frown", "Give me a minute. The room's still settling."], [], ev.detail === 0);
   show("hello", ev.detail === 0);
 });
 $("#bell").addEventListener("click", ev => onBell(ev.detail === 0));
@@ -334,15 +437,10 @@ document.addEventListener("keydown", ev => {
   }
 });
 
-// Her eyes follow whichever doorway you point at (the one behind her, she ignores).
+// Her eyes follow whichever doorway you point at (see glance()).
 document.querySelectorAll(".door").forEach(door => {
-  door.addEventListener("pointerenter", () => {
-    const d = door.getBoundingClientRect(), c = clerk.getBoundingClientRect();
-    const dx = d.left + d.width / 2 - (c.left + c.width / 2);
-    if (Math.abs(dx) < c.width / 2) delete clerk.dataset.look;
-    else clerk.dataset.look = dx < 0 ? "left" : "right";
-  });
-  door.addEventListener("pointerleave", () => { delete clerk.dataset.look; });
+  door.addEventListener("pointerenter", () => { overDoor = door; if (!nearby) glance(); });
+  door.addEventListener("pointerleave", () => { overDoor = null; if (!nearby) glance(); });
 });
 
 // A word when you come back out of a hall.

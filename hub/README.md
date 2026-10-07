@@ -42,9 +42,12 @@ replies to pick from (who she is, what's behind each door, gossip, bits of
 Tessarion lore, and the restricted section, which you can't see). Some of
 what she says depends on the moment: the time of day, how often you've been
 by, whether a hall is closed, and which hall you've just come back from. Her
-eyes follow the doorway you point at, she mutters to herself if you leave
+eyes follow the pointer when it's near her (and the doorway it's over when
+it isn't), she mutters to herself if you leave
 the desk alone for a while, and six rings in quick succession get the bell
-confiscated for half a minute. Esc or a click elsewhere ends the
+confiscated for half a minute. Circle the pointer round her head and she gets
+suspicious; keep circling and she gets dizzy, and then cross (more so each
+time). Esc or a click elsewhere ends the
 conversation.
 
 Everything she says is written out in `clerk.js`, so adding lines is a
