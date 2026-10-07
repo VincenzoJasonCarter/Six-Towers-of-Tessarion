@@ -344,6 +344,7 @@ class Creature:
     def intercept(self, ally, dmg, src, ctx): return False     # True = take the hit instead
     def ward(self, tgt, dmg, src, ctx): return dmg              # tgt may be self or an ally
     def save_from_death(self, tgt): return False                # tgt may be self or an ally
+    def witness_damage(self, tgt, total, src): pass             # any creature took damage (Debtcaller)
 
     # ----- shared mechanics ----------------------------------------------
     def heal(self, amount):
@@ -375,6 +376,7 @@ class Fight:
         self.sides = sides
         self.all = sides[0] + sides[1]
         self.zones: list[Zone] = []
+        self.watchers = [c for c in self.all if getattr(c, "watches_damage", False)]
         self.round = 0
         self.current = None
         for i, side in enumerate(sides):
@@ -482,7 +484,7 @@ def nexus_check(c):
         if z.name == "nexus" and z.owner.side != c.side and c.acted and z.covers(c.x):
             o = z.owner
             if not saving_throw(c, "wis", o.dc, o, {"spell": True, "level": 9}):
-                deal(c, {"necrotic": max(1, o.mod("int"))}, o, {"spell": True})
+                deal(c, o.nexus_damage(), o, {"spell": True})
 
 
 def cage_over(c):
@@ -552,7 +554,7 @@ def attack(att, tgt, *, bonus, parts, kind, spell=False, level=0, magical=False,
         tgt.remove(effect=spot)
     pen = att.take("next_atk_pen")
     roll = d20(adv, dis)
-    total = roll + bonus - (d(1, 4) if pen else 0)
+    total = roll + bonus - (d(1, pen.value or 4) if pen else 0)   # value: the penalty die
     crit = roll == 20
     ac = tgt.ac()
     hit = crit or (roll != 1 and total >= ac)
@@ -577,6 +579,10 @@ def attack(att, tgt, *, bonus, parts, kind, spell=False, level=0, magical=False,
     crit = ctx["crit"]
     att.hit_this_turn = True
     extra = att.hit_extra(tgt, ctx)
+    mark = tgt.get("spotted_dmg")
+    if mark and mark.source is not att and mark.source.side == att.side:
+        tgt.remove(effect=mark)
+        extra = list(extra) + [mark.value]   # Spotter's Mark (evolution.py): the first ally hit
     deal(tgt, roll_damage(list(parts) + extra, crit), att, dict(ctx, attack=True))
     att.after_hit(tgt, ctx, crit)
     return True, crit
@@ -644,6 +650,8 @@ def deal(tgt, dmg, src, ctx):
     if src and src.side != tgt.side:
         src.dealt += total
         src.after_damage_dealt(tgt, total, ctx)
+    for w in tgt.fight.watchers:
+        w.witness_damage(tgt, total, src)
     if tgt.hp <= 0:
         if any(g.save_from_death(tgt) for g in [tgt] + tgt.allies()):
             tgt.hp = 1

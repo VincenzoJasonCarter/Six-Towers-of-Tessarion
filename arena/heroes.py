@@ -23,6 +23,21 @@ def tier(level):
     return 1 + (level >= 5) + (level >= 11) + (level >= 17)
 
 
+# Resonance Rank (Patch 3): a subclass's dice grow each time it gains a
+# subclass feature. False rebuilds the flat dice of Patch 2.
+RANKED = True
+RANK_LEVELS = {"Wizard": (2, 6, 10, 14), "Fighter": (3, 7, 10, 15)}
+
+
+def resonance_rank(level, chassis):
+    return max(1, sum(level >= lv for lv in RANK_LEVELS[chassis]))
+
+
+# Patch 3 base-kit rebalance (Hellbound, Warbound, Stonewarden, Sanguine Mage,
+# Sanguine Aegis, Bulwark, Range). False keeps the kits as they were.
+REBALANCED = True
+
+
 def legendary_left(creatures):
     """Legendary Resistances the creatures still have (heroes have none)."""
     return sum(getattr(c, "legendary", 0) for c in creatures)
@@ -59,6 +74,8 @@ class Hero(Creature):
         super().__init__(self.label, level, scores, save_profs, prof(level), hp, ac)
         self.patched = patched
         self.item = item(level)
+        self.rank = resonance_rank(level, self.chassis)
+        self.rk = self.rank if RANKED else 1     # multiplier for dice that scale with Resonance Rank
 
     def until_my_next_end(self):
         """Effect timing for "until the end of your next turn"."""
@@ -531,8 +548,10 @@ class WarboundMage(Wizard):
         self.warstorm_ready = level >= 14
         # After Patch 1: a martial weapon (rapier); before it, a dagger.
         self.wpn = (1, 8, "piercing") if patched else (1, 4, "piercing")
-        self.wpn_bonus = self.mod("dex") + self.pb
-        self.wpn_dmg = self.mod("dex")
+        # Patch 3: Crimson Attunement's martial weapon attacks with Intelligence.
+        wpn_mod = self.mod("int") if (REBALANCED and patched) else self.mod("dex")
+        self.wpn_bonus = wpn_mod + self.pb
+        self.wpn_dmg = wpn_mod
 
     # War Drum and Battle Surge ---------------------------------------
     def after_hit_roll(self, tgt, ctx):
@@ -653,7 +672,9 @@ class StonewardenMage(Wizard):
 
     def __init__(self, level, patched=True):
         super().__init__(level, patched)
-        self.runic = max(1, self.mod("int")) if level >= 6 else 0
+        # Patch 3: Runic Bulwark uses = half Intelligence (rounded up).
+        uses = (self.mod("int") + 1) // 2 if REBALANCED else self.mod("int")
+        self.runic = max(1, uses) if level >= 6 else 0
         self.stoneheart_ready = level >= 14
 
     def don_mage_armor(self):
@@ -721,6 +742,11 @@ class HellboundMage(Wizard):
         e = self.add("darkness", self)
         self.conc = Conc("darkness", [(self, e)])
 
+    def nexus_damage(self):
+        """Pact Nexus: Intelligence, plus 1d6 per Resonance Rank from Patch 3."""
+        dice = [(self.rk, 6, 0, "necrotic")] if REBALANCED else []
+        return roll_damage(dice + [(0, 0, max(1, self.mod("int")), "necrotic")])
+
     def pact_nexus(self):
         self.nexus_ready = False
         self.fight.zones.append(Zone("nexus", self, self.x, 20, follows=True))
@@ -736,10 +762,13 @@ class HellboundMage(Wizard):
         m = tgt.get("shadow_mark")
         if m and m.source is self:
             tgt.remove(effect=m)
-            deal(tgt, {"necrotic": max(1, self.mod("int"))}, self, {"spell": True})
-        if self.curses and self.reaction and not tgt.dead and ctx.get("spell"):
+            # Shadow Mark: Intelligence, plus 1d6 per Resonance Rank once ranked.
+            dice = [(self.rk, 6, 0, "necrotic")] if RANKED else []
+            deal(tgt, roll_damage(dice + [(0, 0, max(1, self.mod("int")), "necrotic")]), self, {"spell": True})
+        if self.curses and (self.reaction or REBALANCED) and not tgt.dead and ctx.get("spell"):
             self.curses -= 1
-            self.reaction = False
+            if not REBALANCED:
+                self.reaction = False       # Patch 3: Curseweaver no longer costs the reaction
             tgt.add("next_atk_disadv", self, until=("end", tgt))
 
     def choose(self):
@@ -756,7 +785,8 @@ class HellboundMage(Wizard):
     def extra_options(self, opts):
         if self.nexus_ready:
             near = [e for e in self.enemies() if self.dist_to(e) <= 20 + 30]
-            ev = sum(max(1, self.mod("int")) * self.p_save_fail(e, "wis") * 3 for e in near)
+            per = max(1, self.mod("int")) + (3.5 * self.rk if REBALANCED else 0)
+            ev = sum(per * self.p_save_fail(e, "wis") * 3 for e in near)
             opts.append((ev, "pact nexus", self.pact_nexus))
 
     def bonus_before(self, plan):
@@ -783,7 +813,8 @@ class SanguineMage(Wizard):
         super().__init__(level, patched)
         self.free["inflict wounds"] = 1
         self.tethers = self.pb
-        self.flux = max(1, self.mod("int")) if level >= 6 else 0
+        # Patch 3: Flux Manipulation's save swap once per long rest (here only the swap is used).
+        self.flux = (1 if REBALANCED else max(1, self.mod("int"))) if level >= 6 else 0
         self.overlord_ready = level >= 14
         self.overlord = False
 
@@ -851,7 +882,7 @@ class SanguineMage(Wizard):
             if m and m.source is self:
                 self.tethers -= 1
                 self.bonus_used = True
-                self.heal(deal(e, roll_damage([(1, 6, 0, "necrotic")]), self, {"spell": True}))
+                self.heal(deal(e, roll_damage([(self.rk, 6, 0, "necrotic")]), self, {"spell": True}))
                 return
 
 
@@ -1122,7 +1153,7 @@ class SanguineAegis(Aegis):
                 return
             if self.charges:
                 self.bonus_used = True
-                self.heal(d(self.charges, 4))
+                self.heal(d(self.charges, 6 if REBALANCED else 4))   # Patch 3: d6 per charge
                 self.charges = 0
                 return
         if self.level >= 7 and self.charges and self.dist() - 5 <= self.speed_now():
@@ -1203,7 +1234,7 @@ class BulwarkAegis(Aegis):
     def aura_ac(self, ally):
         bonus = 0
         if self.level >= 7 and self.dist_to(ally) <= 10:
-            bonus += 1                   # Unmoving Bastion
+            bonus += 2 if (REBALANCED and self.level >= 15) else 1   # Unmoving Bastion (+2 from 15th, Patch 3)
         if self.has("fortress") and self.dist_to(ally) <= 10:
             bonus += 2                   # Fortress: half cover
         return bonus
@@ -1328,10 +1359,11 @@ class CrystalArcher(Range):
         if not self.arrows or self.special_turn == self.turns:
             return None
         foe = self.foe
-        avg_hit = 4.5 + self.dmg_bonus + 2
+        avg_hit = 4.5 + self.dmg_bonus + self.focus()
         left = self.attacks - 1 - i
         dc = 8 + self.pb + self.mod("dex")
-        ev = {"red": 2.5}
+        rk = self.rk
+        ev = {"red": 2.5 * rk}
         if self.dist() <= 5 and foe.style == "melee" and left and not getattr(foe, "immovable", False):
             # the push frees the remaining arrows from point-blank disadvantage
             p, pd = p_hit(self.atk_bonus, foe.ac()), p_hit(self.atk_bonus, foe.ac(), dis=True)
@@ -1341,9 +1373,9 @@ class CrystalArcher(Range):
         if foe.style == "melee" and sp >= foe.dist_to(closest) - 5 > sp - 10:
             ev["verdant"] = foe.est_dpr(closest)          # it can't reach anyone this round
         if self.patched:
-            ev["prismatic"] = 2.5 + (2.5 if self.hp < self.max_hp else 0)
+            ev["prismatic"] = 2.5 * rk + (2.5 * rk if self.hp < self.max_hp else 0)
             if self.amber_ally(foe):
-                ev["amber"] = 2.5 + self.pb
+                ev["amber"] = 2.5 * rk + self.pb
             ev["violet"] = 0.125 * foe.est_dpr(closest) / max(1, getattr(foe, "multi", 1))
             if foe.has("darkness"):
                 p, pd = p_hit(self.atk_bonus, foe.ac()), p_hit(self.atk_bonus, foe.ac(), dis=True)
@@ -1359,24 +1391,28 @@ class CrystalArcher(Range):
             self.special_turn = self.turns
         self.weapon_attack(self.foe, ctx={"special": arrow, "attack_action": True})
 
+    def focus(self):
+        """Marksman's Focus: +2 (Resonance Rank alone made it + proficiency bonus)."""
+        return self.pb if (RANKED and not REBALANCED) else 2
+
     def hit_extra(self, tgt, ctx):
         out = []
         if ctx.get("weapon") == "longbow":
             if self.patched or self.moved <= 10:
-                out.append((0, 0, 2, "piercing"))          # Marksman's Focus
+                out.append((0, 0, self.focus(), "piercing"))          # Marksman's Focus
             if self.has("crystal_sight") and self.sight_turn != self.turns and self.my_turn():
                 self.sight_turn = self.turns
-                out.append((1, 6, 0, "piercing"))
+                out.append((self.rk, 6, 0, "piercing"))
         sp = ctx.get("special")
         if sp == "red":
-            out.append((1, 4, 0, "thunder"))
+            out.append((self.rk, 4, 0, "thunder"))
         elif sp == "prismatic":
-            out.append((1, 4, 0, "necrotic"))
+            out.append((self.rk, 4, 0, "necrotic"))
         return out
 
     def after_damage_dealt(self, tgt, amount, ctx):
         if ctx.get("special") == "prismatic":
-            self.heal(d(1, 4))   # about the necrotic part of the hit
+            self.heal(d(self.rk, 4))   # about the necrotic part of the hit
 
     def after_hit(self, tgt, ctx, crit):
         if tgt.dead:
@@ -1398,7 +1434,7 @@ class CrystalArcher(Range):
         elif sp == "amber":
             who = self.amber_ally(tgt)
             if who:
-                who.gain_thp(d(1, 4) + self.pb)
+                who.gain_thp(d(self.rk, 4) + self.pb)
         elif sp == "white":
             tgt.add("white_dust", self, until=("start", self))
 
@@ -1411,7 +1447,7 @@ class CrystalArcher(Range):
             if area:
                 rain = 4.5 * sum(dice) * frac(area[0])
                 p = p_hit(self.atk_bonus, self.foe.ac())
-                volley = self.attacks * p * (4.5 + self.dmg_bonus + 2)
+                volley = self.attacks * p * (4.5 + self.dmg_bonus + self.focus())
                 if rain > volley:
                     self.rain_ready = False
                     self.rain_of_shards(dc, dice, area[0])
@@ -1470,11 +1506,12 @@ class Gunman(Range):
         pd = 0.0
         if self.level >= 7 and foe.caster and not foe.has("silenced"):
             pd = p_fail(foe.save_bonus("con"), dc) * threat
-        ev = {"red": 3.5 + pd}
+        die = 4 if REBALANCED else 6
+        ev = {"red": (die + 1) / 2 * self.rk + pd}
         if self.level >= 7 and foe.caster:
             ev["violet"] = (p_fail(foe.save_bonus("con") - 2.5, dc)) * threat
         if self.patched:
-            ev["prismatic"] = 3.5 + pd + (3 if foe.heals else 0)
+            ev["prismatic"] = (die + 1) / 2 * self.rk + pd + (3 if foe.heals else 0)
             if self.attacks - 1 - i > 0 or self.allies():
                 # -2 AC helps my remaining attacks this turn and every ally's until my next turn
                 swings = (self.attacks - 1 - i) + sum(getattr(a, "attacks", 0) for a in self.allies())
@@ -1501,10 +1538,11 @@ class Gunman(Range):
 
     def hit_extra(self, tgt, ctx):
         sp = ctx.get("special")
+        die = 4 if REBALANCED else 6    # Patch 3: d4 per Resonance Rank
         if sp == "red":
-            return [(1, 6, 0, "force")]
+            return [(self.rk, die, 0, "force")]
         if sp == "prismatic":
-            return [(1, 6, 0, "necrotic")]
+            return [(self.rk, die, 0, "necrotic")]
         if ctx.get("barrage"):
             return [(2, 8, 0, "force")]
         return []

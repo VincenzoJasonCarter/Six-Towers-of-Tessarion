@@ -2,25 +2,25 @@
   "3": {
     "warband": 1.352,
     "ambush": 0.999,
-    "mixed": 1.003,
+    "mixed": 0.999,
     "boss": 1.113
   },
   "7": {
-    "warband": 2.633,
-    "ambush": 1.48,
-    "mixed": 1.613,
-    "boss": 1.469
+    "warband": 2.652,
+    "ambush": 1.528,
+    "mixed": 1.672,
+    "boss": 1.501
   },
   "10": {
-    "warband": 2.398,
-    "ambush": 1.469,
-    "mixed": 1.417,
-    "boss": 1.437
+    "warband": 2.459,
+    "ambush": 1.534,
+    "mixed": 1.523,
+    "boss": 1.474
   },
   "15": {
-    "warband": 2.881,
-    "ambush": 1.573,
-    "mixed": 1.619,
-    "boss": 2.355
+    "warband": 2.998,
+    "ambush": 1.648,
+    "mixed": 1.69,
+    "boss": 2.441
   }
 }
