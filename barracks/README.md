@@ -1,61 +1,39 @@
 # The Barracks
 
 The character sheets: [charasheet](https://github.com/SonicRay241/charasheet)
-by SonicRay241 (in `charasheet/`, see `web/README.md` for how it's kept and
-what we changed), built for `/barracks/` and served like the other halls.
+by SonicRay241, hosted by its author at https://charasheet.rayy.dev/. The hub
+loads it in a frame like the other halls (the address is `TOOLS.barracks.url`
+in `hub/app.js`), both locally and on the public site, so there is no copy of
+charasheet here and nothing to build or serve for it. Our changes to it live
+in [VincenzoJasonCarter/charasheet](https://github.com/VincenzoJasonCarter/charasheet).
 
-## Running it
-
-From the repo root:
-
-```
-make barracks          # or: uv run barracks/serve.py
-```
-
-It opens at http://127.0.0.1:8768/barracks/ and serves the last build of
-charasheet, so it starts at once. If anything in charasheet/ changed since
-that build, it builds first (a few seconds; longer the first time, when
-`npm ci` installs its packages). Building needs Node; without it, an
-existing build is served as it is.
-
-Options: `--port 9000`, `--no-browser`.
-
-To work on charasheet's own code, use Vite's dev server instead, which
-reloads the page as you edit:
-
-```
-make barracks-dev      # http://127.0.0.1:5173/
-```
-
-## Building it
-
-```
-make barracks-build    # or: uv run barracks/build.py [--force]
-```
-
-writes `charasheet/dist/` for `/barracks/`, without Google Drive sync, and
-does nothing if it is already up to date. `web/build.py` runs it and copies
-the result to `/barracks/` on the public site.
+Its sheets are kept in the browser by charasheet's own site. Inside the hub
+they sit in a frame from another site, which most browsers give storage of
+its own: sheets made there and sheets made on charasheet.rayy.dev directly
+don't see each other. Export and import moves them across.
 
 ## The item index
 
-`/barracks/items.json` lists the items of Tessarion for charasheet to offer
-in its Weapons and Equipment panels (charasheet looks for `items.json` next to
-itself). It's made from `data/items.yaml`: edit that, not the JSON. The build
-writes it into `charasheet/dist/` every time, and `serve.py` makes it fresh on
-each request, so an edit shows up on the next load. Entries marked
-`hidden: true` stay out.
+`/barracks/items.json` on the public site lists the items of Tessarion for
+charasheet to offer in its Weapons and Equipment panels. It's made from
+`data/items.yaml`: edit that, not the JSON. Entries marked `hidden: true`
+stay out.
+
+```
+make barracks-build    # or: uv run barracks/build.py  -> barracks/dist/items.json
+```
+
+`web/build.py` runs it and puts the result at `/barracks/` on the public site.
 
 Its format is at the top of `items.py`. Two things other code relies on:
 ids never change once published, and damage dice carry no modifier (the
 wielder adds their `ability` modifier and the item's `bonus`). The file is
-served with `Access-Control-Allow-Origin: *` (vercel.json, and serve.py
-locally), so a charasheet hosted elsewhere can read it too.
+served with `Access-Control-Allow-Origin: *` (vercel.json), so charasheet,
+hosted elsewhere, can read it.
 
 ## Files
 
 ```
-build.py     builds charasheet/ into charasheet/dist/ when it changed, and writes items.json
-serve.py     serves that build at /barracks/, building first if needed
+build.py     writes items.json into barracks/dist/
 items.py     data/items.yaml as items.json (the format is described at the top)
 ```

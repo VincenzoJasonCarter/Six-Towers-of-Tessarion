@@ -12,8 +12,9 @@ dist/ is the hub's reception page at the root (index.html, style.css, app.js,
 clerk.js from hub/, with the page marked data-hosted so it needs no hub
 server, and balance-patch.md for its notice board), library/ (the output of library/build.py), bestiary/
 (bestiary.html as its index.html, plus bestiary/images/ if there is one) and
-barracks/ (charasheet/dist, the output of barracks/build.py) and memoria/
-(memoria.html as its index.html). It is rebuilt from scratch every time. Upload it to any static host; vercel.json
+barracks/ (just items.json, the output of barracks/build.py: the hub loads the
+character sheets from where charasheet is hosted) and memoria/ (memoria.html
+as its index.html). It is rebuilt from scratch every time. Upload it to any static host; vercel.json
 at the repo root does that on Vercel.
 """
 import os
@@ -45,7 +46,7 @@ def main():
     run("memoria/build.py")
 
     shutil.rmtree(DIST, ignore_errors=True)
-    shutil.copytree(ROOT / "charasheet" / "dist", DIST / "barracks", ignore=shutil.ignore_patterns(".built-for"))
+    shutil.copytree(ROOT / "barracks" / "dist", DIST / "barracks")
     shutil.copytree(ROOT / "library" / "site", DIST / "library")
     (DIST / "bestiary").mkdir()
     shutil.copy(ROOT / "bestiary" / "bestiary.html", DIST / "bestiary" / "index.html")

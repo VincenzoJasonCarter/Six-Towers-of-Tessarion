@@ -1,7 +1,7 @@
 # Items of Tessarion: what a character can carry, craft, buy or sell.
 #
 # The source for the Barracks' item index (barracks/items.py turns it into
-# items.json for charasheet to offer in its Weapons and Equipment panels).
+# items.json, published at /barracks/items.json for charasheet to read).
 # Entries come from lore-book/07-crafting-book.md (the craftable items, with
 # their recipes) and lore-book/10-official-tessarion-market-value.md (prices,
 # raw materials, utilities).

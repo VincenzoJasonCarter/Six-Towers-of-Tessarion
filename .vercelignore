@@ -8,12 +8,10 @@
 !/bestiary
 !/lore-book
 !/data
-!/charasheet
 !/barracks
 !/memoria
 /library/site
 /library/library.html
 /hub/serve.py
-/charasheet/node_modules
-/charasheet/dist
+/barracks/dist
 __pycache__

@@ -2,7 +2,8 @@ const $ = s => document.querySelector(s);
 const TOOLS = {
   library: { app: "library", name: "The Library" },
   bestiary: { app: "bestiary", name: "The Bestiary" },
-  barracks: { app: "barracks", name: "The Barracks" },
+  // charasheet, hosted by its author rather than by us: always open, at this address.
+  barracks: { app: "barracks", name: "The Barracks", url: "https://charasheet.rayy.dev/" },
   memoria: { app: "memoria", name: "The Memoria" },
 };
 const STATE_TEXT = { ready: "Open", external: "Open", starting: "Lighting the lamps…", stopped: "Closed" };
@@ -10,7 +11,7 @@ const STATE_TEXT = { ready: "Open", external: "Open", starting: "Lighting the la
 // switched off here, whatever the system's reduce-motion preference says.
 let motion = stored("hub.animate") !== "off";
 // On the public website (web/build.py) there is no hub server: the tools are
-// static pages next to this one, in library/, bestiary/, barracks/ and memoria/, and always open.
+// static pages next to this one, in library/, bestiary/ and memoria/, and always open.
 const HOSTED = "hosted" in document.body.dataset;
 
 function stored(key, value) {
@@ -578,16 +579,23 @@ function renderStatus() {
   }
 }
 
+// The hub server only knows the tools it starts; a tool with its own url is
+// hosted elsewhere and always open there.
+function withRemote(s) {
+  for (const t of Object.values(TOOLS)) if (t.url) s.apps[t.app] = { state: "ready", url: t.url };
+  return s;
+}
+
 async function poll() {
   if (HOSTED) {
-    status = { apps: Object.fromEntries(Object.values(TOOLS).map(t => [t.app, { state: "ready", url: `${t.app}/` }])) };
+    status = withRemote({ apps: Object.fromEntries(Object.values(TOOLS).map(t => [t.app, { state: "ready", url: `${t.app}/` }])) });
     renderStatus();
     render();
     preload();
     return;
   }
   try {
-    status = await (await fetch("/api/status", { cache: "no-store" })).json();
+    status = withRemote(await (await fetch("/api/status", { cache: "no-store" })).json());
     renderStatus();
     render();
     preload();
@@ -965,7 +973,7 @@ function ringBell() {
 $("#waitStart").addEventListener("click", async () => {
   const tool = TOOLS[currentView()];
   if (!tool) return;
-  status = await post("/api/start", { app: tool.app }).catch(() => status);
+  status = await post("/api/start", { app: tool.app }).then(withRemote).catch(() => status);
   renderStatus();
   render();
 });

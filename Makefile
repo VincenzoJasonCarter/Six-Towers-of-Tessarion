@@ -29,19 +29,11 @@ library: ## Serve the lore library live at http://127.0.0.1:8767/ (reloads on ch
 library-build: ## Export a static site to library/site/ (ARGS="--single-file" for one library.html)
 	uv run library/build.py $(ARGS)
 
-# --- barracks (charasheet, the character sheets; building it needs Node) ---
-
-.PHONY: barracks
-barracks: ## Serve the character sheets at http://127.0.0.1:8768/barracks/ (rebuilds first if charasheet/ changed)
-	uv run barracks/serve.py $(ARGS)
+# --- barracks (the character sheets are charasheet, hosted elsewhere; this is its item index) ---
 
 .PHONY: barracks-build
-barracks-build: ## Build charasheet for /barracks/ into charasheet/dist/ (ARGS="--force" to rebuild regardless)
-	uv run barracks/build.py $(ARGS)
-
-.PHONY: barracks-dev
-barracks-dev: ## Work on charasheet's code: Vite's dev server with live reload at http://127.0.0.1:5173/
-	cd charasheet && { test -d node_modules || npm ci --no-audit --no-fund; } && npm run dev -- --host 127.0.0.1 $(ARGS)
+barracks-build: ## Write the item index (data/items.yaml) to barracks/dist/items.json
+	uv run barracks/build.py
 
 # --- memoria (the museum of Tessarion's history, a 3D building, from data/memoria.yaml) ---
 
@@ -90,7 +82,7 @@ web-build: ## Build the public site (hub + library + bestiary + barracks + memor
 # --- hub (one page for all of them) ---
 
 .PHONY: hub
-hub: ## Open everything in one place at http://127.0.0.1:8760/ (starts the library, bestiary, barracks and memoria)
+hub: ## Open everything in one place at http://127.0.0.1:8760/ (starts the library, bestiary and memoria)
 	uv run hub/serve.py $(ARGS)
 
 # --- misc ---
