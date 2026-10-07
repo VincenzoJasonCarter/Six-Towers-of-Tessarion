@@ -103,7 +103,7 @@ class WarboundAscendant(Ascendant, WarboundMage):
             self.bonus_used = True
             self.uses += 1
             for a in near:
-                a.gain_thp(max(1, self.mod("int")))
+                a.gain_thp(max(1, self.mod("int")), self)
                 a.add("inspired", self, until=("end", a))
 
 
@@ -177,7 +177,7 @@ class SanguineAscendant(Ascendant, SanguineMage):
                 self.uses += 1
                 got = deal(e, roll_damage([(self.rk, 8, 0, "necrotic")]), self, {"spell": True})
                 who = most_hurt([self] + [a for a in self.allies() if self.dist_to(a) <= 30])
-                who.heal(got + max(0, self.mod("int")))
+                who.heal(got + max(0, self.mod("int")), self)
                 return
 
 
@@ -200,7 +200,7 @@ class AetherAscendant(Ascendant, AetherMage):
                 self.pulses -= 1
                 self.bonus_used = True
                 self.uses += 1
-                most_hurt(cands).gain_thp(self.level)
+                most_hurt(cands).gain_thp(self.level, self)
 
 
 
@@ -224,7 +224,7 @@ class SanguineAegisAscendant(Ascendant, SanguineAegis):
             hurt = [a for a in self.allies() if self.dist_to(a) <= 30 and a.hp < a.max_hp]
             if hurt:
                 self.uses += 1
-                most_hurt(hurt).heal(2 * self.pb)
+                most_hurt(hurt).heal(2 * self.pb, self)
 
 
 
@@ -243,7 +243,7 @@ class BulwarkAscendant(Ascendant, BulwarkAegis):
         if self.reaction and not self.incapacitated() and self.dist_to(ally) <= 10 and att is not self:
             self.reaction = False
             self.uses += 1
-            ally.gain_thp(2 * self.pb + self.mod("con"))
+            ally.gain_thp(2 * self.pb + self.mod("con"), self)
             return True
         return False
 

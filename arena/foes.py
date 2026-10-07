@@ -8,8 +8,8 @@ from pathlib import Path
 
 import yaml
 
-from engine import (R, TACTICS, Creature, attack, cage_over, d, d20, deal, move, p_hit, roll_damage,
-                    saving_throw)
+from engine import (R, TACTICS, Creature, attack, avg, cage_over, causes, credit, d, d20, deal, deny, move,
+                    p_hit, roll_damage, saving_throw)
 
 ENEMIES = Path(__file__).resolve().parent.parent / "data" / "enemies.yaml"
 
@@ -128,6 +128,7 @@ class Monster(Creature):
         e = self.get("restrained")
         if e and e.value and e.value[0] == "escape" and self.style == "melee":
             action = False
+            deny(self, causes(self, ("restrained",)))
             if d20() + self.saves.get("str", 0) >= e.value[1]:
                 self.remove(effect=e)
                 src = e.source
@@ -137,11 +138,14 @@ class Monster(Creature):
                         src.conc = None
         if self.style == "melee":
             sp = self.speed_now()
+            gap, hindered, free = self.dist() - self.reach, self.hindrance(), action
             if self.dist() > self.reach and sp:
                 move(self, True, sp)
                 if self.dist() > self.reach and action and self.speed_now():
                     action = False
                     move(self, True, sp)
+            if free and not self.dead and self.dist() > self.reach and 0 < gap <= self.base_speed:
+                deny(self, hindered)   # unhindered, it would have closed and attacked
         else:
             self.keep_distance()
         if not action or self.foe.dead:
@@ -156,6 +160,8 @@ class Monster(Creature):
             if not saving_throw(self.foe, "con", self.silence, self, {"control": True}):
                 self.foe.add("silenced", self, until=("end", self.foe))
             return
+        if self.spell and self.has("silenced") and self.dist() <= self.spell["range"]:
+            deny(self, causes(self, ("silenced",)))   # Powder Disruption: the staff instead
         if self.spell and not self.has("silenced") and self.dist() <= self.spell["range"]:
             self.cast()
         else:
@@ -173,18 +179,31 @@ class Monster(Creature):
                 self.foe = self.pick_target()
             self.keep_distance()
 
+    def hindrance(self):
+        """The heroes slowing me down on the way to my target: speed effects, fear,
+        and difficult-terrain zones between us."""
+        out = causes(self, ("speed0", "slow", "frightened"))
+        lo, hi = sorted((self.x, self.foe.x))
+        for z in self.fight.zones:
+            if (z.owner.side != self.side and z.name in ("anchor", "lockstep", "nexus") and not z.owner.dead
+                    and z.center() - z.radius <= hi and z.center() + z.radius >= lo and z.owner not in out):
+                out.append(z.owner)
+        return out
+
     def cast(self):
         """A blast centred on the target that catches its neighbours (10-foot radius)."""
         s, foe = self.spell, self.foe
         self.acted = True
+        hit = [e for e in self.enemies() if e.dist_to(foe) <= s.get("radius", 0)] or [foe]
         w, cage = cage_over(foe)
         if cage and abs(self.x - w.x) > 15 and d20() + self.cast_mod < cage.value:
+            credit(w, "protect", 0.75 * avg(s["parts"]) * len([t for t in hit if t is not w]))
             return
-        hit = [e for e in self.enemies() if e.dist_to(foe) <= s.get("radius", 0)] or [foe]
         dmg = roll_damage(s["parts"])
+        stake = sum(dmg.values()) - sum(v // 2 for v in dmg.values())
         for t in hit:
             ctx = {"spell": True, "level": s["level"], "name": s["name"], "damage": True,
-                   "single": len(hit) == 1}
+                   "single": len(hit) == 1, "stake": stake}
             ok = saving_throw(t, s["abil"], s["dc"], self, ctx)
             deal(t, {k: v // 2 for k, v in dmg.items()} if ok else dict(dmg), self, ctx)
 

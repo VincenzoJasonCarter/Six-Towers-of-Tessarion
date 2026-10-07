@@ -157,6 +157,13 @@ class Creature:
         self.turns = 0
         self.dealt = 0
         self.taken = 0
+        # Impact, in hit points (see credit()): damage that came off enemies' HP
+        # (no overkill), and what this creature did for its side beyond that.
+        self.dealt_hp = 0
+        self.protect = 0.0   # damage kept off allies: auras, wards, interceptions, temp HP, heals
+        self.control = 0.0   # enemy damage denied: lost turns, lost attacks, attacks at disadvantage
+        self.enable = 0.0    # allies' extra damage: advantage, lowered AC, worse saves it caused
+        self.thp_src = None  # who granted the current temporary HP
         self.hit_this_turn = False
         self.acted = False   # attacked or cast at an enemy this turn (Pact Nexus)
 
@@ -347,15 +354,19 @@ class Creature:
     def witness_damage(self, tgt, total, src): pass             # any creature took damage (Debtcaller)
 
     # ----- shared mechanics ----------------------------------------------
-    def heal(self, amount):
+    def heal(self, amount, src=None):
+        """`src`: who heals me, when it isn't me (for its Impact)."""
         if self.has("no_heal") or amount <= 0:
             return 0
         got = min(amount, self.max_hp - self.hp)
         self.hp += got
+        if src is not self:
+            credit(src, "protect", got)
         return got
 
-    def gain_thp(self, amount):
-        self.thp = max(self.thp, amount)
+    def gain_thp(self, amount, src=None):
+        if amount > self.thp:
+            self.thp, self.thp_src = amount, src
 
     def drop_conc(self):
         if self.conc:
@@ -435,6 +446,8 @@ class Fight:
         c.hit_this_turn = False
         c.acted = False
         c.foe = c.pick_target()
+        if c.foe and not c.dead and c.incapacitated():
+            deny(c, causes(c, ("paralyzed", "stunned")))
         if c.foe and not c.incapacitated() and not c.dead:
             c.take_turn()
         if not self.over():
@@ -496,39 +509,133 @@ def cage_over(c):
     return None, None
 
 
+# ----- impact --------------------------------------------------------------
+# Besides its own damage, each creature is credited, in hit points, with what it
+# did for its side: damage it kept off allies (protect), enemy damage it denied
+# (control) and extra damage it let allies deal (enable). Rolls are credited by
+# expectation (the change in hit or save chance times the damage at stake), and
+# lost turns at the enemy's expected damage per round, so crediting never rolls
+# a die and never changes a fight. A creature gets nothing for helping itself.
+
+def credit(src, kind, amount):
+    if src is not None and amount > 0:
+        setattr(src, kind, getattr(src, kind) + amount)
+
+
+def causes(c, names):
+    """The enemies of c behind its effects called `names`."""
+    out = []
+    for e in c.effects:
+        if e.name in names and e.source is not None and e.source.side != c.side and e.source not in out:
+            out.append(e.source)
+    return out
+
+
+def deny(c, sources, amount=None):
+    """c loses its attacks this turn: its expected damage, split among the causes."""
+    if sources and c.foe:
+        amount = c.est_dpr(c.foe) if amount is None else amount
+        for s in sources:
+            credit(s, "control", amount / len(sources))
+
+
+def split_credit(why, kind, gain):
+    """Share `gain` among the credited sources of `kind` ("adv" or "dis"). If any
+    source of it isn't credited (the creature's own, or the situation), the
+    others changed nothing and get nothing."""
+    srcs = [(s, cat) for k, s, cat in why if k == kind]
+    if srcs and all(s is not None for s, _ in srcs):
+        for s, cat in srcs:
+            credit(s, cat, gain / len(srcs))
+
+
+def credit_attack(att, tgt, bonus, parts, adv, dis, why, pen):
+    """Credit everyone whose doing moved this attack's chance to hit."""
+    stake = avg(parts)
+    ac = tgt.ac()
+    p = p_hit(bonus, ac + pen, adv, dis)
+    if adv:
+        split_credit(why, "adv", (p - p_hit(bonus, ac + pen, False, dis)) * stake)
+    if dis:
+        split_credit(why, "dis", (p_hit(bonus, ac + pen, adv, False) - p) * stake)
+    for g in tgt.allies():
+        v = g.aura_ac(tgt)
+        if v:
+            credit(g, "protect", (p_hit(bonus, ac + pen - v, adv, dis) - p) * stake)
+    for e in tgt.effects:
+        if e.name == "ac" and (e.value or 0) < 0 and e.source not in (None, att) and e.source.side == att.side:
+            credit(e.source, "enable", (p - p_hit(bonus, ac + pen - e.value, adv, dis)) * stake)
+    return stake
+
+
 # ----- attacks, saves, damage ---------------------------------------------
 
-def attack_adv(att, tgt, ctx):
-    """Advantage/disadvantage on an attack, without using anything up."""
+def attack_adv(att, tgt, ctx, why=None):
+    """Advantage/disadvantage on an attack, without using anything up. With
+    `why`, also lists each source as ("adv" | "dis", creature to credit or None,
+    "protect" | "control" | "enable"). A debuff on an enemy (control) counts
+    whoever it attacks; a buff (protect, enable) only counts on someone else."""
+    def note(kind, src, cat):
+        if why is not None:
+            if src is None:
+                ok = False
+            elif cat == "control":
+                ok = src.side != att.side
+            else:
+                helped = att if cat == "enable" else tgt
+                ok = src is not helped and src.side == helped.side
+            why.append((kind, src if ok else None, cat))
     a1, d1 = att.attack_mods(tgt, ctx)
     a2, d2 = tgt.defend_mods(att, ctx)
     adv, dis = a1 or a2, d1 or d2
-    if tgt.incapacitated() or tgt.has("restrained") or tgt.has("blinded"):
-        adv = True
-    if any(att.has(n) for n in ("restrained", "blinded", "crash", "next_atk_disadv", "hunger")):
-        dis = True
+    if adv:
+        note("adv", None, None)
+    if dis:
+        note("dis", None, None)
+    for n in ("paralyzed", "stunned", "restrained", "blinded"):
+        e = tgt.get(n)
+        if e:
+            adv = True
+            note("adv", e.source, "enable")
+    for n in ("restrained", "blinded", "crash", "next_atk_disadv", "hunger"):
+        e = att.get(n)
+        if e:
+            dis = True
+            note("dis", e.source, "control")
     fear = att.get("frightened")
     if fear and fear.source and not fear.source.dead and att.can_see(fear.source):
         dis = True
+        note("dis", fear.source, "control")
     lost = att.get("unlocated")
     if lost and lost.source is tgt:
         dis = True   # Silent Volley: it can't pin down the archer
+        note("dis", None, None)
     if ctx["kind"] == "ranged" and att.threatened():
         dis = True
+        note("dis", None, None)
     if not att.can_see(tgt):
         dis = True
+        note("dis", None, None)
     if att.has("darkness") and not att.has("white_dust") and not tgt.devils_sight:
         adv = True   # the attacker is unseen
+        note("adv", None, None)
     veil = tgt.get("veiled")
     if veil and ctx["kind"] == "ranged" and not ctx.get("spell") and att.dist_to(tgt) > 10:
         dis = True   # Verdant Veil
-    if ctx.get("spell") and ctx["kind"] == "ranged" and cage_over(tgt)[0]:
-        dis = True   # Mana Cage
-    if att.has("inspired"):
+        note("dis", veil.source, "protect")
+    if ctx.get("spell") and ctx["kind"] == "ranged":
+        w = cage_over(tgt)[0]
+        if w:
+            dis = True   # Mana Cage
+            note("dis", w, "protect")
+    insp = att.get("inspired")
+    if insp:
         adv = True   # Drumwarden (evolution.py)
+        note("adv", insp.source, "enable")
     spot = tgt.get("spotted")
     if spot and spot.source is not att and spot.source.side == att.side:
         adv = True   # Spotter's Mark (evolution.py)
+        note("adv", spot.source, "enable")
     return adv, dis
 
 
@@ -539,12 +646,15 @@ def attack(att, tgt, *, bonus, parts, kind, spell=False, level=0, magical=False,
         return False, False
     att.acted = True
     ctx = dict(ctx or {}, kind=kind, spell=spell, level=level, magical=magical or spell, weapon=weapon)
-    a, b = attack_adv(att, tgt, ctx)
+    why = [("adv", None, None)] if adv else []
+    why += [("dis", None, None)] if dis else []
+    a, b = attack_adv(att, tgt, ctx, why)
     adv, dis = adv or a, dis or b
     if not dis:
         for g in tgt.allies():
             if g.guard_attack(att, tgt, ctx):   # Living Wall
                 dis = True
+                why.append(("dis", g, "protect"))
                 break
     att.take("next_atk_disadv")
     att.take("hunger")
@@ -553,6 +663,11 @@ def attack(att, tgt, *, bonus, parts, kind, spell=False, level=0, magical=False,
     if spot and spot.source is not att and spot.source.side == att.side and spot.value != "all":
         tgt.remove(effect=spot)
     pen = att.take("next_atk_pen")
+    pen_avg = ((pen.value or 4) + 1) / 2 if pen else 0
+    stake = credit_attack(att, tgt, bonus, parts, adv, dis, why, pen_avg)
+    if pen and pen.source is not None and pen.source.side != att.side:
+        p = p_hit(bonus, tgt.ac() + pen_avg, adv, dis)
+        credit(pen.source, "control", (p_hit(bonus, tgt.ac(), adv, dis) - p) * stake)
     roll = d20(adv, dis)
     total = roll + bonus - (d(1, pen.value or 4) if pen else 0)   # value: the penalty die
     crit = roll == 20
@@ -567,12 +682,17 @@ def attack(att, tgt, *, bonus, parts, kind, spell=False, level=0, magical=False,
             for g in tgt.allies():
                 raised = g.guard_attack_hit(att, tgt, ctx, total, ac)
                 if raised:
+                    if total < ac + raised:
+                        credit(g, "protect", stake)   # turned a hit into a miss
                     break
         if raised and total < ac + raised:
             hit = False
     if not hit:
         return False, False
-    if tgt.has("paralyzed") and att.dist_to(tgt) <= 5:
+    held = tgt.get("paralyzed")
+    if held and att.dist_to(tgt) <= 5:
+        if not crit and held.source is not att and held.source is not None and held.source.side == att.side:
+            credit(held.source, "enable", sum(n * (die + 1) / 2 for n, die, _, _ in parts))
         crit = True
     ctx["crit"] = crit
     att.after_hit_roll(tgt, ctx)
@@ -583,28 +703,52 @@ def attack(att, tgt, *, bonus, parts, kind, spell=False, level=0, magical=False,
     if mark and mark.source is not att and mark.source.side == att.side:
         tgt.remove(effect=mark)
         extra = list(extra) + [mark.value]   # Spotter's Mark (evolution.py): the first ally hit
+        credit(mark.source, "enable", avg([mark.value]))
     deal(tgt, roll_damage(list(parts) + extra, crit), att, dict(ctx, attack=True))
     att.after_hit(tgt, ctx, crit)
     return True, crit
 
 
 def saving_throw(tgt, abil, dc, src, ctx):
-    """True if the save succeeds."""
+    """True if the save succeeds. ctx["stake"], when given, is the damage a failure
+    costs over a success; it is what the save's helpers and hinderers get credit for."""
+    stake = ctx.get("stake", 0)
+    ally = lambda s: s is not None and s is not src and src is not None and s.side == src.side
     if abil in ("str", "dex") and tgt.incapacitated():
         ok = False
+        if stake:
+            who = [e.source for e in tgt.effects if e.name in ("paralyzed", "stunned") and ally(e.source)]
+            for s in who:
+                credit(s, "enable", p_roll(dc - tgt.save_bonus(abil)) * stake / len(who))
     else:
         a1, d1 = tgt.save_mods(abil, src, ctx)
         a2, d2 = src.impose_save_mods(tgt, abil, ctx) if src else (False, False)
         adv, dis = a1 or a2, d1 or d2
         bonus = tgt.save_bonus(abil)
-        lift = 0
+        lift, lifter, boosters, own_dis = 0, None, [], dis
         for g in tgt.allies():
             a3, d3 = g.aura_save_mods(tgt, abil, src, ctx)
             adv, dis = adv or a3, dis or d3
-            lift = max(lift, g.aura_save_bonus(tgt, abil))
-        if abil == "dex" and tgt.has("restrained"):
+            own_dis = own_dis or d3
+            if a3:
+                boosters.append(g)
+            b = g.aura_save_bonus(tgt, abil)
+            if b > lift:
+                lift, lifter = b, g
+        hold = tgt.get("restrained") if abil == "dex" else None
+        if hold:
             dis = True
         pen = tgt.take("next_save_pen")
+        if stake:
+            ps = lambda adv, dis, lift, pen: p_roll(dc - bonus - lift + (2.5 if pen else 0), adv, dis)
+            if boosters and not (a1 or a2):
+                for g in boosters:
+                    credit(g, "protect", (ps(True, dis, lift, pen) - ps(False, dis, lift, pen)) * stake / len(boosters))
+            credit(lifter, "protect", (ps(adv, dis, lift, pen) - ps(adv, dis, 0, pen)) * stake)
+            if hold and not own_dis and ally(hold.source):
+                credit(hold.source, "enable", (ps(adv, False, lift, pen) - ps(adv, True, lift, pen)) * stake)
+            if pen and ally(pen.source):
+                credit(pen.source, "enable", (ps(adv, dis, lift, False) - ps(adv, dis, lift, True)) * stake)
         ok = d20(adv, dis) + bonus + lift - (d(1, 4) if pen else 0) >= dc
         if not ok:
             ok = tgt.save_reroll(abil, dc, src, ctx)
@@ -612,6 +756,7 @@ def saving_throw(tgt, abil, dc, src, ctx):
             for g in tgt.allies():
                 if g.ally_save_reroll(tgt, abil, dc, src, ctx):
                     ok = True
+                    credit(g, "protect", stake)
                     break
     if ok and src and not src.dead and src.flip_success(tgt, ctx):
         ok = False
@@ -628,6 +773,7 @@ def deal(tgt, dmg, src, ctx):
     if src and src.side != tgt.side and not ctx.get("intercepted"):
         for g in tgt.allies():
             if g.intercept(tgt, dmg, src, ctx):     # Intercepting Guard
+                credit(g, "protect", sum(max(0, n) for n in dmg.values()))
                 tgt, ctx = g, dict(ctx, intercepted=True)
                 break
     weaponlike = bool(not ctx.get("spell") and ctx.get("weapon") and not ctx.get("magical"))
@@ -639,21 +785,30 @@ def deal(tgt, dmg, src, ctx):
         out[dtype] = n
     out = tgt.react_to_damage(out, src, ctx)
     for g in tgt.allies():
+        before = sum(out.values())
         out = g.ward(tgt, out, src, ctx)            # Runic Bulwark on an ally
+        credit(g, "protect", before - sum(out.values()))
     total = sum(out.values())
     if total <= 0:
         return 0
+    room = tgt.hp + tgt.thp
     soak = min(tgt.thp, total)
     tgt.thp -= soak
+    if tgt.thp_src is not tgt:
+        credit(tgt.thp_src, "protect", soak)
     tgt.hp -= total - soak
     tgt.taken += total
     if src and src.side != tgt.side:
         src.dealt += total
+        src.dealt_hp += min(total, room)
         src.after_damage_dealt(tgt, total, ctx)
     for w in tgt.fight.watchers:
         w.witness_damage(tgt, total, src)
     if tgt.hp <= 0:
-        if any(g.save_from_death(tgt) for g in [tgt] + tgt.allies()):
+        savior = next((g for g in [tgt] + tgt.allies() if g.save_from_death(tgt)), None)
+        if savior:
+            if savior is not tgt:
+                credit(savior, "protect", 1 - tgt.hp)   # the damage past 1 HP
             tgt.hp = 1
             return total
         tgt.hp = 0

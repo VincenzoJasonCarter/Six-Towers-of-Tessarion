@@ -260,9 +260,10 @@ class Wizard(Hero):
             ab = self.save_ability(lead, abil, {"spell": True, "level": level, "damage": True,
                                                 "big": avg(parts) >= 0.2 * lead.max_hp,
                                                 "group": targets}, commit=True)
+        stake = sum(base.values()) - (sum(v // 2 for v in base.values()) if half else 0)
         for t in targets:
             ctx = {"spell": True, "level": level, "name": name, "damage": True,
-                   "single": len(targets) == 1, "big": avg(parts) >= 0.2 * t.max_hp}
+                   "single": len(targets) == 1, "big": avg(parts) >= 0.2 * t.max_hp, "stake": stake}
             ok = saving_throw(t, ab, self.dc, self, ctx)
             if ok and not half:
                 continue
@@ -1434,7 +1435,7 @@ class CrystalArcher(Range):
         elif sp == "amber":
             who = self.amber_ally(tgt)
             if who:
-                who.gain_thp(d(self.rk, 4) + self.pb)
+                who.gain_thp(d(self.rk, 4) + self.pb, self)
         elif sp == "white":
             tgt.add("white_dust", self, until=("start", self))
 
@@ -1460,8 +1461,9 @@ class CrystalArcher(Range):
             self.arrows -= 1
             arrow = "verdant" if any(e.style == "melee" for e in hit) else None
         dmg = roll_damage([(dice[0], 8, 0, "piercing"), (dice[1], 8, 0, "force")])
+        stake = sum(dmg.values()) - sum(v // 2 for v in dmg.values())
         for e in hit:
-            ok = saving_throw(e, "dex", dc, self, {"big": True})
+            ok = saving_throw(e, "dex", dc, self, {"big": True, "stake": stake})
             deal(e, {k: v // 2 for k, v in dmg.items()} if ok else dict(dmg), self,
                  {"weapon": "longbow", "magical": True})
             if not ok and arrow and not e.dead:
