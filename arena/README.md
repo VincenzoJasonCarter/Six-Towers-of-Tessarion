@@ -115,7 +115,7 @@ recalibrate.
   random. Casters blast wherever the most heroes stand together.
 - **Impact** of a subclass, the report's main number: its share of
   everything its party did, averaged over every party it is in (25% is even
-  in a party of four). It is counted in hit points, so its four parts add up
+  in a party of four). It is counted in hit points, so its five parts add up
   without weights:
   - **Damage**: what it took off enemies' hit points, without overkill.
   - **Protection**: damage it kept off allies. AC auras, Living Wall, Verdant
@@ -130,17 +130,30 @@ recalibrate.
   - **Enable**: extra damage allies dealt because of it. Advantage against
     enemies it held, stunned or restrained, auto-crits on held enemies,
     lowered AC (Amber Slug), worse saves (Violet, restrained Dexterity saves).
+  - **Tanking**: damage kept off the party by drawing attacks. For each
+    attack aimed at it, the attacker's expected damage against the hero it
+    would have picked otherwise (its own targeting rule, run without it and
+    without dice) minus its expected damage against this one, after armour
+    and resistances. A Brute that swings at the Bulwark instead of the Wizard
+    behind it credits the Bulwark with the difference; drawing a hit you take
+    no better than that ally earns nothing, and it is never negative.
 
   Rolls are credited by expectation: the change in the chance to hit or to
   save, times the damage at stake. A lost turn is worth the enemy's expected
   damage per round. Two sources of the same advantage or disadvantage share
   it, and one the creature had anyway (its own, or the situation's) leaves
-  nothing to credit. Helping yourself (*shield*, your own advantage, Runic
-  Bulwark on yourself) isn't credited; it shows up in Survives and Damage.
-  The crediting never rolls a die, so fights come out exactly as without it.
-  Known gaps: Anchor of Tessarion's save is credited only for the damage past
-  1 HP, not for keeping the ally in the fight; pushes and Booming Blade's
-  threat aren't credited as control.
+  nothing to credit. Apart from Tanking, helping yourself (*shield*, your own
+  advantage, Runic Bulwark on yourself) isn't credited; it shows up under the
+  report's Advanced stats. The crediting never rolls a die, so fights come out
+  exactly as without it. Known gaps: Anchor of Tessarion's save is credited
+  only for the damage past 1 HP, not for keeping the ally in the fight;
+  pushes and Booming Blade's threat aren't credited as control; and a hit
+  point counts the same on anyone, so a tank soaking damage that would have
+  dropped the party's best damage dealer gets no more than its armour earns.
+- **Advanced stats**, descriptive and not part of Impact: Aggro (share of the
+  enemy attack rolls aimed at it), Mitigated (share of the damage coming at
+  it that its own reactions and resistances took off), Taken, Uptime (share
+  of the fight's rounds it was standing), Survives, Kills and Overkill.
 - **Win value** of a subclass: the win rate of parties that include it minus
   the win rate of parties that don't. It catches everything, credited or not,
   but doesn't say why, and it flattens out where parties win or lose

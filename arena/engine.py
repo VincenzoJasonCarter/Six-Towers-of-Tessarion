@@ -163,7 +163,12 @@ class Creature:
         self.protect = 0.0   # damage kept off allies: auras, wards, interceptions, temp HP, heals
         self.control = 0.0   # enemy damage denied: lost turns, lost attacks, attacks at disadvantage
         self.enable = 0.0    # allies' extra damage: advantage, lowered AC, worse saves it caused
+        self.tank = 0.0      # damage kept off the party by drawing attacks it shrugs off better
         self.thp_src = None  # who granted the current temporary HP
+        # Descriptive only, not part of Impact:
+        self.aimed = 0       # enemy attack rolls aimed at it
+        self.mitigated = 0.0 # damage its own reactions and resistances kept off itself
+        self.kills = 0
         self.hit_this_turn = False
         self.acted = False   # attacked or cast at an enemy this turn (Pact Nexus)
 
@@ -231,6 +236,10 @@ class Creature:
     def pick_target(self):
         """This turn's target. Default: the nearest enemy, the most hurt on a tie."""
         return self.nearest_enemy()
+
+    def stand_in(self, gone):
+        """Who I would attack instead if `gone` weren't there (for Tanking; no dice)."""
+        return self.nearest([e for e in self.enemies() if e is not gone])
 
     def melee_threat(self):
         """The nearest enemy that wants to fight in melee."""
@@ -515,7 +524,9 @@ def cage_over(c):
 # (control) and extra damage it let allies deal (enable). Rolls are credited by
 # expectation (the change in hit or save chance times the damage at stake), and
 # lost turns at the enemy's expected damage per round, so crediting never rolls
-# a die and never changes a fight. A creature gets nothing for helping itself.
+# a die and never changes a fight. A creature gets nothing for helping itself,
+# with one exception: tanking, where drawing an attack it takes better than the
+# ally the attacker would have picked instead keeps that damage off the party.
 
 def credit(src, kind, amount):
     if src is not None and amount > 0:
@@ -547,6 +558,30 @@ def split_credit(why, kind, gain):
     if srcs and all(s is not None for s, _ in srcs):
         for s, cat in srcs:
             credit(s, cat, gain / len(srcs))
+
+
+def expected_damage(att, tgt, bonus, parts, ctx, adv, dis, pen):
+    """An attack's expected damage against tgt, after its armour and resistances."""
+    weaponlike = bool(not ctx.get("spell") and ctx.get("weapon") and not ctx.get("magical"))
+    stake = 0.0
+    for part in parts:
+        x = avg([part])
+        if tgt.resists(part[3], dict(ctx, nonmagical=weaponlike and part[3] in BPS)):
+            x /= 2
+        stake += x
+    return p_hit(bonus, tgt.ac() + pen, adv, dis) * stake
+
+
+def credit_tanking(att, tgt, bonus, parts, ctx, adv, dis, pen):
+    """Tanking: what att would have expected to deal to the one it attacks
+    otherwise, minus what it expects to deal to tgt."""
+    other = att.stand_in(tgt)
+    if other is None:
+        return
+    a, b = attack_adv(att, other, ctx)
+    gain = (expected_damage(att, other, bonus, parts, ctx, a, b, pen)
+            - expected_damage(att, tgt, bonus, parts, ctx, adv, dis, pen))
+    credit(tgt, "tank", gain)
 
 
 def credit_attack(att, tgt, bonus, parts, adv, dis, why, pen):
@@ -665,6 +700,8 @@ def attack(att, tgt, *, bonus, parts, kind, spell=False, level=0, magical=False,
     pen = att.take("next_atk_pen")
     pen_avg = ((pen.value or 4) + 1) / 2 if pen else 0
     stake = credit_attack(att, tgt, bonus, parts, adv, dis, why, pen_avg)
+    tgt.aimed += 1
+    credit_tanking(att, tgt, bonus, parts, ctx, adv, dis, pen_avg)
     if pen and pen.source is not None and pen.source.side != att.side:
         p = p_hit(bonus, tgt.ac() + pen_avg, adv, dis)
         credit(pen.source, "control", (p_hit(bonus, tgt.ac(), adv, dis) - p) * stake)
@@ -678,6 +715,8 @@ def attack(att, tgt, *, bonus, parts, kind, spell=False, level=0, magical=False,
         raised = 0
         if tgt.reaction and not tgt.incapacitated():
             raised = tgt.react_to_attack(att, ctx, total, ac)
+            if raised and total < ac + raised:
+                tgt.mitigated += stake   # its own shield turned the hit into a miss
         if not raised or total >= ac + raised:
             for g in tgt.allies():
                 raised = g.guard_attack_hit(att, tgt, ctx, total, ac)
@@ -781,9 +820,12 @@ def deal(tgt, dmg, src, ctx):
     for dtype, n in dmg.items():
         n = max(0, n)
         if ctx.get("intercepted") or tgt.resists(dtype, dict(ctx, nonmagical=weaponlike and dtype in BPS)):
+            tgt.mitigated += n - n // 2
             n //= 2
         out[dtype] = n
+    before = sum(out.values())
     out = tgt.react_to_damage(out, src, ctx)
+    tgt.mitigated += max(0, before - sum(out.values()))
     for g in tgt.allies():
         before = sum(out.values())
         out = g.ward(tgt, out, src, ctx)            # Runic Bulwark on an ally
@@ -815,6 +857,7 @@ def deal(tgt, dmg, src, ctx):
         tgt.dead = True
         tgt.drop_conc()
         if src and src.side != tgt.side:
+            src.kills += 1
             src.on_kill(tgt)
         return total
     if tgt.conc:

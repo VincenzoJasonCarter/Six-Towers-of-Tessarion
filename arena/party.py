@@ -40,9 +40,12 @@ LEVELS = (3, 7, 10, 15)
 SOLO = HERE / "results.json"
 KEYS = [c.key for c in ROSTER]
 # What battle() records per hero: times down, damage dealt (with overkill), damage
-# taken, then Impact's parts (engine.py, credit()).
-FIELDS = ("dead", "dealt", "taken", "dealt_hp", "protect", "control", "enable")
-PARTS = ("Damage", "Protection", "Control", "Enable")
+# taken, Impact's parts (engine.py, credit()), then descriptive stats: enemy
+# attacks aimed at it, damage its own reactions and resistances kept off it,
+# kills, and the share of the fight's rounds it was standing for.
+FIELDS = ("dead", "dealt", "taken", "dealt_hp", "protect", "control", "enable", "tank",
+          "aimed", "mitigated", "kills", "uptime")
+PARTS = ("Damage", "Protection", "Control", "Enable", "Tanking")
 PARTY_SIZE = 4
 REPEATS = LEGACY = False
 CALIBRATION = RESULTS = REPORT = None
@@ -79,6 +82,8 @@ def battle(task):
         rounds.append(r)
         wins += winner == 0
         draws += winner is None
+        for h in heroes:
+            h.uptime = min(1, h.turns / r)
         for h, m in zip(heroes, members):
             for i, f in enumerate(FIELDS):
                 m[i] += getattr(h, f)
@@ -89,17 +94,25 @@ def battle(task):
 
 def slots(r):
     """(subclass, [one number per FIELDS]) for each hero in a result row. Older
-    results stored one dict per subclass, or only down, dealt and taken; for
-    those, Impact is damage alone (with overkill)."""
+    results stored one dict per subclass, or fewer fields; what they lack reads
+    as 0, and with only down, dealt and taken, Impact is damage with overkill."""
     m = r["members"]
     if isinstance(m, dict):
         m = [[m[k]["down"], m[k]["dealt"], m[k]["taken"]] for k in r["party"]]
-    return [(k, list(x) + [x[1], 0, 0, 0][len(x) - 3:]) for k, x in zip(r["party"], m)]
+    out = []
+    for k, x in zip(r["party"], m):
+        x = list(x) + ([x[1]] if len(x) == 3 else [])
+        out.append((k, x + [0] * (len(FIELDS) - len(x))))
+    return out
 
 
 def impact(m):
-    """A hero's Impact parts, in hit points: damage, protection, control, enabling."""
-    return m[3:7]
+    """A hero's Impact parts, in hit points, in the order of PARTS."""
+    return m[3:3 + len(PARTS)]
+
+
+def field(m, name):
+    return m[FIELDS.index(name)]
 
 
 def win_rate(r):
@@ -176,6 +189,7 @@ def analyse(results):
             down = dealt_share = taken_share = 0.0
             parts = [0.0] * len(PARTS)   # summed shares of the party's Impact, by part
             hp = 0.0                     # summed Impact per fight, in hit points
+            adv = dict(aggro=0.0, mitigated=0.0, kills=0.0, overkill=0.0, uptime=0.0)
             count = 0
             for enc, rows in per_enc.items():
                 w = [win_rate(r) for r in rows if k in r["party"]]
@@ -189,6 +203,8 @@ def analyse(results):
                     tot_dealt = sum(m[1] for _, m in sl) or 1
                     tot_taken = sum(m[2] for _, m in sl) or 1
                     tot_impact = sum(sum(impact(m)) for _, m in sl) or 1
+                    tot_aimed = sum(field(m, "aimed") for _, m in sl) or 1
+                    tot_kills = sum(field(m, "kills") for _, m in sl) or 1
                     for key, m in sl:
                         if key != k:
                             continue
@@ -199,10 +215,16 @@ def analyse(results):
                             parts[i] += x / tot_impact
                         enc_share.append(sum(impact(m)) / tot_impact)
                         hp += sum(impact(m)) / r["n"]
+                        adv["aggro"] += field(m, "aimed") / tot_aimed
+                        adv["mitigated"] += field(m, "mitigated") / ((field(m, "mitigated") + m[2]) or 1)
+                        adv["kills"] += field(m, "kills") / tot_kills
+                        adv["overkill"] += (m[1] - m[3]) / (m[1] or 1)
+                        adv["uptime"] += field(m, "uptime") / r["n"]
                         count += 1
                 row["impact_enc"][enc] = statistics.mean(enc_share)
             row.update(survive=1 - down / count, dealt=dealt_share / count, taken=taken_share / count,
-                       parts=[x / count for x in parts], impact=sum(parts) / count, impact_hp=hp / count)
+                       parts=[x / count for x in parts], impact=sum(parts) / count, impact_hp=hp / count,
+                       **{a: v / count for a, v in adv.items()})
             subs[k] = row
         # Pair synergy: how much better a pair does together than its two halves predict.
         pairs = {}
@@ -269,9 +291,14 @@ def write_report(results):
              "a silenced caster, and attacks at disadvantage from its debuffs.")
     L.append("  - **Enable**: extra damage its allies dealt because of it: advantage against enemies it "
              "held or restrained, auto-crits on held enemies, lowered AC, worse saves.")
+    L.append("  - **Tanking**: damage it kept off the party by drawing attacks: for each attack aimed at it, "
+             "what the attacker expected to deal to the hero it would have picked otherwise (by its own "
+             "targeting rule) minus what it expected to deal to this one, after armour and resistances. "
+             "Drawing a hit you take no better than the ally behind you earns nothing.")
     L.append("  - Rolls are credited by expectation (the change in the chance to hit or save times the damage "
-             "at stake), and a lost turn at the enemy's expected damage per round. Helping yourself (your own "
-             "*shield*, your own advantage) is not credited; it shows in your Damage and Survives instead.")
+             "at stake), and a lost turn at the enemy's expected damage per round. Apart from Tanking, helping "
+             "yourself (your own *shield*, your own advantage) is not credited; it shows under Advanced "
+             "stats instead.")
     L.append("- **Win value** is the older measure: the win rate of parties that include the subclass minus "
              "the win rate of parties that don't, in percentage points. It captures everything, but doesn't "
              "say why, and it flattens out where parties win or lose regardless.")
@@ -311,7 +338,7 @@ def write_report(results):
         if solo:
             row += f" {solo_order.index(k) + 1} |"
         L.append(row)
-    L.append("\nThe four parts add up to Impact. Win rank orders the subclasses by win value"
+    L.append("\nThe parts add up to Impact. Win rank orders the subclasses by win value"
              + (", and solo rank by the one-on-one gauntlet (report.md) across both chassis" if solo else "")
              + ". A subclass ranked far higher by Impact than by win value does a lot that its party "
              "didn't need to win, or that came too late to change the result; the reverse means its "
@@ -323,6 +350,23 @@ def write_report(results):
     for k in impact_order:
         L.append(f"| {label[k]} | " + " | ".join(
             pct(statistics.mean(a[lv]["subs"][k]["impact_enc"][e] for lv in levels)) for e in encs) + " |")
+    L.append("")
+
+    L.append("## Advanced stats\n")
+    L.append("Not part of Impact; averaged over levels.\n")
+    L.append(f"- **Aggro**: its share of the enemy attack rolls aimed at the party ({even} is even).")
+    L.append("- **Mitigated**: the share of the damage coming at it that its own *shield* and other "
+             "reactions, resistances and Runic Bulwark took off.")
+    L.append("- **Taken**: its share of the damage the party took. **Uptime**: the share of the fight's "
+             "rounds it was standing for. **Survives**: how often it is standing at the end.")
+    L.append("- **Kills**: its share of the party's kills. **Overkill**: the share of its damage that went "
+             "past 0 HP and was wasted.\n")
+    L.append("| Subclass | Aggro | Mitigated | Taken | Uptime | Survives | Kills | Overkill |")
+    L.append("|---|" + "---:|" * 7)
+    for k in impact_order:
+        m = lambda f: pct(statistics.mean(a[lv]["subs"][k][f] for lv in levels))
+        L.append(f"| {label[k]} | {m('aggro')} | {m('mitigated')} | {m('taken')} | {m('uptime')} | "
+                 f"{m('survive')} | {m('kills')} | {m('overkill')} |")
     L.append("")
 
     for lv in levels:

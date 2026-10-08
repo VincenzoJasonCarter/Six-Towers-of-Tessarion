@@ -89,6 +89,18 @@ class Monster(Creature):
             return max(foes, key=lambda e: (sum(1 for o in foes if o.dist_to(e) <= 10), -e.hp))
         return self.nearest(foes)
 
+    def stand_in(self, gone):
+        """pick_target without `gone`, and without the dice (ties go to the most hurt)."""
+        foes = [e for e in self.enemies() if e is not gone]
+        if not foes:
+            return None
+        if self.targeting in ("weakest", "sniper"):
+            if self.targeting == "sniper":
+                rng = max(a["long"] for a in self.attacks)
+                foes = [e for e in foes if self.dist_to(e) <= rng] or foes
+            return min(foes, key=lambda e: (e.ac(), e.hp))
+        return self.nearest(foes)   # casters' staff swings go to whoever is close
+
     def softest(self, foes):
         """The lowest-AC hero. With sight_targeting it can see armour but not hit
         points: it keeps last turn's pick if that is still among the softest,
