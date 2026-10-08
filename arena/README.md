@@ -209,7 +209,17 @@ The combatants are bots:
   an enemy to miss the ally fighting it), and aren't cast if every spot would
   hit a friend. The bot gives up on Holds after two tries, but a try that
   Legendary Resistance shrugs off doesn't count, since the table hears about it.
-- Ammunition and other choices are also picked by expected value.
+- Ammunition and other choices are also picked by expected value, from what
+  the hero actually carries.
+- **Competent play** (`COMPETENT` in `heroes.py`): every subclass is meant to
+  be played at the same level, by someone who knows their kit but not what
+  the next fight holds. Range characters craft their special ammunition at a
+  rest, so they carry a fixed loadout (`LOADOUT`: the mix the bot chose when
+  it could pick any kind at the moment it fired, over all four encounters)
+  instead of the best kind for this enemy. The Warbound plays as described
+  below. Turning it off brings back the earlier bots; the old ammunition
+  choice was worth at most 2 to 3 points of win rate to a Range character's
+  party.
 
 ## Builds and gear
 
@@ -248,11 +258,16 @@ Where the text left a choice or room for interpretation, the simulator does this
   archers are alive. Master of Living Paths gives disadvantage on the save
   and the 15-foot teleport.
 - **Warbound Mage** takes *shield* and *booming blade*. After Patch 1 it
-  wields a rapier, before it a dagger. Both use Dexterity, so its melee
-  attacks are weak, and the bot only melees when that beats casting.
-  Light-armour proficiency adds nothing: *mage armor* is better at Dex 14.
-  War Drum, Battle Surge, Blood for Power (only while above half HP, both
-  versions), Crimson Presence and Warstorm (both versions) are all modelled.
+  wields a greatsword (its one martial weapon, attacking with Intelligence
+  since Patch 3; a rapier without competent play), before it a dagger. The
+  bot stays in the back rank and only melees when that beats casting: a
+  front-line Warbound was tried and stood for about half the fight instead of
+  two thirds, for less Impact. Light-armour proficiency adds nothing: *mage
+  armor* is better at Dex 14. It starts each fight with 0 to 3 Beats (they
+  last until a rest), and with 3 it counts the War Drum crit toward attacks
+  that can carry it. War Drum, Battle Surge, Blood for Power (only while
+  above half HP, both versions), Crimson Presence and Warstorm (both
+  versions) are all modelled.
 - **Stonewarden Mage** takes the free *mage armor* (AC 16, no slot). Runic
   Bulwark halves any hit of 8+ damage on itself or an ally within 30 feet.
   Stoneheart Aegis goes up on turn one when at least two allies are within 30

@@ -37,6 +37,38 @@ def resonance_rank(level, chassis):
 # Sanguine Aegis, Bulwark, Range). False keeps the kits as they were.
 REBALANCED = True
 
+# Competent play: every subclass is measured at the same skill level, a player
+# who knows their kit but not what the next fight holds. False brings back the
+# old bots, which gave Range a free edge and played the Warbound carelessly:
+#   - Range crafts its special ammunition at a rest, before it knows the
+#     encounter, so it carries the fixed loadout below instead of picking any
+#     kind at the moment it fires (patched kits only).
+#   - The Warbound swings a greatsword (its one martial weapon), starts a fight
+#     with the Beats left over from the last one (Beats last until a rest), and
+#     spends a ready War Drum crit on the attack with the biggest dice. (Saving
+#     Blood for Power for moments when nothing can reach it was tried: it bled
+#     so rarely that it lost more damage than HP, so it bleeds as before.)
+COMPETENT = True
+
+# The loadout per proficiency bonus: the kinds the bot picked when it could
+# choose freely, over all four party encounters, shared out in proportion.
+LOADOUT = {
+    "archer": {2: ("amber", "prismatic"), 3: ("amber", "red", "prismatic"),
+               4: ("amber", "prismatic", "red", "verdant"),
+               5: ("red", "red", "prismatic", "amber", "verdant")},
+    "gunman": {2: ("red", "snare"), 3: ("snare", "red", "amber"),
+               4: ("red", "red", "snare", "snare"),
+               5: ("snare", "snare", "snare", "red", "red")},
+}
+
+
+def loadout(key, pb):
+    """{kind: count} a Range subclass carries into a fight."""
+    out = {}
+    for kind in LOADOUT[key][pb]:
+        out[kind] = out.get(kind, 0) + 1
+    return out
+
 
 def legendary_left(creatures):
     """Legendary Resistances the creatures still have (heroes have none)."""
@@ -547,8 +579,13 @@ class WarboundMage(Wizard):
         self.presence_now = False
         self.warstorm = False
         self.warstorm_ready = level >= 14
-        # After Patch 1: a martial weapon (rapier); before it, a dagger.
-        self.wpn = (1, 8, "piercing") if patched else (1, 4, "piercing")
+        # After Patch 1: a martial weapon (rapier, or a greatsword with competent
+        # play: with Intelligence to hit, the biggest die is the obvious pick);
+        # before it, a dagger.
+        big = COMPETENT and REBALANCED          # a greatsword needs the Intelligence to-hit
+        self.wpn = ((2, 6, "slashing") if big else (1, 8, "piercing")) if patched else (1, 4, "piercing")
+        if COMPETENT and patched:
+            self.beats = d(1, 4) - 1   # left over from the last fight
         # Patch 3: Crimson Attunement's martial weapon attacks with Intelligence.
         wpn_mod = self.mod("int") if (REBALANCED and patched) else self.mod("dex")
         self.wpn_bonus = wpn_mod + self.pb
@@ -655,6 +692,26 @@ class WarboundMage(Wizard):
                 self.bfp = self.level
             if self.presence and any(label.startswith(s) for s in ("fireball", "vitriolic", "disintegrate", "finger")):
                 self.presence_now = True
+
+    def options(self):
+        opts = super().options()
+        if not (COMPETENT and self.patched and self.beats >= 3 and self.foe):
+            return opts
+        # A ready War Drum crit doubles the dice of the next attack that hits:
+        # count that on the attacks that can carry it (one ray of a scorching ray).
+        n, die, _ = self.wpn
+        t = self.tier
+        dice = {"fire bolt": 5.5 * t, "scorching ray": 7, "booming blade": n * (die + 1) / 2 + (t - 1) * 4.5}
+        out = []
+        for ev, label, do in opts:
+            name = "scorching ray" if label.startswith("scorching ray") else label
+            if name in dice:
+                kind = "melee" if name == "booming blade" else "ranged"
+                bonus = self.wpn_bonus if kind == "melee" else self.spell_atk
+                adv, dis = attack_adv(self, self.foe, {"kind": kind, "spell": kind == "ranged"})
+                ev += p_hit(bonus, self.foe.ac(), adv, dis) * dice[name]
+            out.append((ev, label, do))
+        return out
 
     def bonus_after(self, plan):
         self.bfp = 0
@@ -1335,6 +1392,7 @@ class CrystalArcher(Range):
         self.weapon = dict(name="longbow", n=1, die=8, dtype="piercing", kind="ranged", normal=150, long=600)
         super().__init__(level, patched)
         self.arrows = self.pb
+        self.quiver = loadout("archer", self.pb) if (COMPETENT and patched) else None
         self.sights = self.pb if (level >= 7 and patched) else 0
         self.sight_turn = -1
         self.special_turn = -1
@@ -1383,14 +1441,21 @@ class CrystalArcher(Range):
                 ev["white"] = (left + self.attacks) * (p - pd) * avg_hit
         else:
             ev = {k: v for k, v in ev.items() if k in ("red", "verdant")}
-        return max(ev, key=ev.get)
+        if self.quiver is not None:
+            ev = {k: v for k, v in ev.items() if self.quiver.get(k)}
+        return max(ev, key=ev.get) if ev else None
 
     def one_attack(self, i):
         arrow = self.pick_arrow(i)
         if arrow:
-            self.arrows -= 1
+            self.spend_ammo(arrow)
             self.special_turn = self.turns
         self.weapon_attack(self.foe, ctx={"special": arrow, "attack_action": True})
+
+    def spend_ammo(self, kind):
+        self.arrows -= 1
+        if self.quiver is not None:
+            self.quiver[kind] -= 1
 
     def focus(self):
         """Marksman's Focus: +2 (Resonance Rank alone made it + proficiency bonus)."""
@@ -1458,8 +1523,12 @@ class CrystalArcher(Range):
     def rain_of_shards(self, dc, dice, hit):
         arrow = None
         if self.patched and self.arrows:
-            self.arrows -= 1
-            arrow = "verdant" if any(e.style == "melee" for e in hit) else None
+            if self.quiver is None:
+                self.arrows -= 1
+                arrow = "verdant" if any(e.style == "melee" for e in hit) else None
+            elif self.quiver.get("verdant") and any(e.style == "melee" for e in hit):
+                arrow = "verdant"
+                self.spend_ammo(arrow)
         dmg = roll_damage([(dice[0], 8, 0, "piercing"), (dice[1], 8, 0, "force")])
         stake = sum(dmg.values()) - sum(v // 2 for v in dmg.values())
         for e in hit:
@@ -1482,6 +1551,7 @@ class Gunman(Range):
         self.weapon = dict(self.MUSKET)
         super().__init__(level, patched)
         self.shots = self.pb
+        self.quiver = loadout("gunman", self.pb) if (COMPETENT and patched) else None
         self.special_turn = -1
         self.barrage_ready = level >= 15
 
@@ -1523,12 +1593,16 @@ class Gunman(Range):
                 ev["snare"] = pd + p_fail(foe.save_bonus("str"), dc) * threat
             if foe.has("mage_armor") or foe.has("darkness"):
                 ev["white"] = pd + 3 * self.attacks * 0.15 * avg_hit
-        return max(ev, key=ev.get)
+        if self.quiver is not None:
+            ev = {k: v for k, v in ev.items() if self.quiver.get(k)}
+        return max(ev, key=ev.get) if ev else None
 
     def one_attack(self, i):
         shot = self.pick_shot(i)
         if shot:
             self.shots -= 1
+            if self.quiver is not None:
+                self.quiver[shot] -= 1
             self.special_turn = self.turns
         self.weapon_attack(self.foe, ctx={"special": shot, "firearm": True, "powder": self.level >= 7})
         # Recoil Step: slide 10 feet back after the shot, no opportunity attack.
