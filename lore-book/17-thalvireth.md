@@ -6,7 +6,7 @@
 
 There is a saying among the Daykeepers, taught to every child before they can properly climb a root-stair: *“Spend your years as you would spend another’s — because one day, you will.”*
 
-Wrapped around the roots of the Verdant Tower in the whispering eastern forests, Thal'vireth is the only nation in Tessarion built openly around the management of time itself. Where other realms trade in metal, grain, or blood, Thal'vireth trades in something no one else has learned to farm: the memory of its own dead, spent carefully across six districts that each move at a different pace of life.
+Wrapped around the roots of the Verdant Tower in the whispering western forests, Thal'vireth is the only nation in Tessarion built openly around the management of time itself. Where other realms trade in metal, grain, or blood, Thal'vireth trades in something no one else has learned to farm: the memory of its own dead, spent carefully across six districts that each move at a different pace of life.
 
 # **🌳 Overview**
 
@@ -24,7 +24,7 @@ Population: **\~140,000 souls** (est.), concentrated along the root-roads and ca
 
 The Verdant Tower predates the elves' oldest remembered seasons — a fact confirmed by their own treaty language, which states plainly that authorship of the Tower remains undetermined by law. What elven history *does* claim is what happened beneath it.
 
-When the earliest wars bled the eastern forest, soul-stuff pooled beneath the dead the way it pooled beneath every battlefield in Tessarion — hardening into soulstone, veined green with elven memory. Other peoples learned to cut such crystals and drink its power. The first elves refused. To cut a memory, they held, is to murder it twice.
+When the earliest wars bled the western forest, soul-stuff pooled beneath the dead the way it pooled beneath every battlefield in Tessarion — hardening into soulstone, veined green with elven memory. Other peoples learned to cut such crystals and drink its power. The first elves refused. To cut a memory, they held, is to murder it twice.
 
 Instead, the woman later remembered only as **the First Keeper** gathered the largest shard — dense with the memory of everyone the forest had lost — and buried it among the Tower's roots rather than sell it. It did not stay a crystal. Fed on so much unspent life, it grew. The living wood did not encroach on the pale stone of the Tower; it grew *through* it, the way the Threadmint's own sealed archive describes: seamless, unreconciled, load-bearing. The elves named what grew **Ix'kaanil**, She of the Sky, and built their nation in its shade.
 

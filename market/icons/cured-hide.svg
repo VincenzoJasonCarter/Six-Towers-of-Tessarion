@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+<ellipse cx="48" cy="90" rx="31" ry="4.5" fill="#000" opacity=".15"/>
+<g stroke="#2b1d12" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+<clipPath id="c129"><path d="M48 11 Q58 15 67 9 Q71 21 83 23 Q77 36 85 46 Q76 57 83 71 Q69 71 65 85 Q55 79 48 89 Q41 79 31 85 Q27 71 13 71 Q20 57 11 46 Q19 36 13 23 Q25 21 29 9 Q38 15 48 11 Z"/></clipPath><path d="M48 11 Q58 15 67 9 Q71 21 83 23 Q77 36 85 46 Q76 57 83 71 Q69 71 65 85 Q55 79 48 89 Q41 79 31 85 Q27 71 13 71 Q20 57 11 46 Q19 36 13 23 Q25 21 29 9 Q38 15 48 11 Z" fill="#997044" stroke="none"/><g clip-path="url(#c129)"><path d="M48 11 Q58 15 67 9 Q71 21 83 23 Q77 36 85 46 Q76 57 83 71 Q69 71 65 85 Q55 79 48 89 Q41 79 31 85 Q27 71 13 71 Q20 57 11 46 Q19 36 13 23 Q25 21 29 9 Q38 15 48 11 Z" fill="#d49c5e" stroke="none" transform="translate(-3.00 -3.00)"/></g><path d="M48 11 Q58 15 67 9 Q71 21 83 23 Q77 36 85 46 Q76 57 83 71 Q69 71 65 85 Q55 79 48 89 Q41 79 31 85 Q27 71 13 71 Q20 57 11 46 Q19 36 13 23 Q25 21 29 9 Q38 15 48 11 Z" fill="none" stroke-width="4"/>
+<path d="M48 22 Q65 24 67 46 Q65 71 48 75 Q31 71 29 46 Q31 24 48 22 Z" fill="#e8bb82" stroke="none"/>
+<path d="M35 35 Q39 27 47 26" fill="none" stroke="#fff" stroke-width="3.5" opacity=".85"/>
+
+</g>
+</svg>

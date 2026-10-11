@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+<ellipse cx="48" cy="80" rx="33" ry="4.5" fill="#000" opacity=".15"/>
+<g stroke="#2b1d12" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+<clipPath id="c114"><circle cx="34" cy="63" r="13"/></clipPath><circle cx="34" cy="63" r="13" fill="#6f411d" stroke="none"/><g clip-path="url(#c114)"><circle cx="34" cy="63" r="13" fill="#9a5a28" stroke="none" transform="translate(-3.00 -3.00)"/></g><circle cx="34" cy="63" r="13" fill="none" stroke-width="4"/>
+<clipPath id="c115"><circle cx="34" cy="63" r="9.5"/></clipPath><circle cx="34" cy="63" r="9.5" fill="#ad9066" stroke="none"/><g clip-path="url(#c115)"><circle cx="34" cy="63" r="9.5" fill="#f0c88e" stroke="none" transform="translate(-3.00 -3.00)"/></g><circle cx="34" cy="63" r="9.5" fill="none" stroke-width="2"/>
+<circle cx="34" cy="63" r="5.5" fill="none" stroke="#c48a4c" stroke-width="2"/><circle cx="34" cy="63" r="1.8" fill="#c48a4c" stroke="none"/>
+<clipPath id="c116"><circle cx="62" cy="63" r="13"/></clipPath><circle cx="62" cy="63" r="13" fill="#6f411d" stroke="none"/><g clip-path="url(#c116)"><circle cx="62" cy="63" r="13" fill="#9a5a28" stroke="none" transform="translate(-3.00 -3.00)"/></g><circle cx="62" cy="63" r="13" fill="none" stroke-width="4"/>
+<clipPath id="c117"><circle cx="62" cy="63" r="9.5"/></clipPath><circle cx="62" cy="63" r="9.5" fill="#ad9066" stroke="none"/><g clip-path="url(#c117)"><circle cx="62" cy="63" r="9.5" fill="#f0c88e" stroke="none" transform="translate(-3.00 -3.00)"/></g><circle cx="62" cy="63" r="9.5" fill="none" stroke-width="2"/>
+<circle cx="62" cy="63" r="5.5" fill="none" stroke="#c48a4c" stroke-width="2"/><circle cx="62" cy="63" r="1.8" fill="#c48a4c" stroke="none"/>
+<clipPath id="c118"><circle cx="48" cy="40" r="13"/></clipPath><circle cx="48" cy="40" r="13" fill="#6f411d" stroke="none"/><g clip-path="url(#c118)"><circle cx="48" cy="40" r="13" fill="#9a5a28" stroke="none" transform="translate(-3.00 -3.00)"/></g><circle cx="48" cy="40" r="13" fill="none" stroke-width="4"/>
+<clipPath id="c119"><circle cx="48" cy="40" r="9.5"/></clipPath><circle cx="48" cy="40" r="9.5" fill="#ad9066" stroke="none"/><g clip-path="url(#c119)"><circle cx="48" cy="40" r="9.5" fill="#f0c88e" stroke="none" transform="translate(-3.00 -3.00)"/></g><circle cx="48" cy="40" r="9.5" fill="none" stroke-width="2"/>
+<circle cx="48" cy="40" r="5.5" fill="none" stroke="#c48a4c" stroke-width="2"/><circle cx="48" cy="40" r="1.8" fill="#c48a4c" stroke="none"/>
+
+</g>
+</svg>

@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+<ellipse cx="48" cy="88" rx="30" ry="4.5" fill="#000" opacity=".15"/>
+<g stroke="#2b1d12" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+<g transform="rotate(-35 48 48)">
+<clipPath id="c208"><rect x="45" y="30" width="6" height="58" rx="3"/></clipPath><rect x="45" y="30" width="6" height="58" rx="3" fill="#8d5b30" stroke="none"/><g clip-path="url(#c208)"><rect x="45" y="30" width="6" height="58" rx="3" fill="#c47f42" stroke="none" transform="translate(-0.74 -4.18)"/></g><rect x="45" y="30" width="6" height="58" rx="3" fill="none" stroke-width="4"/>
+<clipPath id="c209"><rect x="31" y="14" width="34" height="18" rx="4"/></clipPath><rect x="31" y="14" width="34" height="18" rx="4" fill="#959ca3" stroke="none"/><g clip-path="url(#c209)"><rect x="31" y="14" width="34" height="18" rx="4" fill="#cfd9e3" stroke="none" transform="translate(-0.74 -4.18)"/></g><rect x="31" y="14" width="34" height="18" rx="4" fill="none" stroke-width="4"/>
+<path d="M36 19 L58 19" fill="none" stroke="#fff" stroke-width="2.6" opacity=".85"/>
+</g>
+<g transform="rotate(35 48 48)">
+<path d="M44 88 L46 40 Q47 30 40 18" fill="none" stroke="#2b1d12" stroke-width="7"/>
+<path d="M44 88 L46 40 Q47 30 40 18" fill="none" stroke="#8fa0b0" stroke-width="3"/>
+<path d="M52 88 L50 40 Q49 30 56 18" fill="none" stroke="#2b1d12" stroke-width="7"/>
+<path d="M52 88 L50 40 Q49 30 56 18" fill="none" stroke="#8fa0b0" stroke-width="3"/>
+<clipPath id="c210"><circle cx="48" cy="42" r="3.2"/></clipPath><circle cx="48" cy="42" r="3.2" fill="#959ca3" stroke="none"/><g clip-path="url(#c210)"><circle cx="48" cy="42" r="3.2" fill="#cfd9e3" stroke="none" transform="translate(-4.18 -0.74)"/></g><circle cx="48" cy="42" r="3.2" fill="none" stroke-width="2"/>
+</g>
+
+</g>
+</svg>

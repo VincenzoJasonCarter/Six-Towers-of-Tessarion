@@ -110,15 +110,34 @@ All purchases use **OTMV** with **standardized rounding**.
 
 Local merchants **reference OTMV but do not honor it**.
 
+#### **🔺 Local Markup**
+
+Every local seller starts from OTMV and multiplies it by what their kind of market can get away with:
+
+| Market | Markup |
+| ----- | ----- |
+| Loft Markets (established stalls under a ward’s eye) | **OTMV × 2** |
+| Street stalls | **OTMV × 3** |
+| Frontier traders (outposts, caravans, ships) | **OTMV × 4** |
+| Underweave outlets | **OTMV × 5** |
+
+**Scarcity:** goods a region has to bring in from elsewhere cost **double again** there (×2 on top of the markup), such as timber and woodwork in Northreach, which lands its wood from the Frost Coast.
+
+Like currency bias, a markup may be:
+
+* Haggled down (never below × 1)  
+* Raised by insult, urgency, or an obvious need
+
 #### **🔺 Rounding Rule — Always Round Up**
 
-1. Calculate total using OTMV.  
+1. Calculate total using OTMV, and apply the markup.  
 2. **Always round the final price upward**, regardless of decimal.
 
 **Examples:**
 
 * 2.1 CB → **3 CB**  
-* 2.9 CB → **3 CB**
+* 2.9 CB → **3 CB**  
+* Quarterstaff Husk (1 CB) at a Northreach street stall: 1 × 3 (street stall) × 2 (scarce wood) → **6 CB**
 
 *Local reality:*  
  Risk, scarcity, and lack of protection are priced into every sale.

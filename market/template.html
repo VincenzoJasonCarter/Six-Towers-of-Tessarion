@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Threadmint Market</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="#"><b>The Threadmint Market</b><span>Arms, Goods &amp; Raw Stock at the Official Value</span></a>
+  <input class="search" id="q" type="search" placeholder="Search items, materials, rules…" aria-label="Search the market">
+  <button class="tally-btn" id="tallyBtn" type="button" aria-haspopup="dialog">
+    <i class="coin" aria-hidden="true"></i><span>Tally</span><b id="tallySum">empty</b>
+  </button>
+</header>
+<main id="main"></main>
+
+<dialog class="slip" id="slip" aria-labelledby="slipTitle"></dialog>
+
+<dialog class="tally" id="tally" aria-labelledby="tallyTitle">
+  <header class="tally-head">
+    <div>
+      <p class="kicker">Merchant's Guild · Purchase Tally</p>
+      <h2 id="tallyTitle">The Tally</h2>
+    </div>
+    <button class="close" type="button" data-close aria-label="Close the tally"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2 2 12"/></svg></button>
+  </header>
+  <div class="tally-body" id="tallyBody"></div>
+</dialog>
+
+<script>
+const DATA = /*__MARKET_DATA__*/null;
+const LIVE = /*__MARKET_LIVE__*/false;  // true when served by serve.py
+</script>
+<script src="app.js"></script>
+</body>
+</html>

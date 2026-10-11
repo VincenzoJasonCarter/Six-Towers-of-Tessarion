@@ -1,0 +1,63 @@
+/* Layout: a DM's module. Reading column with a sticky contents rail on wide screens. */
+:root {
+  --bg: #eceef1;
+  --paper: #f7f8fa;
+  --ink: #1d2330;
+  --muted: #5b6475;
+  --line: #c3c9d3;
+  --accent: #7b3fd1;
+  --tally: #b3261e;
+  --quote-bg: #efeaf8;
+  --display: "IM Fell English SC", "Iowan Old Style", Georgia, serif;
+  --body: "Alegreya Sans", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f1217; --paper: #161a21; --ink: #e2e6ec; --muted: #9aa3b2; --line: #343b48;
+    --accent: #a979ff; --tally: #e5564c; --quote-bg: #1f1a2c; color-scheme: dark;
+  }
+}
+
+body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--body); font-size: 18px; line-height: 1.6; }
+.wrap { max-width: 1180px; margin: 0 auto; padding: 40px 18px 80px; display: grid; gap: 40px; grid-template-columns: minmax(0, 1fr); }
+@media (min-width: 1020px) { .module .wrap { grid-template-columns: 220px minmax(0, 1fr); } }
+header.top { grid-column: 1 / -1; display: grid; gap: 8px; max-width: 70ch; }
+.eyebrow { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--tally); margin: 0; }
+h1 { font-family: var(--display); font-weight: 400; font-size: clamp(40px, 7vw, 68px); line-height: 1; margin: 0; text-wrap: balance; }
+
+nav.toc { align-self: start; }
+.index nav.toc { display: none; }
+@media (min-width: 1020px) { nav.toc { position: sticky; top: 24px; max-height: calc(100vh - 48px); overflow: auto; } }
+nav.toc p { font-family: var(--mono); font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin: 0 0 8px; }
+nav.toc ol { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; font-size: 15px; }
+nav.toc a { color: var(--muted); text-decoration: none; display: block; padding: 3px 0 3px 10px; border-left: 2px solid var(--line); }
+nav.toc a:hover, nav.toc a:focus-visible, nav.toc a.here { color: var(--ink); border-left-color: var(--accent); outline: none; }
+
+article { min-width: 0; max-width: 74ch; }
+article h2 { font-family: var(--display); font-weight: 400; font-size: 34px; line-height: 1.1; margin: 56px 0 14px; text-wrap: balance; scroll-margin-top: 20px; }
+article h3 { font-size: 20px; margin: 30px 0 6px; }
+article p { margin: 0 0 14px; }
+article ul, article ol { margin: 0 0 16px; padding-left: 22px; display: grid; gap: 5px; }
+article li > ul { margin: 6px 0 0; }
+article hr { border: 0; border-top: 1px solid var(--line); margin: 40px 0 0; }
+article a { color: var(--accent); }
+article code { font-family: var(--mono); font-size: .86em; background: var(--paper); border: 1px solid var(--line); border-radius: 3px; padding: 0 4px; }
+article blockquote { margin: 14px 0 18px; padding: 14px 18px; background: var(--quote-bg); border-left: 3px solid var(--accent); border-radius: 0 4px 4px 0; font-style: italic; }
+article blockquote p:last-child { margin-bottom: 0; }
+article blockquote strong { font-style: normal; }
+.module article > ul:first-child { list-style: none; padding: 0; gap: 4px; font-size: 16.5px; color: var(--muted); }
+.module article > ul:first-child strong { color: var(--ink); }
+
+.table-wrap { overflow-x: auto; margin: 6px 0 20px; border: 1px solid var(--line); border-radius: 4px; background: var(--paper); }
+table { border-collapse: collapse; width: 100%; font-size: 15.5px; line-height: 1.45; }
+th, td { text-align: left; vertical-align: top; padding: 9px 12px; border-bottom: 1px solid var(--line); }
+th { font-family: var(--mono); font-size: 11.5px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+
+.shelf { list-style: none; padding: 0; display: grid; gap: 12px; }
+.shelf a { display: grid; gap: 2px; padding: 16px 18px; background: var(--paper); border: 1px solid var(--line); border-radius: 4px; text-decoration: none; color: var(--ink); }
+.shelf a:hover, .shelf a:focus-visible { border-color: var(--accent); outline: none; }
+.shelf b { font-family: var(--display); font-weight: 400; font-size: 26px; }
+.shelf span { color: var(--muted); font-size: 15.5px; }
+.empty { color: var(--muted); }

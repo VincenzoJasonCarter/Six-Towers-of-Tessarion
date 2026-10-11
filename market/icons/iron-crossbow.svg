@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+<ellipse cx="48" cy="88" rx="28" ry="4.5" fill="#000" opacity=".15"/>
+<g stroke="#2b1d12" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+<g transform="rotate(35 48 48) translate(48 48) scale(0.92) translate(-48 -48)">
+<path d="M21 37 L48 53 L75 37" fill="none" stroke="#4a3b2a" stroke-width="2"/>
+<path d="M18 39 Q48 22 78 39" fill="none" stroke="#2b1d12" stroke-width="11"/>
+<path d="M18 39 Q48 22 78 39" fill="none" stroke="#959ca3" stroke-width="6"/>
+<path d="M18 39 Q48 22 78 39" fill="none" stroke="#cfd9e3" stroke-width="6" transform="translate(-2.09 -0.37)"/>
+<clipPath id="c156"><rect x="43" y="27" width="10" height="62" rx="3"/></clipPath><rect x="43" y="27" width="10" height="62" rx="3" fill="#633b1b" stroke="none"/><g clip-path="url(#c156)"><rect x="43" y="27" width="10" height="62" rx="3" fill="#8a5226" stroke="none" transform="translate(-4.18 -0.74)"/></g><rect x="43" y="27" width="10" height="62" rx="3" fill="none" stroke-width="4"/>
+<path d="M48 52 L48 14" fill="none" stroke="#2b1d12" stroke-width="6"/>
+<path d="M48 52 L48 14" fill="none" stroke="#e4a764" stroke-width="2.5"/>
+<clipPath id="c157"><path d="M48 6 L54 16 L42 16 Z"/></clipPath><path d="M48 6 L54 16 L42 16 Z" fill="#959ca3" stroke="none"/><g clip-path="url(#c157)"><path d="M48 6 L54 16 L42 16 Z" fill="#cfd9e3" stroke="none" transform="translate(-4.18 -0.74)"/></g><path d="M48 6 L54 16 L42 16 Z" fill="none" stroke-width="3"/>
+<clipPath id="c158"><rect x="40" y="49" width="16" height="8" rx="2.5"/></clipPath><rect x="40" y="49" width="16" height="8" rx="2.5" fill="#67737f" stroke="none"/><g clip-path="url(#c158)"><rect x="40" y="49" width="16" height="8" rx="2.5" fill="#8fa0b0" stroke="none" transform="translate(-4.18 -0.74)"/></g><rect x="40" y="49" width="16" height="8" rx="2.5" fill="none" stroke-width="3"/>
+<path d="M53 64 Q61 68 57 75" fill="none" stroke="#2b1d12" stroke-width="3"/>
+<path d="M45 31 L45 46" fill="none" stroke="#fff" stroke-width="2.2" opacity=".85"/>
+<path d="M30 33 Q40 28 46 27" fill="none" stroke="#fff" stroke-width="2.4" opacity=".85"/>
+</g>
+<path d="M80 7 Q81.26 12.74 87 14 Q81.26 15.26 80 21 Q78.74 15.26 73 14 Q78.74 12.74 80 7 Z" fill="#fff" stroke-width="1.8"/>
+</g>
+</svg>

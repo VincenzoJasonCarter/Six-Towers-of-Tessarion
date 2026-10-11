@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+<ellipse cx="48" cy="88" rx="28" ry="4.5" fill="#000" opacity=".15"/>
+<g stroke="#2b1d12" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+<g transform="rotate(35 48 48)">
+<clipPath id="c48"><rect x="44" y="44" width="8" height="44" rx="4"/></clipPath><rect x="44" y="44" width="8" height="44" rx="4" fill="#8d5b30" stroke="none"/><g clip-path="url(#c48)"><rect x="44" y="44" width="8" height="44" rx="4" fill="#c47f42" stroke="none" transform="translate(-4.18 -0.74)"/></g><rect x="44" y="44" width="8" height="44" rx="4" fill="none" stroke-width="4"/>
+<clipPath id="c49"><rect x="42.5" y="66" width="11" height="18" rx="3"/></clipPath><rect x="42.5" y="66" width="11" height="18" rx="3" fill="#7a431e" stroke="none"/><g clip-path="url(#c49)"><rect x="42.5" y="66" width="11" height="18" rx="3" fill="#a95d2a" stroke="none" transform="translate(-4.18 -0.74)"/></g><rect x="42.5" y="66" width="11" height="18" rx="3" fill="none" stroke-width="4"/>
+<path d="M42.5 70 L53.5 73 M42.5 76 L53.5 79" fill="none" stroke="#2b1d12" stroke-width="2"/>
+<clipPath id="c50"><path d="M35 21 L23 30 L35 39 Z"/></clipPath><path d="M35 21 L23 30 L35 39 Z" fill="#67737f" stroke="none"/><g clip-path="url(#c50)"><path d="M35 21 L23 30 L35 39 Z" fill="#8fa0b0" stroke="none" transform="translate(-4.18 -0.74)"/></g><path d="M35 21 L23 30 L35 39 Z" fill="none" stroke-width="3.5"/>
+<clipPath id="c51"><path d="M61 21 L73 30 L61 39 Z"/></clipPath><path d="M61 21 L73 30 L61 39 Z" fill="#67737f" stroke="none"/><g clip-path="url(#c51)"><path d="M61 21 L73 30 L61 39 Z" fill="#8fa0b0" stroke="none" transform="translate(-4.18 -0.74)"/></g><path d="M61 21 L73 30 L61 39 Z" fill="none" stroke-width="3.5"/>
+<clipPath id="c52"><path d="M41 16 L48 4 L55 16 Z"/></clipPath><path d="M41 16 L48 4 L55 16 Z" fill="#67737f" stroke="none"/><g clip-path="url(#c52)"><path d="M41 16 L48 4 L55 16 Z" fill="#8fa0b0" stroke="none" transform="translate(-4.18 -0.74)"/></g><path d="M41 16 L48 4 L55 16 Z" fill="none" stroke-width="3.5"/>
+<clipPath id="c53"><rect x="34" y="14" width="28" height="31" rx="10"/></clipPath><rect x="34" y="14" width="28" height="31" rx="10" fill="#959ca3" stroke="none"/><g clip-path="url(#c53)"><rect x="34" y="14" width="28" height="31" rx="10" fill="#cfd9e3" stroke="none" transform="translate(-4.18 -0.74)"/></g><rect x="34" y="14" width="28" height="31" rx="10" fill="none" stroke-width="4"/>
+<path d="M40 21 L40 34" fill="none" stroke="#fff" stroke-width="3.2" opacity=".85"/>
+<clipPath id="c54"><rect x="41" y="43" width="14" height="6" rx="2.5"/></clipPath><rect x="41" y="43" width="14" height="6" rx="2.5" fill="#67737f" stroke="none"/><g clip-path="url(#c54)"><rect x="41" y="43" width="14" height="6" rx="2.5" fill="#8fa0b0" stroke="none" transform="translate(-4.18 -0.74)"/></g><rect x="41" y="43" width="14" height="6" rx="2.5" fill="none" stroke-width="4"/>
+<clipPath id="c55"><circle cx="48" cy="90" r="4.5"/></clipPath><circle cx="48" cy="90" r="4.5" fill="#ae9137" stroke="none"/><g clip-path="url(#c55)"><circle cx="48" cy="90" r="4.5" fill="#f2c94c" stroke="none" transform="translate(-4.18 -0.74)"/></g><circle cx="48" cy="90" r="4.5" fill="none" stroke-width="4"/>
+</g>
+<path d="M78 9 Q79.26 14.74 85 16 Q79.26 17.26 78 23 Q76.74 17.26 71 16 Q76.74 14.74 78 9 Z" fill="#fff" stroke-width="1.8"/>
+</g>
+</svg>

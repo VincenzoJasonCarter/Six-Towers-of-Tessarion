@@ -74,7 +74,7 @@ const LORE = bag([
   ["flat", "The Towers aren't ours. Nobody built them, officially. Authorship is, and I quote the treaty, \"undetermined\"."],
   ["flat", "In Thal'vireth they farm time. Stand too long near the Verdant Tower and you come home before you left. Or after your funeral."],
   ["smile", "Soulstone forms where the dead fall. Most of Tessarion cuts it and sells it. The elves refused. Cutting a memory, they say, kills it twice."],
-  ["smug", "The market value of almost everything is in the Library, chapter ten. The market value of my patience is not listed."],
+  ["smug", "The market value of almost everything is on a tag in the Market now. The market value of my patience is still not listed."],
   ["flat", "Skyloom governs from above. Literally above. Their tax notices arrive by falling."],
   ["flat", "The Meridian Spire sits in the middle of Crownweave, and the city grew around it like a callus. The lower schematics were withdrawn. Don't ask me why. I'm not allowed to know either."],
   ["smile", "Emberweave is the southern gate: hot roads, quick tempers, excellent bread. Two out of three is a good average."],
@@ -92,6 +92,10 @@ const HALLS = {
   library: {
     name: "The Library", app: "library",
     line: ["smile", "Every volume of the lore-book, shelved by subject, colour by colour. Pull one off the shelf and it opens for you. Please put it back."],
+  },
+  market: {
+    name: "The Market", app: "market",
+    line: ["smug", "The Guild's chartered stall. Everything at the Official Value, a tag on every item, the recipe on the back. Keep a tally and the clerks round it for you. Haggling is done elsewhere, and badly."],
   },
   barracks: {
     name: "The Barracks", app: "barracks",
@@ -153,7 +157,7 @@ const TALK = {
     replies: [["Take me there.", () => go("library")], MORE],
   },
   halls: {
-    line: ["flat", "Four halls. The Library on the left, the barracks and the Memoria behind me, the Bestiary on the right. Which one?"],
+    line: ["flat", "Five halls. The Library and the Market on the left, the barracks right behind me, the Memoria and the Bestiary on the right. Which one?"],
     replies: () => [...Object.entries(HALLS).map(([id, h]) => [h.name + "?", "hall:" + id]), MORE],
   },
   notice: {
@@ -187,6 +191,8 @@ const BACK_FROM = {
     ["smile", "Find what you were looking for? Nobody ever finds exactly what they were looking for."]],
   bestiary: [["smile", "You're back. All your limbs? Good. It makes the paperwork easier."],
     ["flat", "Anything in there look at you funny? They all do. Don't take it personally."]],
+  market: [["smug", "Back from the Market. Did you buy anything, or just add it to the tally and feel rich?"],
+    ["flat", "The Guild rounds halves up, you know. Everyone thinks they've found a way around it. Nobody has."]],
   barracks: [["smug", "Back from the barracks. Did you level up, or did you just write that you did?"],
     ["flat", "Sheet in order? Good. Hit points are not a suggestion, whatever your cleric says."]],
   memoria: [["flat", "Back from the Memoria. Did you look in the Empty Case? Don't tell me. Nobody's supposed to tell anybody."],
@@ -197,6 +203,7 @@ const IDLE = bag([
   ["flat", "(Hessa turns a page of the ledger, reads it, and turns it back.)"],
   ["frown", "Someone's left the Bestiary door open again. I can hear it from here."],
   ["flat", "Someone in the barracks is snoring. Through two walls. Impressive, really."],
+  ["flat", "(From the Market, faintly: someone disputing the price of rope.)"],
   ["flat", "...four hundred and twelve. Four hundred and thirteen."],
   ["smile", "(She straightens the bell by about a millimetre.)"],
   ["flat", "If you're waiting for someone to tell you where to go: the doors. Any of them."],

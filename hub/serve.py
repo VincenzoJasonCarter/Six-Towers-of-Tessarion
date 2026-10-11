@@ -9,7 +9,7 @@ Usage, from the repo root:
     uv run hub/serve.py              # http://127.0.0.1:8760/
     uv run hub/serve.py --port 9000 --no-browser
 
-Starts the library, bestiary and Memoria servers on their usual ports (or
+Starts the library, market, bestiary and Memoria servers on their usual ports (or
 reuses one that is already running there) and shows them side by side in one
 tabbed page, with the Barracks loaded from where charasheet is hosted (see
 app.js). Ctrl+C stops everything the hub started.
@@ -46,6 +46,7 @@ PAGE_FILES = {
 # name -> (port, script, the path its page is at).
 APPS = {
     "library": (8767, "library/serve.py", "/"),
+    "market": (8770, "market/serve.py", "/"),
     "bestiary": (8766, "bestiary/serve.py", "/"),
     "memoria": (8769, "memoria/serve.py", "/"),
 }

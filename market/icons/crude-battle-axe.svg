@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+<ellipse cx="48" cy="88" rx="28" ry="4.5" fill="#000" opacity=".15"/>
+<g stroke="#2b1d12" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+<g transform="rotate(28 48 48)">
+<clipPath id="c80"><rect x="44" y="9" width="8" height="81" rx="4"/></clipPath><rect x="44" y="9" width="8" height="81" rx="4" fill="#a47848" stroke="none"/><g clip-path="url(#c80)"><rect x="44" y="9" width="8" height="81" rx="4" fill="#e4a764" stroke="none" transform="translate(-4.06 -1.24)"/></g><rect x="44" y="9" width="8" height="81" rx="4" fill="none" stroke-width="4"/>
+<clipPath id="c81"><rect x="42.5" y="72" width="11" height="15" rx="3"/></clipPath><rect x="42.5" y="72" width="11" height="15" rx="3" fill="#a49163" stroke="none"/><g clip-path="url(#c81)"><rect x="42.5" y="72" width="11" height="15" rx="3" fill="#e4c98a" stroke="none" transform="translate(-4.06 -1.24)"/></g><rect x="42.5" y="72" width="11" height="15" rx="3" fill="none" stroke-width="4"/>
+<path d="M42.5 76 L53.5 79 M42.5 81 L53.5 84" fill="none" stroke="#2b1d12" stroke-width="2"/>
+<clipPath id="c82"><path d="M51 23 L60 23 Q78 14 84 32 L79 36 L84 41 Q78 64 60 53 L51 53 Z"/></clipPath><path d="M51 23 L60 23 Q78 14 84 32 L79 36 L84 41 Q78 64 60 53 L51 53 Z" fill="#7d756b" stroke="none"/><g clip-path="url(#c82)"><path d="M51 23 L60 23 Q78 14 84 32 L79 36 L84 41 Q78 64 60 53 L51 53 Z" fill="#aea395" stroke="none" transform="translate(-4.06 -1.24)"/></g><path d="M51 23 L60 23 Q78 14 84 32 L79 36 L84 41 Q78 64 60 53 L51 53 Z" fill="none" stroke-width="4"/>
+<circle cx="66" cy="31" r="3" fill="#c4622a" stroke="none"/><circle cx="72" cy="48" r="2.6" fill="#c4622a" stroke="none"/>
+<path d="M62 27 Q70 24 75 27" fill="none" stroke="#fff" stroke-width="3.2" opacity=".85"/>
+<clipPath id="c83"><rect x="42" y="20" width="12" height="35" rx="3"/></clipPath><rect x="42" y="20" width="12" height="35" rx="3" fill="#564f47" stroke="none"/><g clip-path="url(#c83)"><rect x="42" y="20" width="12" height="35" rx="3" fill="#776e63" stroke="none" transform="translate(-4.06 -1.24)"/></g><rect x="42" y="20" width="12" height="35" rx="3" fill="none" stroke-width="4"/>
+<path d="M42 30 L54 33 M42 42 L54 45" fill="none" stroke="#e4c98a" stroke-width="2.2"/>
+</g>
+
+</g>
+</svg>

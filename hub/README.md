@@ -3,6 +3,8 @@
 One page for the Tessarion tools:
 
 - **Library**: the lore-book bookcase (`library/`)
+- **Market**: every item at its Official Market Value, with its recipe and a
+  purchase tally (`market/`)
 - **Bestiary**: the Threadmint Bestiary (`bestiary/`)
 - **Memoria**: the museum of Tessarion's history, room by room in lit cases
   (`memoria/`)
@@ -24,9 +26,9 @@ uv run hub/serve.py
 ```
 
 The desk opens at http://127.0.0.1:8760/ on a reception hall: a desk in
-front and four corridors behind it, one per tool (the Library's bookshelves,
-the Barracks' bunks and the Memoria's marble gallery right behind the clerk,
-the Bestiary's dark stone). The lamp on each corridor's plaque shows whether
+front and five corridors behind it, one per tool (the Library's bookshelves,
+the Market's stalls under striped awnings, the Barracks' bunks right behind
+the clerk, the Memoria's marble gallery, the Bestiary's dark stone). The lamp on each corridor's plaque shows whether
 that tool is running. Click a corridor and you walk into it: the camera
 crosses reception, passes through the doorway and goes down the corridor
 (redrawn in perspective as it moves) towards the light at the far end, which
@@ -59,8 +61,8 @@ and eyes. Like the library's **Animate books**, it is remembered in the
 browser and is on unless switched off there, whatever the system's
 reduce-motion setting says.
 
-It starts the tools on their usual ports (library 8767, bestiary 8766,
-Memoria 8769). The Barracks isn't started: it is its own site.
+It starts the tools on their usual ports (library 8767, Market 8770,
+bestiary 8766, Memoria 8769). The Barracks isn't started: it is its own site.
 A tool keeps its place while you look at the other. **Open in its own tab**
 opens the current tool without the desk around it.
 
@@ -101,7 +103,7 @@ as itself, its sheets and its Drive sync are the same wherever you come from.
 
 The public website (`web/`) uses this same page as its front door, without
 serve.py: there every hall is always open, and the other tools load from
-`library/`, `bestiary/` and `memoria/` next to the page.
+`library/`, `market/`, `bestiary/` and `memoria/` next to the page.
 
 ## Layout
 

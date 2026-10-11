@@ -2,7 +2,7 @@
 # requires-python = ">=3.11"
 # dependencies = []
 # ///
-"""Build the Threadmint's public website: the hub, the library, the bestiary, the Barracks and the Memoria as one static site.
+"""Build the Threadmint's public website: the hub, the library, the Market, the bestiary, the Barracks and the Memoria as one static site.
 
 Usage, from the repo root:
 
@@ -10,7 +10,8 @@ Usage, from the repo root:
 
 dist/ is the hub's reception page at the root (index.html, style.css, app.js,
 clerk.js from hub/, with the page marked data-hosted so it needs no hub
-server, and balance-patch.md for its notice board), library/ (the output of library/build.py), bestiary/
+server, and balance-patch.md for its notice board), library/ (the output of library/build.py), market/
+(market.html as its index.html), bestiary/
 (bestiary.html as its index.html, plus bestiary/images/ if there is one) and
 barracks/ (just items.json, the output of barracks/build.py: the hub loads the
 character sheets from where charasheet is hosted) and memoria/ (memoria.html
@@ -41,6 +42,7 @@ def run(script):
 
 def main():
     run("library/build.py")
+    run("market/build.py")
     run("bestiary/build.py")
     run("barracks/build.py")
     run("memoria/build.py")
@@ -48,6 +50,8 @@ def main():
     shutil.rmtree(DIST, ignore_errors=True)
     shutil.copytree(ROOT / "barracks" / "dist", DIST / "barracks")
     shutil.copytree(ROOT / "library" / "site", DIST / "library")
+    (DIST / "market").mkdir()
+    shutil.copy(ROOT / "market" / "market.html", DIST / "market" / "index.html")
     (DIST / "bestiary").mkdir()
     shutil.copy(ROOT / "bestiary" / "bestiary.html", DIST / "bestiary" / "index.html")
     if (ROOT / "bestiary" / "images").is_dir():

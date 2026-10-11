@@ -521,7 +521,8 @@ one self-contained file (the engine, the Placeholder Boss and the screen
 bundled inline, nothing fetched), and opens it. It is not in the hub and
 `web/build.py` doesn't copy it.
 
-- **Setup:** the party in initiative order (name and subclass), how the
+- **Setup:** the party in initiative order (name and subclass; drag a row
+  by its grip or use ▲ ▼ to reorder, the order numbered), how the
   Placeholder fits the monster (Strike 1 or 2, a reaction or not, signature
   uses or Recharge 5–6, 6.2), the starting step, and the enrage (with the
   boss's max HP) and insult triggers.

@@ -1,8 +1,8 @@
 # The Threadmint on the web
 
-The hub, the library, the bestiary and the Memoria as one static site: the
-hub's reception hall at `/`, the library at `/library/`, the bestiary at
-`/bestiary/` and the Memoria at `/memoria/`. The Barracks (charasheet) isn't
+The hub, the library, the Market, the bestiary and the Memoria as one static
+site: the hub's reception hall at `/`, the library at `/library/`, the Market
+at `/market/`, the bestiary at `/bestiary/` and the Memoria at `/memoria/`. The Barracks (charasheet) isn't
 part of it: the hub loads it in a frame from https://charasheet.rayy.dev/,
 where its author hosts it. Only its item index is here, at
 `/barracks/items.json`.
@@ -15,15 +15,15 @@ From the repo root:
 make web-build                # or: uv run web/build.py
 ```
 
-That runs `library/build.py`, `bestiary/build.py`, `barracks/build.py` (the
-item index) and `memoria/build.py`, gathers their output
+That runs `library/build.py`, `market/build.py`, `bestiary/build.py`,
+`barracks/build.py` (the item index) and `memoria/build.py`, gathers their output
 into `dist/` (not committed) and copies the hub's page files to its root.
 The hub's page is marked `<body data-hosted>` there, so instead of asking
 `hub/serve.py` which tools are running it shows every hall as open and loads
 them from the folders next to it (the Barracks from its own site). Like them, it is a snapshot: rebuild after
-editing the lore-book, `enemies.yaml` or `memoria.yaml`. It also rewrites
-`bestiary/bestiary.html` and `memoria/memoria.html`, the same as
-`make bestiary-build` and `make memoria-build`.
+editing the lore-book, `items.yaml`, `enemies.yaml` or `memoria.yaml`. It also rewrites
+`market/market.html`, `bestiary/bestiary.html` and `memoria/memoria.html`, the same as
+`make market-build`, `make bestiary-build` and `make memoria-build`.
 
 To look at it before deploying:
 
@@ -40,7 +40,7 @@ defaults, since vercel.json overrides them. Every push to `main` then
 redeploys.
 
 `.vercelignore` limits the upload to what the build reads (`balance-patch.md`, `web/`,
-`hub/`, `library/`, `bestiary/`, `memoria/`, `lore-book/`, `data/`, `barracks/`). If the build starts reading
+`hub/`, `library/`, `market/`, `bestiary/`, `memoria/`, `lore-book/`, `data/`, `barracks/`). If the build starts reading
 another folder, add it there too.
 
 Library images carry a hash of their contents in their names, so vercel.json

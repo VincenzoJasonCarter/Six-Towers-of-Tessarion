@@ -48,6 +48,11 @@ button.primary { background: var(--accent); color: #1a1408; border-color: var(--
 button.quiet { background: transparent; }
 button.small { padding: 2px 8px; font-size: 0.85em; margin-left: 8px; }
 .step-choice strong { min-width: 7em; }
+.hint { margin: 0 0 4px; font-size: 0.9rem; }
+.hero-setup { border-radius: 6px; padding: 2px 4px; }
+.hero-setup.drop-target { outline: 1px dashed var(--accent); background: #26282f; }
+.grip { cursor: grab; color: var(--muted); font-size: 1.2em; padding: 0 4px; user-select: none; touch-action: none; }
+.order { color: var(--muted); min-width: 1.2em; text-align: right; font-variant-numeric: tabular-nums; }
 
 header { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; position: sticky; top: 0; background: var(--bg); padding: 8px 0; z-index: 2; }
 header .spacer { flex: 1; }

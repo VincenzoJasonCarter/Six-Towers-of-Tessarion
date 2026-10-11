@@ -16,7 +16,7 @@ Weight, if left unbound, reshapes the ground.
 
 ## **I. OF THE STRUCTURE KNOWN AS THE VERDANT TOWER**
 
-The Verdant Tower stands within the eastern forests of Thal’veren, in a region whose precise coordinates are withheld by joint accord.
+The Verdant Tower stands within the western forests of Thal’veren, in a region whose precise coordinates are withheld by joint accord.
 
 It is not accurate to say the Tower was *built*.  
  It is not accurate to say it *grew*.  

@@ -706,6 +706,7 @@ def attack(att, tgt, *, bonus, parts, kind, spell=False, level=0, magical=False,
         p = p_hit(bonus, tgt.ac() + pen_avg, adv, dis)
         credit(pen.source, "control", (p_hit(bonus, tgt.ac(), adv, dis) - p) * stake)
     roll = d20(adv, dis)
+    att.last_natural = roll   # for misfires (heroes.py, GEAR)
     total = roll + bonus - (d(1, pen.value or 4) if pen else 0)   # value: the penalty die
     crit = roll == 20
     ac = tgt.ac()

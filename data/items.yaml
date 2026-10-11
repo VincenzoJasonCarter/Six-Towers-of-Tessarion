@@ -1,14 +1,15 @@
 # Items of Tessarion: what a character can carry, craft, buy or sell.
 #
 # The source for the Barracks' item index (barracks/items.py turns it into
-# items.json, published at /barracks/items.json for charasheet to read).
+# items.json, published at /barracks/items.json for charasheet to read) and
+# for the Market (market/), which shows every entry with its price and recipe.
 # Entries come from lore-book/07-crafting-book.md (the craftable items, with
 # their recipes) and lore-book/10-official-tessarion-market-value.md (prices,
 # raw materials, utilities).
 #
 # id:           stable slug; charasheet may keep it, so don't change it once
 #               published (rename the name instead)
-# kind:         weapon | shield | armor | ammunition | material | utility
+# kind:         weapon | shield | armor | ammunition | material | utility | tool | service
 # damage:       weapons only. dice, versatile (two-handed dice), bonus (flat,
 #               added to damage), type, ability (str | dex: the modifier added
 #               to attack and damage)
@@ -16,7 +17,16 @@
 # stat, power:  the rules text from Ch.7
 # materials:    recipe as [material name, quantity] pairs (names of entries
 #               below, kind: material); tools, craft_time_hrs likewise
-# market_value: OTMV in CB from Ch.10, or null where it lists none
+# market_value: OTMV in CB from Ch.10, or null where it lists none. Where
+#               Ch.10 lists none, a value marked "derived" is worked out:
+#               - a crafted item: its materials at market price x 1.1,
+#                 rounded the Guild's way (Ch.9: halves up, at least 1 CB),
+#                 the rule that gives 11 of the 15 prices Ch.10 does list;
+#               - a raw material: the price of the nearest material Ch.10
+#                 lists, scaled by how the two compare in real-world prices;
+#               - Tier 2 armour: priced by protection, not materials (Ch.7,
+#                 Tier 2 Armor), on 5e's price ratios with the Iron Sword
+#                 standing for a longsword (1 CB ~ 4 gp).
 # hidden:       true keeps an entry out of items.json (not for players yet)
 
 - name: Crude Sword
@@ -128,7 +138,121 @@
     - [Cord Bundle, 0.5]
   tools: "Carpenter's tools or Bowyer's kit"
   craft_time_hrs: 4
-  market_value: null
+  market_value: 1  # derived: materials 1.1 CB
+
+- name: Crude Battle Axe
+  id: crude-battle-axe
+  kind: weapon
+  damage: {dice: 1d8, type: slashing, ability: str}
+  properties: [melee]
+  emoji: "🪓"
+  category: Tier 1 Weapon
+  stat: "Melee · 1d8 + STR slashing"
+  power: "Top-Heavy Head — miss by 5+ reduces speed by 10ft."
+  materials:
+    - [Impure Ingot, 2]
+    - [Wood Bundle, 0.4]
+    - [Cord Bundle, 0.2]
+  tools: "Smith's tools"
+  craft_time_hrs: 24
+  market_value: 1
+
+- name: Club
+  id: club
+  kind: weapon
+  damage: {dice: 1d4, type: bludgeoning, ability: str}
+  properties: [simple, melee, light]
+  emoji: "🔨"
+  category: Tier 1 Weapon
+  stat: "Simple Melee, Light · 1d4 + STR bludgeoning"
+  power: "Green Wood — natural 1 cracks it (−1 damage until bound up on a short rest). Utility: advantage on STR checks to break doors and crates."
+  materials:
+    - [Wood Bundle, 0.5]
+    - [Cord Bundle, 0.2]
+  tools: "Carpenter's tools"
+  craft_time_hrs: 2
+  market_value: 1
+
+- name: Crude Crossbow
+  id: crude-crossbow
+  kind: weapon
+  damage: {dice: 1d8, type: piercing, ability: dex}
+  properties: [ranged (80/320), ammunition, loading, two-handed]
+  emoji: "🏹"
+  category: Tier 1 Weapon
+  stat: "Ranged (80/320), Ammunition, Loading, 2H · 1d8 + DEX piercing"
+  power: "Slipping Latch — natural 1: an action to re-span before it fires again."
+  materials:
+    - [Wood Bundle, 1]
+    - [Impure Ingot, 0.5]
+    - [Cord Bundle, 0.5]
+  tools: "Carpenter's tools or Bowyer's kit"
+  craft_time_hrs: 24
+  market_value: 1  # derived: materials 1.25 CB
+
+- name: Bolt Bundle (10)
+  id: bolt-bundle
+  kind: ammunition
+  emoji: "🏹"
+  category: Tier 1 Weapon
+  stat: "Consumable ammunition (crossbows) · uses the crossbow's attack bonus"
+  power: "Cheap Fletching — natural 1 breaks the bolt (remove from bundle)."
+  materials:
+    - [Wood Bundle, 0.2]
+    - [Impure Ingot, 0.2]
+    - [Cord Bundle, 0.1]
+  tools: "Fletcher's tools"
+  craft_time_hrs: 4
+  market_value: 1  # derived: materials 0.28 CB (Guild minimum)
+
+- name: Matchlock Musket
+  id: matchlock-musket
+  kind: weapon
+  damage: {dice: 1d12, type: piercing, ability: dex}
+  properties: [firearm, ranged (40/120), ammunition, loading, two-handed, loud]
+  emoji: "🔫"
+  category: Tier 1 Weapon
+  stat: "Firearm, Ranged (40/120), Loading, 2H, Loud · 1d12 + DEX piercing"
+  power: "Misfire — natural 1 fouls the barrel: an action to clear. Loud: heard within 300 ft."
+  materials:
+    - [Impure Ingot, 3]
+    - [Wood Bundle, 1]
+    - [Cord Bundle, 0.5]
+  tools: "Smith's tools and Tinker's tools (basic forge)"
+  craft_time_hrs: 72
+  market_value: 6  # derived: priced by power, about twice a melee weapon of like damage (Ch.7, Matchlock Musket); materials 2.0 CB
+
+- name: Crude Handgun
+  id: crude-handgun
+  kind: weapon
+  damage: {dice: 1d10, type: piercing, ability: dex}
+  properties: [firearm, ranged (30/90), ammunition, loading, loud]
+  emoji: "🔫"
+  category: Tier 1 Weapon
+  stat: "Firearm, Ranged (30/90), Loading, Loud · 1d10 + DEX piercing"
+  power: "Misfire — natural 1 fouls the barrel: an action to clear. Loud: heard within 300 ft."
+  materials:
+    - [Impure Ingot, 1.5]
+    - [Wood Bundle, 0.3]
+    - [Cord Bundle, 0.2]
+  tools: "Smith's tools and Tinker's tools (basic forge)"
+  craft_time_hrs: 48
+  market_value: 4  # derived: priced by power, about twice a melee weapon of like damage (Ch.7, Matchlock Musket); materials 0.79 CB
+
+- name: Shot & Powder (10)
+  id: shot-and-powder
+  kind: ammunition
+  emoji: "🧨"
+  category: Tier 1 Weapon
+  stat: "Consumable ammunition (firearms) · uses the firearm's attack bonus"
+  power: "Loose Powder — if you're soaked, the bundle won't fire until dried over a short rest."
+  materials:
+    - [Impure Ingot, 0.3]
+    - [Black Powder, 1]
+    - [Fabric, 0.1]
+  tools: "Tinker's tools"
+  craft_time_hrs: 2
+  market_value: 2  # derived: materials 2.16 CB
 
 - name: Iron Sword
   id: iron-sword
@@ -164,6 +288,25 @@
   tools: "Carpenter's tools or Bowyer's kit"
   craft_time_hrs: 24
   market_value: 3
+
+- name: Composite Bow
+  id: composite-bow
+  kind: weapon
+  damage: {dice: 1d8, bonus: 1, type: piercing, ability: dex}
+  properties: [ranged (150/600), ammunition, two-handed]
+  emoji: "🏹"
+  category: Tier 2 Weapon
+  upgrade_from: Crude Bow
+  stat: "Ranged (150/600), Ammunition, 2H · 1d8 + DEX + 1 piercing"
+  power: "Heavy Draw — movement halved on a turn you fire it; no disadvantage beyond normal range."
+  materials:
+    - [Seasoned Timber, 1]
+    - [Cured Hide, 0.5]
+    - [Binding Fiber, 0.5]
+    - [Animal Oil/Resin, 1]
+  tools: "Bowyer's kit"
+  craft_time_hrs: 72
+  market_value: 4  # derived: as the Iron Battle Axe, Ch.10's weapon of the same damage (1d8 + 1); materials 1.75 CB
 
 - name: Iron Mace
   id: iron-mace
@@ -224,7 +367,6 @@
   emoji: "🪓"
   category: Tier 2 Weapon
   upgrade_from: Crude Battle Axe
-  upgrade_gap: true
   stat: "Melee · 1d8 + STR + 1 slashing"
   power: "Head Pull — miss by 5+ reduces speed by 5ft."
   materials:
@@ -267,7 +409,7 @@
     - [Cord Bundle, 0.5]
   tools: "Carpenter's tools or Bowyer's kit"
   craft_time_hrs: 6
-  market_value: null
+  market_value: 1  # derived: materials 1.1 CB
 
 - name: Iron-Shod Club
   id: iron-shod-club
@@ -276,6 +418,7 @@
   properties: [simple, melee, light]
   emoji: "🔨"
   category: Tier 2 Weapon
+  upgrade_from: Club
   stat: "Simple Melee, Light · 1d4 + STR + 1 bludgeoning"
   power: "Reinforced Head — critical hit forces DC 10 CON save or knocked prone."
   materials:
@@ -285,6 +428,108 @@
   tools: "Smith's tools or Carpenter's tools"
   craft_time_hrs: 4
   market_value: 2
+
+- name: Iron-Tipped Arrow Bundle (10)
+  id: iron-tipped-arrow-bundle
+  kind: ammunition
+  emoji: "🏹"
+  category: Tier 2 Weapon
+  upgrade_from: Arrow Bundle (10)
+  stat: "Consumable ammunition · uses bow's attack bonus"
+  power: "True Fletching — no longer breaks on a natural 1; recover half the arrows fired after combat."
+  materials:
+    - [Seasoned Timber, 0.3]
+    - [Iron Ingot, 0.1]
+    - [Binding Fiber, 0.1]
+  tools: "Fletcher's tools"
+  craft_time_hrs: 4
+  market_value: 1  # derived: materials 0.48 CB (Guild minimum)
+
+- name: Iron Crossbow
+  id: iron-crossbow
+  kind: weapon
+  damage: {dice: 1d8, bonus: 1, type: piercing, ability: dex}
+  properties: [ranged (80/320), ammunition, loading, two-handed]
+  emoji: "🏹"
+  category: Tier 2 Weapon
+  upgrade_from: Crude Crossbow
+  stat: "Ranged (80/320), Ammunition, Loading, 2H · 1d8 + DEX + 1 piercing"
+  power: "Steel Prod — natural 1 still slips the latch, but re-spanning takes a bonus action."
+  materials:
+    - [Seasoned Timber, 1]
+    - [Iron Ingot, 1]
+    - [Treated Leather Strip, 0.3]
+  tools: "Carpenter's tools or Bowyer's kit, and Smith's tools"
+  craft_time_hrs: 24
+  market_value: 3  # derived: materials 2.71 CB
+
+- name: Iron Bolt Bundle (10)
+  id: iron-bolt-bundle
+  kind: ammunition
+  emoji: "🏹"
+  category: Tier 2 Weapon
+  upgrade_from: Bolt Bundle (10)
+  stat: "Consumable ammunition (crossbows) · uses the crossbow's attack bonus"
+  power: "True Fletching — no longer breaks on a natural 1; recover half the bolts fired after combat."
+  materials:
+    - [Seasoned Timber, 0.2]
+    - [Iron Ingot, 0.2]
+    - [Binding Fiber, 0.1]
+  tools: "Fletcher's tools"
+  craft_time_hrs: 4
+  market_value: 1  # derived: materials 0.53 CB
+
+- name: Black-Powder Rifle
+  id: black-powder-rifle
+  kind: weapon
+  damage: {dice: 1d12, bonus: 1, type: piercing, ability: dex}
+  properties: [firearm, ranged (40/120), ammunition, loading, two-handed, loud]
+  emoji: "🔫"
+  category: Tier 2 Weapon
+  upgrade_from: Matchlock Musket
+  stat: "Firearm, Ranged (40/120), Loading, 2H, Loud · 1d12 + DEX + 1 piercing"
+  power: "Flintlock — a natural 1 still fouls it, but clearing takes a bonus action."
+  materials:
+    - [Iron Ingot, 3]
+    - [Seasoned Timber, 1]
+    - [Iron Rivets, 0.5]
+  tools: "Smith's tools and Tinker's tools (basic forge)"
+  craft_time_hrs: 72
+  market_value: 12  # derived: priced by power, about twice a melee weapon of like damage (Ch.7, Matchlock Musket); materials 5.75 CB
+
+- name: Heavy Handgun
+  id: heavy-handgun
+  kind: weapon
+  damage: {dice: 1d10, bonus: 1, type: piercing, ability: dex}
+  properties: [firearm, ranged (30/90), ammunition, loading, loud]
+  emoji: "🔫"
+  category: Tier 2 Weapon
+  upgrade_from: Crude Handgun
+  stat: "Firearm, Ranged (30/90), Loading, Loud · 1d10 + DEX + 1 piercing"
+  power: "Flintlock — a natural 1 still fouls it, but clearing takes a bonus action."
+  materials:
+    - [Iron Ingot, 1.5]
+    - [Seasoned Timber, 0.3]
+    - [Iron Rivets, 0.2]
+  tools: "Smith's tools and Tinker's tools (basic forge)"
+  craft_time_hrs: 48
+  market_value: 8  # derived: priced by power, about twice a melee weapon of like damage (Ch.7, Matchlock Musket); materials 2.65 CB
+
+- name: Paper Cartridges (10)
+  id: paper-cartridges
+  kind: ammunition
+  emoji: "🧨"
+  category: Tier 2 Weapon
+  upgrade_from: Shot & Powder (10)
+  stat: "Consumable ammunition (firearms) · uses the firearm's attack bonus"
+  power: "Waxed Paper — each charge sealed with its ball: cartridges stay dry whatever happens to you."
+  materials:
+    - [Iron Ingot, 0.2]
+    - [Black Powder, 1]
+    - [Fabric, 0.2]
+  tools: "Tinker's tools"
+  craft_time_hrs: 3
+  market_value: 3  # derived: materials 2.44 CB
 
 - name: Leather Tunic
   id: leather-tunic
@@ -299,7 +544,7 @@
     - [Animal Oil/Resin, 1]
   tools: "Leatherworker's tools"
   craft_time_hrs: 10
-  market_value: null
+  market_value: 3  # derived: materials 2.4 CB
 
 - name: Leather Leggings
   id: leather-leggings
@@ -313,7 +558,7 @@
     - [Binding Fiber, 1]
   tools: "Leatherworker's tools"
   craft_time_hrs: 6
-  market_value: null
+  market_value: 1  # derived: materials 1.3 CB
 
 - name: Leather Hood
   id: leather-hood
@@ -327,7 +572,7 @@
     - [Soft Lining, 1]
   tools: "Leatherworker's tools"
   craft_time_hrs: 4
-  market_value: null
+  market_value: 2  # derived: materials 1.5 CB
 
 - name: Leather Boots
   id: leather-boots
@@ -341,7 +586,73 @@
     - [Binding Fiber, 1]
   tools: "Leatherworker's tools"
   craft_time_hrs: 5
-  market_value: null
+  market_value: 1  # derived: materials 1.3 CB
+
+- name: Riveted Brigandine
+  id: riveted-brigandine
+  kind: armor
+  emoji: "🧥"
+  category: Tier 2 Armor
+  upgrade_from: Leather Tunic
+  stat: "Medium Armor (Body) · +2 AC base, +1 Dex scaling (max) · disadvantage on Stealth"
+  power: "Riveted Guard — the first critical hit you take each combat deals 2 less damage (min 1)."
+  materials:
+    - [Cured Hide, 2]
+    - [Iron Ingot, 1]
+    - [Iron Rivets, 1]
+    - [Treated Leather Strip, 0.5]
+    - [Fabric, 0.5]
+  tools: "Leatherworker's tools and Smith's tools"
+  craft_time_hrs: 24
+  market_value: 12  # derived: priced by protection (studded leather / scale mail, 45-50 gp); materials 4.7 CB
+
+- name: Riveted Leggings
+  id: riveted-leggings
+  kind: armor
+  emoji: "👖"
+  category: Tier 2 Armor
+  upgrade_from: Leather Leggings
+  stat: "Medium Armor (Legs) · +2 Dex Save OR +5ft move (as chosen for the Leggings)"
+  power: "Doubles down on the Tier 1 choice — still no AC."
+  materials:
+    - [Cured Hide, 1]
+    - [Iron Rivets, 0.5]
+    - [Binding Fiber, 1]
+  tools: "Leatherworker's tools"
+  craft_time_hrs: 8
+  market_value: 4  # derived: priced by protection, a third of the body piece; materials 1.55 CB
+
+- name: Riveted Coif
+  id: riveted-coif
+  kind: armor
+  emoji: "🪖"
+  category: Tier 2 Armor
+  upgrade_from: Leather Hood
+  stat: "Medium Armor (Head) · +2 Perception OR advantage vs ambush and +1 initiative (as chosen for the Hood)"
+  power: "Awareness, a little sharper — the only combat number on a head piece."
+  materials:
+    - [Cured Hide, 1]
+    - [Iron Rivets, 0.5]
+    - [Soft Lining, 1]
+  tools: "Leatherworker's tools"
+  craft_time_hrs: 6
+  market_value: 5  # derived: priced by protection, a third of the body piece plus the initiative; materials 1.75 CB
+
+- name: Riveted Boots
+  id: riveted-boots
+  kind: armor
+  emoji: "👢"
+  category: Tier 2 Armor
+  upgrade_from: Leather Boots
+  stat: "Medium Armor (Feet) · +5ft move and speed can't drop more than 5ft (nonmagical) OR advantage vs prone and shoves (as chosen for the Boots)"
+  power: "Answers the weapons' own speed-loss drawbacks without more raw speed."
+  materials:
+    - [Cured Hide, 1]
+    - [Iron Rivets, 0.5]
+    - [Treated Leather Strip, 0.3]
+  tools: "Leatherworker's tools"
+  craft_time_hrs: 7
+  market_value: 4  # derived: priced by protection, a third of the body piece; materials 1.46 CB
 
 # ---------- raw materials and utilities (Ch.10, and the materials Ch.7's
 # recipes call for without Ch.10 pricing them) ----------
@@ -414,19 +725,29 @@
   id: binding-fiber
   kind: material
   category: Material
-  market_value: null
+  stat: "15 m · waxed sinew thread for stitching leather"
+  market_value: 0.3  # derived: Cord Bundle x 1.6 (waxed sinew vs jute twine, per metre)
 
 - name: Animal Oil/Resin
   id: animal-oil-resin
   kind: material
   category: Material
-  market_value: null
+  stat: "250 ml pot · rendered oil and pine resin for curing and sealing leather"
+  market_value: 0.1  # derived: Cured Hide x 0.09 (250 ml of neatsfoot oil vs ~8 sq ft of veg-tan hide)
 
 - name: Soft Lining
   id: soft-lining
   kind: material
   category: Material
-  market_value: null
+  stat: "1 x 1.5 m · soft flannel-weight cloth for lining hoods and helms"
+  market_value: 0.5  # derived: Fabric x 0.66 (cotton flannel vs linen, per yard)
+
+- name: Black Powder
+  id: black-powder
+  kind: material
+  category: Tier 2 Raw Item
+  stat: "10 charges · refined at Flint-and-Steel, Cleoti; scarce outside Northreach · soaked powder won't fire until dried"
+  market_value: 2  # derived: about twice an arrow's price per shot, as Ch.3 has Gunmen dependent on scarce powder
 
 - name: Rations
   id: rations
@@ -447,4 +768,128 @@
   kind: utility
   category: Tier 1 Utility
   stat: "20 uses · handheld ignition device using a spring-loaded striker and volatile resin chamber"
+  market_value: 1
+
+- name: Crucible Tinned Rations (4 uses)
+  id: crucible-tinned-rations
+  kind: utility
+  emoji: "🥫"
+  category: Tier 2 Utility
+  upgrade_from: Rations
+  stat: "4 uses · each a day's ration · never spoils, survives water and fire"
+  power: "Same price per use as Rations — never makes resting cheaper, just certain on long voyages."
+  market_value: 2  # derived: Rations' price per use (0.5 CB) x 4; sealed in the Crucible, not craftable
+
+- name: Tarred Rope & Grapnel (15 m)
+  id: tarred-rope-grapnel
+  kind: utility
+  emoji: "🪝"
+  category: Tier 2 Utility
+  upgrade_from: Rope
+  stat: "15 m · grapnel thrown 30 ft (DC 10 Athletics) · advantage to climb · doesn't rot (AC 12, 8 HP)"
+  power: "Turns the rope from a thing you tie into a way up."
+  materials:
+    - [Cord Bundle, 2]
+    - [Animal Oil/Resin, 1]
+    - [Iron Ingot, 0.5]
+  tools: "Smith's tools (grapnel) and Weaver's tools"
+  craft_time_hrs: 6
+  market_value: 1  # derived: materials 1.25 CB
+
+- name: Storm Lighter (50 uses)
+  id: storm-lighter
+  kind: utility
+  emoji: "🔥"
+  category: Tier 2 Utility
+  upgrade_from: Compression Lighter
+  stat: "50 uses · lights in wind and rain · refill with Animal Oil/Resin x1"
+  power: "Anything it lights catches on the first try."
+  materials:
+    - [Iron Ingot, 0.3]
+    - [Animal Oil/Resin, 1]
+    - [Treated Leather Strip, 0.1]
+  tools: "Tinker's tools"
+  craft_time_hrs: 4
+  market_value: 1  # derived: materials 0.62 CB (Guild minimum)
+
+- name: Hooded Lantern
+  id: hooded-lantern
+  kind: utility
+  emoji: "🏮"
+  category: Tier 2 Utility
+  stat: "Bright 30 ft, dim 30 ft more · hood to 5 ft or shut (bonus action) · Animal Oil/Resin x1 burns 6 hours"
+  power: "Hangs from a belt or pack, leaving both hands free."
+  materials:
+    - [Iron Ingot, 1]
+    - [Iron Rivets, 0.5]
+    - [Animal Oil/Resin, 1]
+  tools: "Tinker's tools or Smith's tools"
+  craft_time_hrs: 24
+  market_value: 2  # derived: materials 1.85 CB
+
+# ---------- tools and the workshop (Ch.7, Tools & the Workshop): priced on
+# 5e's ratios like the armour (1 CB ~ 4 gp), rounded the Guild's way ----------
+
+- name: Smith's Tools
+  id: smiths-tools
+  kind: tool
+  emoji: "🔨"
+  category: Tool
+  stat: "Hammers, tongs, punches and a hardy · works every forge recipe, with Forge Hire"
+  market_value: 5  # derived: 20 gp
+
+- name: Leatherworker's Tools
+  id: leatherworkers-tools
+  kind: tool
+  emoji: "🧵"
+  category: Tool
+  stat: "Knives, awls, an edger and a stitching pony · leather and Riveted armour"
+  market_value: 1  # derived: 5 gp
+
+- name: Carpenter's Tools
+  id: carpenters-tools
+  kind: tool
+  emoji: "🪚"
+  category: Tool
+  stat: "Saw, adze, planes, chisels · staves, clubs, bows and crossbows"
+  market_value: 2  # derived: 8 gp
+
+- name: Bowyer's Kit
+  id: bowyers-kit
+  kind: tool
+  emoji: "🏹"
+  category: Tool
+  stat: "Tillering stick, rasps, a stringing board · bows and crossbows, in place of Carpenter's tools"
+  market_value: 2  # derived: as Carpenter's tools, which it stands in for
+
+- name: Fletcher's Tools
+  id: fletchers-tools
+  kind: tool
+  emoji: "🪶"
+  category: Tool
+  stat: "Fletching jig, glue pot, a small knife · arrows and bolts"
+  market_value: 1  # derived: as woodcarver's tools, 1 gp (Guild minimum)
+
+- name: Tinker's Tools
+  id: tinkers-tools
+  kind: tool
+  emoji: "⚙️"
+  category: Tool
+  stat: "Files, small hammers, a vice and a hand drill · locks, lighters, lanterns, firearms and cartridges"
+  market_value: 13  # derived: 50 gp
+
+- name: Weaver's Tools
+  id: weavers-tools
+  kind: tool
+  emoji: "🧶"
+  category: Tool
+  stat: "Shuttles, a ropewalk hook and a twisting wheel · rope and cord"
+  market_value: 1  # derived: 1 gp (Guild minimum)
+
+- name: Forge Hire (1 day)
+  id: forge-hire
+  kind: service
+  emoji: "🔥"
+  category: Service
+  stat: "A day at a chartered forge: fire, anvil and quench · for recipes marked (basic forge); bring Smith's tools"
   market_value: 1

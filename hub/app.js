@@ -1,6 +1,7 @@
 const $ = s => document.querySelector(s);
 const TOOLS = {
   library: { app: "library", name: "The Library" },
+  market: { app: "market", name: "The Market" },
   bestiary: { app: "bestiary", name: "The Bestiary" },
   // charasheet, hosted by its author rather than by us: always open, at this address.
   // It leaves: the hall is its own site, opened in this tab rather than a frame,
@@ -14,7 +15,7 @@ const STATE_TEXT = { ready: "Open", external: "Open", starting: "Lighting the la
 // switched off here, whatever the system's reduce-motion preference says.
 let motion = stored("hub.animate") !== "off";
 // On the public website (web/build.py) there is no hub server: the tools are
-// static pages next to this one, in library/, bestiary/ and memoria/, and always open.
+// static pages next to this one, in library/, market/, bestiary/ and memoria/, and always open.
 const HOSTED = "hosted" in document.body.dataset;
 
 function stored(key, value) {
@@ -262,6 +263,76 @@ const CORRIDORS = {
       const [x, y] = P(0, 1.63, z);
       ellipse(x, y, 5 * depth(z), 5 * depth(z), shade("#d9bb70", f));
     });
+    farGlow(c);
+  },
+
+  // The market: a covered arcade of stalls down both walls, each a counter
+  // of goods under a striped awning with a lantern hung from its edge,
+  // bunting strung across overhead, and the lit square at the far end.
+  market() {
+    const c = { wall: "#8a5a32", wallFar: "#130b05", floor: "#5a4632", floorFar: "#0d0905", ceil: "#2e1e10", far: "#2a1608", glow: "#ffc46b", glowA: .55, glowY: 172 };
+    shell(c);
+    polygon(end(-.34, .34, 0, 1.3), "#ffd58a");
+    polygon(end(-.38, .38, 1.3, 1.38), "#3a2414");
+    // Cobbles: runs along the floor, joints across it.
+    for (let x = -.8; x < .9; x += .4) line(P(x, 0, from1()), P(x, 0, D), "#2f2418", .8, { alpha: .5 });
+    for (let z = 1.15; z < D; z += .3) if (seen(z)) line(P(-1, 0, z), P(1, 0, z), "#2f2418", .9 * depth(z), { alpha: .45 });
+    const shade = (hex, f) => {
+      const n = parseInt(hex.slice(1), 16), k = v => Math.round(v * f).toString(16).padStart(2, "0");
+      return `#${k(n >> 16)}${k(n >> 8 & 255)}${k(n & 255)}`;
+    };
+    const awnings = ["#9b3a2a", "#3d5f86", "#4f7a45", "#b08a2e"];
+    const goods = ["#b8432e", "#d98a2b", "#d9bb70", "#6f8fb8", "#8fae5a"];
+
+    function stall(z0, i) {
+      const z1 = z0 + .6, a = fade(z0);
+      for (const s of [-1, 1]) {
+        const inner = s * .62, lo = Math.min(inner, s), hi = Math.max(inner, s);
+        const stripe = awnings[(i + (s > 0 ? 2 : 0)) % awnings.length];
+        // the counter: its end towards us, its front to the aisle, its top
+        polygon(end(lo, hi, 0, .45, z0), shade("#4a2f1a", a));
+        polygon(side(inner, z0, z1, 0, .45), shade("#6b4526", a));
+        polygon(flat(.45, s, inner, z0, z1), shade("#8a5a32", a));
+        // goods heaped along it
+        for (let k = 0; k < 4; k++) {
+          const z = z0 + .1 + k * .13;
+          if (!seen(z)) continue;
+          const d = depth(z), [x, y] = P(s * .8, .47, z);
+          ellipse(x, y, 10 * d, 5.5 * d, shade(goods[(i * 3 + k + (s > 0 ? 1 : 0)) % goods.length], a));
+        }
+        // posts up to the awning
+        for (const z of [z0, z1]) if (seen(z)) line(P(inner, .45, z), P(s * .6, 1.15, z), shade("#3a2414", a), 2.2 * depth(z));
+        // the awning, sloping down from the wall, in stripes along its length
+        for (let z = z0, k = 0; z < z1 - 1e-6; z += .1, k++) {
+          const r = along(z, Math.min(z + .1, z1));
+          if (r) polygon([P(s, 1.42, r[0]), P(s, 1.42, r[1]), P(s * .6, 1.15, r[1]), P(s * .6, 1.15, r[0])], shade(k % 2 ? "#efe3c8" : stripe, a));
+        }
+        polygon(side(s * .6, z0, z1, 1.07, 1.15), shade(stripe, a * .85));
+        // a lantern hung from the awning's edge
+        const lz = z0 + .3;
+        if (seen(lz)) {
+          const d = depth(lz), [x, y] = P(s * .6, .98, lz);
+          line(P(s * .6, 1.07, lz), P(s * .6, 1.01, lz), shade("#3a2414", a), 1.2 * d);
+          glowAt(x, y, 22 * d, 22 * d, "#ffc46b", .5, { cls: "flicker" });
+          ellipse(x, y, 3.4 * d, 4.6 * d, "#ffe2a8");
+        }
+      }
+    }
+
+    // A string of pennants across the arcade, sagging in the middle.
+    function bunting(z, i) {
+      if (!seen(z)) return;
+      const d = depth(z), f = fade(z), sag = X => 1.84 - .14 * (1 - X * X);
+      for (let X = -1; X < 1; X += .25) line(P(X, sag(X), z), P(X + .25, sag(X + .25), z), shade("#3a2414", f), 1 * d);
+      for (let k = 0; k < 9; k++) {
+        const x0 = -.92 + k * .2, x1 = x0 + .15, xm = (x0 + x1) / 2;
+        polygon([P(x0, sag(x0), z), P(x1, sag(x1), z), P(xm, sag(xm) - .13, z)], shade(awnings[(k + i) % awnings.length], f));
+      }
+    }
+
+    // Far to near, so nearer things stand in front of further ones.
+    const parts = [[3.5, 2.75, 2, 1.25].map((z, i) => [z, () => stall(z, i)]), [3.95, 3.15, 2.35, 1.55].map((z, i) => [z, () => bunting(z, i)])].flat();
+    parts.sort((p, q) => q[0] - p[0]).forEach(([, draw]) => draw());
     farGlow(c);
   },
 
@@ -627,7 +698,7 @@ async function poll() {
 // light hides that where a frozen stride would not. Walking out plays the
 // same path backwards. Every frame of a walk is drawn on a canvas; see toCanvas().
 
-const GLOW = { library: "#ffd98a", bestiary: "#57d19b", barracks: "#ff9a55", memoria: "#fff2d0" };
+const GLOW = { library: "#ffd98a", market: "#ffc46b", bestiary: "#57d19b", barracks: "#ff9a55", memoria: "#fff2d0" };
 const WALK_TO = 3.75;
 const WALK_MS = 1900;
 const REVEAL_MS = 420;  // the light fading into the tool (or back into the corridor)
@@ -675,7 +746,7 @@ function walker(view) {
   const dpr = devicePixelRatio || 1;
   let geo = measure(door);
   let doorway = null, tunnel = null;
-  // Which door, for style.css (Hessa stands in front of the Barracks' and the Memoria's).
+  // Which door, for style.css (Hessa stands in front of the Barracks').
   hall.dataset.walk = view;
 
   return {

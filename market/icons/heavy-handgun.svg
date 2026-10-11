@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+<ellipse cx="50" cy="82" rx="30" ry="4.5" fill="#000" opacity=".15"/>
+<g stroke="#2b1d12" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+<clipPath id="c191"><rect x="34" y="30.5" width="46" height="11" rx="2.5"/></clipPath><rect x="34" y="30.5" width="46" height="11" rx="2.5" fill="#959ca3" stroke="none"/><g clip-path="url(#c191)"><rect x="34" y="30.5" width="46" height="11" rx="2.5" fill="#cfd9e3" stroke="none" transform="translate(-3.00 -3.00)"/></g><rect x="34" y="30.5" width="46" height="11" rx="2.5" fill="none" stroke-width="4"/>
+<path d="M40 33.0 L74 33.0" fill="none" stroke="#fff" stroke-width="2" opacity=".85"/>
+<clipPath id="c192"><path d="M24 33 L42 33 L46 41 Q44 56 38 72 Q30 75 24 70 Q29 54 24 41 Z"/></clipPath><path d="M24 33 L42 33 L46 41 Q44 56 38 72 Q30 75 24 70 Q29 54 24 41 Z" fill="#633b1b" stroke="none"/><g clip-path="url(#c192)"><path d="M24 33 L42 33 L46 41 Q44 56 38 72 Q30 75 24 70 Q29 54 24 41 Z" fill="#8a5226" stroke="none" transform="translate(-3.00 -3.00)"/></g><path d="M24 33 L42 33 L46 41 Q44 56 38 72 Q30 75 24 70 Q29 54 24 41 Z" fill="none" stroke-width="4"/>
+<path d="M42 44 Q48 54 41 56" fill="none" stroke="#2b1d12" stroke-width="2.8"/>
+<clipPath id="c193"><circle cx="30" cy="70" r="4.5"/></clipPath><circle cx="30" cy="70" r="4.5" fill="#ae9137" stroke="none"/><g clip-path="url(#c193)"><circle cx="30" cy="70" r="4.5" fill="#f2c94c" stroke="none" transform="translate(-3.00 -3.00)"/></g><circle cx="30" cy="70" r="4.5" fill="none" stroke-width="2.5"/>
+<clipPath id="c194"><path d="M36 30 L32 22 L37 20 L41 29 Z"/></clipPath><path d="M36 30 L32 22 L37 20 L41 29 Z" fill="#67737f" stroke="none"/><g clip-path="url(#c194)"><path d="M36 30 L32 22 L37 20 L41 29 Z" fill="#8fa0b0" stroke="none" transform="translate(-3.00 -3.00)"/></g><path d="M36 30 L32 22 L37 20 L41 29 Z" fill="none" stroke-width="2.5"/>
+<path d="M56 31 L56 41" fill="none" stroke="#f2c94c" stroke-width="2.8"/>
+<path d="M28 42 Q30 52 28 60" fill="none" stroke="#fff" stroke-width="2.4" opacity=".85"/>
+<path d="M82 11 Q83.26 16.74 89 18 Q83.26 19.26 82 25 Q80.74 19.26 75 18 Q80.74 16.74 82 11 Z" fill="#fff" stroke-width="1.8"/>
+</g>
+</svg>

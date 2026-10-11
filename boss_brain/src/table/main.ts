@@ -81,6 +81,18 @@ function act(change: () => void): void {
 
 // --- setup ---
 
+/** The setup row being dragged by its grip, if any. */
+let dragging: number | null = null;
+
+/** Moves a hero to another place in the initiative order. */
+function moveHero(from: number, to: number): void {
+  if (from === to || to < 0 || to >= draft.heroes.length) return;
+  const heroes = [...draft.heroes];
+  const [hero] = heroes.splice(from, 1);
+  heroes.splice(to, 0, hero!);
+  draft = { ...draft, heroes };
+}
+
 function setupScreen(): HTMLElement {
   const subclassOptions = (selected: SubclassId) =>
     (Object.keys(SUBCLASSES) as SubclassId[]).map((id) => h("option", { value: id, selected: id === selected }, SUBCLASSES[id].name));
@@ -96,10 +108,45 @@ function setupScreen(): HTMLElement {
       "section",
       {},
       h("h2", {}, "Party, in initiative order"),
+      h("p", { class: "muted hint" }, "Drag a hero by ⠿, or use ▲ ▼, to change the order."),
       ...draft.heroes.map((hero, i) =>
         h(
           "div",
-          { class: "row" },
+          {
+            class: "row hero-setup",
+            ondragover: (e: DragEvent) => {
+              if (dragging === null) return;
+              e.preventDefault();
+              (e.currentTarget as HTMLElement).classList.add("drop-target");
+            },
+            ondragleave: (e: DragEvent) => (e.currentTarget as HTMLElement).classList.remove("drop-target"),
+            ondrop: (e: DragEvent) => {
+              e.preventDefault();
+              const from = dragging;
+              dragging = null;
+              if (from !== null) act(() => moveHero(from, i));
+            },
+          },
+          h(
+            "span",
+            {
+              class: "grip",
+              draggable: "true",
+              title: "Drag to reorder",
+              ondragstart: (e: DragEvent) => {
+                dragging = i;
+                e.dataTransfer?.setData("text/plain", String(i));
+                const row = (e.target as HTMLElement).parentElement;
+                if (row) e.dataTransfer?.setDragImage(row, 16, 16);
+              },
+              ondragend: () => {
+                dragging = null;
+                for (const el of document.querySelectorAll(".drop-target")) el.classList.remove("drop-target");
+              },
+            },
+            "⠿",
+          ),
+          h("span", { class: "order" }, String(i + 1)),
           h("input", {
             placeholder: `Hero ${i + 1}`,
             value: hero.name,
@@ -118,6 +165,8 @@ function setupScreen(): HTMLElement {
             },
             ...subclassOptions(hero.subclass),
           ),
+          h("button", { class: "quiet", title: "Move up", disabled: i === 0, onclick: () => act(() => moveHero(i, i - 1)) }, "▲"),
+          h("button", { class: "quiet", title: "Move down", disabled: i === draft.heroes.length - 1, onclick: () => act(() => moveHero(i, i + 1)) }, "▼"),
           h("button", { class: "quiet", title: "Remove", onclick: () => act(() => (draft = { ...draft, heroes: draft.heroes.filter((_, j) => j !== i) })) }, "✕"),
         ),
       ),

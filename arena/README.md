@@ -232,6 +232,21 @@ increases into the main stat and then Constitution.
 | Armour | *Mage armor*, cast before the day (costs a 1st-level slot) | Chain mail and shield (plate from 5th), Defense style | Studded leather, Archery style |
 | Weapon | Spells | Longsword | Longbow (Archer), musket 1d12, 40/120 ft (Gunman) |
 
+With `--gear` (`uv run arena/party.py --gear --only gunman`, then `--only
+archer`), the two Range subclasses carry Tessarion's own weapons from
+`data/items.yaml` instead: Tier 1 at 3rd level, Tier 2 from 5th. The Gunman
+has the Matchlock Musket and Crude Handgun, then the Black-Powder Rifle and
+Heavy Handgun; a natural 1 fouls the gun (Misfire), and clearing it costs an
+action at Tier 1 or a bonus action at Tier 2. With the long gun fouled the
+bot fires its handgun, and spends an action clearing only once both are
+fouled. The Crystal Archer has the Crude Crossbow (a natural 1 slips the
+latch: an action to re-span), then the Composite Bow (1d8 + 1, no
+disadvantage at long range, Heavy Draw: half speed on a turn it fires).
+Marksman's Focus counts for any bow or crossbow. A Tier 2 item's own +1 is
+damage only, on top of the magic weapon below. The run keeps the plain run's
+encounter tuning and dice seeds and writes `party_gear_*` files, so it
+compares straight against `party_report.md`.
+
 Everyone carries a +1 weapon or spellcasting focus from 5th level and +2 from
 15th. Magic weapons get through Bulwark's Anchored Stance; the monsters'
 natural weapons don't.

@@ -36,7 +36,8 @@ def describe(item):
 def build_index():
     weapons, equipment = [], []
     for item in yaml.safe_load(SOURCE.read_text(encoding="utf-8")):
-        if item.get("hidden"):
+        # A service (Forge Hire) is bought but never carried, so it has no place on a sheet.
+        if item.get("hidden") or item["kind"] == "service":
             continue
         entry = {
             "id": item["id"],

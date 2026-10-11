@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96">
+<ellipse cx="48" cy="88" rx="28" ry="4.5" fill="#000" opacity=".15"/>
+<g stroke="#2b1d12" stroke-width="4" stroke-linejoin="round" stroke-linecap="round">
+<g transform="rotate(45 48 48) translate(48 48) scale(0.95) translate(-48 -48)">
+<clipPath id="c179"><rect x="44.5" y="4" width="7" height="58" rx="2"/></clipPath><rect x="44.5" y="4" width="7" height="58" rx="2" fill="#7d756b" stroke="none"/><g clip-path="url(#c179)"><rect x="44.5" y="4" width="7" height="58" rx="2" fill="#aea395" stroke="none" transform="translate(-4.24 0.00)"/></g><rect x="44.5" y="4" width="7" height="58" rx="2" fill="none" stroke-width="4"/>
+<path d="M46.5 9 L46.5 54" fill="none" stroke="#fff" stroke-width="2" opacity=".85"/>
+<clipPath id="c180"><path d="M43 52 L53 52 L55 68 Q62 84 58 92 L40 92 Q37 82 42 68 Z"/></clipPath><path d="M43 52 L53 52 L55 68 Q62 84 58 92 L40 92 Q37 82 42 68 Z" fill="#a47848" stroke="none"/><g clip-path="url(#c180)"><path d="M43 52 L53 52 L55 68 Q62 84 58 92 L40 92 Q37 82 42 68 Z" fill="#e4a764" stroke="none" transform="translate(-4.24 0.00)"/></g><path d="M43 52 L53 52 L55 68 Q62 84 58 92 L40 92 Q37 82 42 68 Z" fill="none" stroke-width="4"/>
+<clipPath id="c181"><rect x="42" y="55" width="12" height="9" rx="2"/></clipPath><rect x="42" y="55" width="12" height="9" rx="2" fill="#564f47" stroke="none"/><g clip-path="url(#c181)"><rect x="42" y="55" width="12" height="9" rx="2" fill="#776e63" stroke="none" transform="translate(-4.24 0.00)"/></g><rect x="42" y="55" width="12" height="9" rx="2" fill="none" stroke-width="3"/>
+<clipPath id="c182"><rect x="39.5" y="88" width="19" height="5" rx="2"/></clipPath><rect x="39.5" y="88" width="19" height="5" rx="2" fill="#564f47" stroke="none"/><g clip-path="url(#c182)"><rect x="39.5" y="88" width="19" height="5" rx="2" fill="#776e63" stroke="none" transform="translate(-4.24 0.00)"/></g><rect x="39.5" y="88" width="19" height="5" rx="2" fill="none" stroke-width="2.5"/>
+<path d="M44 22 L52 23 M44 40 L52 41" fill="none" stroke="#e4c98a" stroke-width="2.6"/>
+<path d="M54 58 Q64 50 60 44" fill="none" stroke="#2b1d12" stroke-width="4"/>
+<path d="M54 58 Q64 50 60 44" fill="none" stroke="#e4c98a" stroke-width="2"/>
+<circle cx="60" cy="43" r="2.6" fill="#ff8a2a" stroke="none"/><circle cx="60" cy="43" r="5" fill="#ff8a2a" opacity=".35" stroke="none"/>
+<path d="M49 66 Q55 70 52 75" fill="none" stroke="#2b1d12" stroke-width="2.6"/>
+</g>
+
+</g>
+</svg>

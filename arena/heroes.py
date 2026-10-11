@@ -6,6 +6,8 @@ patched=False rebuilds the rules as they stood before Patch 1
 ignore the flag. Everything works one-on-one and in a party; features that
 help allies only do something when there are allies.
 """
+import os
+
 from engine import (TACTICS, Conc, Creature, Zone, attack, attack_adv, avg, cage_over, d, d20, deal, mod,
                     move, move_to, p_fail, p_hit, push, roll_damage, room_behind, saving_throw)
 
@@ -60,6 +62,36 @@ LOADOUT = {
                4: ("red", "red", "snare", "snare"),
                5: ("snare", "snare", "snare", "red", "red")},
 }
+
+
+# Tessarion gear (data/items.yaml, lore-book Ch.7) for the two Range subclasses
+# in place of the 5e weapons the arena was built with: Tier 1 below 5th level,
+# Tier 2 from 5th. Set by party.py --gear (ARENA_GEAR=1, so worker processes
+# see it too). Everyone keeps the arena's +1/+2 magic weapon on top; a Tier 2
+# item's own +1 is damage only.
+#   - Gunman: Matchlock Musket and Crude Handgun, then Black-Powder Rifle and
+#     Heavy Handgun. A natural 1 fouls the barrel (Misfire): clearing a Tier 1
+#     gun takes an action, a Tier 2 gun a bonus action. With the musket fouled
+#     the bot fires its handgun rather than spend a turn clearing, and clears
+#     only once both are fouled.
+#   - Crystal Archer: Crude Crossbow (a natural 1 slips the latch: an action to
+#     re-span), then Composite Bow (Heavy Draw: speed halved on a turn it
+#     fires; no disadvantage at long range).
+GEAR = os.environ.get("ARENA_GEAR") == "1"
+GEAR_WEAPONS = {
+    "matchlock musket": dict(n=1, die=12, normal=40, long=120, misfire="action"),
+    "crude handgun": dict(n=1, die=10, normal=30, long=90, misfire="action"),
+    "black-powder rifle": dict(n=1, die=12, normal=40, long=120, bonus=1, misfire="bonus"),
+    "heavy handgun": dict(n=1, die=10, normal=30, long=90, bonus=1, misfire="bonus"),
+    "crude crossbow": dict(n=1, die=8, normal=80, long=320, misfire="action"),
+    "composite bow": dict(n=1, die=8, normal=150, long=600, bonus=1, heavy_draw=True, no_long_dis=True),
+}
+# Marksman's Focus and Crystal Sight: a bow or a crossbow.
+BOWS = {"longbow", "crude crossbow", "composite bow"}
+
+
+def gear(name):
+    return dict(GEAR_WEAPONS[name], name=name, dtype="piercing", kind="ranged")
 
 
 def loadout(key, pb):
@@ -1031,13 +1063,15 @@ class Fighter(Hero):
         self.atk_bonus = self.mod(primary) + self.pb + self.item + (2 if self.ranged else 0)
         self.dmg_bonus = self.mod(primary) + self.item
         self.action = True
+        self.fouled = set()   # names of weapons a misfire has put out of action (GEAR)
 
     def armor(self, level, sc):
         raise NotImplementedError
 
     def est_dpr(self, target):
         w = self.weapon
-        return self.attacks * p_hit(self.atk_bonus, target.ac()) * (w["n"] * (w["die"] + 1) / 2 + self.dmg_bonus)
+        return self.attacks * p_hit(self.atk_bonus, target.ac()) * (
+            w["n"] * (w["die"] + 1) / 2 + self.dmg_bonus + w.get("bonus", 0))
 
     def reach_of_attacks(self):
         return self.weapon["normal"] if self.ranged else self.reach
@@ -1045,12 +1079,16 @@ class Fighter(Hero):
     def weapon_attack(self, tgt, *, ctx=None, extra=(), weapon=None):
         w = weapon or self.weapon
         dis = w["kind"] == "ranged" and self.dist_to(tgt) > w["normal"] and not self.ignores_long_range()
-        parts = [(w["n"], w["die"], self.dmg_bonus, w["dtype"])] + list(extra)
-        return attack(self, tgt, bonus=self.atk_bonus, parts=parts, kind=w["kind"],
-                      magical=self.item > 0, weapon=w["name"], dis=dis, ctx=ctx)
+        parts = [(w["n"], w["die"], self.dmg_bonus + w.get("bonus", 0), w["dtype"])] + list(extra)
+        self.last_natural = 0
+        out = attack(self, tgt, bonus=self.atk_bonus, parts=parts, kind=w["kind"],
+                     magical=self.item > 0, weapon=w["name"], dis=dis, ctx=ctx)
+        if w.get("misfire") and self.last_natural == 1:
+            self.fouled.add(w["name"])
+        return out
 
     def ignores_long_range(self):
-        return False
+        return bool(self.weapon.get("no_long_dis"))
 
     def can_attack(self):
         if self.foe is None or self.foe.dead:
@@ -1390,7 +1428,11 @@ class CrystalArcher(Range):
 
     def __init__(self, level, patched=True):
         self.weapon = dict(name="longbow", n=1, die=8, dtype="piercing", kind="ranged", normal=150, long=600)
+        if GEAR:
+            self.weapon = gear("crude crossbow" if level < 5 else "composite bow")
+            self.max_range = min(self.max_range, self.weapon["normal"])
         super().__init__(level, patched)
+        self.drawing = False
         self.arrows = self.pb
         self.quiver = loadout("archer", self.pb) if (COMPETENT and patched) else None
         self.sights = self.pb if (level >= 7 and patched) else 0
@@ -1400,7 +1442,18 @@ class CrystalArcher(Range):
         self.rain_ready = level >= 15
 
     def ignores_long_range(self):
-        return self.level >= 10
+        return self.level >= 10 or super().ignores_long_range()
+
+    def speed_now(self):
+        # Heavy Draw (Composite Bow): half speed on a turn it fires.
+        sp = super().speed_now()
+        return sp // 10 * 5 if self.drawing else sp
+
+    def take_turn(self):
+        self.drawing = bool(self.weapon.get("heavy_draw")) and any(
+            self.dist_to(e) <= self.weapon["long"] for e in self.enemies())
+        super().take_turn()
+        self.drawing = False
 
     def pre_bonus(self):
         if self.sights and not self.has("crystal_sight"):
@@ -1463,7 +1516,7 @@ class CrystalArcher(Range):
 
     def hit_extra(self, tgt, ctx):
         out = []
-        if ctx.get("weapon") == "longbow":
+        if ctx.get("weapon") in BOWS:
             if self.patched or self.moved <= 10:
                 out.append((0, 0, self.focus(), "piercing"))          # Marksman's Focus
             if self.has("crystal_sight") and self.sight_turn != self.turns and self.my_turn():
@@ -1505,6 +1558,9 @@ class CrystalArcher(Range):
             tgt.add("white_dust", self, until=("start", self))
 
     def main_action(self):
+        if self.weapon["name"] in self.fouled:
+            self.fouled.discard(self.weapon["name"])   # Slipping Latch: the action goes on re-spanning
+            return
         if self.rain_ready:
             dc = 8 + self.pb + self.mod("dex")
             dice = (6, 3) if self.patched else (4, 2)
@@ -1549,6 +1605,12 @@ class Gunman(Range):
 
     def __init__(self, level, patched=True):
         self.weapon = dict(self.MUSKET)
+        self.backup = dict(self.PISTOL)
+        if GEAR:
+            tier2 = level >= 5
+            self.weapon = gear("black-powder rifle" if tier2 else "matchlock musket")
+            self.backup = gear("heavy handgun" if tier2 else "crude handgun")
+        self.main = self.weapon
         super().__init__(level, patched)
         self.shots = self.pb
         self.quiver = loadout("gunman", self.pb) if (COMPETENT and patched) else None
@@ -1597,7 +1659,39 @@ class Gunman(Range):
             ev = {k: v for k, v in ev.items() if self.quiver.get(k)}
         return max(ev, key=ev.get) if ev else None
 
+    def clear(self, w, how):
+        """Spend a bonus action or an action clearing a fouled barrel."""
+        if how == "bonus":
+            self.bonus_used = True
+        self.fouled.discard(w["name"])
+
+    def pre_bonus(self):
+        # A Tier 2 lock fouled last turn: clear it with the bonus action first.
+        m = self.main
+        if m["name"] in self.fouled and m.get("misfire") == "bonus" and not self.bonus_used:
+            self.clear(m, "bonus")
+
+    def ready_gun(self, i):
+        """Pick the gun for this shot, clearing a fouled one if it's cheap.
+        False: no shot this time (both fouled, and the action went on clearing)."""
+        for w in (self.main, self.backup):
+            if w["name"] not in self.fouled:
+                break
+            if w.get("misfire") == "bonus" and not self.bonus_used:
+                self.clear(w, "bonus")
+                break
+        else:
+            if i == 0:
+                self.clear(self.main, "action")
+            return False
+        if self.weapon is not w:
+            self.weapon = w
+            self.max_range = w["normal"]
+        return True
+
     def one_attack(self, i):
+        if (self.main["name"] in self.fouled or self.weapon is not self.main) and not self.ready_gun(i):
+            return
         shot = self.pick_shot(i)
         if shot:
             self.shots -= 1
@@ -1658,7 +1752,7 @@ class Gunman(Range):
                 hit, _ = self.weapon_attack(self.foe, ctx={"barrage": True, "firearm": True, "powder": True})
                 if hit and self.foe not in struck:
                     struck.append(self.foe)
-            self.weapon = dict(self.PISTOL)   # the musket is spent; the backup pistol comes out
+            self.weapon = self.main = self.backup   # the musket is spent; the backup pistol comes out
             self.max_range = 30
             for t in struck:
                 if not t.dead and not saving_throw(t, "wis", dc, self, {"control": True}):

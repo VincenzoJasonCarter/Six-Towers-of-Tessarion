@@ -18,7 +18,8 @@ Barracks" in `hub/README.md`.
 `/barracks/items.json` on the public site lists the items of Tessarion for
 charasheet to offer in its Weapons and Equipment panels. It's made from
 `data/items.yaml`: edit that, not the JSON. Entries marked `hidden: true`
-stay out.
+stay out, and so do services (`kind: service`, such as Forge Hire), which
+are bought but never carried. The Market (`market/`) is made from the same file.
 
 ```
 make barracks-build    # or: uv run barracks/build.py  -> barracks/dist/items.json

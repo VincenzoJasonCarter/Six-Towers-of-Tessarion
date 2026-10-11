@@ -29,6 +29,16 @@ library: ## Serve the lore library live at http://127.0.0.1:8767/ (reloads on ch
 library-build: ## Export a static site to library/site/ (ARGS="--single-file" for one library.html)
 	uv run library/build.py $(ARGS)
 
+# --- market (the Threadmint Market: every item at its price, with its recipe, from data/items.yaml) ---
+
+.PHONY: market
+market: ## Serve the Market live at http://127.0.0.1:8770/ (reloads on items.yaml edits)
+	uv run market/serve.py $(ARGS)
+
+.PHONY: market-build
+market-build: ## Export a static snapshot to market/market.html
+	uv run market/build.py
+
 # --- barracks (the character sheets are charasheet, hosted elsewhere; this is its item index) ---
 
 .PHONY: barracks-build
@@ -44,6 +54,16 @@ memoria: ## Serve the Memoria live at http://127.0.0.1:8769/ (reloads on memoria
 .PHONY: memoria-build
 memoria-build: ## Export a static snapshot to memoria/memoria.html
 	uv run memoria/build.py
+
+# --- oneshots (the DM's one-shot modules from oneshots/modules/*.md; DM-only, not on the hub or the public site) ---
+
+.PHONY: oneshots
+oneshots: ## Serve the one-shot modules live at http://127.0.0.1:8768/ (DM-only; reloads on module edits)
+	uv run oneshots/serve.py $(ARGS)
+
+.PHONY: oneshots-build
+oneshots-build: ## Export each one-shot module to oneshots/dist/<name>.html (DM-only, git-ignored)
+	uv run oneshots/build.py
 
 # --- arena (Monte Carlo power rankings for the subclasses) ---
 
@@ -73,16 +93,16 @@ boss-table: ## Build the DM's table tool (one offline HTML file, DM-only, not on
 boss-brain-harness: ## Score the boss brain against synthetic players → boss_brain/reports/ (ARGS="--trials 200" for a quick run)
 	cd boss_brain && node src/harness/cli.ts $(ARGS)
 
-# --- web (the hub, library, bestiary, barracks and memoria as one static site, for Vercel or any static host) ---
+# --- web (the hub, library, market, bestiary, barracks and memoria as one static site, for Vercel or any static host) ---
 
 .PHONY: web-build
-web-build: ## Build the public site (hub + library + bestiary + barracks + memoria) to dist/
+web-build: ## Build the public site (hub + library + market + bestiary + barracks + memoria) to dist/
 	uv run web/build.py
 
 # --- hub (one page for all of them) ---
 
 .PHONY: hub
-hub: ## Open everything in one place at http://127.0.0.1:8760/ (starts the library, bestiary and memoria)
+hub: ## Open everything in one place at http://127.0.0.1:8760/ (starts the library, market, bestiary and memoria)
 	uv run hub/serve.py $(ARGS)
 
 # --- misc ---
