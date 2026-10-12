@@ -23,17 +23,17 @@ Impact share by level (25% is even), its parts averaged over levels, and the win
 
 | Subclass | L3 | L7 | L10 | L15 | Impact | Damage | Protection | Control | Enable | Tanking | Win value | Impact rank | Win rank | Solo rank |
 |---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| Sanguine Mage | 29% | 32% | 32% | 32% | **31%** | 21% | 0% | 9% | 1% | 0% | +17 | 1 | 1 | 2 |
-| Verdant Mage | 23% | 25% | 32% | 34% | **28%** | 20% | 0% | 6% | 1% | 1% | +1 | 2 | 4 | 9 |
-| Stonewarden Mage | 26% | 31% | 30% | 24% | **28%** | 20% | 2% | 4% | 1% | 1% | +6 | 3 | 2 | 6 |
-| Hellbound Mage | 25% | 29% | 27% | 29% | **28%** | 22% | 0% | 5% | 1% | 1% | +1 | 4 | 3 | 3 |
-| Warbound Mage | 26% | 27% | 27% | 29% | **27%** | 22% | 0% | 4% | 1% | 1% | +0 | 5 | 5 | 7 |
-| Aether Mage | 22% | 26% | 25% | 29% | **25%** | 19% | 0% | 4% | 1% | 0% | -1 | 6 | 6 | 8 |
-| Bulwark Aegis | 31% | 24% | 22% | 17% | **24%** | 11% | 3% | 0% | 0% | 10% | -3 | 7 | 8 | 4 |
-| Crystal Archer | 25% | 23% | 22% | 22% | **23%** | 22% | 1% | 0% | 0% | 0% | -9 | 8 | 11 | 5 |
-| Warden Aegis | 24% | 20% | 22% | 20% | **21%** | 10% | 2% | 7% | 0% | 3% | -5 | 9 | 9 | 10 |
-| Sanguine Aegis | 25% | 21% | 19% | 20% | **21%** | 16% | 0% | 4% | 0% | 1% | -2 | 10 | 7 | 1 |
-| Gunman | 20% | 17% | 17% | 18% | **18%** | 13% | 0% | 4% | 0% | 0% | -5 | 11 | 10 | 11 |
+| Sanguine Mage | 26% | 30% | 30% | 31% | **29%** | 22% | 0% | 6% | 1% | 0% | +8 | 1 | 1 | 2 |
+| Verdant Mage | 23% | 24% | 31% | 34% | **28%** | 19% | 0% | 7% | 1% | 1% | +1 | 2 | 4 | 9 |
+| Stonewarden Mage | 26% | 30% | 30% | 24% | **27%** | 20% | 2% | 4% | 1% | 1% | +6 | 3 | 2 | 6 |
+| Hellbound Mage | 25% | 29% | 27% | 28% | **27%** | 21% | 0% | 5% | 1% | 1% | +1 | 4 | 3 | 3 |
+| Warbound Mage | 25% | 27% | 26% | 28% | **27%** | 21% | 0% | 4% | 1% | 1% | -0 | 5 | 6 | 7 |
+| Crystal Archer | 25% | 26% | 26% | 25% | **25%** | 25% | 1% | 0% | 0% | 0% | -4 | 6 | 11 | 5 |
+| Aether Mage | 22% | 26% | 24% | 28% | **25%** | 19% | 0% | 4% | 1% | 0% | -1 | 7 | 7 | 8 |
+| Bulwark Aegis | 31% | 24% | 22% | 17% | **24%** | 11% | 3% | 0% | 0% | 10% | -3 | 8 | 8 | 4 |
+| Gunman | 24% | 20% | 21% | 22% | **22%** | 17% | 0% | 4% | 0% | 0% | +0 | 9 | 5 | 11 |
+| Warden Aegis | 23% | 20% | 21% | 19% | **21%** | 10% | 2% | 7% | 0% | 2% | -4 | 10 | 10 | 10 |
+| Sanguine Aegis | 24% | 20% | 18% | 20% | **20%** | 15% | 0% | 4% | 0% | 1% | -4 | 11 | 9 | 1 |
 
 The parts add up to Impact. Win rank orders the subclasses by win value, and solo rank by the one-on-one gauntlet (report.md) across both chassis. A subclass ranked far higher by Impact than by win value does a lot that its party didn't need to win, or that came too late to change the result; the reverse means its contribution is worth more than its hit points suggest (or isn't credited here: see README.md).
 
@@ -41,17 +41,17 @@ Impact share by encounter, averaged over levels:
 
 | Subclass | Warband | Ambush | Mixed | Boss |
 |---|---:|---:|---:|---:|
-| Sanguine Mage | 33% | 24% | 29% | 40% |
-| Verdant Mage | 33% | 27% | 27% | 26% |
-| Stonewarden Mage | 29% | 25% | 29% | 28% |
-| Hellbound Mage | 29% | 23% | 29% | 30% |
-| Warbound Mage | 30% | 23% | 29% | 27% |
-| Aether Mage | 28% | 21% | 27% | 25% |
-| Bulwark Aegis | 25% | 21% | 20% | 28% |
-| Crystal Archer | 18% | 25% | 26% | 23% |
-| Warden Aegis | 20% | 30% | 18% | 18% |
-| Sanguine Aegis | 18% | 31% | 21% | 15% |
-| Gunman | 14% | 24% | 20% | 15% |
+| Sanguine Mage | 31% | 23% | 28% | 34% |
+| Verdant Mage | 32% | 27% | 27% | 26% |
+| Stonewarden Mage | 29% | 24% | 29% | 28% |
+| Hellbound Mage | 28% | 22% | 28% | 29% |
+| Warbound Mage | 29% | 22% | 28% | 27% |
+| Crystal Archer | 20% | 27% | 28% | 26% |
+| Aether Mage | 27% | 20% | 26% | 26% |
+| Bulwark Aegis | 25% | 21% | 20% | 29% |
+| Gunman | 17% | 27% | 23% | 18% |
+| Warden Aegis | 19% | 30% | 17% | 17% |
+| Sanguine Aegis | 17% | 30% | 21% | 13% |
 
 ## Advanced stats
 
@@ -64,33 +64,33 @@ Not part of Impact; averaged over levels.
 
 | Subclass | Aggro | Mitigated | Taken | Uptime | Survives | Kills | Overkill |
 |---|---:|---:|---:|---:|---:|---:|---:|
-| Sanguine Mage | 21% | 28% | 22% | 72% | 50% | 29% | 5% |
-| Verdant Mage | 19% | 26% | 21% | 71% | 39% | 26% | 5% |
-| Stonewarden Mage | 19% | 32% | 21% | 74% | 44% | 28% | 5% |
-| Hellbound Mage | 21% | 28% | 21% | 68% | 38% | 27% | 4% |
-| Warbound Mage | 22% | 29% | 22% | 67% | 37% | 26% | 5% |
-| Aether Mage | 21% | 27% | 21% | 70% | 37% | 25% | 4% |
-| Bulwark Aegis | 43% | 41% | 30% | 85% | 45% | 16% | 3% |
-| Crystal Archer | 18% | 0% | 25% | 82% | 39% | 39% | 6% |
-| Warden Aegis | 32% | 7% | 30% | 79% | 41% | 14% | 3% |
-| Sanguine Aegis | 39% | 6% | 36% | 75% | 40% | 23% | 4% |
-| Gunman | 20% | 0% | 27% | 75% | 36% | 19% | 4% |
+| Sanguine Mage | 23% | 27% | 23% | 70% | 42% | 29% | 5% |
+| Verdant Mage | 19% | 25% | 21% | 70% | 37% | 25% | 5% |
+| Stonewarden Mage | 19% | 31% | 21% | 73% | 42% | 26% | 5% |
+| Hellbound Mage | 21% | 27% | 21% | 67% | 36% | 26% | 4% |
+| Warbound Mage | 22% | 28% | 21% | 66% | 35% | 25% | 5% |
+| Crystal Archer | 17% | 0% | 24% | 82% | 41% | 43% | 7% |
+| Aether Mage | 21% | 26% | 22% | 69% | 35% | 24% | 4% |
+| Bulwark Aegis | 44% | 41% | 30% | 84% | 42% | 15% | 3% |
+| Gunman | 20% | 0% | 27% | 75% | 39% | 25% | 5% |
+| Warden Aegis | 32% | 6% | 30% | 78% | 39% | 13% | 3% |
+| Sanguine Aegis | 38% | 6% | 35% | 73% | 37% | 22% | 4% |
 
 ## Level 3
 
 | # | Subclass | Impact | HP/fight | Damage | Protection | Control | Enable | Tanking | Win with | Win value | Survives | Taken |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | Bulwark Aegis | **31%** | 71 | 19% | 2% | 0% | 0% | 10% | 57% | +10 | 47% | 31% |
-| 2 | Sanguine Mage | **29%** | 64 | 21% | 0% | 7% | 1% | 0% | 59% | +14 | 45% | 20% |
-| 3 | Stonewarden Mage | **26%** | 51 | 22% | 0% | 2% | 1% | 1% | 49% | -2 | 36% | 20% |
-| 4 | Warbound Mage | **26%** | 51 | 22% | 0% | 2% | 1% | 1% | 52% | +3 | 37% | 23% |
-| 5 | Hellbound Mage | **25%** | 48 | 22% | 0% | 1% | 1% | 1% | 49% | -2 | 33% | 20% |
-| 6 | Crystal Archer | **25%** | 48 | 24% | 1% | 0% | 0% | 0% | 52% | +2 | 38% | 24% |
-| 7 | Sanguine Aegis | **25%** | 43 | 21% | 0% | 2% | 0% | 1% | 55% | +7 | 41% | 40% |
-| 8 | Warden Aegis | **24%** | 45 | 17% | 0% | 4% | 0% | 3% | 46% | -8 | 34% | 28% |
-| 9 | Verdant Mage | **23%** | 46 | 18% | 0% | 3% | 1% | 1% | 48% | -3 | 30% | 21% |
-| 10 | Aether Mage | **22%** | 42 | 18% | 0% | 2% | 1% | 0% | 45% | -8 | 31% | 20% |
-| 11 | Gunman | **20%** | 37 | 19% | 0% | 1% | 0% | 0% | 42% | -13 | 25% | 27% |
+| 1 | Bulwark Aegis | **31%** | 70 | 19% | 2% | 0% | 0% | 11% | 57% | +12 | 45% | 31% |
+| 2 | Stonewarden Mage | **26%** | 49 | 23% | 0% | 2% | 1% | 1% | 48% | -2 | 35% | 20% |
+| 3 | Sanguine Mage | **26%** | 50 | 23% | 0% | 2% | 1% | 0% | 51% | +2 | 36% | 21% |
+| 4 | Warbound Mage | **25%** | 49 | 22% | 0% | 2% | 1% | 1% | 52% | +4 | 35% | 23% |
+| 5 | Crystal Archer | **25%** | 47 | 24% | 1% | 0% | 0% | 0% | 51% | +2 | 37% | 25% |
+| 6 | Hellbound Mage | **25%** | 46 | 22% | 0% | 1% | 1% | 1% | 49% | -1 | 31% | 21% |
+| 7 | Gunman | **24%** | 43 | 23% | 0% | 1% | 0% | 0% | 45% | -7 | 28% | 26% |
+| 8 | Sanguine Aegis | **24%** | 40 | 21% | 0% | 2% | 0% | 1% | 53% | +6 | 39% | 38% |
+| 9 | Warden Aegis | **23%** | 43 | 17% | 0% | 4% | 0% | 2% | 46% | -6 | 33% | 28% |
+| 10 | Verdant Mage | **23%** | 45 | 18% | 0% | 3% | 1% | 1% | 48% | -3 | 28% | 21% |
+| 11 | Aether Mage | **22%** | 41 | 19% | 0% | 2% | 1% | 0% | 46% | -6 | 30% | 20% |
 
 HP/fight is its Impact in hit points per fight.
 
@@ -98,17 +98,17 @@ HP/fight is its Impact in hit points per fight.
 
 | # | Subclass | Impact | HP/fight | Damage | Protection | Control | Enable | Tanking | Win with | Win value | Survives | Taken |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | Sanguine Mage | **32%** | 228 | 25% | 0% | 7% | 1% | 0% | 65% | +18 | 52% | 22% |
-| 2 | Stonewarden Mage | **31%** | 200 | 24% | 3% | 2% | 1% | 1% | 59% | +8 | 49% | 20% |
-| 3 | Hellbound Mage | **29%** | 190 | 25% | 0% | 3% | 1% | 1% | 56% | +3 | 40% | 22% |
-| 4 | Warbound Mage | **27%** | 175 | 24% | 0% | 2% | 1% | 1% | 53% | -1 | 37% | 22% |
-| 5 | Aether Mage | **26%** | 165 | 22% | 0% | 2% | 1% | 0% | 51% | -4 | 36% | 22% |
-| 6 | Verdant Mage | **25%** | 164 | 19% | 0% | 4% | 1% | 1% | 50% | -5 | 34% | 23% |
-| 7 | Bulwark Aegis | **24%** | 169 | 12% | 2% | 0% | 0% | 10% | 52% | -2 | 48% | 29% |
-| 8 | Crystal Archer | **23%** | 127 | 22% | 1% | 0% | 0% | 0% | 49% | -8 | 44% | 23% |
-| 9 | Sanguine Aegis | **21%** | 116 | 16% | 0% | 3% | 0% | 1% | 51% | -4 | 40% | 35% |
-| 10 | Warden Aegis | **20%** | 130 | 10% | 0% | 7% | 0% | 3% | 51% | -4 | 43% | 29% |
-| 11 | Gunman | **17%** | 97 | 11% | 0% | 4% | 0% | 1% | 54% | +0 | 39% | 28% |
+| 1 | Stonewarden Mage | **30%** | 198 | 24% | 3% | 3% | 1% | 1% | 58% | +8 | 46% | 20% |
+| 2 | Sanguine Mage | **30%** | 194 | 25% | 0% | 3% | 1% | 0% | 56% | +5 | 42% | 23% |
+| 3 | Hellbound Mage | **29%** | 186 | 24% | 0% | 3% | 1% | 1% | 54% | +3 | 38% | 22% |
+| 4 | Warbound Mage | **27%** | 171 | 23% | 0% | 2% | 1% | 1% | 51% | -3 | 34% | 22% |
+| 5 | Crystal Archer | **26%** | 147 | 25% | 1% | 0% | 0% | 0% | 53% | +1 | 47% | 23% |
+| 6 | Aether Mage | **26%** | 164 | 22% | 0% | 2% | 1% | 0% | 50% | -4 | 35% | 22% |
+| 7 | Bulwark Aegis | **24%** | 168 | 11% | 3% | 0% | 0% | 10% | 52% | -1 | 46% | 30% |
+| 8 | Verdant Mage | **24%** | 160 | 19% | 0% | 4% | 1% | 1% | 49% | -6 | 32% | 23% |
+| 9 | Warden Aegis | **20%** | 126 | 10% | 0% | 7% | 0% | 3% | 51% | -3 | 40% | 29% |
+| 10 | Gunman | **20%** | 116 | 15% | 0% | 4% | 0% | 1% | 55% | +4 | 40% | 27% |
+| 11 | Sanguine Aegis | **20%** | 107 | 15% | 0% | 4% | 0% | 1% | 49% | -5 | 36% | 34% |
 
 HP/fight is its Impact in hit points per fight.
 
@@ -116,17 +116,17 @@ HP/fight is its Impact in hit points per fight.
 
 | # | Subclass | Impact | HP/fight | Damage | Protection | Control | Enable | Tanking | Win with | Win value | Survives | Taken |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | Sanguine Mage | **32%** | 349 | 22% | 0% | 9% | 1% | 0% | 64% | +19 | 53% | 23% |
-| 2 | Verdant Mage | **32%** | 315 | 22% | 1% | 7% | 1% | 1% | 55% | +5 | 46% | 20% |
-| 3 | Stonewarden Mage | **30%** | 307 | 21% | 3% | 5% | 1% | 1% | 58% | +10 | 50% | 20% |
-| 4 | Hellbound Mage | **27%** | 272 | 21% | 0% | 6% | 1% | 1% | 53% | +2 | 38% | 22% |
-| 5 | Warbound Mage | **27%** | 262 | 21% | 0% | 5% | 1% | 1% | 52% | -0 | 37% | 21% |
-| 6 | Aether Mage | **25%** | 245 | 18% | 0% | 5% | 1% | 1% | 51% | -1 | 37% | 22% |
-| 7 | Bulwark Aegis | **22%** | 234 | 8% | 4% | 0% | 0% | 10% | 49% | -5 | 45% | 32% |
-| 8 | Warden Aegis | **22%** | 218 | 7% | 3% | 8% | 0% | 3% | 51% | -0 | 45% | 30% |
-| 9 | Crystal Archer | **22%** | 175 | 20% | 1% | 0% | 0% | 0% | 42% | -15 | 38% | 25% |
-| 10 | Sanguine Aegis | **19%** | 171 | 13% | 0% | 5% | 0% | 1% | 47% | -7 | 40% | 34% |
-| 11 | Gunman | **17%** | 143 | 11% | 0% | 5% | 0% | 0% | 47% | -7 | 41% | 26% |
+| 1 | Verdant Mage | **31%** | 313 | 21% | 1% | 7% | 1% | 1% | 54% | +6 | 44% | 21% |
+| 2 | Sanguine Mage | **30%** | 309 | 22% | 0% | 7% | 1% | 1% | 57% | +10 | 45% | 23% |
+| 3 | Stonewarden Mage | **30%** | 306 | 20% | 3% | 6% | 1% | 0% | 57% | +10 | 47% | 20% |
+| 4 | Hellbound Mage | **27%** | 269 | 20% | 0% | 6% | 1% | 1% | 52% | +2 | 37% | 22% |
+| 5 | Warbound Mage | **26%** | 257 | 20% | 0% | 5% | 1% | 1% | 50% | -2 | 34% | 21% |
+| 6 | Crystal Archer | **26%** | 214 | 25% | 1% | 0% | 0% | 0% | 45% | -8 | 42% | 25% |
+| 7 | Aether Mage | **24%** | 241 | 18% | 0% | 5% | 1% | 1% | 49% | -2 | 34% | 22% |
+| 8 | Bulwark Aegis | **22%** | 232 | 8% | 4% | 0% | 0% | 10% | 47% | -5 | 42% | 32% |
+| 9 | Gunman | **21%** | 185 | 16% | 0% | 5% | 0% | 0% | 50% | -1 | 43% | 26% |
+| 10 | Warden Aegis | **21%** | 211 | 7% | 3% | 8% | 0% | 3% | 51% | +0 | 43% | 30% |
+| 11 | Sanguine Aegis | **18%** | 162 | 13% | 0% | 5% | 0% | 1% | 45% | -9 | 36% | 34% |
 
 HP/fight is its Impact in hit points per fight.
 
@@ -134,17 +134,17 @@ HP/fight is its Impact in hit points per fight.
 
 | # | Subclass | Impact | HP/fight | Damage | Protection | Control | Enable | Tanking | Win with | Win value | Survives | Taken |
 |---:|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
-| 1 | Verdant Mage | **34%** | 638 | 20% | 1% | 11% | 1% | 1% | 53% | +8 | 47% | 19% |
-| 2 | Sanguine Mage | **32%** | 751 | 17% | 0% | 14% | 1% | 0% | 59% | +17 | 50% | 24% |
-| 3 | Hellbound Mage | **29%** | 552 | 19% | 0% | 9% | 1% | 0% | 50% | +2 | 41% | 21% |
-| 4 | Warbound Mage | **29%** | 536 | 20% | 0% | 8% | 1% | 0% | 48% | +0 | 39% | 20% |
-| 5 | Aether Mage | **29%** | 550 | 18% | 1% | 8% | 1% | 0% | 54% | +9 | 44% | 22% |
-| 6 | Stonewarden Mage | **24%** | 494 | 14% | 3% | 6% | 1% | 0% | 54% | +8 | 43% | 22% |
-| 7 | Crystal Archer | **22%** | 305 | 21% | 0% | 0% | 0% | 0% | 38% | -16 | 35% | 25% |
-| 8 | Warden Aegis | **20%** | 343 | 6% | 4% | 9% | 0% | 2% | 44% | -7 | 40% | 31% |
-| 9 | Sanguine Aegis | **20%** | 321 | 14% | 0% | 5% | 0% | 1% | 45% | -5 | 40% | 34% |
-| 10 | Gunman | **18%** | 288 | 10% | 0% | 7% | 0% | 1% | 48% | -1 | 40% | 28% |
-| 11 | Bulwark Aegis | **17%** | 317 | 4% | 5% | 0% | 0% | 8% | 38% | -16 | 39% | 28% |
+| 1 | Verdant Mage | **34%** | 649 | 20% | 1% | 12% | 1% | 1% | 53% | +7 | 46% | 20% |
+| 2 | Sanguine Mage | **31%** | 737 | 16% | 0% | 14% | 1% | 0% | 57% | +14 | 47% | 24% |
+| 3 | Hellbound Mage | **28%** | 554 | 18% | 0% | 9% | 1% | 0% | 49% | +1 | 40% | 21% |
+| 4 | Aether Mage | **28%** | 554 | 18% | 1% | 8% | 1% | 0% | 53% | +8 | 43% | 22% |
+| 5 | Warbound Mage | **28%** | 535 | 19% | 0% | 8% | 1% | 0% | 47% | -1 | 38% | 20% |
+| 6 | Crystal Archer | **25%** | 360 | 24% | 0% | 0% | 0% | 0% | 41% | -11 | 38% | 25% |
+| 7 | Stonewarden Mage | **24%** | 497 | 13% | 3% | 6% | 1% | 0% | 53% | +7 | 41% | 23% |
+| 8 | Gunman | **22%** | 355 | 14% | 0% | 7% | 0% | 1% | 51% | +5 | 43% | 27% |
+| 9 | Sanguine Aegis | **20%** | 319 | 14% | 0% | 5% | 0% | 1% | 44% | -7 | 38% | 34% |
+| 10 | Warden Aegis | **19%** | 334 | 5% | 4% | 8% | 0% | 2% | 44% | -7 | 39% | 31% |
+| 11 | Bulwark Aegis | **17%** | 321 | 4% | 5% | 0% | 0% | 7% | 38% | -16 | 37% | 28% |
 
 HP/fight is its Impact in hit points per fight.
 
@@ -154,36 +154,36 @@ Average win rate across all levels and encounters (50% is par).
 
 | | Party | Mages | L3 | L7 | L10 | L15 | Mean |
 |---|---|---:|---:|---:|---:|---:|---:|
-| Best | Warbound Mage, Stonewarden Mage, Sanguine Mage, Aether Mage | 4 | 64% | 81% | 84% | 82% | **78%** |
-| Best | Warbound Mage, Stonewarden Mage, Hellbound Mage, Sanguine Mage | 4 | 69% | 77% | 86% | 69% | **75%** |
-| Best | Stonewarden Mage, Hellbound Mage, Sanguine Mage, Aether Mage | 4 | 57% | 74% | 84% | 85% | **75%** |
-| Best | Stonewarden Mage, Sanguine Mage, Aether Mage, Sanguine Aegis | 3 | 65% | 80% | 78% | 76% | **75%** |
-| Best | Verdant Mage, Stonewarden Mage, Sanguine Mage, Aether Mage | 4 | 57% | 72% | 81% | 84% | **74%** |
-| Best | Stonewarden Mage, Hellbound Mage, Sanguine Mage, Sanguine Aegis | 3 | 67% | 78% | 78% | 67% | **73%** |
-| Best | Warbound Mage, Stonewarden Mage, Sanguine Mage, Sanguine Aegis | 3 | 69% | 76% | 77% | 68% | **73%** |
-| Best | Verdant Mage, Stonewarden Mage, Sanguine Mage, Sanguine Aegis | 3 | 66% | 73% | 79% | 72% | **73%** |
-| Best | Verdant Mage, Stonewarden Mage, Hellbound Mage, Sanguine Mage | 4 | 59% | 77% | 81% | 71% | **72%** |
-| Best | Warbound Mage, Hellbound Mage, Sanguine Mage, Aether Mage | 4 | 62% | 67% | 76% | 82% | **72%** |
-| Worst | Warbound Mage, Sanguine Aegis, Warden Aegis, Crystal Archer | 1 | 54% | 34% | 32% | 25% | **36%** |
-| Worst | Warbound Mage, Aether Mage, Crystal Archer, Gunman | 2 | 28% | 36% | 31% | 43% | **34%** |
-| Worst | Verdant Mage, Warden Aegis, Crystal Archer, Gunman | 1 | 29% | 35% | 36% | 37% | **34%** |
-| Worst | Aether Mage, Bulwark Aegis, Warden Aegis, Gunman | 1 | 35% | 51% | 30% | 21% | **34%** |
-| Worst | Aether Mage, Sanguine Aegis, Warden Aegis, Crystal Archer | 1 | 44% | 30% | 31% | 27% | **33%** |
-| Worst | Stonewarden Mage, Warden Aegis, Crystal Archer, Gunman | 1 | 30% | 39% | 32% | 32% | **33%** |
-| Worst | Sanguine Aegis, Bulwark Aegis, Warden Aegis, Gunman | 0 | 43% | 41% | 26% | 17% | **32%** |
-| Worst | Hellbound Mage, Warden Aegis, Crystal Archer, Gunman | 1 | 31% | 43% | 29% | 25% | **32%** |
-| Worst | Warbound Mage, Warden Aegis, Crystal Archer, Gunman | 1 | 33% | 38% | 27% | 24% | **31%** |
-| Worst | Aether Mage, Warden Aegis, Crystal Archer, Gunman | 1 | 24% | 34% | 20% | 34% | **28%** |
+| Best | Stonewarden Mage, Hellbound Mage, Sanguine Mage, Aether Mage | 4 | 42% | 68% | 78% | 84% | **68%** |
+| Best | Warbound Mage, Stonewarden Mage, Hellbound Mage, Sanguine Mage | 4 | 57% | 67% | 78% | 64% | **67%** |
+| Best | Verdant Mage, Stonewarden Mage, Hellbound Mage, Sanguine Mage | 4 | 48% | 70% | 78% | 68% | **66%** |
+| Best | Warbound Mage, Stonewarden Mage, Sanguine Mage, Aether Mage | 4 | 55% | 58% | 71% | 79% | **66%** |
+| Best | Verdant Mage, Stonewarden Mage, Sanguine Mage, Aether Mage | 4 | 43% | 58% | 74% | 82% | **64%** |
+| Best | Stonewarden Mage, Hellbound Mage, Sanguine Mage, Gunman | 3 | 45% | 69% | 71% | 71% | **64%** |
+| Best | Stonewarden Mage, Hellbound Mage, Sanguine Mage, Sanguine Aegis | 3 | 55% | 70% | 70% | 61% | **64%** |
+| Best | Verdant Mage, Stonewarden Mage, Sanguine Mage, Gunman | 3 | 41% | 63% | 74% | 78% | **64%** |
+| Best | Verdant Mage, Warbound Mage, Stonewarden Mage, Sanguine Mage | 4 | 55% | 59% | 77% | 65% | **64%** |
+| Best | Warbound Mage, Stonewarden Mage, Sanguine Mage, Sanguine Aegis | 3 | 61% | 64% | 65% | 65% | **64%** |
+| Worst | Warbound Mage, Aether Mage, Sanguine Aegis, Crystal Archer | 2 | 55% | 42% | 28% | 26% | **38%** |
+| Worst | Hellbound Mage, Aether Mage, Sanguine Aegis, Bulwark Aegis | 2 | 58% | 34% | 30% | 28% | **38%** |
+| Worst | Warbound Mage, Sanguine Aegis, Bulwark Aegis, Warden Aegis | 1 | 56% | 36% | 32% | 26% | **38%** |
+| Worst | Hellbound Mage, Sanguine Aegis, Bulwark Aegis, Warden Aegis | 1 | 55% | 38% | 34% | 23% | **38%** |
+| Worst | Warbound Mage, Warden Aegis, Crystal Archer, Gunman | 1 | 41% | 44% | 32% | 32% | **37%** |
+| Worst | Verdant Mage, Warbound Mage, Sanguine Aegis, Bulwark Aegis | 2 | 58% | 28% | 37% | 26% | **37%** |
+| Worst | Verdant Mage, Sanguine Aegis, Bulwark Aegis, Warden Aegis | 1 | 51% | 28% | 40% | 28% | **37%** |
+| Worst | Aether Mage, Warden Aegis, Crystal Archer, Gunman | 1 | 32% | 41% | 30% | 43% | **36%** |
+| Worst | Warbound Mage, Aether Mage, Sanguine Aegis, Bulwark Aegis | 2 | 55% | 30% | 24% | 33% | **36%** |
+| Worst | Aether Mage, Sanguine Aegis, Bulwark Aegis, Warden Aegis | 1 | 49% | 32% | 33% | 26% | **35%** |
 
 By number of mages in the party:
 
 | Mages | Parties | L3 | L7 | L10 | L15 |
 |---:|---:|---:|---:|---:|---:|
-| 0 | 5 | 53% | 44% | 32% | 23% |
-| 1 | 60 | 50% | 46% | 38% | 31% |
-| 2 | 150 | 50% | 53% | 49% | 45% |
-| 3 | 100 | 51% | 58% | 61% | 61% |
-| 4 | 15 | 55% | 66% | 76% | 77% |
+| 0 | 5 | 58% | 53% | 44% | 29% |
+| 1 | 60 | 53% | 51% | 43% | 35% |
+| 2 | 150 | 50% | 52% | 48% | 45% |
+| 3 | 100 | 47% | 53% | 57% | 58% |
+| 4 | 15 | 48% | 57% | 70% | 73% |
 
 ## Synergy
 
@@ -191,23 +191,23 @@ How much better (or worse) parties containing both do than the two subclasses' s
 
 | Pair | Synergy |
 |---|---:|
-| Sanguine Mage + Sanguine Aegis | +3 |
+| Bulwark Aegis + Crystal Archer | +3 |
 | Stonewarden Mage + Sanguine Mage | +2 |
-| Bulwark Aegis + Crystal Archer | +2 |
-| Warbound Mage + Sanguine Mage | +2 |
-| Bulwark Aegis + Warden Aegis | +2 |
-| Sanguine Mage + Bulwark Aegis | +1 |
-| Stonewarden Mage + Hellbound Mage | +1 |
+| Verdant Mage + Gunman | +1 |
 | Stonewarden Mage + Aether Mage | +1 |
+| Sanguine Mage + Sanguine Aegis | +1 |
+| Stonewarden Mage + Hellbound Mage | +1 |
+| Sanguine Aegis + Gunman | +1 |
+| Bulwark Aegis + Warden Aegis | +1 |
 | … | |
-| Stonewarden Mage + Crystal Archer | -1 |
-| Sanguine Aegis + Warden Aegis | -1 |
+| Verdant Mage + Bulwark Aegis | -1 |
 | Aether Mage + Bulwark Aegis | -1 |
 | Hellbound Mage + Crystal Archer | -1 |
-| Aether Mage + Crystal Archer | -1 |
+| Sanguine Mage + Crystal Archer | -1 |
+| Sanguine Aegis + Warden Aegis | -1 |
 | Warbound Mage + Crystal Archer | -2 |
+| Warden Aegis + Gunman | -2 |
 | Sanguine Aegis + Bulwark Aegis | -3 |
-| Warden Aegis + Gunman | -3 |
 
 ## Encounters
 
@@ -215,10 +215,10 @@ One creature per hero (the boss alone), built like the gauntlet's benchmark foes
 
 | Encounter | Creatures | L3 scale | L7 scale | L10 scale | L15 scale |
 |---|---|---:|---:|---:|---:|
-| Warband | brute, soldier, soldier, skirmisher | ×1.347 | ×2.398 | ×2.329 | ×2.642 |
-| Ambush | skirmisher, skirmisher, sniper, caster | ×0.91 | ×1.249 | ×1.318 | ×1.402 |
-| Mixed | brute, soldier, sniper, caster | ×0.933 | ×1.422 | ×1.3 | ×1.407 |
-| Boss | boss | ×1.154 | ×1.443 | ×1.377 | ×2.061 |
+| Warband | brute, soldier, soldier, skirmisher | ×1.342 | ×2.459 | ×2.398 | ×2.73 |
+| Ambush | skirmisher, skirmisher, sniper, caster | ×0.91 | ×1.29 | ×1.377 | ×1.443 |
+| Mixed | brute, soldier, sniper, caster | ×0.943 | ×1.469 | ×1.377 | ×1.464 |
+| Boss | boss | ×1.113 | ×1.392 | ×1.377 | ×2.144 |
 
 - **Skirmishers** ignore the front rank and go for the lowest-AC hero. **Snipers** shoot the lowest-AC hero in range. **Casters** blast a 10-foot radius wherever the most heroes stand. The **Boss** has three attacks, 10-foot reach and two Legendary Resistances (it shrugs off a save against Hold or a big spell).
 - Base numbers per level: L3 CR 1 (AC 13, +4, DC 12); L7 CR 3 (AC 14, +5, DC 13); L10 CR 5 (AC 15, +6, DC 14); L15 CR 8 (AC 16, +7, DC 15).

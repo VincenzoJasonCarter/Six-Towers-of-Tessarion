@@ -8,7 +8,7 @@ Changes to the class and subclass rules in the lore-book, newest patch first. Th
 
 ## Patch 4 — 2026-10-12
 
-Two new traits shared by every Aegisbound order, a new Shackle Strike for the Warden, Blood Lure and a reworked Red Pact for the Sanguine Aegis, and longer-lasting special ammunition for the Range, tested in the Proving Grounds.
+Two new traits shared by every Aegisbound order, a new Shackle Strike for the Warden, Blood Lure and a reworked Red Pact for the Sanguine Aegis, and for the Range longer-lasting special ammunition, Resonant Shot and a longer-ranged Black-Powder Rifle, tested in the Proving Grounds.
 
 > *Why:* The Proving Grounds now play every class as Tessarion does: **one attack per turn at every level**, and no Action Surge, Second Wind or Indomitable for the Aegisbound or Range (earlier reports ran them on the 5e Fighter, with Extra Attack). On that footing all three Aegisbound orders fall below an even share from 7th level: the wall drew the blows (31–39% of every attack aimed at the party) and fell before it could keep the mages standing (30–37% still on their feet at the end). The Classes chapter has always promised them "high physical durability and HP"; these two traits are that promise in rules.
 
@@ -40,18 +40,31 @@ Magic resistance stays with the armor itself: it comes with Tier 3 Aegisbound ar
 - **Modular Ammunition and Crystal-Cased Rounds** [buff]: every effect of a special arrow or special shot that lasted until the start of your next turn (Verdant Dust and Verdant Snare, White Dust, Violet Dust and Violet Hex, Amber Slug, Prismatic Round's no-healing) now lasts **until the start of your turn after next**.
 - **Gunman, Powder Disruption (7th level)** [buff]: the silence a special shot inflicts lasts likewise **until the start of your turn after next**.
 
+> *Why Resonant Shot:* With one attack a turn, nothing in the Range's kit grew with its level: Marksman's Focus is a flat +2 and special ammunition is a few shots a rest. At 7th level a Gunman took about half as many hit points off the enemy as a mage did (97 a fight against 190). Resonant Shot is that growth. The Crystal Archer gets it at 7th level, not 3rd: at 3rd it already pulled its weight (+2), and with Resonant Shot from 3rd it overshot (+12).
+
+- **Resonant Shot** [new]: once on each of your turns, when you hit a creature with a ranged weapon attack, it takes an extra **1d4 force damage per Resonance Rank**. The **Gunman** has it from **3rd level** (part of Ballistic Training), the **Crystal Archer** from **7th level** (with Crystal Sight, whether or not it is in hyper-focus).
+- **Black-Powder Rifle** (Tier 2 Gunman weapon, Ch.7) [buff]: range **40/120 → 80/200**. A rifled barrel should reach further than the musket it replaces. Tested alone, it kept more Gunmen on their feet at 7th level (47% → 58% still standing at the end) and changed little from 10th, where the enemy reaches it anyway. With its Tier 2 guns the Gunman is +2 (`arena/party_gear_report.md`).
+
+> *Proving Grounds fix:* the arena gave Soul Tether and the Warden's new Shackle Strike the same effect, so a creature the Sanguine Mage had tethered also attacked anyone but the mage at disadvantage, which the lore never gave it. Fixed, the Sanguine Mage's party value falls from +17 to +8. Its rules don't change.
+
 **Party value** (win rate with the subclass minus without, averaged over 3rd, 7th, 10th and 15th level; every fight at full resources; `arena/party_report.md`):
 
 | Subclass | Before | After | 3rd | 7th | 10th | 15th |
 |---|---:|---:|---:|---:|---:|---:|
-| Bulwark Aegis | −5 | **−3** | +10 | −2 | −5 | −15 |
-| Warden Aegis | −10 | **−4** | −7 | −3 | +1 | −6 |
-| Sanguine Aegis | −11 | **−2** | +7 | −4 | −6 | −5 |
-| Sanguine Mage (for comparison) | +12 | +17 | | | | |
+| Bulwark Aegis | −5 | **−3** | +12 | −1 | −5 | −16 |
+| Warden Aegis | −10 | **−4** | −6 | −3 | +0 | −7 |
+| Sanguine Aegis | −11 | **−4** | +6 | −5 | −9 | −7 |
+| Crystal Archer | −9 | **−4** | +2 | +1 | −8 | −11 |
+| Gunman | −9 | **+0** | −7 | +4 | −1 | +5 |
+| Sanguine Mage (for comparison) | +12 | +8 | +2 | +5 | +10 | +14 |
 
-All three orders now sit within 4 points of even, from 5 to 11 below it. The Sanguine Aegis gains the most (+9): with Blood Lure, the mages behind it live long enough to matter. The Sanguine Mage, which this patch doesn't touch, gains about 3 points too, and as much in parties without a Sanguine Aegis as in parties with one: sturdier tanks at every level give every mage more turns, and those turns are worth the most to the mage whose spells already land hardest. It was the strongest subclass before this patch and is the clearest one to look at next. The Bulwark is about even at 7th level, the Warden at 10th. At 15th level the Bulwark still trails, where Tier 3 armor is meant to carry it.
+The Range's *Before* is this patch's Aegisbound changes alone, without lasting ammunition or Resonant Shot.
 
-Party value is relative: as the Aegisbound rise, the encounters are tuned to the stronger average party and the Range pillar falls back to −9 for both the Crystal Archer and the Gunman. Range is meant to lean on its gear, and the next patch looks at it together with Tier 3 weapons.
+All three orders now sit within 4 points of even, from 5 to 11 below it. The Sanguine Aegis gains the most (+7): with Blood Lure, the mages behind it live long enough to matter. The Bulwark is about even at 7th level, the Warden at 10th. At 15th level the Bulwark still trails, where Tier 3 armor is meant to carry it.
+
+The Gunman is even, weakest at 3rd level and above even from 7th, where Powder Disruption silences the enemy's casters. The Crystal Archer is 4 below. It is a striker with no control, and from 10th level, where a landed Hold decides more fights than the same damage dealt, its party value trails (−8, −11) though its share of the party's damage is the largest of any subclass (24–25%).
+
+The Sanguine Mage, which this patch doesn't touch, is still the strongest subclass (+8), most of it at 10th and 15th level.
 
 ---
 

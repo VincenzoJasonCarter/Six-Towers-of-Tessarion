@@ -83,9 +83,9 @@
     "caster": 0.864
    },
    "Fighter": {
-    "brute": 1.001,
-    "soldier": 1.007,
-    "sniper": 1.82,
+    "brute": 1.032,
+    "soldier": 1.043,
+    "sniper": 1.885,
     "caster": 0.908
    }
   },
@@ -97,10 +97,10 @@
     "caster": 1.592
    },
    "Fighter": {
-    "brute": 1.147,
-    "soldier": 1.266,
-    "sniper": 2.11,
-    "caster": 0.864
+    "brute": 1.201,
+    "soldier": 1.35,
+    "sniper": 2.155,
+    "caster": 0.908
    }
   },
   "10": {
@@ -111,10 +111,10 @@
     "caster": 1.57
    },
    "Fighter": {
-    "brute": 0.984,
-    "soldier": 1.078,
-    "sniper": 1.629,
-    "caster": 0.776
+    "brute": 1.053,
+    "soldier": 1.174,
+    "sniper": 1.72,
+    "caster": 0.804
    }
   },
   "15": {
@@ -125,10 +125,10 @@
     "caster": 2.24
    },
    "Fighter": {
-    "brute": 0.93,
-    "soldier": 1.067,
-    "sniper": 1.479,
-    "caster": 0.87
+    "brute": 1.107,
+    "soldier": 1.266,
+    "sniper": 1.636,
+    "caster": 0.886
    }
   }
  },
@@ -207,12 +207,12 @@
     "hp_left": 0.7295748613678373
    },
    "verdant|gunman": {
-    "wins": 548,
-    "losses": 452,
+    "wins": 482,
+    "losses": 518,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.976,
-    "hp_left": 0.6914233576642336
+    "rounds": 4.627,
+    "hp_left": 0.716597510373444
    },
    "warbound|stonewarden": {
     "wins": 624,
@@ -279,12 +279,12 @@
     "hp_left": 0.688205499276411
    },
    "warbound|gunman": {
-    "wins": 661,
-    "losses": 339,
+    "wins": 565,
+    "losses": 435,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.446,
-    "hp_left": 0.7050680786686838
+    "rounds": 4.221,
+    "hp_left": 0.7132743362831858
    },
    "stonewarden|hellbound": {
     "wins": 340,
@@ -343,12 +343,12 @@
     "hp_left": 0.7089725036179451
    },
    "stonewarden|gunman": {
-    "wins": 693,
-    "losses": 307,
+    "wins": 640,
+    "losses": 360,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.61,
-    "hp_left": 0.7163059163059163
+    "rounds": 4.406,
+    "hp_left": 0.7375
    },
    "hellbound|sanguine_mage": {
     "wins": 512,
@@ -399,12 +399,12 @@
     "hp_left": 0.7315982404692082
    },
    "hellbound|gunman": {
-    "wins": 690,
-    "losses": 310,
+    "wins": 646,
+    "losses": 354,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.049,
-    "hp_left": 0.7395652173913043
+    "rounds": 3.771,
+    "hp_left": 0.7561919504643962
    },
    "sanguine_mage|aether": {
     "wins": 688,
@@ -447,12 +447,12 @@
     "hp_left": 0.7628859060402684
    },
    "sanguine_mage|gunman": {
-    "wins": 713,
-    "losses": 287,
+    "wins": 639,
+    "losses": 361,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.425,
-    "hp_left": 0.7612903225806451
+    "rounds": 3.936,
+    "hp_left": 0.8037558685446009
    },
    "aether|sanguine_aegis": {
     "wins": 595,
@@ -487,12 +487,12 @@
     "hp_left": 0.7051829268292683
    },
    "aether|gunman": {
-    "wins": 553,
-    "losses": 447,
+    "wins": 489,
+    "losses": 511,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.978,
-    "hp_left": 0.7028933092224231
+    "rounds": 4.645,
+    "hp_left": 0.6841513292433538
    },
    "sanguine_aegis|bulwark": {
     "wins": 143,
@@ -519,12 +519,12 @@
     "hp_left": 0.740726902173913
    },
    "sanguine_aegis|gunman": {
-    "wins": 912,
-    "losses": 87,
-    "draws": 1,
+    "wins": 801,
+    "losses": 199,
+    "draws": 0,
     "n": 1000,
-    "rounds": 7.966,
-    "hp_left": 0.7663788377192983
+    "rounds": 7.535,
+    "hp_left": 0.7244850187265918
    },
    "bulwark|warden": {
     "wins": 869,
@@ -543,12 +543,12 @@
     "hp_left": 0.6736001577287066
    },
    "bulwark|gunman": {
-    "wins": 967,
-    "losses": 32,
-    "draws": 1,
+    "wins": 906,
+    "losses": 94,
+    "draws": 0,
     "n": 1000,
-    "rounds": 8.326,
-    "hp_left": 0.7223048086866598
+    "rounds": 8.173,
+    "hp_left": 0.6517315121412803
    },
    "warden|archer": {
     "wins": 783,
@@ -559,20 +559,20 @@
     "hp_left": 0.554198595146871
    },
    "warden|gunman": {
-    "wins": 829,
-    "losses": 171,
-    "draws": 0,
+    "wins": 729,
+    "losses": 270,
+    "draws": 1,
     "n": 1000,
-    "rounds": 7.737,
-    "hp_left": 0.5864746682750301
+    "rounds": 7.332,
+    "hp_left": 0.5728309327846365
    },
    "archer|gunman": {
-    "wins": 526,
-    "losses": 474,
+    "wins": 392,
+    "losses": 608,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.842,
-    "hp_left": 0.42619500271591526
+    "rounds": 3.405,
+    "hp_left": 0.4232871720116618
    }
   },
   "3/pre": {
@@ -601,12 +601,12 @@
     "hp_left": 0.6971115537848606
    },
    "verdant|gunman": {
-    "wins": 521,
-    "losses": 479,
+    "wins": 468,
+    "losses": 532,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.892,
-    "hp_left": 0.6901151631477928
+    "rounds": 4.433,
+    "hp_left": 0.7341880341880341
    },
    "warbound|stonewarden": {
     "wins": 561,
@@ -673,12 +673,12 @@
     "hp_left": 0.6908372827804108
    },
    "warbound|gunman": {
-    "wins": 617,
-    "losses": 383,
+    "wins": 556,
+    "losses": 444,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.421,
-    "hp_left": 0.7106158833063209
+    "rounds": 4.189,
+    "hp_left": 0.7285971223021582
    },
    "stonewarden|sanguine_aegis": {
     "wins": 793,
@@ -697,12 +697,12 @@
     "hp_left": 0.7187874251497006
    },
    "stonewarden|gunman": {
-    "wins": 692,
-    "losses": 308,
+    "wins": 619,
+    "losses": 381,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.608,
-    "hp_left": 0.6989161849710983
+    "rounds": 4.316,
+    "hp_left": 0.7252827140549273
    },
    "hellbound|sanguine_aegis": {
     "wins": 754,
@@ -721,12 +721,12 @@
     "hp_left": 0.7370562130177515
    },
    "hellbound|gunman": {
-    "wins": 642,
-    "losses": 358,
+    "wins": 601,
+    "losses": 399,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.065,
-    "hp_left": 0.7225077881619938
+    "rounds": 3.81,
+    "hp_left": 0.752828618968386
    },
    "sanguine_mage|sanguine_aegis": {
     "wins": 814,
@@ -745,12 +745,12 @@
     "hp_left": 0.7755944055944056
    },
    "sanguine_mage|gunman": {
-    "wins": 710,
-    "losses": 290,
+    "wins": 642,
+    "losses": 358,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.211,
-    "hp_left": 0.7833802816901408
+    "rounds": 4.082,
+    "hp_left": 0.770171339563863
    },
    "aether|sanguine_aegis": {
     "wins": 582,
@@ -769,12 +769,12 @@
     "hp_left": 0.6957597173144876
    },
    "aether|gunman": {
-    "wins": 511,
-    "losses": 489,
+    "wins": 432,
+    "losses": 568,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.027,
-    "hp_left": 0.7109589041095891
+    "rounds": 4.633,
+    "hp_left": 0.7267361111111111
    },
    "sanguine_aegis|bulwark": {
     "wins": 118,
@@ -801,12 +801,12 @@
     "hp_left": 0.7281490120746432
    },
    "sanguine_aegis|gunman": {
-    "wins": 930,
-    "losses": 68,
+    "wins": 825,
+    "losses": 173,
     "draws": 2,
     "n": 1000,
-    "rounds": 8.005,
-    "hp_left": 0.7448924731182796
+    "rounds": 7.566,
+    "hp_left": 0.7159848484848484
    },
    "bulwark|archer": {
     "wins": 960,
@@ -817,12 +817,12 @@
     "hp_left": 0.6724283854166667
    },
    "bulwark|gunman": {
-    "wins": 979,
-    "losses": 21,
+    "wins": 908,
+    "losses": 92,
     "draws": 0,
     "n": 1000,
-    "rounds": 8.061,
-    "hp_left": 0.695097037793667
+    "rounds": 7.89,
+    "hp_left": 0.6416574889867841
    },
    "warden|archer": {
     "wins": 803,
@@ -833,20 +833,20 @@
     "hp_left": 0.5374766500622665
    },
    "warden|gunman": {
-    "wins": 820,
-    "losses": 180,
+    "wins": 706,
+    "losses": 294,
     "draws": 0,
     "n": 1000,
-    "rounds": 7.803,
-    "hp_left": 0.554077743902439
+    "rounds": 7.341,
+    "hp_left": 0.5443519830028328
    },
    "archer|gunman": {
-    "wins": 484,
-    "losses": 516,
+    "wins": 353,
+    "losses": 647,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.474,
-    "hp_left": 0.43410566706021253
+    "rounds": 3.133,
+    "hp_left": 0.4161270740590854
    }
   },
   "7/post": {
@@ -915,20 +915,20 @@
     "hp_left": 0.8981034011124281
    },
    "verdant|archer": {
-    "wins": 753,
-    "losses": 247,
+    "wins": 698,
+    "losses": 302,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.705,
-    "hp_left": 0.685530604853314
+    "rounds": 3.571,
+    "hp_left": 0.6766736129200313
    },
    "verdant|gunman": {
-    "wins": 884,
-    "losses": 116,
+    "wins": 694,
+    "losses": 306,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.309,
-    "hp_left": 0.6737967914438503
+    "rounds": 4.007,
+    "hp_left": 0.7085407388001048
    },
    "warbound|stonewarden": {
     "wins": 464,
@@ -987,20 +987,20 @@
     "hp_left": 0.6177831744868035
    },
    "warbound|archer": {
-    "wins": 758,
-    "losses": 242,
+    "wins": 710,
+    "losses": 290,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.592,
-    "hp_left": 0.5389481890141521
+    "rounds": 3.452,
+    "hp_left": 0.5248399487836107
    },
    "warbound|gunman": {
-    "wins": 895,
-    "losses": 105,
+    "wins": 704,
+    "losses": 296,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.09,
-    "hp_left": 0.5329862874555612
+    "rounds": 3.815,
+    "hp_left": 0.5409672004132231
    },
    "stonewarden|hellbound": {
     "wins": 468,
@@ -1051,20 +1051,20 @@
     "hp_left": 0.9450681818181819
    },
    "stonewarden|archer": {
-    "wins": 923,
-    "losses": 77,
+    "wins": 876,
+    "losses": 124,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.126,
-    "hp_left": 0.785802225943071
+    "rounds": 4.1,
+    "hp_left": 0.773557492735575
    },
    "stonewarden|gunman": {
-    "wins": 959,
-    "losses": 41,
+    "wins": 901,
+    "losses": 99,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.41,
-    "hp_left": 0.8190112806901128
+    "rounds": 4.553,
+    "hp_left": 0.7503531429724548
    },
    "hellbound|sanguine_mage": {
     "wins": 307,
@@ -1107,20 +1107,20 @@
     "hp_left": 0.9483574483574484
    },
    "hellbound|archer": {
-    "wins": 826,
-    "losses": 174,
+    "wins": 798,
+    "losses": 202,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.1,
-    "hp_left": 0.7059211974466212
+    "rounds": 3,
+    "hp_left": 0.7046593757120073
    },
    "hellbound|gunman": {
-    "wins": 906,
-    "losses": 94,
+    "wins": 765,
+    "losses": 235,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.572,
-    "hp_left": 0.7056241220148505
+    "rounds": 3.382,
+    "hp_left": 0.7381461675579323
    },
    "sanguine_mage|aether": {
     "wins": 695,
@@ -1155,20 +1155,20 @@
     "hp_left": 0.9695
    },
    "sanguine_mage|archer": {
-    "wins": 903,
-    "losses": 97,
+    "wins": 844,
+    "losses": 156,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.346,
-    "hp_left": 0.803508506996879
+    "rounds": 3.192,
+    "hp_left": 0.8054717794054287
    },
    "sanguine_mage|gunman": {
-    "wins": 950,
-    "losses": 50,
+    "wins": 794,
+    "losses": 206,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.733,
-    "hp_left": 0.8140191387559809
+    "rounds": 3.574,
+    "hp_left": 0.8003205862147927
    },
    "aether|sanguine_aegis": {
     "wins": 959,
@@ -1195,20 +1195,20 @@
     "hp_left": 0.8904896507704932
    },
    "aether|archer": {
-    "wins": 729,
-    "losses": 271,
+    "wins": 688,
+    "losses": 312,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.731,
-    "hp_left": 0.6922621274473126
+    "rounds": 3.591,
+    "hp_left": 0.6719080338266384
    },
    "aether|gunman": {
-    "wins": 871,
-    "losses": 129,
+    "wins": 663,
+    "losses": 337,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.318,
-    "hp_left": 0.6936906377204884
+    "rounds": 3.957,
+    "hp_left": 0.7150692444810092
    },
    "sanguine_aegis|bulwark": {
     "wins": 833,
@@ -1227,20 +1227,20 @@
     "hp_left": 0.6952169076751946
    },
    "sanguine_aegis|archer": {
-    "wins": 863,
-    "losses": 137,
+    "wins": 701,
+    "losses": 299,
     "draws": 0,
     "n": 1000,
-    "rounds": 7.763,
-    "hp_left": 0.6002828709699407
+    "rounds": 7.179,
+    "hp_left": 0.5640681379541831
    },
    "sanguine_aegis|gunman": {
-    "wins": 995,
-    "losses": 5,
+    "wins": 934,
+    "losses": 66,
     "draws": 0,
     "n": 1000,
-    "rounds": 7.396,
-    "hp_left": 0.7779781259237363
+    "rounds": 7.54,
+    "hp_left": 0.6536245119032624
    },
    "bulwark|warden": {
     "wins": 406,
@@ -1251,44 +1251,44 @@
     "hp_left": 0.3481237322515213
    },
    "bulwark|archer": {
-    "wins": 678,
-    "losses": 322,
+    "wins": 497,
+    "losses": 503,
     "draws": 0,
     "n": 1000,
-    "rounds": 9.436,
-    "hp_left": 0.4312207183758459
+    "rounds": 8.375,
+    "hp_left": 0.4222689075630252
    },
    "bulwark|gunman": {
-    "wins": 974,
-    "losses": 26,
+    "wins": 816,
+    "losses": 184,
     "draws": 0,
     "n": 1000,
-    "rounds": 10.354,
-    "hp_left": 0.6002234569392438
+    "rounds": 9.93,
+    "hp_left": 0.47338163206459055
    },
    "warden|archer": {
-    "wins": 569,
-    "losses": 430,
-    "draws": 1,
-    "n": 1000,
-    "rounds": 8.976,
-    "hp_left": 0.38005272407732865
-   },
-   "warden|gunman": {
-    "wins": 960,
-    "losses": 39,
-    "draws": 1,
-    "n": 1000,
-    "rounds": 10.196,
-    "hp_left": 0.5323682598039216
-   },
-   "archer|gunman": {
-    "wins": 850,
-    "losses": 150,
+    "wins": 386,
+    "losses": 614,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.914,
-    "hp_left": 0.5047843137254902
+    "rounds": 7.731,
+    "hp_left": 0.4014782078634563
+   },
+   "warden|gunman": {
+    "wins": 765,
+    "losses": 234,
+    "draws": 1,
+    "n": 1000,
+    "rounds": 9.528,
+    "hp_left": 0.44229142637447133
+   },
+   "archer|gunman": {
+    "wins": 771,
+    "losses": 229,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 3.18,
+    "hp_left": 0.49898400345871163
    }
   },
   "7/pre": {
@@ -1309,20 +1309,20 @@
     "hp_left": 0.8931104356636271
    },
    "verdant|archer": {
-    "wins": 861,
-    "losses": 139,
+    "wins": 762,
+    "losses": 238,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.013,
-    "hp_left": 0.6994509555485166
+    "rounds": 3.813,
+    "hp_left": 0.7024874731567645
    },
    "verdant|gunman": {
-    "wins": 771,
-    "losses": 229,
+    "wins": 610,
+    "losses": 390,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.189,
-    "hp_left": 0.7025114962858153
+    "rounds": 3.935,
+    "hp_left": 0.7832712369597615
    },
    "warbound|stonewarden": {
     "wins": 456,
@@ -1381,20 +1381,20 @@
     "hp_left": 0.5986751941525811
    },
    "warbound|archer": {
-    "wins": 874,
-    "losses": 126,
+    "wins": 748,
+    "losses": 252,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.85,
-    "hp_left": 0.5403058040357811
+    "rounds": 3.69,
+    "hp_left": 0.5313259601361205
    },
    "warbound|gunman": {
-    "wins": 740,
-    "losses": 260,
+    "wins": 610,
+    "losses": 390,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.036,
-    "hp_left": 0.5533476658476658
+    "rounds": 3.788,
+    "hp_left": 0.5580104321907601
    },
    "stonewarden|sanguine_aegis": {
     "wins": 994,
@@ -1405,20 +1405,20 @@
     "hp_left": 0.9366654472288275
    },
    "stonewarden|archer": {
-    "wins": 974,
-    "losses": 26,
+    "wins": 930,
+    "losses": 70,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.134,
-    "hp_left": 0.8111349635990293
+    "rounds": 4.054,
+    "hp_left": 0.8036901270772239
    },
    "stonewarden|gunman": {
-    "wins": 925,
-    "losses": 75,
+    "wins": 767,
+    "losses": 233,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.691,
-    "hp_left": 0.7664373464373464
+    "rounds": 4.789,
+    "hp_left": 0.7849354035794713
    },
    "hellbound|sanguine_aegis": {
     "wins": 999,
@@ -1429,20 +1429,20 @@
     "hp_left": 0.9403721903721903
    },
    "hellbound|archer": {
-    "wins": 914,
-    "losses": 86,
+    "wins": 852,
+    "losses": 148,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.289,
-    "hp_left": 0.7444052118559777
+    "rounds": 3.148,
+    "hp_left": 0.7166826717883056
    },
    "hellbound|gunman": {
-    "wins": 805,
-    "losses": 195,
+    "wins": 659,
+    "losses": 341,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.545,
-    "hp_left": 0.7510446075663467
+    "rounds": 3.327,
+    "hp_left": 0.8053524624086081
    },
    "sanguine_mage|sanguine_aegis": {
     "wins": 999,
@@ -1453,20 +1453,20 @@
     "hp_left": 0.9706069706069707
    },
    "sanguine_mage|archer": {
-    "wins": 968,
-    "losses": 32,
+    "wins": 916,
+    "losses": 84,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.458,
-    "hp_left": 0.8363072877535688
+    "rounds": 3.341,
+    "hp_left": 0.7959259626836046
    },
    "sanguine_mage|gunman": {
-    "wins": 879,
-    "losses": 121,
+    "wins": 705,
+    "losses": 295,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.714,
-    "hp_left": 0.8220084807115524
+    "rounds": 3.487,
+    "hp_left": 0.852675693101225
    },
    "aether|sanguine_aegis": {
     "wins": 984,
@@ -1477,20 +1477,20 @@
     "hp_left": 0.8776792313377679
    },
    "aether|archer": {
-    "wins": 878,
-    "losses": 122,
+    "wins": 795,
+    "losses": 205,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.024,
-    "hp_left": 0.7137864982398012
+    "rounds": 3.819,
+    "hp_left": 0.6734705546026301
    },
    "aether|gunman": {
-    "wins": 722,
-    "losses": 278,
+    "wins": 587,
+    "losses": 413,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.157,
-    "hp_left": 0.7230861244019139
+    "rounds": 3.861,
+    "hp_left": 0.7765216044602756
    },
    "sanguine_aegis|bulwark": {
     "wins": 378,
@@ -1509,60 +1509,60 @@
     "hp_left": 0.6414732865623314
    },
    "sanguine_aegis|archer": {
-    "wins": 996,
-    "losses": 2,
-    "draws": 2,
-    "n": 1000,
-    "rounds": 10.842,
-    "hp_left": 0.7332122608079377
-   },
-   "sanguine_aegis|gunman": {
-    "wins": 998,
-    "losses": 1,
-    "draws": 1,
-    "n": 1000,
-    "rounds": 10.234,
-    "hp_left": 0.7410114346339738
-   },
-   "bulwark|archer": {
-    "wins": 971,
-    "losses": 29,
-    "draws": 0,
-    "n": 1000,
-    "rounds": 10.565,
-    "hp_left": 0.5497819107045496
-   },
-   "bulwark|gunman": {
-    "wins": 971,
-    "losses": 29,
-    "draws": 0,
-    "n": 1000,
-    "rounds": 10.112,
-    "hp_left": 0.5748470345913854
-   },
-   "warden|archer": {
     "wins": 945,
     "losses": 55,
     "draws": 0,
     "n": 1000,
-    "rounds": 10.502,
-    "hp_left": 0.4928882664176782
+    "rounds": 10.459,
+    "hp_left": 0.6264705882352941
    },
-   "warden|gunman": {
-    "wins": 936,
-    "losses": 62,
+   "sanguine_aegis|gunman": {
+    "wins": 953,
+    "losses": 45,
     "draws": 2,
     "n": 1000,
-    "rounds": 10.104,
-    "hp_left": 0.4935740321769734
+    "rounds": 10.008,
+    "hp_left": 0.6419819764212086
    },
-   "archer|gunman": {
-    "wins": 528,
-    "losses": 472,
+   "bulwark|archer": {
+    "wins": 766,
+    "losses": 234,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.62,
-    "hp_left": 0.3257891414141414
+    "rounds": 9.925,
+    "hp_left": 0.45588235294117646
+   },
+   "bulwark|gunman": {
+    "wins": 807,
+    "losses": 193,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 9.555,
+    "hp_left": 0.48042860266783294
+   },
+   "warden|archer": {
+    "wins": 692,
+    "losses": 308,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 9.638,
+    "hp_left": 0.4193301598095886
+   },
+   "warden|gunman": {
+    "wins": 722,
+    "losses": 278,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 9.393,
+    "hp_left": 0.4323570148280919
+   },
+   "archer|gunman": {
+    "wins": 522,
+    "losses": 478,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 3.433,
+    "hp_left": 0.3829501915708812
    }
   },
   "10/post": {
@@ -1631,20 +1631,20 @@
     "hp_left": 0.9199354838709678
    },
    "verdant|archer": {
-    "wins": 924,
-    "losses": 76,
+    "wins": 832,
+    "losses": 168,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.506,
-    "hp_left": 0.7428606339896663
+    "rounds": 4.314,
+    "hp_left": 0.7499612282878412
    },
    "verdant|gunman": {
-    "wins": 969,
-    "losses": 31,
+    "wins": 848,
+    "losses": 152,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.976,
-    "hp_left": 0.781234395286128
+    "rounds": 4.932,
+    "hp_left": 0.7552495435179549
    },
    "warbound|stonewarden": {
     "wins": 466,
@@ -1703,20 +1703,20 @@
     "hp_left": 0.5802576770318706
    },
    "warbound|archer": {
-    "wins": 878,
-    "losses": 122,
+    "wins": 817,
+    "losses": 183,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.015,
-    "hp_left": 0.548662649717099
+    "rounds": 3.832,
+    "hp_left": 0.5309748489754017
    },
    "warbound|gunman": {
-    "wins": 917,
-    "losses": 83,
+    "wins": 711,
+    "losses": 289,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.595,
-    "hp_left": 0.5212298167235374
+    "rounds": 4.151,
+    "hp_left": 0.5477746018783176
    },
    "stonewarden|hellbound": {
     "wins": 545,
@@ -1767,20 +1767,20 @@
     "hp_left": 0.9518387096774193
    },
    "stonewarden|archer": {
-    "wins": 976,
-    "losses": 24,
+    "wins": 949,
+    "losses": 51,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.674,
-    "hp_left": 0.8018244315177155
+    "rounds": 4.657,
+    "hp_left": 0.7667833712906625
    },
    "stonewarden|gunman": {
-    "wins": 991,
-    "losses": 9,
+    "wins": 919,
+    "losses": 81,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.138,
-    "hp_left": 0.8267146251749617
+    "rounds": 5.418,
+    "hp_left": 0.7603109972269999
    },
    "hellbound|sanguine_mage": {
     "wins": 283,
@@ -1823,20 +1823,20 @@
     "hp_left": 0.9259354838709677
    },
    "hellbound|archer": {
-    "wins": 891,
-    "losses": 109,
+    "wins": 810,
+    "losses": 190,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.534,
-    "hp_left": 0.7067267658665508
+    "rounds": 3.356,
+    "hp_left": 0.7215252887295898
    },
    "hellbound|gunman": {
-    "wins": 940,
-    "losses": 60,
+    "wins": 730,
+    "losses": 270,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.065,
-    "hp_left": 0.7213452299245025
+    "rounds": 3.762,
+    "hp_left": 0.7796509058771542
    },
    "sanguine_mage|aether": {
     "wins": 738,
@@ -1871,20 +1871,20 @@
     "hp_left": 0.9901612903225806
    },
    "sanguine_mage|archer": {
-    "wins": 960,
-    "losses": 40,
+    "wins": 919,
+    "losses": 81,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.53,
-    "hp_left": 0.8920530913978495
+    "rounds": 3.453,
+    "hp_left": 0.8536277159605462
    },
    "sanguine_mage|gunman": {
-    "wins": 958,
-    "losses": 42,
+    "wins": 793,
+    "losses": 207,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.03,
-    "hp_left": 0.8977540575122904
+    "rounds": 3.688,
+    "hp_left": 0.9056461782532644
    },
    "aether|sanguine_aegis": {
     "wins": 986,
@@ -1911,20 +1911,20 @@
     "hp_left": 0.9123387096774194
    },
    "aether|archer": {
-    "wins": 862,
-    "losses": 138,
+    "wins": 806,
+    "losses": 194,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.362,
-    "hp_left": 0.7126150737220268
+    "rounds": 4.125,
+    "hp_left": 0.7145601536860642
    },
    "aether|gunman": {
-    "wins": 906,
-    "losses": 94,
+    "wins": 694,
+    "losses": 306,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.995,
-    "hp_left": 0.7096952218186997
+    "rounds": 4.515,
+    "hp_left": 0.7493027795853863
    },
    "sanguine_aegis|bulwark": {
     "wins": 617,
@@ -1943,20 +1943,20 @@
     "hp_left": 0.8663952962460425
    },
    "sanguine_aegis|archer": {
-    "wins": 853,
-    "losses": 144,
-    "draws": 3,
+    "wins": 561,
+    "losses": 439,
+    "draws": 0,
     "n": 1000,
-    "rounds": 10.352,
-    "hp_left": 0.5673644838943784
+    "rounds": 9.195,
+    "hp_left": 0.5213818860877685
    },
    "sanguine_aegis|gunman": {
-    "wins": 999,
-    "losses": 0,
+    "wins": 959,
+    "losses": 40,
     "draws": 1,
     "n": 1000,
-    "rounds": 9.334,
-    "hp_left": 0.8465417798751133
+    "rounds": 9.621,
+    "hp_left": 0.6581260241322806
    },
    "bulwark|warden": {
     "wins": 13,
@@ -1967,44 +1967,44 @@
     "hp_left": 0.40586080586080586
    },
    "bulwark|archer": {
-    "wins": 512,
-    "losses": 474,
-    "draws": 14,
+    "wins": 261,
+    "losses": 735,
+    "draws": 4,
     "n": 1000,
-    "rounds": 13.026,
-    "hp_left": 0.34605654761904764
+    "rounds": 10.332,
+    "hp_left": 0.32205801860974276
    },
    "bulwark|gunman": {
-    "wins": 973,
-    "losses": 6,
-    "draws": 21,
+    "wins": 739,
+    "losses": 247,
+    "draws": 14,
     "n": 1000,
-    "rounds": 14.462,
-    "hp_left": 0.578632604120785
+    "rounds": 13.575,
+    "hp_left": 0.38257619691990463
    },
    "warden|archer": {
-    "wins": 372,
-    "losses": 622,
-    "draws": 6,
+    "wins": 175,
+    "losses": 821,
+    "draws": 4,
     "n": 1000,
-    "rounds": 12.307,
-    "hp_left": 0.2833589349718382
+    "rounds": 9.658,
+    "hp_left": 0.2925170068027211
    },
    "warden|gunman": {
-    "wins": 952,
-    "losses": 22,
-    "draws": 26,
+    "wins": 615,
+    "losses": 375,
+    "draws": 10,
     "n": 1000,
-    "rounds": 14.594,
-    "hp_left": 0.5055422168867547
+    "rounds": 13.272,
+    "hp_left": 0.3344483159117305
    },
    "archer|gunman": {
-    "wins": 969,
-    "losses": 31,
+    "wins": 905,
+    "losses": 95,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.832,
-    "hp_left": 0.529005555189601
+    "rounds": 3.615,
+    "hp_left": 0.5054543317268132
    }
   },
   "10/pre": {
@@ -2025,20 +2025,20 @@
     "hp_left": 0.9392779876650844
    },
    "verdant|archer": {
-    "wins": 966,
-    "losses": 34,
+    "wins": 932,
+    "losses": 68,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.663,
-    "hp_left": 0.7908735724303747
+    "rounds": 4.575,
+    "hp_left": 0.7354631039734183
    },
    "verdant|gunman": {
-    "wins": 922,
-    "losses": 78,
+    "wins": 789,
+    "losses": 211,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.021,
-    "hp_left": 0.769155412497376
+    "rounds": 4.926,
+    "hp_left": 0.7665481009035529
    },
    "warbound|stonewarden": {
     "wins": 444,
@@ -2097,20 +2097,20 @@
     "hp_left": 0.5318387096774193
    },
    "warbound|archer": {
-    "wins": 925,
-    "losses": 75,
+    "wins": 885,
+    "losses": 115,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.321,
-    "hp_left": 0.5400697471665213
+    "rounds": 4.192,
+    "hp_left": 0.5264807727355567
    },
    "warbound|gunman": {
-    "wins": 823,
-    "losses": 177,
+    "wins": 626,
+    "losses": 374,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.584,
-    "hp_left": 0.528554070473876
+    "rounds": 4.216,
+    "hp_left": 0.5409924765536431
    },
    "stonewarden|sanguine_aegis": {
     "wins": 999,
@@ -2121,20 +2121,20 @@
     "hp_left": 0.9633504472214149
    },
    "stonewarden|archer": {
-    "wins": 991,
-    "losses": 9,
+    "wins": 972,
+    "losses": 28,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.638,
-    "hp_left": 0.8540086585723121
+    "rounds": 4.634,
+    "hp_left": 0.8179344218770742
    },
    "stonewarden|gunman": {
-    "wins": 947,
-    "losses": 53,
+    "wins": 830,
+    "losses": 170,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.281,
-    "hp_left": 0.8149163742889259
+    "rounds": 5.584,
+    "hp_left": 0.7961329187718617
    },
    "hellbound|sanguine_aegis": {
     "wins": 999,
@@ -2145,20 +2145,20 @@
     "hp_left": 0.9655784817075139
    },
    "hellbound|archer": {
-    "wins": 955,
-    "losses": 45,
+    "wins": 919,
+    "losses": 81,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.652,
-    "hp_left": 0.7656308056071609
+    "rounds": 3.623,
+    "hp_left": 0.6941977605391555
    },
    "hellbound|gunman": {
-    "wins": 844,
-    "losses": 156,
+    "wins": 663,
+    "losses": 337,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.082,
-    "hp_left": 0.7498471181776487
+    "rounds": 3.816,
+    "hp_left": 0.804432442952367
    },
    "sanguine_mage|sanguine_aegis": {
     "wins": 1000,
@@ -2169,20 +2169,20 @@
     "hp_left": 0.9937258064516129
    },
    "sanguine_mage|archer": {
-    "wins": 997,
-    "losses": 3,
+    "wins": 959,
+    "losses": 41,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.608,
-    "hp_left": 0.9487171190992332
+    "rounds": 3.565,
+    "hp_left": 0.9083218406269972
    },
    "sanguine_mage|gunman": {
-    "wins": 914,
-    "losses": 86,
+    "wins": 749,
+    "losses": 251,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.961,
-    "hp_left": 0.9133726265264347
+    "rounds": 3.749,
+    "hp_left": 0.9220465997674319
    },
    "aether|sanguine_aegis": {
     "wins": 1000,
@@ -2193,20 +2193,20 @@
     "hp_left": 0.9421774193548387
    },
    "aether|archer": {
-    "wins": 937,
-    "losses": 63,
+    "wins": 887,
+    "losses": 113,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.555,
-    "hp_left": 0.7648466278789547
+    "rounds": 4.438,
+    "hp_left": 0.7309524675419137
    },
    "aether|gunman": {
-    "wins": 818,
-    "losses": 182,
+    "wins": 662,
+    "losses": 338,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.809,
-    "hp_left": 0.7640586797066015
+    "rounds": 4.474,
+    "hp_left": 0.8160510671474516
    },
    "sanguine_aegis|bulwark": {
     "wins": 4,
@@ -2225,60 +2225,60 @@
     "hp_left": 0.8869047619047619
    },
    "sanguine_aegis|archer": {
-    "wins": 867,
-    "losses": 0,
-    "draws": 133,
+    "wins": 833,
+    "losses": 88,
+    "draws": 79,
     "n": 1000,
-    "rounds": 15.969,
-    "hp_left": 0.7559180534959081
+    "rounds": 15.562,
+    "hp_left": 0.5671640084605271
    },
    "sanguine_aegis|gunman": {
-    "wins": 919,
-    "losses": 0,
-    "draws": 81,
+    "wins": 913,
+    "losses": 43,
+    "draws": 44,
     "n": 1000,
-    "rounds": 14.933,
-    "hp_left": 0.7761438416498264
+    "rounds": 14.708,
+    "hp_left": 0.5899128983466333
    },
    "bulwark|archer": {
-    "wins": 926,
-    "losses": 21,
-    "draws": 53,
+    "wins": 669,
+    "losses": 318,
+    "draws": 13,
     "n": 1000,
-    "rounds": 14.934,
-    "hp_left": 0.5189653399156638
+    "rounds": 13.529,
+    "hp_left": 0.3698483877856075
    },
    "bulwark|gunman": {
-    "wins": 973,
-    "losses": 8,
-    "draws": 19,
+    "wins": 729,
+    "losses": 260,
+    "draws": 11,
     "n": 1000,
-    "rounds": 14.22,
-    "hp_left": 0.5444623892722557
+    "rounds": 13.251,
+    "hp_left": 0.38177542621987065
    },
    "warden|archer": {
-    "wins": 922,
-    "losses": 44,
-    "draws": 34,
+    "wins": 487,
+    "losses": 507,
+    "draws": 6,
     "n": 1000,
-    "rounds": 15.028,
-    "hp_left": 0.4395310401817994
+    "rounds": 12.712,
+    "hp_left": 0.3111567419575633
    },
    "warden|gunman": {
-    "wins": 935,
-    "losses": 34,
-    "draws": 31,
+    "wins": 601,
+    "losses": 395,
+    "draws": 4,
     "n": 1000,
-    "rounds": 14.365,
-    "hp_left": 0.47404125286478227
+    "rounds": 12.817,
+    "hp_left": 0.3136993899057127
    },
    "archer|gunman": {
-    "wins": 649,
-    "losses": 351,
+    "wins": 617,
+    "losses": 383,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.515,
-    "hp_left": 0.29706914074025503
+    "rounds": 4.316,
+    "hp_left": 0.3381840753129418
    }
   },
   "15/post": {
@@ -2347,20 +2347,20 @@
     "hp_left": 0.9684672897196261
    },
    "verdant|archer": {
-    "wins": 984,
-    "losses": 16,
+    "wins": 973,
+    "losses": 27,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.415,
-    "hp_left": 0.7503324215485145
+    "rounds": 3.417,
+    "hp_left": 0.7552227910595422
    },
    "verdant|gunman": {
-    "wins": 948,
-    "losses": 52,
+    "wins": 827,
+    "losses": 173,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.912,
-    "hp_left": 0.6301510311920817
+    "rounds": 3.619,
+    "hp_left": 0.6303721366497531
    },
    "warbound|stonewarden": {
     "wins": 431,
@@ -2419,20 +2419,20 @@
     "hp_left": 0.6576168224299065
    },
    "warbound|archer": {
-    "wins": 978,
-    "losses": 22,
+    "wins": 974,
+    "losses": 26,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.301,
-    "hp_left": 0.6018672476731074
+    "rounds": 3.284,
+    "hp_left": 0.6014699955861751
    },
    "warbound|gunman": {
-    "wins": 878,
-    "losses": 122,
+    "wins": 745,
+    "losses": 255,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.72,
-    "hp_left": 0.5116130543077938
+    "rounds": 3.316,
+    "hp_left": 0.5130276610424638
    },
    "stonewarden|hellbound": {
     "wins": 470,
@@ -2483,20 +2483,20 @@
     "hp_left": 0.9676728971962617
    },
    "stonewarden|archer": {
-    "wins": 993,
-    "losses": 7,
+    "wins": 988,
+    "losses": 12,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.402,
-    "hp_left": 0.8677471270858627
+    "rounds": 3.403,
+    "hp_left": 0.8715142457149343
    },
    "stonewarden|gunman": {
-    "wins": 977,
-    "losses": 23,
+    "wins": 875,
+    "losses": 125,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.109,
-    "hp_left": 0.6371497718554797
+    "rounds": 3.99,
+    "hp_left": 0.6200587449933245
    },
    "hellbound|sanguine_mage": {
     "wins": 703,
@@ -2539,20 +2539,20 @@
     "hp_left": 0.9568598130841122
    },
    "hellbound|archer": {
-    "wins": 968,
-    "losses": 32,
+    "wins": 958,
+    "losses": 42,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.34,
-    "hp_left": 0.7420058700857342
+    "rounds": 3.345,
+    "hp_left": 0.7401420404659239
    },
    "hellbound|gunman": {
-    "wins": 876,
-    "losses": 124,
+    "wins": 737,
+    "losses": 263,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.828,
-    "hp_left": 0.5982908718473947
+    "rounds": 3.327,
+    "hp_left": 0.6321155480033984
    },
    "sanguine_mage|aether": {
     "wins": 393,
@@ -2587,20 +2587,20 @@
     "hp_left": 0.998822429906542
    },
    "sanguine_mage|archer": {
-    "wins": 983,
-    "losses": 17,
+    "wins": 974,
+    "losses": 26,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.966,
-    "hp_left": 0.6163660737205389
+    "rounds": 3.948,
+    "hp_left": 0.5914045558348846
    },
    "sanguine_mage|gunman": {
-    "wins": 755,
-    "losses": 245,
+    "wins": 472,
+    "losses": 528,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.6,
-    "hp_left": 0.48901404963792783
+    "rounds": 3.666,
+    "hp_left": 0.46715111674322823
    },
    "aether|sanguine_aegis": {
     "wins": 1000,
@@ -2627,20 +2627,20 @@
     "hp_left": 0.9624205607476636
    },
    "aether|archer": {
-    "wins": 984,
-    "losses": 16,
+    "wins": 985,
+    "losses": 15,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.395,
-    "hp_left": 0.775890889750019
+    "rounds": 3.424,
+    "hp_left": 0.7712794724607429
    },
    "aether|gunman": {
-    "wins": 988,
-    "losses": 12,
+    "wins": 920,
+    "losses": 80,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.119,
-    "hp_left": 0.6517745658178515
+    "rounds": 4.067,
+    "hp_left": 0.6357984559122308
    },
    "sanguine_aegis|bulwark": {
     "wins": 51,
@@ -2659,20 +2659,20 @@
     "hp_left": 0.9372200772200773
    },
    "sanguine_aegis|archer": {
-    "wins": 941,
-    "losses": 58,
+    "wins": 560,
+    "losses": 439,
     "draws": 1,
     "n": 1000,
-    "rounds": 11.49,
-    "hp_left": 0.4714421116121435
+    "rounds": 10.796,
+    "hp_left": 0.40033783783783783
    },
    "sanguine_aegis|gunman": {
-    "wins": 1000,
-    "losses": 0,
-    "draws": 0,
+    "wins": 981,
+    "losses": 16,
+    "draws": 3,
     "n": 1000,
-    "rounds": 9.381,
-    "hp_left": 0.760145945945946
+    "rounds": 10.41,
+    "hp_left": 0.5327272226354796
    },
    "bulwark|warden": {
     "wins": 0,
@@ -2683,44 +2683,44 @@
     "hp_left": 0.0
    },
    "bulwark|archer": {
-    "wins": 87,
-    "losses": 803,
-    "draws": 110,
+    "wins": 25,
+    "losses": 965,
+    "draws": 10,
     "n": 1000,
-    "rounds": 14.89,
-    "hp_left": 0.18956197576887232
+    "rounds": 10.766,
+    "hp_left": 0.17513513513513515
    },
    "bulwark|gunman": {
-    "wins": 583,
-    "losses": 1,
-    "draws": 416,
+    "wins": 298,
+    "losses": 553,
+    "draws": 149,
     "n": 1000,
-    "rounds": 19.053,
-    "hp_left": 0.47565713226090583
+    "rounds": 16.361,
+    "hp_left": 0.22936695084346093
    },
    "warden|archer": {
-    "wins": 37,
-    "losses": 910,
-    "draws": 53,
+    "wins": 10,
+    "losses": 987,
+    "draws": 3,
     "n": 1000,
-    "rounds": 13.15,
-    "hp_left": 0.13747260774287803
+    "rounds": 9.359,
+    "hp_left": 0.16756756756756758
    },
    "warden|gunman": {
-    "wins": 560,
-    "losses": 8,
-    "draws": 432,
+    "wins": 163,
+    "losses": 758,
+    "draws": 79,
     "n": 1000,
-    "rounds": 19.107,
-    "hp_left": 0.41303088803088805
+    "rounds": 15.185,
+    "hp_left": 0.1900514010943459
    },
    "archer|gunman": {
-    "wins": 936,
-    "losses": 64,
+    "wins": 594,
+    "losses": 406,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.493,
-    "hp_left": 0.27697491528852475
+    "rounds": 4.922,
+    "hp_left": 0.20274739505508738
    }
   },
   "15/pre": {
@@ -2741,20 +2741,20 @@
     "hp_left": 0.9856822429906542
    },
    "verdant|archer": {
-    "wins": 996,
-    "losses": 4,
+    "wins": 991,
+    "losses": 9,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.398,
-    "hp_left": 0.8347689824719439
+    "rounds": 3.399,
+    "hp_left": 0.8267114309156238
    },
    "verdant|gunman": {
-    "wins": 918,
-    "losses": 82,
+    "wins": 799,
+    "losses": 201,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.896,
-    "hp_left": 0.65621118644758
+    "rounds": 3.614,
+    "hp_left": 0.6301451580831179
    },
    "warbound|stonewarden": {
     "wins": 481,
@@ -2813,20 +2813,20 @@
     "hp_left": 0.6466168224299065
    },
    "warbound|archer": {
-    "wins": 997,
-    "losses": 3,
+    "wins": 993,
+    "losses": 7,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.313,
-    "hp_left": 0.6111418367251286
+    "rounds": 3.291,
+    "hp_left": 0.6144977459035679
    },
    "warbound|gunman": {
-    "wins": 833,
-    "losses": 167,
+    "wins": 733,
+    "losses": 267,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.694,
-    "hp_left": 0.5243069190292939
+    "rounds": 3.337,
+    "hp_left": 0.5282222590557305
    },
    "stonewarden|sanguine_aegis": {
     "wins": 1000,
@@ -2837,20 +2837,20 @@
     "hp_left": 0.9909345794392523
    },
    "stonewarden|archer": {
-    "wins": 997,
-    "losses": 3,
+    "wins": 995,
+    "losses": 5,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.417,
-    "hp_left": 0.9009083324740577
+    "rounds": 3.436,
+    "hp_left": 0.8962288075893486
    },
    "stonewarden|gunman": {
-    "wins": 949,
-    "losses": 51,
+    "wins": 835,
+    "losses": 165,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.947,
-    "hp_left": 0.6539594063598673
+    "rounds": 4.018,
+    "hp_left": 0.6478034585035536
    },
    "hellbound|sanguine_aegis": {
     "wins": 1000,
@@ -2861,20 +2861,20 @@
     "hp_left": 0.986177570093458
    },
    "hellbound|archer": {
-    "wins": 993,
-    "losses": 7,
+    "wins": 985,
+    "losses": 15,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.372,
-    "hp_left": 0.8161052601857864
+    "rounds": 3.34,
+    "hp_left": 0.8036149722472603
    },
    "hellbound|gunman": {
-    "wins": 834,
-    "losses": 166,
+    "wins": 711,
+    "losses": 289,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.722,
-    "hp_left": 0.6428203231807078
+    "rounds": 3.359,
+    "hp_left": 0.6256950195196972
    },
    "sanguine_mage|sanguine_aegis": {
     "wins": 1000,
@@ -2890,15 +2890,15 @@
     "draws": 0,
     "n": 1000,
     "rounds": 4,
-    "hp_left": 0.7922242990654206
+    "hp_left": 0.747196261682243
    },
    "sanguine_mage|gunman": {
-    "wins": 657,
-    "losses": 343,
+    "wins": 409,
+    "losses": 591,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.398,
-    "hp_left": 0.5104197783752258
+    "rounds": 3.613,
+    "hp_left": 0.4754929963667938
    },
    "aether|sanguine_aegis": {
     "wins": 1000,
@@ -2909,20 +2909,20 @@
     "hp_left": 0.9832429906542056
    },
    "aether|archer": {
-    "wins": 995,
-    "losses": 5,
+    "wins": 996,
+    "losses": 4,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.411,
-    "hp_left": 0.8534541868219603
+    "rounds": 3.385,
+    "hp_left": 0.8490785572195323
    },
    "aether|gunman": {
-    "wins": 950,
-    "losses": 50,
+    "wins": 846,
+    "losses": 154,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.202,
-    "hp_left": 0.6473487456960157
+    "rounds": 4.154,
+    "hp_left": 0.6616402642451559
    },
    "sanguine_aegis|bulwark": {
     "wins": 0,
@@ -2941,60 +2941,60 @@
     "hp_left": 0.9400337837837838
    },
    "sanguine_aegis|archer": {
-    "wins": 935,
-    "losses": 0,
-    "draws": 65,
+    "wins": 929,
+    "losses": 8,
+    "draws": 63,
     "n": 1000,
-    "rounds": 15.783,
-    "hp_left": 0.6987136869489811
+    "rounds": 15.926,
+    "hp_left": 0.5312832746632531
    },
    "sanguine_aegis|gunman": {
-    "wins": 978,
-    "losses": 0,
-    "draws": 22,
+    "wins": 966,
+    "losses": 6,
+    "draws": 28,
     "n": 1000,
-    "rounds": 14.969,
-    "hp_left": 0.6975625932681148
+    "rounds": 15.122,
+    "hp_left": 0.5245929158972638
    },
    "bulwark|archer": {
-    "wins": 501,
-    "losses": 8,
-    "draws": 491,
+    "wins": 257,
+    "losses": 562,
+    "draws": 181,
     "n": 1000,
-    "rounds": 19.269,
-    "hp_left": 0.4077682472892054
+    "rounds": 16.648,
+    "hp_left": 0.21188347880954886
    },
    "bulwark|gunman": {
-    "wins": 644,
-    "losses": 14,
-    "draws": 342,
+    "wins": 262,
+    "losses": 606,
+    "draws": 132,
     "n": 1000,
-    "rounds": 18.791,
-    "hp_left": 0.40819204297465167
+    "rounds": 15.675,
+    "hp_left": 0.20812873942644936
    },
    "warden|archer": {
-    "wins": 430,
-    "losses": 35,
-    "draws": 535,
+    "wins": 153,
+    "losses": 759,
+    "draws": 88,
     "n": 1000,
-    "rounds": 19.373,
-    "hp_left": 0.3471904462602137
+    "rounds": 15.245,
+    "hp_left": 0.19621974916092563
    },
    "warden|gunman": {
-    "wins": 600,
-    "losses": 41,
-    "draws": 359,
+    "wins": 148,
+    "losses": 782,
+    "draws": 70,
     "n": 1000,
-    "rounds": 18.855,
-    "hp_left": 0.332981981981982
+    "rounds": 14.038,
+    "hp_left": 0.16033601168736306
    },
    "archer|gunman": {
-    "wins": 184,
-    "losses": 816,
+    "wins": 85,
+    "losses": 915,
     "draws": 0,
     "n": 1000,
-    "rounds": 7.308,
-    "hp_left": 0.10988551582197068
+    "rounds": 4.835,
+    "hp_left": 0.12718412808910545
    }
   }
  },
@@ -3193,28 +3193,28 @@
     "hp_left": 0.6175324675324675
    },
    "sanguine_aegis|brute": {
-    "wins": 787,
-    "losses": 211,
+    "wins": 779,
+    "losses": 219,
     "draws": 2,
     "n": 1000,
-    "rounds": 10.949,
-    "hp_left": 0.6708624523506989
+    "rounds": 11.008,
+    "hp_left": 0.6704508985879333
    },
    "sanguine_aegis|soldier": {
-    "wins": 772,
-    "losses": 224,
-    "draws": 4,
+    "wins": 757,
+    "losses": 235,
+    "draws": 8,
     "n": 1000,
-    "rounds": 10.653,
-    "hp_left": 0.6403821243523317
+    "rounds": 10.893,
+    "hp_left": 0.6382926023778072
    },
    "sanguine_aegis|sniper": {
-    "wins": 878,
-    "losses": 82,
-    "draws": 40,
+    "wins": 861,
+    "losses": 79,
+    "draws": 60,
     "n": 1000,
-    "rounds": 13.866,
-    "hp_left": 0.8077662300683371
+    "rounds": 14.251,
+    "hp_left": 0.8162383855981417
    },
    "sanguine_aegis|caster": {
     "wins": 605,
@@ -3225,28 +3225,28 @@
     "hp_left": 0.4588326446280992
    },
    "bulwark|brute": {
-    "wins": 885,
-    "losses": 111,
-    "draws": 4,
+    "wins": 890,
+    "losses": 107,
+    "draws": 3,
     "n": 1000,
-    "rounds": 11.479,
-    "hp_left": 0.4987994350282486
+    "rounds": 11.654,
+    "hp_left": 0.491186797752809
    },
    "bulwark|soldier": {
-    "wins": 927,
-    "losses": 62,
-    "draws": 11,
+    "wins": 909,
+    "losses": 75,
+    "draws": 16,
     "n": 1000,
-    "rounds": 11.638,
-    "hp_left": 0.5171925566343042
+    "rounds": 11.98,
+    "hp_left": 0.5176361386138614
    },
    "bulwark|sniper": {
-    "wins": 898,
-    "losses": 70,
-    "draws": 32,
+    "wins": 883,
+    "losses": 76,
+    "draws": 41,
     "n": 1000,
-    "rounds": 14.013,
-    "hp_left": 0.6303243318485523
+    "rounds": 14.322,
+    "hp_left": 0.6192313137032842
    },
    "bulwark|caster": {
     "wins": 174,
@@ -3257,28 +3257,28 @@
     "hp_left": 0.17043821839080459
    },
    "warden|brute": {
-    "wins": 334,
-    "losses": 666,
+    "wins": 330,
+    "losses": 670,
     "draws": 0,
     "n": 1000,
-    "rounds": 8.786,
-    "hp_left": 0.39932634730538924
+    "rounds": 8.843,
+    "hp_left": 0.3934659090909091
    },
    "warden|soldier": {
-    "wins": 379,
-    "losses": 620,
+    "wins": 352,
+    "losses": 647,
     "draws": 1,
     "n": 1000,
-    "rounds": 8.788,
-    "hp_left": 0.37351583113456466
+    "rounds": 8.994,
+    "hp_left": 0.3498757102272727
    },
    "warden|sniper": {
-    "wins": 632,
-    "losses": 358,
-    "draws": 10,
+    "wins": 586,
+    "losses": 397,
+    "draws": 17,
     "n": 1000,
-    "rounds": 12.515,
-    "hp_left": 0.4276107594936709
+    "rounds": 12.684,
+    "hp_left": 0.4395797781569966
    },
    "warden|caster": {
     "wins": 179,
@@ -3289,28 +3289,28 @@
     "hp_left": 0.19535614525139663
    },
    "archer|brute": {
-    "wins": 266,
-    "losses": 734,
+    "wins": 256,
+    "losses": 744,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.684,
-    "hp_left": 0.3704350161117078
+    "rounds": 6.73,
+    "hp_left": 0.3618861607142857
    },
    "archer|soldier": {
-    "wins": 180,
-    "losses": 820,
+    "wins": 150,
+    "losses": 850,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.51,
-    "hp_left": 0.3740079365079365
+    "rounds": 6.537,
+    "hp_left": 0.35833333333333334
    },
    "archer|sniper": {
-    "wins": 19,
-    "losses": 981,
+    "wins": 13,
+    "losses": 987,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.961,
-    "hp_left": 0.18984962406015038
+    "rounds": 3.955,
+    "hp_left": 0.1510989010989011
    },
    "archer|caster": {
     "wins": 796,
@@ -3321,36 +3321,36 @@
     "hp_left": 0.41533560660445085
    },
    "gunman|brute": {
-    "wins": 125,
-    "losses": 875,
+    "wins": 309,
+    "losses": 691,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.739,
-    "hp_left": 0.31085714285714283
+    "rounds": 5.524,
+    "hp_left": 0.37182154415164126
    },
    "gunman|soldier": {
-    "wins": 170,
-    "losses": 830,
+    "wins": 303,
+    "losses": 697,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.247,
-    "hp_left": 0.3873949579831933
+    "rounds": 5.996,
+    "hp_left": 0.45685997171145687
    },
    "gunman|sniper": {
-    "wins": 23,
-    "losses": 977,
+    "wins": 53,
+    "losses": 947,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.823,
-    "hp_left": 0.2577639751552795
+    "rounds": 3.814,
+    "hp_left": 0.23045822102425875
    },
    "gunman|caster": {
-    "wins": 774,
-    "losses": 226,
+    "wins": 887,
+    "losses": 113,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.567,
-    "hp_left": 0.4127906976744186
+    "rounds": 3.054,
+    "hp_left": 0.48389434691576744
    }
   },
   "3/pre": {
@@ -3387,28 +3387,28 @@
     "hp_left": 0.5650319829424307
    },
    "sanguine_aegis|brute": {
-    "wins": 797,
-    "losses": 203,
+    "wins": 784,
+    "losses": 216,
     "draws": 0,
     "n": 1000,
-    "rounds": 10.905,
-    "hp_left": 0.6806775407779172
+    "rounds": 11.026,
+    "hp_left": 0.6853475765306123
    },
    "sanguine_aegis|soldier": {
-    "wins": 756,
-    "losses": 241,
-    "draws": 3,
+    "wins": 739,
+    "losses": 259,
+    "draws": 2,
     "n": 1000,
-    "rounds": 10.474,
-    "hp_left": 0.6226438492063492
+    "rounds": 10.851,
+    "hp_left": 0.615823748308525
    },
    "sanguine_aegis|sniper": {
-    "wins": 900,
-    "losses": 70,
-    "draws": 30,
+    "wins": 867,
+    "losses": 77,
+    "draws": 56,
     "n": 1000,
-    "rounds": 13.946,
-    "hp_left": 0.8151388888888889
+    "rounds": 14.204,
+    "hp_left": 0.8216190888119954
    },
    "sanguine_aegis|caster": {
     "wins": 565,
@@ -3419,28 +3419,28 @@
     "hp_left": 0.4543694690265487
    },
    "archer|brute": {
-    "wins": 219,
-    "losses": 781,
+    "wins": 199,
+    "losses": 801,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.182,
-    "hp_left": 0.361545988258317
+    "rounds": 6.177,
+    "hp_left": 0.34709260588657576
    },
    "archer|soldier": {
-    "wins": 182,
-    "losses": 818,
+    "wins": 161,
+    "losses": 839,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.529,
-    "hp_left": 0.3873626373626374
+    "rounds": 6.574,
+    "hp_left": 0.36645962732919257
    },
    "archer|sniper": {
-    "wins": 22,
-    "losses": 978,
+    "wins": 19,
+    "losses": 981,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.837,
-    "hp_left": 0.2564935064935065
+    "rounds": 3.848,
+    "hp_left": 0.2593984962406015
    },
    "archer|caster": {
     "wins": 813,
@@ -3451,36 +3451,36 @@
     "hp_left": 0.442321208926375
    },
    "gunman|brute": {
-    "wins": 151,
-    "losses": 849,
+    "wins": 280,
+    "losses": 720,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.719,
-    "hp_left": 0.3190633869441816
+    "rounds": 5.363,
+    "hp_left": 0.3510204081632653
    },
    "gunman|soldier": {
-    "wins": 174,
-    "losses": 826,
+    "wins": 269,
+    "losses": 731,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.204,
-    "hp_left": 0.34523809523809523
+    "rounds": 6.045,
+    "hp_left": 0.3863515666489644
    },
    "gunman|sniper": {
-    "wins": 20,
-    "losses": 980,
+    "wins": 60,
+    "losses": 940,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.808,
-    "hp_left": 0.21607142857142858
+    "rounds": 3.828,
+    "hp_left": 0.2470238095238095
    },
    "gunman|caster": {
-    "wins": 806,
-    "losses": 194,
+    "wins": 894,
+    "losses": 106,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.357,
-    "hp_left": 0.44837823466855725
+    "rounds": 2.849,
+    "hp_left": 0.5387503994886546
    }
   },
   "7/post": {
@@ -3677,164 +3677,164 @@
     "hp_left": 0.6181437277805993
    },
    "sanguine_aegis|brute": {
-    "wins": 837,
-    "losses": 163,
+    "wins": 727,
+    "losses": 273,
     "draws": 0,
     "n": 1000,
-    "rounds": 10.998,
-    "hp_left": 0.6574249771593225
+    "rounds": 11.041,
+    "hp_left": 0.6433975240715268
    },
    "sanguine_aegis|soldier": {
-    "wins": 872,
-    "losses": 125,
-    "draws": 3,
+    "wins": 843,
+    "losses": 152,
+    "draws": 5,
     "n": 1000,
-    "rounds": 11.473,
-    "hp_left": 0.6524217485159202
+    "rounds": 12.135,
+    "hp_left": 0.6541937059521318
    },
    "sanguine_aegis|sniper": {
-    "wins": 964,
-    "losses": 23,
-    "draws": 13,
+    "wins": 951,
+    "losses": 41,
+    "draws": 8,
     "n": 1000,
-    "rounds": 14.099,
-    "hp_left": 0.8120576031242372
+    "rounds": 14.193,
+    "hp_left": 0.7934681759138987
    },
    "sanguine_aegis|caster": {
-    "wins": 572,
-    "losses": 428,
+    "wins": 538,
+    "losses": 462,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.266,
-    "hp_left": 0.33394179350061703
+    "rounds": 5.423,
+    "hp_left": 0.3233654056418106
    },
    "bulwark|brute": {
-    "wins": 878,
-    "losses": 112,
-    "draws": 10,
+    "wins": 779,
+    "losses": 196,
+    "draws": 25,
     "n": 1000,
-    "rounds": 15.297,
-    "hp_left": 0.46305105185582207
+    "rounds": 15.635,
+    "hp_left": 0.42852827909084046
    },
    "bulwark|soldier": {
-    "wins": 892,
-    "losses": 43,
-    "draws": 65,
+    "wins": 813,
+    "losses": 58,
+    "draws": 129,
     "n": 1000,
-    "rounds": 15.939,
-    "hp_left": 0.5083421260881034
+    "rounds": 16.709,
+    "hp_left": 0.4900151942695897
    },
    "bulwark|sniper": {
-    "wins": 713,
-    "losses": 16,
-    "draws": 271,
+    "wins": 649,
+    "losses": 29,
+    "draws": 322,
     "n": 1000,
-    "rounds": 18.368,
-    "hp_left": 0.6781824931936309
+    "rounds": 18.52,
+    "hp_left": 0.6691516360010876
    },
    "bulwark|caster": {
-    "wins": 50,
-    "losses": 950,
+    "wins": 34,
+    "losses": 966,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.949,
-    "hp_left": 0.115
+    "rounds": 4.944,
+    "hp_left": 0.10467128027681662
    },
    "warden|brute": {
-    "wins": 267,
-    "losses": 732,
-    "draws": 1,
+    "wins": 209,
+    "losses": 789,
+    "draws": 2,
     "n": 1000,
-    "rounds": 11.245,
-    "hp_left": 0.3213262833223177
+    "rounds": 10.913,
+    "hp_left": 0.2813819307627357
    },
    "warden|soldier": {
-    "wins": 288,
-    "losses": 705,
-    "draws": 7,
+    "wins": 214,
+    "losses": 771,
+    "draws": 15,
     "n": 1000,
-    "rounds": 12.125,
-    "hp_left": 0.26986315359477125
+    "rounds": 12.59,
+    "hp_left": 0.2687603078614623
    },
    "warden|sniper": {
-    "wins": 561,
-    "losses": 222,
-    "draws": 217,
+    "wins": 523,
+    "losses": 259,
+    "draws": 218,
     "n": 1000,
-    "rounds": 17.29,
-    "hp_left": 0.4997902904477299
+    "rounds": 17.097,
+    "hp_left": 0.47494657518839273
    },
    "warden|caster": {
-    "wins": 50,
-    "losses": 950,
-    "draws": 0,
-    "n": 1000,
-    "rounds": 4.934,
-    "hp_left": 0.09647058823529411
-   },
-   "archer|brute": {
-    "wins": 508,
-    "losses": 492,
-    "draws": 0,
-    "n": 1000,
-    "rounds": 6.451,
-    "hp_left": 0.4237204724409449
-   },
-   "archer|soldier": {
-    "wins": 325,
-    "losses": 675,
-    "draws": 0,
-    "n": 1000,
-    "rounds": 6.588,
-    "hp_left": 0.37276923076923074
-   },
-   "archer|sniper": {
-    "wins": 33,
-    "losses": 967,
-    "draws": 0,
-    "n": 1000,
-    "rounds": 4.337,
-    "hp_left": 0.2777777777777778
-   },
-   "archer|caster": {
-    "wins": 988,
-    "losses": 12,
-    "draws": 0,
-    "n": 1000,
-    "rounds": 2.885,
-    "hp_left": 0.6127024291497976
-   },
-   "gunman|brute": {
-    "wins": 53,
-    "losses": 947,
-    "draws": 0,
-    "n": 1000,
-    "rounds": 6.42,
-    "hp_left": 0.3081761006289308
-   },
-   "gunman|soldier": {
     "wins": 30,
     "losses": 970,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.747,
-    "hp_left": 0.19944444444444445
+    "rounds": 4.915,
+    "hp_left": 0.08186274509803922
+   },
+   "archer|brute": {
+    "wins": 604,
+    "losses": 396,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 5.733,
+    "hp_left": 0.485485651214128
+   },
+   "archer|soldier": {
+    "wins": 468,
+    "losses": 532,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 6.187,
+    "hp_left": 0.412962962962963
+   },
+   "archer|sniper": {
+    "wins": 84,
+    "losses": 916,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 4.089,
+    "hp_left": 0.2757936507936508
+   },
+   "archer|caster": {
+    "wins": 995,
+    "losses": 5,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 2.429,
+    "hp_left": 0.7012227805695143
+   },
+   "gunman|brute": {
+    "wins": 202,
+    "losses": 798,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 6.282,
+    "hp_left": 0.30965346534653465
+   },
+   "gunman|soldier": {
+    "wins": 172,
+    "losses": 828,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 6.786,
+    "hp_left": 0.33439922480620154
    },
    "gunman|sniper": {
-    "wins": 0,
-    "losses": 1000,
+    "wins": 3,
+    "losses": 997,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.12,
-    "hp_left": 0.0
+    "rounds": 3.958,
+    "hp_left": 0.1388888888888889
    },
    "gunman|caster": {
-    "wins": 842,
-    "losses": 158,
+    "wins": 968,
+    "losses": 32,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.425,
-    "hp_left": 0.40049485352335706
+    "rounds": 3.497,
+    "hp_left": 0.7022899449035813
    }
   },
   "7/pre": {
@@ -3871,100 +3871,100 @@
     "hp_left": 0.4528217568947906
    },
    "sanguine_aegis|brute": {
-    "wins": 759,
-    "losses": 236,
-    "draws": 5,
+    "wins": 627,
+    "losses": 351,
+    "draws": 22,
     "n": 1000,
-    "rounds": 14.35,
-    "hp_left": 0.6051305897853212
+    "rounds": 14.358,
+    "hp_left": 0.5884698376958439
    },
    "sanguine_aegis|soldier": {
-    "wins": 795,
-    "losses": 153,
-    "draws": 52,
+    "wins": 730,
+    "losses": 174,
+    "draws": 96,
     "n": 1000,
-    "rounds": 15.307,
-    "hp_left": 0.5707917129115797
+    "rounds": 16.071,
+    "hp_left": 0.5604552780016115
    },
    "sanguine_aegis|sniper": {
-    "wins": 717,
-    "losses": 13,
-    "draws": 270,
+    "wins": 668,
+    "losses": 18,
+    "draws": 314,
     "n": 1000,
-    "rounds": 18.454,
-    "hp_left": 0.8502133070801542
+    "rounds": 18.647,
+    "hp_left": 0.8343827051778795
    },
    "sanguine_aegis|caster": {
-    "wins": 543,
-    "losses": 457,
+    "wins": 452,
+    "losses": 548,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.396,
-    "hp_left": 0.32149821254468636
+    "rounds": 6.561,
+    "hp_left": 0.30957183758459134
    },
    "archer|brute": {
-    "wins": 88,
-    "losses": 912,
+    "wins": 267,
+    "losses": 733,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.767,
-    "hp_left": 0.2840909090909091
+    "rounds": 6.239,
+    "hp_left": 0.32403245942571784
    },
    "archer|soldier": {
-    "wins": 42,
-    "losses": 958,
+    "wins": 170,
+    "losses": 830,
     "draws": 0,
     "n": 1000,
-    "rounds": 7.255,
-    "hp_left": 0.25277777777777777
+    "rounds": 7.028,
+    "hp_left": 0.275
    },
    "archer|sniper": {
-    "wins": 3,
-    "losses": 997,
+    "wins": 19,
+    "losses": 981,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.207,
-    "hp_left": 0.1111111111111111
+    "rounds": 4.077,
+    "hp_left": 0.2587719298245614
    },
    "archer|caster": {
-    "wins": 890,
-    "losses": 110,
+    "wins": 973,
+    "losses": 27,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.697,
-    "hp_left": 0.39754681647940077
+    "rounds": 3.118,
+    "hp_left": 0.48067831449126414
    },
    "gunman|brute": {
-    "wins": 80,
-    "losses": 920,
+    "wins": 169,
+    "losses": 831,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.142,
-    "hp_left": 0.270625
+    "rounds": 5.66,
+    "hp_left": 0.31577909270216964
    },
    "gunman|soldier": {
-    "wins": 34,
-    "losses": 966,
+    "wins": 106,
+    "losses": 894,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.612,
-    "hp_left": 0.2088235294117647
+    "rounds": 6.371,
+    "hp_left": 0.24937106918238994
    },
    "gunman|sniper": {
-    "wins": 2,
-    "losses": 998,
+    "wins": 18,
+    "losses": 982,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.128,
-    "hp_left": 0.1
+    "rounds": 4.088,
+    "hp_left": 0.24074074074074073
    },
    "gunman|caster": {
-    "wins": 971,
-    "losses": 29,
+    "wins": 996,
+    "losses": 4,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.687,
-    "hp_left": 0.7296601441812565
+    "rounds": 3.403,
+    "hp_left": 0.8356258366800535
    }
   },
   "10/post": {
@@ -4161,164 +4161,164 @@
     "hp_left": 0.6299029770296044
    },
    "sanguine_aegis|brute": {
-    "wins": 792,
-    "losses": 208,
-    "draws": 0,
+    "wins": 679,
+    "losses": 319,
+    "draws": 2,
     "n": 1000,
-    "rounds": 12.259,
-    "hp_left": 0.6268638768638769
+    "rounds": 12.672,
+    "hp_left": 0.6059751735745845
    },
    "sanguine_aegis|soldier": {
-    "wins": 911,
-    "losses": 74,
-    "draws": 15,
+    "wins": 827,
+    "losses": 159,
+    "draws": 14,
     "n": 1000,
-    "rounds": 12.379,
-    "hp_left": 0.673472374679839
+    "rounds": 13.177,
+    "hp_left": 0.6116542868658951
    },
    "sanguine_aegis|sniper": {
-    "wins": 984,
-    "losses": 9,
-    "draws": 7,
+    "wins": 959,
+    "losses": 16,
+    "draws": 25,
     "n": 1000,
-    "rounds": 14.142,
-    "hp_left": 0.8067073170731708
+    "rounds": 15.056,
+    "hp_left": 0.7775957098167734
    },
    "sanguine_aegis|caster": {
-    "wins": 546,
-    "losses": 454,
+    "wins": 409,
+    "losses": 591,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.93,
-    "hp_left": 0.2873015873015873
+    "rounds": 5.864,
+    "hp_left": 0.2788217487483991
    },
    "bulwark|brute": {
-    "wins": 607,
-    "losses": 217,
-    "draws": 176,
+    "wins": 392,
+    "losses": 321,
+    "draws": 287,
     "n": 1000,
-    "rounds": 17.821,
-    "hp_left": 0.3727622185612301
+    "rounds": 18.032,
+    "hp_left": 0.34086491739552965
    },
    "bulwark|soldier": {
-    "wins": 621,
-    "losses": 29,
-    "draws": 350,
+    "wins": 415,
+    "losses": 83,
+    "draws": 502,
     "n": 1000,
-    "rounds": 18.417,
-    "hp_left": 0.4688904225136109
+    "rounds": 18.995,
+    "hp_left": 0.3816867469879518
    },
    "bulwark|sniper": {
-    "wins": 431,
-    "losses": 6,
-    "draws": 563,
+    "wins": 258,
+    "losses": 12,
+    "draws": 730,
     "n": 1000,
-    "rounds": 19.431,
-    "hp_left": 0.6860457408021213
+    "rounds": 19.75,
+    "hp_left": 0.6402362495385752
    },
    "bulwark|caster": {
-    "wins": 6,
-    "losses": 994,
+    "wins": 2,
+    "losses": 998,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.579,
-    "hp_left": 0.08571428571428572
+    "rounds": 5.281,
+    "hp_left": 0.20952380952380953
    },
    "warden|brute": {
-    "wins": 108,
-    "losses": 874,
-    "draws": 18,
+    "wins": 56,
+    "losses": 912,
+    "draws": 32,
     "n": 1000,
-    "rounds": 11.98,
-    "hp_left": 0.2616402116402116
+    "rounds": 11.639,
+    "hp_left": 0.2284013605442177
    },
    "warden|soldier": {
-    "wins": 145,
-    "losses": 820,
-    "draws": 35,
+    "wins": 51,
+    "losses": 928,
+    "draws": 21,
     "n": 1000,
-    "rounds": 13.875,
-    "hp_left": 0.22876847290640395
+    "rounds": 12.736,
+    "hp_left": 0.18450046685340804
    },
    "warden|sniper": {
-    "wins": 352,
-    "losses": 208,
-    "draws": 440,
+    "wins": 184,
+    "losses": 293,
+    "draws": 523,
     "n": 1000,
-    "rounds": 18.506,
-    "hp_left": 0.4377435064935065
+    "rounds": 18.205,
+    "hp_left": 0.42060041407867493
    },
    "warden|caster": {
-    "wins": 23,
-    "losses": 977,
+    "wins": 10,
+    "losses": 990,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.124,
-    "hp_left": 0.10600414078674948
+    "rounds": 5.875,
+    "hp_left": 0.10380952380952381
    },
    "archer|brute": {
-    "wins": 817,
-    "losses": 183,
+    "wins": 903,
+    "losses": 97,
     "draws": 0,
     "n": 1000,
-    "rounds": 7.371,
-    "hp_left": 0.5276830125784525
+    "rounds": 6.244,
+    "hp_left": 0.6058881741712023
    },
    "archer|soldier": {
-    "wins": 638,
-    "losses": 362,
+    "wins": 719,
+    "losses": 281,
     "draws": 0,
     "n": 1000,
-    "rounds": 8.082,
-    "hp_left": 0.5019675848729407
+    "rounds": 6.836,
+    "hp_left": 0.5725446098304382
    },
    "archer|sniper": {
-    "wins": 316,
-    "losses": 684,
+    "wins": 416,
+    "losses": 584,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.022,
-    "hp_left": 0.3110355507675734
+    "rounds": 5.239,
+    "hp_left": 0.35640855155482815
    },
    "archer|caster": {
+    "wins": 995,
+    "losses": 5,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 2.418,
+    "hp_left": 0.7413022559606544
+   },
+   "gunman|brute": {
+    "wins": 333,
+    "losses": 667,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 7.279,
+    "hp_left": 0.3818605839882436
+   },
+   "gunman|soldier": {
+    "wins": 249,
+    "losses": 751,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 7.729,
+    "hp_left": 0.407075108946424
+   },
+   "gunman|sniper": {
+    "wins": 14,
+    "losses": 986,
+    "draws": 0,
+    "n": 1000,
+    "rounds": 4.474,
+    "hp_left": 0.22112462006079028
+   },
+   "gunman|caster": {
     "wins": 993,
     "losses": 7,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.07,
-    "hp_left": 0.6247991257954618
-   },
-   "gunman|brute": {
-    "wins": 26,
-    "losses": 974,
-    "draws": 0,
-    "n": 1000,
-    "rounds": 7.195,
-    "hp_left": 0.25081833060556463
-   },
-   "gunman|soldier": {
-    "wins": 12,
-    "losses": 988,
-    "draws": 0,
-    "n": 1000,
-    "rounds": 7.837,
-    "hp_left": 0.1950354609929078
-   },
-   "gunman|sniper": {
-    "wins": 0,
-    "losses": 1000,
-    "draws": 0,
-    "n": 1000,
-    "rounds": 4.823,
-    "hp_left": 0.0
-   },
-   "gunman|caster": {
-    "wins": 908,
-    "losses": 92,
-    "draws": 0,
-    "n": 1000,
-    "rounds": 5.059,
-    "hp_left": 0.4908613740744212
+    "rounds": 3.393,
+    "hp_left": 0.8187525444065908
    }
   },
   "10/pre": {
@@ -4355,100 +4355,100 @@
     "hp_left": 0.4125417130144605
    },
    "sanguine_aegis|brute": {
-    "wins": 474,
-    "losses": 387,
-    "draws": 139,
+    "wins": 284,
+    "losses": 501,
+    "draws": 215,
     "n": 1000,
-    "rounds": 16.467,
-    "hp_left": 0.505384769941732
+    "rounds": 16.35,
+    "hp_left": 0.48893360160965793
    },
    "sanguine_aegis|soldier": {
-    "wins": 455,
-    "losses": 197,
-    "draws": 348,
+    "wins": 238,
+    "losses": 374,
+    "draws": 388,
     "n": 1000,
-    "rounds": 18.128,
-    "hp_left": 0.5004500261643119
+    "rounds": 17.775,
+    "hp_left": 0.4612645058023209
    },
    "sanguine_aegis|sniper": {
-    "wins": 335,
+    "wins": 209,
     "losses": 7,
-    "draws": 658,
+    "draws": 784,
     "n": 1000,
-    "rounds": 19.59,
-    "hp_left": 0.8234257285003553
+    "rounds": 19.799,
+    "hp_left": 0.785600364547733
    },
    "sanguine_aegis|caster": {
-    "wins": 318,
-    "losses": 682,
+    "wins": 196,
+    "losses": 804,
     "draws": 0,
     "n": 1000,
-    "rounds": 7.575,
-    "hp_left": 0.2416891284815813
+    "rounds": 7.173,
+    "hp_left": 0.2293002915451895
    },
    "archer|brute": {
-    "wins": 305,
-    "losses": 695,
+    "wins": 578,
+    "losses": 422,
     "draws": 0,
     "n": 1000,
-    "rounds": 9.562,
-    "hp_left": 0.32915940006975936
+    "rounds": 7.657,
+    "hp_left": 0.4370168593094309
    },
    "archer|soldier": {
-    "wins": 123,
-    "losses": 877,
+    "wins": 325,
+    "losses": 675,
     "draws": 0,
     "n": 1000,
-    "rounds": 9.756,
-    "hp_left": 0.2532433834976648
+    "rounds": 8.239,
+    "hp_left": 0.35404255319148936
    },
    "archer|sniper": {
-    "wins": 43,
-    "losses": 957,
+    "wins": 170,
+    "losses": 830,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.465,
-    "hp_left": 0.1714497773379515
+    "rounds": 5.695,
+    "hp_left": 0.25062578222778475
    },
    "archer|caster": {
-    "wins": 937,
-    "losses": 63,
+    "wins": 989,
+    "losses": 11,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.167,
-    "hp_left": 0.3759735688821272
+    "rounds": 3.127,
+    "hp_left": 0.5194479702256739
    },
    "gunman|brute": {
-    "wins": 47,
-    "losses": 953,
+    "wins": 187,
+    "losses": 813,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.773,
-    "hp_left": 0.20099592575826167
+    "rounds": 6.123,
+    "hp_left": 0.28757537831380137
    },
    "gunman|soldier": {
-    "wins": 31,
-    "losses": 969,
+    "wins": 148,
+    "losses": 852,
     "draws": 0,
     "n": 1000,
-    "rounds": 7.73,
-    "hp_left": 0.26355525051475637
+    "rounds": 6.808,
+    "hp_left": 0.29435020126509487
    },
    "gunman|sniper": {
-    "wins": 2,
-    "losses": 998,
+    "wins": 39,
+    "losses": 961,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.905,
-    "hp_left": 0.09574468085106383
+    "rounds": 4.555,
+    "hp_left": 0.18494271685761046
    },
    "gunman|caster": {
-    "wins": 991,
-    "losses": 9,
+    "wins": 999,
+    "losses": 1,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.186,
-    "hp_left": 0.7412242093737252
+    "rounds": 3.697,
+    "hp_left": 0.8406385108512768
    }
   },
   "15/post": {
@@ -4645,164 +4645,164 @@
     "hp_left": 0.505079868025174
    },
    "sanguine_aegis|brute": {
-    "wins": 942,
-    "losses": 58,
+    "wins": 754,
+    "losses": 246,
     "draws": 0,
     "n": 1000,
-    "rounds": 10.063,
-    "hp_left": 0.6431284787972686
+    "rounds": 11.421,
+    "hp_left": 0.5745716538819987
    },
    "sanguine_aegis|soldier": {
-    "wins": 977,
-    "losses": 22,
+    "wins": 873,
+    "losses": 126,
     "draws": 1,
     "n": 1000,
-    "rounds": 9.998,
-    "hp_left": 0.6899167335195995
+    "rounds": 11.59,
+    "hp_left": 0.5993250982941705
    },
    "sanguine_aegis|sniper": {
-    "wins": 996,
-    "losses": 4,
-    "draws": 0,
+    "wins": 993,
+    "losses": 6,
+    "draws": 1,
     "n": 1000,
-    "rounds": 10.574,
-    "hp_left": 0.7451807228915662
+    "rounds": 11.587,
+    "hp_left": 0.7034103589994829
    },
    "sanguine_aegis|caster": {
-    "wins": 562,
-    "losses": 438,
+    "wins": 488,
+    "losses": 512,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.88,
-    "hp_left": 0.26216216216216215
+    "rounds": 5.906,
+    "hp_left": 0.2506092157731502
    },
    "bulwark|brute": {
-    "wins": 114,
-    "losses": 158,
-    "draws": 728,
+    "wins": 0,
+    "losses": 373,
+    "draws": 627,
     "n": 1000,
-    "rounds": 19.55,
-    "hp_left": 0.32778568041725936
+    "rounds": 18.662,
+    "hp_left": 0.0
    },
    "bulwark|soldier": {
-    "wins": 139,
-    "losses": 50,
-    "draws": 811,
+    "wins": 4,
+    "losses": 202,
+    "draws": 794,
     "n": 1000,
-    "rounds": 19.82,
-    "hp_left": 0.3697841726618705
+    "rounds": 19.529,
+    "hp_left": 0.33783783783783783
    },
    "bulwark|sniper": {
-    "wins": 136,
-    "losses": 5,
-    "draws": 859,
+    "wins": 9,
+    "losses": 7,
+    "draws": 984,
     "n": 1000,
-    "rounds": 19.939,
-    "hp_left": 0.6187599364069952
+    "rounds": 19.982,
+    "hp_left": 0.5735735735735736
    },
    "bulwark|caster": {
     "wins": 0,
     "losses": 1000,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.634,
+    "rounds": 5.515,
     "hp_left": 0.0
    },
    "warden|brute": {
-    "wins": 24,
-    "losses": 912,
-    "draws": 64,
+    "wins": 0,
+    "losses": 962,
+    "draws": 38,
     "n": 1000,
-    "rounds": 12.965,
-    "hp_left": 0.23423423423423423
+    "rounds": 11.345,
+    "hp_left": 0.0
    },
    "warden|soldier": {
-    "wins": 25,
-    "losses": 944,
-    "draws": 31,
+    "wins": 0,
+    "losses": 978,
+    "draws": 22,
     "n": 1000,
-    "rounds": 13.571,
-    "hp_left": 0.20237837837837838
+    "rounds": 11.759,
+    "hp_left": 0.0
    },
    "warden|sniper": {
-    "wins": 123,
-    "losses": 247,
-    "draws": 630,
+    "wins": 5,
+    "losses": 343,
+    "draws": 652,
     "n": 1000,
-    "rounds": 19.026,
-    "hp_left": 0.3849263898044386
+    "rounds": 18.507,
+    "hp_left": 0.30702702702702706
    },
    "warden|caster": {
     "wins": 0,
     "losses": 1000,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.192,
+    "rounds": 6.035,
     "hp_left": 0.0
    },
    "archer|brute": {
-    "wins": 883,
-    "losses": 117,
+    "wins": 863,
+    "losses": 137,
     "draws": 0,
     "n": 1000,
-    "rounds": 7.492,
-    "hp_left": 0.5265937129339865
+    "rounds": 7.004,
+    "hp_left": 0.5168978450019541
    },
    "archer|soldier": {
-    "wins": 805,
-    "losses": 195,
+    "wins": 806,
+    "losses": 194,
     "draws": 0,
     "n": 1000,
-    "rounds": 7.7,
-    "hp_left": 0.5537873497739718
+    "rounds": 7.115,
+    "hp_left": 0.546500359728075
    },
    "archer|sniper": {
-    "wins": 479,
-    "losses": 521,
+    "wins": 505,
+    "losses": 495,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.217,
-    "hp_left": 0.30354164865165345
+    "rounds": 5.54,
+    "hp_left": 0.32257308571093796
    },
    "archer|caster": {
-    "wins": 995,
-    "losses": 5,
+    "wins": 994,
+    "losses": 6,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.47,
-    "hp_left": 0.5485058428235854
+    "rounds": 3.145,
+    "hp_left": 0.5995380567428238
    },
    "gunman|brute": {
-    "wins": 150,
-    "losses": 850,
+    "wins": 598,
+    "losses": 402,
     "draws": 0,
     "n": 1000,
-    "rounds": 9.574,
-    "hp_left": 0.24611439842209074
+    "rounds": 8.369,
+    "hp_left": 0.4818329342383883
    },
    "gunman|soldier": {
-    "wins": 101,
-    "losses": 899,
+    "wins": 472,
+    "losses": 528,
     "draws": 0,
     "n": 1000,
-    "rounds": 8.939,
-    "hp_left": 0.26316714511687855
+    "rounds": 8.093,
+    "hp_left": 0.4708780463343697
    },
    "gunman|sniper": {
-    "wins": 11,
-    "losses": 989,
+    "wins": 142,
+    "losses": 858,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.249,
-    "hp_left": 0.1436256051640667
+    "rounds": 5.657,
+    "hp_left": 0.19359946662221852
    },
    "gunman|caster": {
-    "wins": 987,
-    "losses": 13,
+    "wins": 999,
+    "losses": 1,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.623,
-    "hp_left": 0.7736611451832401
+    "rounds": 2.594,
+    "hp_left": 0.8436365359442283
    }
   },
   "15/pre": {
@@ -4839,100 +4839,100 @@
     "hp_left": 0.48416123029100794
    },
    "sanguine_aegis|brute": {
-    "wins": 805,
-    "losses": 187,
-    "draws": 8,
+    "wins": 424,
+    "losses": 528,
+    "draws": 48,
     "n": 1000,
-    "rounds": 15.111,
-    "hp_left": 0.4722847070673158
+    "rounds": 15.266,
+    "hp_left": 0.41907190209077005
    },
    "sanguine_aegis|soldier": {
-    "wins": 769,
-    "losses": 139,
-    "draws": 92,
+    "wins": 366,
+    "losses": 452,
+    "draws": 182,
     "n": 1000,
-    "rounds": 16.333,
-    "hp_left": 0.44291990299792644
+    "rounds": 16.609,
+    "hp_left": 0.39527396248707725
    },
    "sanguine_aegis|sniper": {
-    "wins": 919,
-    "losses": 1,
-    "draws": 80,
+    "wins": 777,
+    "losses": 6,
+    "draws": 217,
     "n": 1000,
-    "rounds": 16.962,
-    "hp_left": 0.7115136899685321
+    "rounds": 18.267,
+    "hp_left": 0.6685658631604577
    },
    "sanguine_aegis|caster": {
-    "wins": 287,
-    "losses": 713,
+    "wins": 234,
+    "losses": 766,
     "draws": 0,
     "n": 1000,
-    "rounds": 7.439,
-    "hp_left": 0.20478387795460967
+    "rounds": 7.364,
+    "hp_left": 0.19972279972279974
    },
    "archer|brute": {
-    "wins": 305,
-    "losses": 695,
+    "wins": 477,
+    "losses": 523,
     "draws": 0,
     "n": 1000,
-    "rounds": 10.465,
-    "hp_left": 0.3001649044524202
+    "rounds": 8.659,
+    "hp_left": 0.34505600833612443
    },
    "archer|soldier": {
-    "wins": 155,
-    "losses": 845,
+    "wins": 312,
+    "losses": 688,
     "draws": 0,
     "n": 1000,
-    "rounds": 10.267,
-    "hp_left": 0.2531399121969842
+    "rounds": 8.892,
+    "hp_left": 0.29267182521620394
    },
    "archer|sniper": {
-    "wins": 45,
-    "losses": 955,
+    "wins": 179,
+    "losses": 821,
     "draws": 0,
     "n": 1000,
-    "rounds": 7.091,
-    "hp_left": 0.17646285338593032
+    "rounds": 6.193,
+    "hp_left": 0.21182770817493637
    },
    "archer|caster": {
-    "wins": 780,
-    "losses": 220,
+    "wins": 946,
+    "losses": 54,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.089,
-    "hp_left": 0.24665452890304962
+    "rounds": 4.143,
+    "hp_left": 0.3752767804646159
    },
    "gunman|brute": {
-    "wins": 260,
-    "losses": 740,
+    "wins": 441,
+    "losses": 559,
     "draws": 0,
     "n": 1000,
-    "rounds": 8.225,
-    "hp_left": 0.2741693218024579
+    "rounds": 6.976,
+    "hp_left": 0.31853372512713174
    },
    "gunman|soldier": {
-    "wins": 170,
-    "losses": 830,
+    "wins": 353,
+    "losses": 647,
     "draws": 0,
     "n": 1000,
-    "rounds": 7.857,
-    "hp_left": 0.31301775147928995
+    "rounds": 6.946,
+    "hp_left": 0.31025696900615185
    },
    "gunman|sniper": {
-    "wins": 88,
-    "losses": 912,
+    "wins": 310,
+    "losses": 690,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.131,
-    "hp_left": 0.21321947283485745
+    "rounds": 5.425,
+    "hp_left": 0.2552395495323535
    },
    "gunman|caster": {
     "wins": 1000,
     "losses": 0,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.519,
-    "hp_left": 0.8063313609467455
+    "rounds": 2.63,
+    "hp_left": 0.8462899408284024
    }
   }
  },
@@ -5579,68 +5579,68 @@
     "hp_left": 0.41603130016051365
    },
    "gunman|guard_leader": {
-    "wins": 986,
-    "losses": 14,
+    "wins": 994,
+    "losses": 6,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.682,
-    "hp_left": 0.7977035641842944
+    "rounds": 3.039,
+    "hp_left": 0.8417648749640702
    },
    "gunman|resonance_construct": {
-    "wins": 970,
-    "losses": 30,
+    "wins": 990,
+    "losses": 10,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.183,
-    "hp_left": 0.731921944035346
+    "rounds": 2.689,
+    "hp_left": 0.7811327561327561
    },
    "gunman|scavenger_leader": {
-    "wins": 369,
-    "losses": 631,
+    "wins": 531,
+    "losses": 469,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.146,
-    "hp_left": 0.5311653116531165
+    "rounds": 4.552,
+    "hp_left": 0.6152138821630347
    },
    "gunman|mana_mite_swarm": {
-    "wins": 957,
-    "losses": 43,
+    "wins": 978,
+    "losses": 22,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.527,
-    "hp_left": 0.7806762203313927
+    "rounds": 3.001,
+    "hp_left": 0.823656149576395
    },
    "gunman|alpha_mite": {
-    "wins": 925,
-    "losses": 75,
+    "wins": 969,
+    "losses": 31,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.71,
-    "hp_left": 0.5927027027027028
+    "rounds": 4.7,
+    "hp_left": 0.6461005454813504
    },
    "gunman|slag_ghoul": {
-    "wins": 996,
-    "losses": 4,
+    "wins": 998,
+    "losses": 2,
     "draws": 0,
     "n": 1000,
-    "rounds": 2.661,
-    "hp_left": 0.8818488238668961
+    "rounds": 2.13,
+    "hp_left": 0.9254938448325222
    },
    "gunman|iron_hound": {
-    "wins": 917,
-    "losses": 83,
+    "wins": 961,
+    "losses": 39,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.949,
-    "hp_left": 0.7632419379965727
+    "rounds": 4.05,
+    "hp_left": 0.8350304742084138
    },
    "gunman|smuggler_king_hydraform": {
-    "wins": 327,
-    "losses": 673,
+    "wins": 540,
+    "losses": 460,
     "draws": 0,
     "n": 1000,
-    "rounds": 6.151,
-    "hp_left": 0.41764962865880295
+    "rounds": 5.523,
+    "hp_left": 0.5368386243386243
    }
   },
   "3/pre": {
@@ -5837,68 +5837,68 @@
     "hp_left": 0.40714285714285714
    },
    "gunman|guard_leader": {
-    "wins": 963,
-    "losses": 37,
+    "wins": 990,
+    "losses": 10,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.63,
-    "hp_left": 0.8022548583296247
+    "rounds": 2.863,
+    "hp_left": 0.8618686868686869
    },
    "gunman|resonance_construct": {
-    "wins": 975,
-    "losses": 25,
+    "wins": 989,
+    "losses": 11,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.02,
-    "hp_left": 0.7419047619047618
+    "rounds": 2.651,
+    "hp_left": 0.7878448649429438
    },
    "gunman|scavenger_leader": {
-    "wins": 390,
-    "losses": 610,
+    "wins": 525,
+    "losses": 475,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.956,
-    "hp_left": 0.4880952380952381
+    "rounds": 4.505,
+    "hp_left": 0.5859183673469388
    },
    "gunman|mana_mite_swarm": {
-    "wins": 963,
-    "losses": 37,
+    "wins": 969,
+    "losses": 31,
     "draws": 0,
     "n": 1000,
-    "rounds": 3.335,
-    "hp_left": 0.7849354695149088
+    "rounds": 2.842,
+    "hp_left": 0.8475232198142415
    },
    "gunman|alpha_mite": {
-    "wins": 941,
-    "losses": 59,
+    "wins": 982,
+    "losses": 18,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.417,
-    "hp_left": 0.6057765295278579
+    "rounds": 4.501,
+    "hp_left": 0.6740253127727669
    },
    "gunman|slag_ghoul": {
     "wins": 998,
     "losses": 2,
     "draws": 0,
     "n": 1000,
-    "rounds": 2.56,
-    "hp_left": 0.8929287145720012
+    "rounds": 2.143,
+    "hp_left": 0.9244202691096479
    },
    "gunman|iron_hound": {
-    "wins": 944,
-    "losses": 56,
+    "wins": 971,
+    "losses": 29,
     "draws": 0,
     "n": 1000,
-    "rounds": 4.701,
-    "hp_left": 0.7795096852300242
+    "rounds": 3.996,
+    "hp_left": 0.8354053258790642
    },
    "gunman|smuggler_king_hydraform": {
-    "wins": 321,
-    "losses": 679,
+    "wins": 504,
+    "losses": 496,
     "draws": 0,
     "n": 1000,
-    "rounds": 5.976,
-    "hp_left": 0.37427681352915
+    "rounds": 5.444,
+    "hp_left": 0.45861678004535145
    }
   }
  },
@@ -5955,8 +5955,8 @@
     "n": 1000
    },
    "gunman": {
-    "dealt": 14.802,
-    "survived": 6.655,
+    "dealt": 18.835,
+    "survived": 6.768,
     "n": 1000
    }
   },
@@ -5977,245 +5977,245 @@
     "n": 1000
    },
    "gunman": {
-    "dealt": 16.215,
-    "survived": 6.5,
+    "dealt": 19.473,
+    "survived": 6.464,
     "n": 1000
    }
   },
   "7/post": {
    "verdant": {
-    "dealt": 40.607,
-    "survived": 10.259,
+    "dealt": 39.271,
+    "survived": 9.924,
     "n": 1000
    },
    "warbound": {
-    "dealt": 48.423,
-    "survived": 9.453,
+    "dealt": 47.148,
+    "survived": 9.169,
     "n": 1000
    },
    "stonewarden": {
-    "dealt": 39.496,
-    "survived": 11.858,
+    "dealt": 39.889,
+    "survived": 11.631,
     "n": 1000
    },
    "hellbound": {
-    "dealt": 69.141,
-    "survived": 10.536,
+    "dealt": 68.538,
+    "survived": 10.166,
     "n": 1000
    },
    "sanguine_mage": {
-    "dealt": 49.326,
-    "survived": 10.431,
+    "dealt": 49.259,
+    "survived": 10.323,
     "n": 1000
    },
    "aether": {
-    "dealt": 39.349,
-    "survived": 10.285,
+    "dealt": 41.124,
+    "survived": 10.262,
     "n": 1000
    },
    "sanguine_aegis": {
-    "dealt": 32.941,
-    "survived": 17.475,
+    "dealt": 33.271,
+    "survived": 16.755,
     "n": 1000
    },
    "bulwark": {
-    "dealt": 19.286,
-    "survived": 19.957,
+    "dealt": 18.997,
+    "survived": 19.594,
     "n": 1000
    },
    "warden": {
-    "dealt": 18.981,
-    "survived": 11.53,
+    "dealt": 19.215,
+    "survived": 11.014,
     "n": 1000
    },
    "archer": {
-    "dealt": 50.345,
-    "survived": 6.445,
+    "dealt": 61.273,
+    "survived": 6.141,
     "n": 1000
    },
    "gunman": {
-    "dealt": 30.048,
-    "survived": 6.3,
+    "dealt": 40.196,
+    "survived": 6.287,
     "n": 1000
    }
   },
   "7/pre": {
    "warbound": {
-    "dealt": 43.438,
-    "survived": 8.923,
+    "dealt": 43.312,
+    "survived": 8.912,
     "n": 1000
    },
    "sanguine_aegis": {
-    "dealt": 19.424,
-    "survived": 17.906,
+    "dealt": 19.313,
+    "survived": 16.835,
     "n": 1000
    },
    "archer": {
-    "dealt": 33.947,
-    "survived": 6.744,
+    "dealt": 44.102,
+    "survived": 6.491,
     "n": 1000
    },
    "gunman": {
-    "dealt": 35.611,
-    "survived": 6.013,
+    "dealt": 46.018,
+    "survived": 5.765,
     "n": 1000
    }
   },
   "10/post": {
    "verdant": {
-    "dealt": 52.811,
-    "survived": 12.743,
+    "dealt": 52.491,
+    "survived": 12.598,
     "n": 1000
    },
    "warbound": {
-    "dealt": 68.556,
-    "survived": 11.523,
+    "dealt": 68.221,
+    "survived": 11.416,
     "n": 1000
    },
    "stonewarden": {
-    "dealt": 53.81,
-    "survived": 14.342,
+    "dealt": 54.464,
+    "survived": 13.93,
     "n": 1000
    },
    "hellbound": {
-    "dealt": 91.288,
-    "survived": 14.612,
+    "dealt": 91.284,
+    "survived": 14.525,
     "n": 1000
    },
    "sanguine_mage": {
-    "dealt": 69.679,
-    "survived": 12.376,
+    "dealt": 69.138,
+    "survived": 12.269,
     "n": 1000
    },
    "aether": {
-    "dealt": 52.518,
-    "survived": 12.07,
+    "dealt": 53.372,
+    "survived": 12.103,
     "n": 1000
    },
    "sanguine_aegis": {
-    "dealt": 36.132,
-    "survived": 14.334,
+    "dealt": 36.155,
+    "survived": 13.814,
     "n": 1000
    },
    "bulwark": {
-    "dealt": 19.854,
-    "survived": 18.387,
+    "dealt": 19.414,
+    "survived": 17.943,
     "n": 1000
    },
    "warden": {
-    "dealt": 19.348,
-    "survived": 9.904,
+    "dealt": 19.293,
+    "survived": 9.315,
     "n": 1000
    },
    "archer": {
-    "dealt": 57.418,
-    "survived": 8.014,
+    "dealt": 74.361,
+    "survived": 7.691,
     "n": 1000
    },
    "gunman": {
-    "dealt": 33.801,
-    "survived": 6.554,
+    "dealt": 50.214,
+    "survived": 6.933,
     "n": 1000
    }
   },
   "10/pre": {
    "warbound": {
-    "dealt": 60.99,
-    "survived": 11.48,
+    "dealt": 59.62,
+    "survived": 11.515,
     "n": 1000
    },
    "sanguine_aegis": {
-    "dealt": 18.896,
-    "survived": 14.121,
+    "dealt": 18.547,
+    "survived": 13.501,
     "n": 1000
    },
    "archer": {
-    "dealt": 37.067,
-    "survived": 7.585,
+    "dealt": 54.696,
+    "survived": 7.378,
     "n": 1000
    },
    "gunman": {
-    "dealt": 40.472,
-    "survived": 5.897,
+    "dealt": 56.772,
+    "survived": 5.771,
     "n": 1000
    }
   },
   "15/post": {
    "verdant": {
-    "dealt": 157.226,
-    "survived": 16.788,
+    "dealt": 156.528,
+    "survived": 16.885,
     "n": 1000
    },
    "warbound": {
-    "dealt": 184.584,
-    "survived": 16.458,
+    "dealt": 184.538,
+    "survived": 16.137,
     "n": 1000
    },
    "stonewarden": {
-    "dealt": 156.692,
-    "survived": 17.258,
+    "dealt": 157.673,
+    "survived": 17.396,
     "n": 1000
    },
    "hellbound": {
-    "dealt": 209.56,
-    "survived": 17.686,
+    "dealt": 210.582,
+    "survived": 17.637,
     "n": 1000
    },
    "sanguine_mage": {
-    "dealt": 94.272,
-    "survived": 19.35,
+    "dealt": 93.051,
+    "survived": 19.202,
     "n": 1000
    },
    "aether": {
-    "dealt": 158.384,
-    "survived": 17.223,
+    "dealt": 156.98,
+    "survived": 17.154,
     "n": 1000
    },
    "sanguine_aegis": {
-    "dealt": 57.941,
-    "survived": 11.227,
+    "dealt": 55.966,
+    "survived": 10.511,
     "n": 1000
    },
    "bulwark": {
-    "dealt": 13.562,
-    "survived": 15.269,
+    "dealt": 13.849,
+    "survived": 14.235,
     "n": 1000
    },
    "warden": {
-    "dealt": 22.096,
-    "survived": 7.726,
+    "dealt": 22.029,
+    "survived": 7.249,
     "n": 1000
    },
    "archer": {
-    "dealt": 88.275,
-    "survived": 7.349,
+    "dealt": 110.675,
+    "survived": 7.077,
     "n": 1000
    },
    "gunman": {
-    "dealt": 75.022,
-    "survived": 6.405,
+    "dealt": 105.539,
+    "survived": 7.044,
     "n": 1000
    }
   },
   "15/pre": {
    "warbound": {
-    "dealt": 173.177,
-    "survived": 16.43,
+    "dealt": 173.34,
+    "survived": 16.426,
     "n": 1000
    },
    "sanguine_aegis": {
-    "dealt": 30.8,
-    "survived": 10.385,
+    "dealt": 30.996,
+    "survived": 9.445,
     "n": 1000
    },
    "archer": {
-    "dealt": 54.506,
-    "survived": 7.129,
+    "dealt": 68.589,
+    "survived": 6.735,
     "n": 1000
    },
    "gunman": {
-    "dealt": 90.17,
-    "survived": 5.471,
+    "dealt": 117.981,
+    "survived": 5.262,
     "n": 1000
    }
   }
