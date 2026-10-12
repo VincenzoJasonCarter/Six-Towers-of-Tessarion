@@ -35,6 +35,27 @@ def resonance_rank(level, chassis):
     return max(1, sum(level >= lv for lv in RANK_LEVELS[chassis]))
 
 
+# Tessarion's own progression (the class sheet linked from lore-book Ch.2):
+# every class makes one attack per turn at every level, and the Aegisbound and
+# Range have none of the 5e Fighter's Action Surge, Second Wind or Indomitable.
+# False brings back the 5e Fighter chassis the reports before it were run on.
+ONE_ATTACK = True
+
+# Patch 4: every Aegisbound has a d12 hit die from 3rd level (hit points as if
+# it always had), and from 5th level Reinforced Plating: a weapon attack that
+# hits it deals damage reduced by its proficiency bonus, before resistance.
+# False keeps Patch 3's Aegisbound.
+PLATED = True
+# Patch 4: the Warden's Shackle Strike tethers instead of slowing. Every hit
+# shackles the target to the Warden until the start of its next turn, and a
+# shackled creature attacks anyone else at disadvantage. The Peacekeeper and
+# Gravewell riders keep Shackle Strike's old proficiency-bonus uses.
+TETHER = True
+# Patch 4: the Sanguine Aegis's Blood Lure (while it has a Blood Charge, an
+# enemy within 10 feet attacks anyone else at disadvantage) and Red Pact spent
+# on a hit, with no bonus action, instead of before the attack.
+BLOOD_LURE = True
+
 # Patch 3 base-kit rebalance (Hellbound, Warbound, Stonewarden, Sanguine Mage,
 # Sanguine Aegis, Bulwark, Range). False keeps the kits as they were.
 REBALANCED = True
@@ -86,6 +107,14 @@ GEAR_WEAPONS = {
     "crude crossbow": dict(n=1, die=8, normal=80, long=320, misfire="action"),
     "composite bow": dict(n=1, die=8, normal=150, long=600, bonus=1, heavy_draw=True, no_long_dis=True),
 }
+# Lasting ammunition (a proposal, not yet in the lore-book): the effects of
+# special arrows and shots (Verdant slow, White Dust, Snare, Amber Slug, Violet
+# Hex, Prismatic's no-healing, and the silence Powder Disruption adds to a
+# special shot) last until the start of the shooter's second turn after the
+# hit instead of its next. Set by party.py --lasting-ammo (ARENA_LASTING_AMMO=1).
+LASTING_AMMO = os.environ.get("ARENA_LASTING_AMMO") == "1"
+AMMO_SKIP = 1 if LASTING_AMMO else 0
+
 # Marksman's Focus and Crystal Sight: a bow or a crossbow.
 BOWS = {"longbow", "crude crossbow", "composite bow"}
 
@@ -1056,10 +1085,13 @@ class Fighter(Hero):
         con = mod(sc["con"])
         hp = 10 + con + (level - 1) * (6 + con)
         super().__init__(level, patched, sc, ("str", "con"), hp, self.armor(level, sc))
-        self.attacks = 1 + (level >= 5) + (level >= 11) + (level >= 20)
-        self.surges = 1 + (level >= 17)
-        self.second_wind = True
-        self.indomitable = (level >= 9) + (level >= 13) + (level >= 17)
+        if ONE_ATTACK:
+            self.attacks, self.surges, self.second_wind, self.indomitable = 1, 0, False, 0
+        else:
+            self.attacks = 1 + (level >= 5) + (level >= 11) + (level >= 20)
+            self.surges = 1 + (level >= 17)
+            self.second_wind = True
+            self.indomitable = (level >= 9) + (level >= 13) + (level >= 17)
         self.atk_bonus = self.mod(primary) + self.pb + self.item + (2 if self.ranged else 0)
         self.dmg_bonus = self.mod(primary) + self.item
         self.action = True
@@ -1195,6 +1227,22 @@ class Aegis(Fighter):
     def __init__(self, level, patched=True):
         self.weapon = dict(name="longsword", n=1, die=8, dtype="slashing", kind="melee", normal=5, long=5)
         super().__init__(level, patched)
+        if PLATED:
+            self.max_hp += 2 + (level - 1)   # d12 instead of d10: +2 at 1st level, +1 a level on average
+            self.hp = self.max_hp
+
+    def reduce_damage(self, dmg, src, ctx):
+        """Reinforced Plating (Patch 4): weapon attacks lose the proficiency bonus off their damage."""
+        if not (PLATED and self.level >= 5 and ctx.get("attack") and not ctx.get("spell")):
+            return dmg
+        cut = self.pb
+        for k in sorted(dmg, key=dmg.get, reverse=True):
+            take = min(cut, max(0, dmg[k]))
+            dmg[k] -= take
+            cut -= take
+            if not cut:
+                break
+        return dmg
 
     def armor(self, level, sc):
         body = 16 if level < 5 else 18   # chain mail, then plate
@@ -1252,19 +1300,27 @@ class SanguineAegis(Aegis):
                 self.heal(d(self.charges, 6 if REBALANCED else 4))   # Patch 3: d6 per charge
                 self.charges = 0
                 return
-        if self.level >= 7 and self.charges and self.dist() - 5 <= self.speed_now():
+        if not BLOOD_LURE and self.level >= 7 and self.charges and self.dist() - 5 <= self.speed_now():
             self.pact = min(self.charges, self.level // 2)
             self.charges -= self.pact
             self.bonus_used = True
+
+    def lures(self, c):
+        """Blood Lure (Patch 4): with a Blood Charge in the armor, enemies within 10 feet are drawn to me."""
+        return BLOOD_LURE and self.charges > 0 and not self.dead and self.dist_to(c) <= 10
 
     def hit_extra(self, tgt, ctx):
         out = []
         if ctx["kind"] == "melee" and ctx.get("weapon"):
             if self.overdrive:
                 out.append((1, 8, 0, "necrotic"))
+            if BLOOD_LURE and self.patched and self.level >= 7 and self.charges:
+                self.pact = min(self.charges, self.level // 2)   # Red Pact, spent as the hit lands
+                self.charges -= self.pact
             if self.pact:
                 out.append((self.pact, 6, 0, "necrotic") if self.patched else (0, 0, self.pact, "slashing"))
                 ctx["pact"] = True
+                ctx["pact_n"] = self.pact
                 self.pact = 0
         return out
 
@@ -1398,6 +1454,14 @@ class WardenAegis(Aegis):
         super().post_bonus()
 
     def after_hit(self, tgt, ctx, crit):
+        if TETHER:
+            if ctx.get("oa") and self.level >= 7 and not tgt.dead:
+                tgt.add("speed0", self, until=("end", tgt))    # Lockstep Field
+            if not tgt.dead:
+                tgt.add("tethered", self, until=("start", self))
+                if self.shackles and not ctx.get("oa"):
+                    self.shackles -= 1    # the evolutions' riders keep the old uses (evolution.py counts these)
+            return
         if ctx.get("oa") and self.level >= 7 and not tgt.dead:
             tgt.add("speed0", self, until=("end", tgt))    # Lockstep Field
         elif (self.shackles and not tgt.dead and not ctx.get("oa")
@@ -1546,7 +1610,7 @@ class CrystalArcher(Range):
     def arrow_effect(self, tgt, sp):
         dc = 8 + self.pb + self.mod("dex")
         if sp == "verdant":
-            tgt.add("slow", self, until=("start", self), value=10)
+            tgt.add("slow", self, until=("start", self), skip=AMMO_SKIP, value=10)
         elif sp == "red":
             if not getattr(tgt, "immovable", False) and not saving_throw(tgt, "str", dc, self, {}):
                 push(tgt, self, 5)
@@ -1555,7 +1619,7 @@ class CrystalArcher(Range):
             if who:
                 who.gain_thp(d(self.rk, 4) + self.pb, self)
         elif sp == "white":
-            tgt.add("white_dust", self, until=("start", self))
+            tgt.add("white_dust", self, until=("start", self), skip=AMMO_SKIP)
 
     def main_action(self):
         if self.weapon["name"] in self.fouled:
@@ -1724,13 +1788,13 @@ class Gunman(Range):
         dc = 8 + self.pb + self.mod("dex")
         if sp == "snare":
             if not saving_throw(tgt, "str", dc, self, {}):
-                tgt.add("speed0", self, until=("start", self))
+                tgt.add("speed0", self, until=("start", self), skip=AMMO_SKIP)
         elif sp == "amber":
-            tgt.add("ac", self, until=("start", self), value=-2)
+            tgt.add("ac", self, until=("start", self), skip=AMMO_SKIP, value=-2)
         elif sp == "violet":
-            tgt.add("next_save_pen", self, until=("start", self))
+            tgt.add("next_save_pen", self, until=("start", self), skip=AMMO_SKIP)
         elif sp == "prismatic":
-            tgt.add("no_heal", self, until=("start", self))
+            tgt.add("no_heal", self, until=("start", self), skip=AMMO_SKIP)
         elif sp == "white":
             if tgt.has("darkness"):
                 tgt.drop_conc()
@@ -1739,7 +1803,7 @@ class Gunman(Range):
         if sp and self.level >= 7 and not tgt.dead and self.my_turn():
             # Powder Disruption: no verbal or somatic spells until my next turn.
             if not saving_throw(tgt, "con", dc, self, {"control": True}):
-                tgt.add("silenced", self, until=("start", self))
+                tgt.add("silenced", self, until=("start", self), skip=AMMO_SKIP)
 
     def main_action(self):
         if self.barrage_ready and self.dist() <= self.weapon["normal"]:

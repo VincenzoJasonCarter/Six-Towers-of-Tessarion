@@ -6,6 +6,48 @@ Changes to the class and subclass rules in the lore-book, newest patch first. Th
 
 ---
 
+## Patch 4 — 2026-10-12
+
+Two new traits shared by every Aegisbound order, a new Shackle Strike for the Warden, and Blood Lure and a reworked Red Pact for the Sanguine Aegis, tested in the Proving Grounds.
+
+> *Why:* The Proving Grounds now play every class as Tessarion does: **one attack per turn at every level**, and no Action Surge, Second Wind or Indomitable for the Aegisbound or Range (earlier reports ran them on the 5e Fighter, with Extra Attack). On that footing all three Aegisbound orders fall below an even share from 7th level: the wall drew the blows (31–39% of every attack aimed at the party) and fell before it could keep the mages standing (30–37% still on their feet at the end). The Classes chapter has always promised them "high physical durability and HP"; these two traits are that promise in rules.
+
+### Aegisbound
+
+- **Hit points** [buff]: from 3rd level your hit die is a **d12** instead of a d10. Work out your hit points as if it had always been (about **+1 hit point per level**, +2 at 1st).
+- **Reinforced Plating (5th level)** [new]: when a **weapon attack** hits you, the damage it deals is reduced by your **proficiency bonus** (+3 at 5th level, up to +6 at 17th). Spells, breath, and other area effects aren't weapon attacks. It applies before Anchored Stance's resistance halves what is left.
+
+Magic resistance stays with the armor itself: it comes with Tier 3 Aegisbound armor and up, not with the order.
+
+### Warden Aegis
+
+> *Why:* Switched off one at a time in the Proving Grounds, Gravitic Anchor and Lockstep Field each carried about 6 points of the Warden's party value, and Shackle Strike carried almost none: a 10-foot slow means nothing to a foe already in reach, so the Warden had no answer to a single strong enemy (−20 against the Boss). It is now the tool for exactly that.
+
+- **Shackle Strike (3rd level)** [change]: a hit slowed the target by 10 feet, proficiency bonus times per long rest → **every melee weapon hit shackles the target to you** until the start of your next turn, and a shackled creature has **disadvantage on attack rolls against anyone but you**.
+- **Peacekeeper and Gravewell** (6th level) [change]: their Shackle Strike riders (Peacekeeper's disadvantage on the next attack, Gravewell's 1d4 force per Rank) keep the old **proficiency bonus uses per long rest**, so neither branch grows.
+
+### Sanguine Aegis
+
+> *Why:* The Sanguine Aegis drew more of the enemy's attacks than anyone (up to half of them against the Boss) and fell first, and everything it did with its charges healed only itself. Switched off one at a time, its self-healing was worth about 1 point of party value and Red Pact about 5. Healing the Aegis harder (temporary hit points at 1d6 instead of 1d4 changed nothing) doesn't win fights; keeping the enemy off the mages does. Blood Lure gives it that job, and ties it to the charges, so a Sanguine Aegis has to choose between burning its blood for damage or healing and keeping the enemy's eyes on itself.
+
+- **Blood Lure (3rd level, part of Bloodwell Armor)** [new]: while you have at least **1 Blood Charge**, a hostile creature within **10 feet** of you has **disadvantage on attack rolls against anyone but you**. With no charges, the lure falls silent.
+- **Red Pact (7th level)** [change]: spent as a **bonus action before the attack**, and lost if the attack missed → spent **when you hit** with a weapon attack, **no action required**. Same cap (half your fighter level), same 1d6 necrotic per charge and the same fear save. With one attack a turn, a miss no longer throws the charges away, and the bonus action stays free for healing.
+
+**Party value** (win rate with the subclass minus without, averaged over 3rd, 7th, 10th and 15th level; every fight at full resources; `arena/party_report.md`):
+
+| Subclass | Before | After | 3rd | 7th | 10th | 15th |
+|---|---:|---:|---:|---:|---:|---:|
+| Bulwark Aegis | −5 | **−3** | +10 | −2 | −5 | −15 |
+| Warden Aegis | −10 | **−4** | −7 | −3 | +1 | −6 |
+| Sanguine Aegis | −11 | **−2** | +7 | −4 | −6 | −5 |
+| Sanguine Mage (for comparison) | +12 | +17 | | | | |
+
+All three orders now sit within 4 points of even, from 5 to 11 below it. The Sanguine Aegis gains the most (+9): with Blood Lure, the mages behind it live long enough to matter, and the Sanguine Mage, already the strongest subclass, gains with it (the two are the report's best pair, +3 together over their separate values). The Bulwark is about even at 7th level, the Warden at 10th. At 15th level the Bulwark still trails, where Tier 3 armor is meant to carry it.
+
+Party value is relative: as the Aegisbound rise, the encounters are tuned to the stronger average party and the Range pillar falls back to −9 for both the Crystal Archer and the Gunman. Range is meant to lean on its gear, and the next patch looks at it together with Tier 3 weapons.
+
+---
+
 ## Patch 3 — 2026-10-07
 
 Three changes, tested together in the Proving Grounds (`arena/party_report.md`, `arena/evolution_report.md`):

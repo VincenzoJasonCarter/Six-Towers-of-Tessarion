@@ -192,8 +192,8 @@ as half a win.
 The combatants are bots:
 
 - **Melee heroes** close in, dashing when they can't reach, and attack the
-  most hurt enemy in reach. They use Action Surge on the first turn they can
-  attack.
+  most hurt enemy in reach. (On the 5e chassis, `ONE_ATTACK = False`, they
+  use Action Surge on the first turn they can attack.)
 - **Guards** (Bulwark and Warden, when the party has a back rank) don't
   charge. They stand just in front of the most vulnerable ally and engage
   whatever comes for it.
@@ -222,6 +222,30 @@ The combatants are bots:
   party.
 
 ## Builds and gear
+
+**One attack per turn** (`ONE_ATTACK` in `heroes.py`, on): Tessarion's class
+progression (the sheet linked from lore-book Ch.2) gives every class a single
+attack per turn at every level, and the Aegisbound and Range have none of the
+5e Fighter's Action Surge, Second Wind or Indomitable. Their damage grows only
+through their weapon, Resonance Rank and subclass features. Reports from
+before 12 October 2026 were run on the full 5e Fighter chassis (Extra Attack
+at 5th and 11th level, Action Surge, Second Wind, Indomitable), which
+overrated the Aegisbound and Range from 5th level; `ONE_ATTACK = False`
+rebuilds it.
+
+**Patch 4** (`PLATED` in `heroes.py`, on): every Aegisbound has a d12 hit die
+(about +1 HP a level), and from 5th level Reinforced Plating takes its
+proficiency bonus off the damage of each weapon attack that hits it, before
+resistance (`reduce_damage`, called from `deal` in `engine.py`). Spells and
+area effects aren't weapon attacks. The Warden's Shackle Strike (`TETHER`)
+shackles every creature it hits until the start of its next turn, and
+`attack_adv` gives a shackled creature disadvantage against anyone but the
+Warden (credited to the Warden as Control); the Peacekeeper and Gravewell
+riders keep the old proficiency-bonus uses. The Sanguine Aegis's Blood Lure
+(`BLOOD_LURE`, `lures` in `heroes.py`) gives an enemy within 10 feet of it
+disadvantage against anyone else while it has a Blood Charge (also credited
+as Control), and its Red Pact is spent as a hit lands instead of as a bonus
+action before the attack.
 
 All characters are human with no feats, average HP, and ability score
 increases into the main stat and then Constitution.

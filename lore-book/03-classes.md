@@ -66,8 +66,8 @@ Some humans cannot adapt internally to mana crystals. Attempts to attune them fa
 
 ### **Shared Aegisbound Traits (All Paths)**
 
-* **High physical durability and HP.**  
-* **Magic-resistant armor:** Reduced incoming magic damage / better saves vs spells.  
+* **High physical durability and HP.** From 3rd level an Aegisbound's hit die is a **d12** (hit points worked out as if it had always been). From 5th level, **Reinforced Plating**: when a weapon attack hits them, its damage is reduced by their **proficiency bonus**; spells and area effects aren't weapon attacks. *(Patch 4)*  
+* **Magic-resistant armor:** Reduced incoming magic damage / better saves vs spells. This comes with the armor, from **Tier 3** Aegisbound armor up, rather than with the order.  
 * Powers come from the armor’s interaction with mana and blood, not from spellcasting.  
 * **Socially, they’re seen as:** Human answer to other races’ innate magic and Sangrith terror. Tools of city-states, caravans, and tower councils.
 

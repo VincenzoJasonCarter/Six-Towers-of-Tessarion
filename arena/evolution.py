@@ -576,8 +576,9 @@ class SanguineAegisCorrupted(Corrupted, SanguineAegis):
             if self.leeched_turn != self.turns:
                 self.uses += 1
                 out = out + [(0, 0, 2 * self.pb, "necrotic")]
-            if pact and not self.pact:
-                out = out + [(0, 0, pact, "necrotic")]   # d8s instead of d6s: +1 a die on average
+            spent = ctx.get("pact_n") or (pact if pact and not self.pact else 0)   # Patch 4 spends on the hit
+            if spent:
+                out = out + [(0, 0, spent, "necrotic")]   # d8s instead of d6s: +1 a die on average
         return out
 
 

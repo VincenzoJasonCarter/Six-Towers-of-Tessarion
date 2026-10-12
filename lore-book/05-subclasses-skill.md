@@ -535,6 +535,8 @@ As a **bonus action**, you can spend any number of Blood Charges. For each charg
 
 * You gain **1d4 temporary hit points**.
 
+**Blood Lure.** While you have at least **1 Blood Charge**, the blood in your armor calls to your enemies: a creature hostile to you that is within **10 feet** of you has **disadvantage** on attack rolls against any target other than you. Spend your last charge and the call falls silent until you gain another. *(Patch 4)*
+
 ---
 
 **Leeching Strikes**  
@@ -565,11 +567,13 @@ Once on each of your turns, when you deal damage to a creature with a **melee we
 
 When you roll **initiative** and have **no Blood Charges**, you immediately gain Blood Charges equal to your **proficiency bonus**.
 
-In addition, as a **bonus action**, you can spend up to **a number of Blood Charges equal to half your fighter level** (round down):
+In addition, when you hit a creature with a **weapon attack**, you can spend up to **a number of Blood Charges equal to half your fighter level** (round down; no action required):
 
-* The next time you hit with a weapon attack this turn, it deals an extra **1d6 necrotic damage per charge spent**.
+* The hit deals an extra **1d6 necrotic damage per charge spent**.
 
-* The target of that attack must succeed on a **Constitution saving throw** (DC \= 8 \+ your proficiency bonus \+ your Constitution modifier) or become **frightened of you** until the end of your next turn.
+* The target must succeed on a **Constitution saving throw** (DC \= 8 \+ your proficiency bonus \+ your Constitution modifier) or become **frightened of you** until the end of your next turn.
+
+*(Patch 4: Red Pact used to be spent as a bonus action before the attack, and was lost if the attack missed.)*
 
 ---
 
@@ -681,11 +685,11 @@ As a **bonus action**, you place an invisible **anchor** in an unoccupied space 
 
 **Shackle Strike**  
  *3rd-level Warden Aegis feature*  
- Your blows drag at your foes’ movement.
+ Your blows chain your foes to you.
 
-When you hit a creature with a **melee weapon attack**, you can force its speed to be **reduced by 10 feet** until the start of your next turn.
+When you hit a creature with a **melee weapon attack**, it is **shackled** to you until the start of your next turn. A shackled creature has **disadvantage** on attack rolls against any target other than you.
 
-You can use this feature a number of times equal to your **proficiency bonus**, and you regain all expended uses when you finish a **long rest**.
+*(Patch 4: Shackle Strike used to reduce the target's speed by 10 feet, a number of times equal to your proficiency bonus per long rest.)*
 
 ---
 
@@ -693,13 +697,15 @@ You can use this feature a number of times equal to your **proficiency bonus**, 
  *6th-level Warden Aegis feature*
  Your armor settles. Choose a branch (see Subclass Evolution).
 
-**Ascendant: Peacekeeper.** A creature you hit with **Shackle Strike** also has **disadvantage** on its next attack roll before the start of your next turn.
+Each branch's Shackle Strike rider can be used a number of times equal to your **proficiency bonus**, and you regain all expended uses when you finish a **long rest**.
+
+**Ascendant: Peacekeeper.** When you shackle a creature with **Shackle Strike**, it also has **disadvantage** on its next attack roll before the start of your next turn, whoever it attacks.
 
 **Corrupted: Gravewell.** While your seal is open:
 
 * A creature that fails its saving throw against your **Gravitic Anchor** takes **1d6 force damage per Resonance Rank**.
 
-* A hit with **Shackle Strike** deals an extra **1d4 force damage per Resonance Rank**.
+* When you shackle a creature with **Shackle Strike**, the hit deals an extra **1d4 force damage per Resonance Rank**.
 
 ---
 

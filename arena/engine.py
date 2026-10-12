@@ -343,6 +343,8 @@ class Creature:
     def block_missiles(self): return False
     def resists(self, dtype, ctx): return False
     def react_to_damage(self, dmg, src, ctx): return dmg
+    def reduce_damage(self, dmg, src, ctx): return dmg     # before resistance; see deal()
+    def lures(self, c): return False                        # Blood Lure; see attack_adv()
     def save_reroll(self, abil, dc, src, ctx): return False    # True = the reroll succeeded
     def flip_success(self, tgt, ctx): return False
     def on_failed_save(self, tgt, ctx): pass
@@ -637,6 +639,16 @@ def attack_adv(att, tgt, ctx, why=None):
         if e:
             dis = True
             note("dis", e.source, "control")
+    e = att.get("tethered")   # Shackle Strike (Patch 4): anyone but the Warden is attacked at disadvantage
+    if e and e.source is not tgt and not e.source.dead:
+        dis = True
+        note("dis", e.source, "control")
+    if att.fight:
+        for h in att.enemies():   # Blood Lure (Patch 4): anyone but the Sanguine Aegis, likewise
+            if h is not tgt and h.lures(att):
+                dis = True
+                note("dis", h, "control")
+                break
     fear = att.get("frightened")
     if fear and fear.source and not fear.source.dead and att.can_see(fear.source):
         dis = True
@@ -816,6 +828,9 @@ def deal(tgt, dmg, src, ctx):
                 credit(g, "protect", sum(max(0, n) for n in dmg.values()))
                 tgt, ctx = g, dict(ctx, intercepted=True)
                 break
+    before = sum(max(0, n) for n in dmg.values())
+    dmg = tgt.reduce_damage(dict(dmg), src, ctx)   # flat reductions come before resistance (Reinforced Plating)
+    tgt.mitigated += max(0, before - sum(max(0, n) for n in dmg.values()))
     weaponlike = bool(not ctx.get("spell") and ctx.get("weapon") and not ctx.get("magical"))
     out = {}
     for dtype, n in dmg.items():

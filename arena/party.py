@@ -14,6 +14,7 @@ Usage, from the repo root:
     uv run arena/party.py --recalibrate   # re-tune the encounters first
     uv run arena/party.py --legacy        # the bots and arena from before the tactics fixes
     uv run arena/party.py --gear --only gunman   # Range with Tessarion's own weapons (heroes.py, GEAR)
+    uv run arena/party.py --lasting-ammo --only gunman   # special ammunition effects last two rounds
 
 Writes arena/party_results.json and arena/party_report.md (party6_* etc. for
 other sizes, party4r_* etc. with repeats, *_legacy with --legacy, each with its
@@ -50,20 +51,22 @@ FIELDS = ("dead", "dealt", "taken", "dealt_hp", "protect", "control", "enable", 
           "aimed", "mitigated", "kills", "uptime")
 PARTS = ("Damage", "Protection", "Control", "Enable", "Tanking")
 PARTY_SIZE = 4
-REPEATS = LEGACY = GEAR = False
+REPEATS = LEGACY = GEAR = AMMO = False
 CALIBRATION = RESULTS = REPORT = BASE = None
 PARTIES = []
 
 
-def setup(size, repeats=False, legacy=False, gear=False):
+def setup(size, repeats=False, legacy=False, gear=False, ammo=False):
     """Point the module at one kind of party: its party list and its output files.
-    With gear, BASE is the plain run's results, which a first --only starts from."""
-    global PARTY_SIZE, REPEATS, LEGACY, GEAR, CALIBRATION, RESULTS, REPORT, BASE, PARTIES
-    PARTY_SIZE, REPEATS, LEGACY, GEAR = size, repeats, legacy, gear
+    With a rules variant (gear, ammo), BASE is the plain run's results, which a
+    first --only starts from."""
+    global PARTY_SIZE, REPEATS, LEGACY, GEAR, AMMO, CALIBRATION, RESULTS, REPORT, BASE, PARTIES
+    PARTY_SIZE, REPEATS, LEGACY, GEAR, AMMO = size, repeats, legacy, gear, ammo
     stem = f"party{size}r" if repeats else "party" if size == 4 else f"party{size}"
     stem += "_legacy" if legacy else ""
     BASE = HERE / f"{stem}_results.json"
     stem += "_gear" if gear else ""
+    stem += "_ammo" if ammo else ""
     CALIBRATION = HERE / f"{stem}_calibration.json"
     RESULTS = HERE / f"{stem}_results.json"
     REPORT = HERE / f"{stem}_report.md"
@@ -270,7 +273,7 @@ def solo_ranks():
 
 def write_report(results):
     tactics = set(results.get("tactics", ()))   # results from before the fixes have none
-    setup(results.get("size", 4), results.get("repeats", False), LEGACY, GEAR)
+    setup(results.get("size", 4), results.get("repeats", False), LEGACY, GEAR, AMMO)
     a = analyse(results)
     levels, encs = results["levels"], results["encounters"]
     label = {s["key"]: s["label"] for s in results["subclasses"]}
@@ -322,6 +325,10 @@ def write_report(results):
         L.append("- Gear: the Crystal Archer and the Gunman carry Tessarion's own weapons from `data/items.yaml` "
                  "(Tier 1 at 3rd level, Tier 2 from 5th) with their misfires and Heavy Draw; see GEAR in "
                  "heroes.py. Parties without either are the plain run's.\n")
+    if AMMO:
+        L.append("- Lasting ammunition (a proposal): the effects of special arrows and shots last two rounds "
+                 "instead of one; see LASTING_AMMO in heroes.py. Parties without a Range subclass are the "
+                 "plain run's.\n")
 
     solo = solo_ranks()
     mean_of = lambda f: {k: statistics.mean(f(a[lv]["subs"][k]) for lv in levels) for k in KEYS}
@@ -483,12 +490,18 @@ def main():
     ap.add_argument("--gear", action="store_true",
                     help="Range carries Tessarion's own weapons (heroes.py, GEAR); writes *_gear files, "
                          "starting --only from the plain run's results and tuning")
+    ap.add_argument("--lasting-ammo", action="store_true",
+                    help="special arrows' and shots' effects last two rounds (heroes.py, LASTING_AMMO); writes "
+                         "*_ammo files, starting --only from the plain run's results and tuning")
     ap.add_argument("--workers", type=int, default=os.cpu_count())
     args = ap.parse_args()
+    if args.lasting_ammo:
+        os.environ["ARENA_LASTING_AMMO"] = "1"   # worker processes import heroes afresh and read it
+        heroes.LASTING_AMMO, heroes.AMMO_SKIP = True, 1
     if args.gear:
         os.environ["ARENA_GEAR"] = "1"   # worker processes import heroes afresh and read it
         heroes.GEAR = True
-    setup(args.size, args.repeats, args.legacy, args.gear)
+    setup(args.size, args.repeats, args.legacy, args.gear, args.lasting_ammo)
     tactics = set() if args.legacy else set(ALL_TACTICS)
     set_tactics(tactics)
     if args.report_only:
@@ -497,7 +510,7 @@ def main():
         return
     with Pool(args.workers, initializer=set_tactics, initargs=(tactics,)) as pool:
         if args.only:
-            previous = json.loads((RESULTS if RESULTS.exists() or not GEAR else BASE).read_text(encoding="utf-8"))
+            previous = json.loads((RESULTS if RESULTS.exists() or not (GEAR or AMMO) else BASE).read_text(encoding="utf-8"))
             if set(previous.get("tactics", ())) != tactics:
                 sys.exit("the saved results used different tactics; rerun everything instead of --only")
             scales, n = previous["scales"], previous["n"]
