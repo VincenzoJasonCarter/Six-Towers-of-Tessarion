@@ -483,11 +483,11 @@
   id: black-powder-rifle
   kind: weapon
   damage: {dice: 1d12, bonus: 1, type: piercing, ability: dex}
-  properties: [firearm, ranged (40/120), ammunition, loading, two-handed, loud]
+  properties: [firearm, ranged (80/200), ammunition, loading, two-handed, loud]
   emoji: "🔫"
   category: Tier 2 Weapon
   upgrade_from: Matchlock Musket
-  stat: "Firearm, Ranged (40/120), Loading, 2H, Loud · 1d12 + DEX + 1 piercing"
+  stat: "Firearm, Ranged (80/200), Loading, 2H, Loud · 1d12 + DEX + 1 piercing"
   power: "Flintlock — a natural 1 still fouls it, but clearing takes a bonus action."
   materials:
     - [Iron Ingot, 3]

@@ -55,6 +55,10 @@ TETHER = True
 # enemy within 10 feet attacks anyone else at disadvantage) and Red Pact spent
 # on a hit, with no bonus action, instead of before the attack.
 BLOOD_LURE = True
+# Patch 4: Resonant Shot. Once on each of its turns, a Range character's weapon
+# hit deals an extra 1d4 force per Resonance Rank: the Gunman from 3rd level,
+# the Crystal Archer from 7th. False keeps Patch 3's Range.
+RESONANT = True
 
 # Patch 3 base-kit rebalance (Hellbound, Warbound, Stonewarden, Sanguine Mage,
 # Sanguine Aegis, Bulwark, Range). False keeps the kits as they were.
@@ -102,17 +106,17 @@ GEAR = os.environ.get("ARENA_GEAR") == "1"
 GEAR_WEAPONS = {
     "matchlock musket": dict(n=1, die=12, normal=40, long=120, misfire="action"),
     "crude handgun": dict(n=1, die=10, normal=30, long=90, misfire="action"),
-    "black-powder rifle": dict(n=1, die=12, normal=40, long=120, bonus=1, misfire="bonus"),
+    "black-powder rifle": dict(n=1, die=12, normal=80, long=200, bonus=1, misfire="bonus"),
     "heavy handgun": dict(n=1, die=10, normal=30, long=90, bonus=1, misfire="bonus"),
     "crude crossbow": dict(n=1, die=8, normal=80, long=320, misfire="action"),
     "composite bow": dict(n=1, die=8, normal=150, long=600, bonus=1, heavy_draw=True, no_long_dis=True),
 }
-# Lasting ammunition (a proposal, not yet in the lore-book): the effects of
-# special arrows and shots (Verdant slow, White Dust, Snare, Amber Slug, Violet
-# Hex, Prismatic's no-healing, and the silence Powder Disruption adds to a
-# special shot) last until the start of the shooter's second turn after the
-# hit instead of its next. Set by party.py --lasting-ammo (ARENA_LASTING_AMMO=1).
-LASTING_AMMO = os.environ.get("ARENA_LASTING_AMMO") == "1"
+# Patch 4, lasting ammunition: the effects of special arrows and shots (Verdant
+# slow, White Dust, Snare, Amber Slug, Violet Hex, Prismatic's no-healing, and
+# the silence Powder Disruption adds to a special shot) last until the start of
+# the shooter's turn after next instead of its next. ARENA_LASTING_AMMO=0 turns
+# it off (party.py --lasting-ammo forces it on, for the *_ammo files).
+LASTING_AMMO = os.environ.get("ARENA_LASTING_AMMO", "1") == "1"
 AMMO_SKIP = 1 if LASTING_AMMO else 0
 
 # Marksman's Focus and Crystal Sight: a bow or a crossbow.
@@ -983,10 +987,10 @@ class SanguineMage(Wizard):
     def after_damage_dealt(self, tgt, amount, ctx):
         if self.my_turn() and not tgt.dead:
             for e in self.enemies():
-                m = e.get("tethered")
+                m = e.get("soul_tether")
                 if m and m.source is self:
                     e.remove(effect=m)        # one tether at a time
-            tgt.add("tethered", self, until=("start", self), skip=2)
+            tgt.add("soul_tether", self, until=("start", self), skip=2)
 
     def after_spell_damage(self, tgt, ctx):
         # Overlord: push a damaged Large-or-smaller creature 10 feet (here: away).
@@ -997,7 +1001,7 @@ class SanguineMage(Wizard):
         if not self.tethers or self.bonus_used:
             return
         for e in self.enemies():
-            m = e.get("tethered")
+            m = e.get("soul_tether")
             if m and m.source is self:
                 self.tethers -= 1
                 self.bonus_used = True
@@ -1258,6 +1262,16 @@ class Range(Fighter):
     def armor(self, level, sc):
         return 12 + mod(sc["dex"])
 
+    resonant_from = 3   # the level Resonant Shot comes in
+
+    def resonant(self):
+        """Resonant Shot (Patch 4): once on each of my turns, a weapon hit deals
+        an extra 1d4 force per Resonance Rank."""
+        if RESONANT and self.level >= self.resonant_from and self.my_turn()                 and getattr(self, "resonant_turn", -1) != self.turns:
+            self.resonant_turn = self.turns
+            return [(self.rk, 4, 0, "force")]
+        return []
+
 
 class SanguineAegis(Aegis):
     key, label = "sanguine_aegis", "Sanguine Aegis"
@@ -1489,6 +1503,7 @@ class CrystalArcher(Range):
     key, label = "archer", "Crystal Archer"
     patch_sensitive = True
     max_range = 120
+    resonant_from = 7
 
     def __init__(self, level, patched=True):
         self.weapon = dict(name="longbow", n=1, die=8, dtype="piercing", kind="ranged", normal=150, long=600)
@@ -1579,7 +1594,7 @@ class CrystalArcher(Range):
         return self.pb if (RANKED and not REBALANCED) else 2
 
     def hit_extra(self, tgt, ctx):
-        out = []
+        out = self.resonant()
         if ctx.get("weapon") in BOWS:
             if self.patched or self.moved <= 10:
                 out.append((0, 0, self.focus(), "piercing"))          # Marksman's Focus
@@ -1674,6 +1689,7 @@ class Gunman(Range):
             tier2 = level >= 5
             self.weapon = gear("black-powder rifle" if tier2 else "matchlock musket")
             self.backup = gear("heavy handgun" if tier2 else "crude handgun")
+            self.max_range = self.weapon["normal"]   # it keeps its distance by the long gun's range
         self.main = self.weapon
         super().__init__(level, patched)
         self.shots = self.pb
@@ -1773,13 +1789,14 @@ class Gunman(Range):
     def hit_extra(self, tgt, ctx):
         sp = ctx.get("special")
         die = 4 if REBALANCED else 6    # Patch 3: d4 per Resonance Rank
+        out = self.resonant()
         if sp == "red":
-            return [(self.rk, die, 0, "force")]
+            return out + [(self.rk, die, 0, "force")]
         if sp == "prismatic":
-            return [(self.rk, die, 0, "necrotic")]
+            return out + [(self.rk, die, 0, "necrotic")]
         if ctx.get("barrage"):
-            return [(2, 8, 0, "force")]
-        return []
+            return out + [(2, 8, 0, "force")]
+        return out
 
     def after_hit(self, tgt, ctx, crit):
         if tgt.dead:

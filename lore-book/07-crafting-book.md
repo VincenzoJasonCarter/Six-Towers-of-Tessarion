@@ -815,7 +815,7 @@ Tools: Smith's tools or Carpenter's tools | Craft Time: 4 hours
 *(Upgraded from Matchlock Musket)*
 
 **Damage Type:** Piercing
-**Weapon Type:** Firearm, Ranged (40/120), Ammunition (shot and powder), Loading, Two-Handed, Loud
+**Weapon Type:** Firearm, Ranged (80/200), Ammunition (shot and powder), Loading, Two-Handed, Loud
 
 ### **Attack & Damage**
 
@@ -830,7 +830,7 @@ Tools: Smith's tools or Carpenter's tools | Craft Time: 4 hours
 
 * As the Matchlock Musket.
 
-> Design intent: the rifle Flint-and-Steel tests into sand, steel and crystal plates. The same step every Tier 2 weapon takes: \+1 damage and a softer failure.
+> Design intent: the rifle Flint-and-Steel tests into sand, steel and crystal plates. The same step every Tier 2 weapon takes, \+1 damage and a softer failure, plus a rifled barrel that doubles the musket's reach (80/200 instead of 40/120). *(Patch 4)*
 
 ### **Upgrade Recipe**
 

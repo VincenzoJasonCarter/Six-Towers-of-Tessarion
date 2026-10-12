@@ -170,7 +170,7 @@ class SanguineAscendant(Ascendant, SanguineMage):
         if not self.tethers or self.bonus_used:
             return
         for e in self.enemies():
-            m = e.get("tethered")
+            m = e.get("soul_tether")
             if m and m.source is self:
                 self.tethers -= 1
                 self.bonus_used = True
@@ -497,7 +497,7 @@ class SanguineCorrupted(Corrupted, SanguineMage):
         if self.bonus_used:
             return
         for e in self.enemies():
-            m = e.get("tethered")
+            m = e.get("soul_tether")
             if m and m.source is self:
                 self.bonus_used = True
                 self.uses += 1
@@ -508,14 +508,14 @@ class SanguineCorrupted(Corrupted, SanguineMage):
 
     def on_kill(self, tgt):
         super().on_kill(tgt)
-        m = tgt.get("tethered")
+        m = tgt.get("soul_tether")
         if self.evolved and m and m.source is self:
             tgt.remove(effect=m)
             near = [e for e in self.enemies() if e.dist_to(tgt) <= 30]
             if near:
                 nxt = min(near, key=lambda e: e.dist_to(tgt))
                 self.uses += 1
-                nxt.add("tethered", self, until=("start", self), skip=2)
+                nxt.add("soul_tether", self, until=("start", self), skip=2)
                 deal(nxt, roll_damage([(2 * self.rk, 6, 0, "necrotic")]), self, {"spell": True})
 
 

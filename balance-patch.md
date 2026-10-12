@@ -8,7 +8,7 @@ Changes to the class and subclass rules in the lore-book, newest patch first. Th
 
 ## Patch 4 — 2026-10-12
 
-Two new traits shared by every Aegisbound order, a new Shackle Strike for the Warden, and Blood Lure and a reworked Red Pact for the Sanguine Aegis, tested in the Proving Grounds.
+Two new traits shared by every Aegisbound order, a new Shackle Strike for the Warden, Blood Lure and a reworked Red Pact for the Sanguine Aegis, and longer-lasting special ammunition for the Range, tested in the Proving Grounds.
 
 > *Why:* The Proving Grounds now play every class as Tessarion does: **one attack per turn at every level**, and no Action Surge, Second Wind or Indomitable for the Aegisbound or Range (earlier reports ran them on the 5e Fighter, with Extra Attack). On that footing all three Aegisbound orders fall below an even share from 7th level: the wall drew the blows (31–39% of every attack aimed at the party) and fell before it could keep the mages standing (30–37% still on their feet at the end). The Classes chapter has always promised them "high physical durability and HP"; these two traits are that promise in rules.
 
@@ -33,6 +33,13 @@ Magic resistance stays with the armor itself: it comes with Tier 3 Aegisbound ar
 - **Blood Lure (3rd level, part of Bloodwell Armor)** [new]: while you have at least **1 Blood Charge**, a hostile creature within **10 feet** of you has **disadvantage on attack rolls against anyone but you**. With no charges, the lure falls silent.
 - **Red Pact (7th level)** [change]: spent as a **bonus action before the attack**, and lost if the attack missed → spent **when you hit** with a weapon attack, **no action required**. Same cap (half your fighter level), same 1d6 necrotic per charge and the same fear save. With one attack a turn, a miss no longer throws the charges away, and the bonus action stays free for healing.
 
+### Range
+
+> *Why:* With one attack a turn, a special arrow or shot is the Range's main way to shape a fight, and its effects lasted exactly one enemy turn. Tested at two rounds, the Gunman's party value rose by about 3 points (more from 7th level, where Powder Disruption rides on the special shots) and the Crystal Archer's didn't move: its usual arrows (Amber, Prismatic, Red) act at once and have nothing to extend.
+
+- **Modular Ammunition and Crystal-Cased Rounds** [buff]: every effect of a special arrow or special shot that lasted until the start of your next turn (Verdant Dust and Verdant Snare, White Dust, Violet Dust and Violet Hex, Amber Slug, Prismatic Round's no-healing) now lasts **until the start of your turn after next**.
+- **Gunman, Powder Disruption (7th level)** [buff]: the silence a special shot inflicts lasts likewise **until the start of your turn after next**.
+
 **Party value** (win rate with the subclass minus without, averaged over 3rd, 7th, 10th and 15th level; every fight at full resources; `arena/party_report.md`):
 
 | Subclass | Before | After | 3rd | 7th | 10th | 15th |
@@ -42,7 +49,7 @@ Magic resistance stays with the armor itself: it comes with Tier 3 Aegisbound ar
 | Sanguine Aegis | −11 | **−2** | +7 | −4 | −6 | −5 |
 | Sanguine Mage (for comparison) | +12 | +17 | | | | |
 
-All three orders now sit within 4 points of even, from 5 to 11 below it. The Sanguine Aegis gains the most (+9): with Blood Lure, the mages behind it live long enough to matter, and the Sanguine Mage, already the strongest subclass, gains with it (the two are the report's best pair, +3 together over their separate values). The Bulwark is about even at 7th level, the Warden at 10th. At 15th level the Bulwark still trails, where Tier 3 armor is meant to carry it.
+All three orders now sit within 4 points of even, from 5 to 11 below it. The Sanguine Aegis gains the most (+9): with Blood Lure, the mages behind it live long enough to matter. The Sanguine Mage, which this patch doesn't touch, gains about 3 points too, and as much in parties without a Sanguine Aegis as in parties with one: sturdier tanks at every level give every mage more turns, and those turns are worth the most to the mage whose spells already land hardest. It was the strongest subclass before this patch and is the clearest one to look at next. The Bulwark is about even at 7th level, the Warden at 10th. At 15th level the Bulwark still trails, where Tier 3 armor is meant to carry it.
 
 Party value is relative: as the Aegisbound rise, the encounters are tuned to the stronger average party and the Range pillar falls back to −9 for both the Crystal Archer and the Gunman. Range is meant to lean on its gear, and the next patch looks at it together with Tier 3 weapons.
 

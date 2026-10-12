@@ -107,7 +107,8 @@ Humans are defined by their reliance on **distance, precision, and technology** 
 
 * **Focus:** Distance, precision, and human craft (ballistics, engineering).  
 * **Power Source:** They **infuse** Soulstone dust/crystals into their ammunition or weapon components, not their bodies.  
-* **Role:** Provides highly focused, targeted damage capable of bypassing magical wards and natural resilience.
+* **Role:** Provides highly focused, targeted damage capable of bypassing magical wards and natural resilience.  
+* **Resonant Shot.** Once on each of their turns, a ranged weapon hit deals an extra **1d4 force damage per Resonance Rank**: Gunmen from 3rd level, Archers from 7th. *(Patch 4)*
 
 ### **1\. Archers (Strikers)**
 

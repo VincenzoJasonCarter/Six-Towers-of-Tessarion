@@ -762,19 +762,21 @@ You can use this feature once per **short or long rest**.
 
 During a **short or long rest**, you can craft a number of **special arrows** equal to your **proficiency bonus**. Each arrow is tipped with dust from one of Tessarion’s six soulstones, imbuing it with one of the following effects (you choose per arrow):
 
-* **Verdant Dust.** On a hit, the target’s speed is **reduced by 10 feet** until the start of your next turn.
+* **Verdant Dust.** On a hit, the target’s speed is **reduced by 10 feet** until the start of your **turn after next**.
 
 * **Red Dust.** On a hit, the attack deals an extra **1d4 thunder damage per Resonance Rank**. The target must succeed on a **Strength saving throw** (DC \= 8 \+ your proficiency bonus \+ your Dexterity modifier) or be **pushed 5 feet** away from you.
 
 * **Amber Dust.** On a hit, the arrowhead bursts into a shell of hardened amber light. Choose one creature you can see within **10 feet** of the target, other than the target; it gains **temporary hit points** equal to **1d4 per Resonance Rank \+ your proficiency bonus**.
 
-* **Violet Dust.** On a hit, smoke-laced hellglass clings to the target. It suffers a **–1d4 penalty** to the **next attack roll** it makes before the start of your next turn.
+* **Violet Dust.** On a hit, smoke-laced hellglass clings to the target. It suffers a **–1d4 penalty** to the **next attack roll** it makes before the start of your **turn after next**.
 
 * **Prismatic Dust.** On a hit, the attack deals an extra **1d4 necrotic damage per Resonance Rank**, and you regain hit points equal to the necrotic damage dealt. Crafting a Prismatic arrow costs you **one Hit Die**, expended without regaining any hit points; if you have no Hit Dice left, you can’t craft one. Prismatic soulstone is forbidden in most of Tessarion, and these arrows are rarely carried openly.
 
-* **White Dust.** On a hit, aetherite light clings to the target until the start of your next turn. It sheds **dim light** in a 5-foot radius, it can’t benefit from being **invisible**, and attack rolls against it don’t suffer **disadvantage** from dim light, darkness, fog, or smoke.
+* **White Dust.** On a hit, aetherite light clings to the target until the start of your **turn after next**. It sheds **dim light** in a 5-foot radius, it can’t benefit from being **invisible**, and attack rolls against it don’t suffer **disadvantage** from dim light, darkness, fog, or smoke.
 
 Any unused special arrows **lose their power** at the end of your next **long rest**.
+
+*(Patch 4: special arrows' effects used to last only until the start of your next turn.)*
 
 ---
 
@@ -801,6 +803,8 @@ As a **bonus action**, you enter a state of hyper-focus for **1 minute**. While 
 * Once on each of your turns, when you hit a creature with a ranged weapon attack, it takes an extra **1d6 damage per Resonance Rank** of the weapon’s type.
 
 You can use this feature a number of times equal to your **proficiency bonus**, and you regain all expended uses when you finish a **long rest**.
+
+**Resonant Shot.** From 7th level, whether or not you are in hyper-focus, once on each of your turns when you hit a creature with a ranged weapon attack, it takes an extra **1d4 force damage per Resonance Rank**. *(Patch 4)*
 
 ---
 
@@ -844,6 +848,8 @@ Once you use this feature, you can’t use it again until you finish a **long re
 
 * When you take the **Attack action** and attack with a firearm you are proficient with, you ignore the **loading** property of that weapon for that action.
 
+* **Resonant Shot.** Once on each of your turns, when you hit a creature with a ranged weapon attack, it takes an extra **1d4 force damage per Resonance Rank**. *(Patch 4)*
+
 ---
 
 **Crystal-Cased Rounds**  
@@ -852,19 +858,21 @@ Once you use this feature, you can’t use it again until you finish a **long re
 
 During a **short or long rest**, you can craft a number of **special shots** equal to your **proficiency bonus**. Each shot carries a casing of one of Tessarion’s six soulstones, imbuing it with one of the following effects (you choose per shot):
 
-* **Verdant Snare.** On a hit, the round splits into grasping roots. The target must succeed on a **Strength saving throw** (DC \= 8 \+ your proficiency bonus \+ your Dexterity modifier) or have its **speed become 0** until the start of your next turn.
+* **Verdant Snare.** On a hit, the round splits into grasping roots. The target must succeed on a **Strength saving throw** (DC \= 8 \+ your proficiency bonus \+ your Dexterity modifier) or have its **speed become 0** until the start of your **turn after next**.
 
 * **Red Impact.** On a hit, the attack deals an extra **1d4 force damage per Resonance Rank**.
 
-* **Amber Slug.** On a hit, a dense deepstone core cracks the target’s armor. The target’s **AC is reduced by 2** until the start of your next turn.
+* **Amber Slug.** On a hit, a dense deepstone core cracks the target’s armor. The target’s **AC is reduced by 2** until the start of your **turn after next**.
 
-* **Violet Hex.** On a hit, the target suffers a **–1d4 penalty** to the **next saving throw** it makes before the start of your next turn.
+* **Violet Hex.** On a hit, the target suffers a **–1d4 penalty** to the **next saving throw** it makes before the start of your **turn after next**.
 
-* **Prismatic Round.** On a hit, the attack deals an extra **1d4 necrotic damage per Resonance Rank**, and the target **can’t regain hit points** until the start of your next turn. Crafting a Prismatic round costs you **one Hit Die**, expended without regaining any hit points; if you have no Hit Dice left, you can’t craft one. Prismatic soulstone is forbidden in most of Tessarion, and these rounds are rarely carried openly.
+* **Prismatic Round.** On a hit, the attack deals an extra **1d4 necrotic damage per Resonance Rank**, and the target **can’t regain hit points** until the start of your **turn after next**. Crafting a Prismatic round costs you **one Hit Die**, expended without regaining any hit points; if you have no Hit Dice left, you can’t craft one. Prismatic soulstone is forbidden in most of Tessarion, and these rounds are rarely carried openly.
 
 * **White Null.** On a hit, choose one spell of **2nd level or lower** affecting the target; that spell **ends**.
 
 A creature can be under the effect of **only one** special shot at a time; if it is hit by another special shot before the first effect is used, you decide which effect remains.
+
+*(Patch 4: special shots' effects, and Powder Disruption's silence, used to last only until the start of your next turn.)*
 
 ---
 
@@ -888,7 +896,7 @@ A creature can be under the effect of **only one** special shot at a time; if it
 
 * When you hit a creature that is **concentrating on a spell** with a firearm attack, that creature has **disadvantage** on the resulting **Constitution saving throw** to maintain concentration.
 
-* In addition, once on each of your turns when you hit a creature with one of your **special shots**, that creature must succeed on a **Constitution saving throw** (DC \= 8 \+ your proficiency bonus \+ your Dexterity modifier) or be unable to **cast spells with verbal or somatic components** until the start of your next turn.
+* In addition, once on each of your turns when you hit a creature with one of your **special shots**, that creature must succeed on a **Constitution saving throw** (DC \= 8 \+ your proficiency bonus \+ your Dexterity modifier) or be unable to **cast spells with verbal or somatic components** until the start of your **turn after next**.
 
 ---
 

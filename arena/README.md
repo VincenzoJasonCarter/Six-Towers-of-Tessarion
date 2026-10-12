@@ -245,7 +245,16 @@ riders keep the old proficiency-bonus uses. The Sanguine Aegis's Blood Lure
 (`BLOOD_LURE`, `lures` in `heroes.py`) gives an enemy within 10 feet of it
 disadvantage against anyone else while it has a Blood Charge (also credited
 as Control), and its Red Pact is spent as a hit lands instead of as a bonus
-action before the attack.
+action before the attack. Special arrows' and shots' effects, and Powder
+Disruption's silence, last until the start of the shooter's turn after next
+(`LASTING_AMMO`; `ARENA_LASTING_AMMO=0` turns it off). Resonant Shot
+(`RESONANT`, `resonant` on `Range`) adds 1d4 force per Resonance Rank to the
+first weapon hit on each of the shooter's turns: the Gunman's from 3rd level,
+the Crystal Archer's from 7th. The Sanguine Mage's Soul Tether is its own
+effect (`soul_tether`); until Patch 4 it shared the Warden's `tethered`, so a
+creature the mage had tethered also attacked anyone but the mage at
+disadvantage, which the lore never gave it (worth about 8 points of its
+party value).
 
 All characters are human with no feats, average HP, and ability score
 increases into the main stat and then Constitution.
@@ -259,8 +268,9 @@ increases into the main stat and then Constitution.
 With `--gear` (`uv run arena/party.py --gear --only gunman`, then `--only
 archer`), the two Range subclasses carry Tessarion's own weapons from
 `data/items.yaml` instead: Tier 1 at 3rd level, Tier 2 from 5th. The Gunman
-has the Matchlock Musket and Crude Handgun, then the Black-Powder Rifle and
-Heavy Handgun; a natural 1 fouls the gun (Misfire), and clearing it costs an
+has the Matchlock Musket and Crude Handgun, then the Black-Powder Rifle
+(80/200 ft from Patch 4) and Heavy Handgun, and keeps its distance by its long
+gun's normal range; a natural 1 fouls the gun (Misfire), and clearing it costs an
 action at Tier 1 or a bonus action at Tier 2. With the long gun fouled the
 bot fires its handgun, and spends an action clearing only once both are
 fouled. The Crystal Archer has the Crude Crossbow (a natural 1 slips the
