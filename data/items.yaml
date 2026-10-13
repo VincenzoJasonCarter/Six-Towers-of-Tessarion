@@ -12,7 +12,11 @@
 # kind:         weapon | shield | armor | ammunition | material | utility | tool | service
 # damage:       weapons only. dice, versatile (two-handed dice), bonus (flat,
 #               added to damage), type, ability (str | dex: the modifier added
-#               to attack and damage)
+#               to attack and damage; hybrid: attack with the higher of STR
+#               and DEX, and add both to damage, the lower only if positive,
+#               in place of a bonus. Barracks items.json v1 knows only str and
+#               dex, so charasheet must learn hybrid before a Hybrid weapon
+#               loses hidden: true)
 # properties:   weapons only, as in the stat line
 # stat, power:  the rules text from Ch.7
 # materials:    recipe as [material name, quantity] pairs (names of entries
@@ -24,9 +28,9 @@
 #                 the rule that gives 11 of the 15 prices Ch.10 does list;
 #               - a raw material: the price of the nearest material Ch.10
 #                 lists, scaled by how the two compare in real-world prices;
-#               - Tier 2 armour: priced by protection, not materials (Ch.7,
-#                 Tier 2 Armor), on 5e's price ratios with the Iron Sword
-#                 standing for a longsword (1 CB ~ 4 gp).
+#               - Tier 2 and 3 armour: priced by protection, not materials
+#                 (Ch.7, Tier 2 Armor), on 5e's price ratios with the Iron
+#                 Sword standing for a longsword (1 CB ~ 4 gp).
 # hidden:       true keeps an entry out of items.json (not for players yet)
 
 - name: Crude Sword
@@ -531,6 +535,433 @@
   craft_time_hrs: 3
   market_value: 3  # derived: materials 2.44 CB
 
+# ---------- Tier 3 weapons: Crownweave steel (Ch.7, Tier 3 Weapons). Hidden
+# until the party can reach them. ----------
+
+- name: Steel Longsword
+  id: steel-longsword
+  kind: weapon
+  damage: {dice: 1d8, versatile: 1d10, bonus: 2, type: slashing, ability: str}
+  properties: [melee, versatile]
+  emoji: "🗡️"
+  category: Tier 3 Weapon
+  upgrade_from: Iron Sword
+  stat: "Melee, Versatile · 1d8/1d10 + STR + 2 slashing"
+  power: "Riposte — when a creature within 5 ft misses you with a melee attack, your reaction is an attack back (proficiency bonus times per long rest)."
+  materials:
+    - [Crucible Steel Ingot, 2]
+    - [Skywood Timber, 0.5]
+    - [Castfield Leather, 0.2]
+  tools: "Smith's tools (basic forge)"
+  craft_time_hrs: 48
+  market_value: 10  # derived: materials 9.4 CB
+  hidden: true
+
+- name: Sabre
+  id: sabre
+  kind: weapon
+  damage: {dice: 1d6, type: slashing, ability: hybrid}
+  properties: [melee, light, hybrid]
+  emoji: "🗡️"
+  category: Tier 3 Weapon
+  upgrade_from: Iron Sword
+  stat: "Melee, Light, Hybrid · 1d6 + STR + DEX slashing"
+  power: "Slash & Step — after a hit, move 5 ft without provoking opportunity attacks. Thin Blade — a natural 1 bends it: −1 damage until straightened over a short rest."
+  materials:
+    - [Crucible Steel Ingot, 1.5]
+    - [Skywood Timber, 0.3]
+    - [Castfield Leather, 0.2]
+  tools: "Smith's tools"
+  craft_time_hrs: 24
+  market_value: 8  # derived: materials 7 CB
+  hidden: true
+
+- name: Spear
+  id: spear
+  kind: weapon
+  damage: {dice: 1d6, versatile: 1d8, type: piercing, ability: hybrid}
+  properties: [melee, versatile, thrown (20/60), hybrid]
+  emoji: "🔱"
+  category: Tier 3 Weapon
+  upgrade_from: Quarterstaff
+  stat: "Melee, Versatile, Thrown (20/60), Hybrid · 1d6/1d8 + STR + DEX piercing"
+  power: "Long Haft — held two-handed it has 10 ft reach, and attacks against a creature within 5 ft of you have disadvantage."
+  materials:
+    - [Skywood Timber, 1]
+    - [Crucible Steel Ingot, 0.5]
+    - [Castfield Leather, 0.2]
+  tools: "Carpenter's tools and Smith's tools"
+  craft_time_hrs: 24
+  market_value: 5  # derived: materials 4.4 CB
+  hidden: true
+
+- name: Steel-Capped Staff
+  id: steel-capped-staff
+  kind: weapon
+  damage: {dice: 1d6, versatile: 1d8, bonus: 2, type: bludgeoning, ability: str}
+  properties: [melee, versatile]
+  emoji: "🪵"
+  category: Tier 3 Weapon
+  upgrade_from: Quarterstaff
+  stat: "Melee, Versatile · 1d6/1d8 + STR + 2 bludgeoning"
+  power: "Topple — on a hit, a Large or smaller target makes a CON save (DC 8 + proficiency + STR) or falls prone."
+  materials:
+    - [Skywood Timber, 1]
+    - [Crucible Steel Ingot, 0.3]
+  tools: "Carpenter's tools and Smith's tools"
+  craft_time_hrs: 8
+  market_value: 4  # derived: materials 3.2 CB
+  hidden: true
+
+- name: Steel Greatsword
+  id: steel-greatsword
+  kind: weapon
+  damage: {dice: 2d6, bonus: 2, type: slashing, ability: str}
+  properties: [melee, heavy, two-handed]
+  emoji: "⚔️"
+  category: Tier 3 Weapon
+  upgrade_from: Iron Greatsword
+  stat: "Melee, Heavy, 2H · 2d6 + STR + 2 slashing"
+  power: "Graze — a miss still deals your STR modifier in slashing damage. Inertia Drag — miss by 5+ and your speed drops 5 ft this turn."
+  materials:
+    - [Crucible Steel Ingot, 3]
+    - [Skywood Timber, 0.5]
+    - [Castfield Leather, 0.3]
+  tools: "Smith's tools (basic forge)"
+  craft_time_hrs: 72
+  market_value: 15  # derived: materials 13.6 CB
+  hidden: true
+
+- name: Halberd
+  id: halberd
+  kind: weapon
+  damage: {dice: 1d10, bonus: 2, type: slashing, ability: str}
+  properties: [melee, heavy, reach, two-handed]
+  emoji: "🪓"
+  category: Tier 3 Weapon
+  upgrade_from: Iron Greatsword
+  stat: "Melee, Heavy, Reach, 2H · 1d10 + STR + 2 slashing"
+  power: "Hook & Haul — on a hit, pull a Large or smaller target 5 ft toward you or push it 10 ft away. Long Haft — disadvantage in a space under 10 ft wide."
+  materials:
+    - [Crucible Steel Ingot, 2]
+    - [Skywood Timber, 1]
+    - [Steel Rivets, 0.3]
+  tools: "Smith's tools and Carpenter's tools (basic forge)"
+  craft_time_hrs: 48
+  market_value: 11  # derived: materials 10.3 CB
+  hidden: true
+
+- name: Bearded Axe
+  id: bearded-axe
+  kind: weapon
+  damage: {dice: 1d8, versatile: 1d10, bonus: 2, type: slashing, ability: str}
+  properties: [melee, versatile]
+  emoji: "🪓"
+  category: Tier 3 Weapon
+  upgrade_from: Iron Battle Axe
+  stat: "Melee, Versatile · 1d8/1d10 + STR + 2 slashing"
+  power: "Hook the Rim — on a hit, the target's shield gives it no AC until the start of your next turn. Head Pull — miss by 5+ and your speed drops 5 ft this turn."
+  materials:
+    - [Crucible Steel Ingot, 2]
+    - [Skywood Timber, 0.4]
+    - [Castfield Leather, 0.2]
+  tools: "Smith's tools"
+  craft_time_hrs: 24
+  market_value: 10  # derived: materials 9.2 CB
+  hidden: true
+
+- name: Steel Warhammer
+  id: steel-warhammer
+  kind: weapon
+  damage: {dice: 1d8, bonus: 2, type: bludgeoning, ability: str}
+  properties: [melee]
+  emoji: "🔨"
+  category: Tier 3 Weapon
+  upgrade_from: Iron Mace
+  stat: "Melee · 1d8 + STR + 2 bludgeoning"
+  power: "Crushing Weight — +2 damage against medium or heavy armour, or natural armour of +2 AC or more."
+  materials:
+    - [Crucible Steel Ingot, 1.5]
+    - [Skywood Timber, 0.3]
+    - [Castfield Leather, 0.1]
+  tools: "Smith's tools"
+  craft_time_hrs: 24
+  market_value: 7  # derived: materials 6.8 CB
+  hidden: true
+
+- name: Watchman's Cudgel
+  id: watchmans-cudgel
+  kind: weapon
+  damage: {dice: 1d6, bonus: 2, type: bludgeoning, ability: str}
+  properties: [melee, light]
+  emoji: "🔨"
+  category: Tier 3 Weapon
+  upgrade_from: Iron-Shod Club
+  stat: "Melee, Light · 1d6 + STR + 2 bludgeoning"
+  power: "Sap — on a hit, a Medium or smaller target has disadvantage on its next attack roll before the start of your next turn. Door Breaker as the Club."
+  materials:
+    - [Crucible Steel Ingot, 0.5]
+    - [Skywood Timber, 0.3]
+    - [Castfield Leather, 0.1]
+  tools: "Smith's tools or Carpenter's tools"
+  craft_time_hrs: 4
+  market_value: 3  # derived: materials 2.8 CB
+  hidden: true
+
+- name: Stiletto
+  id: stiletto
+  kind: weapon
+  damage: {dice: 1d4, type: piercing, ability: hybrid}
+  properties: [melee, light, thrown (20/60), hybrid]
+  emoji: "🔪"
+  category: Tier 3 Weapon
+  upgrade_from: Iron Dagger
+  stat: "Melee, Light, Thrown (20/60), Hybrid · 1d4 + STR + DEX piercing"
+  power: "Gap-Finder — scores a critical hit on a 19 or 20. Working Knife as the Basic Dagger."
+  materials:
+    - [Crucible Steel Ingot, 1]
+    - [Skywood Timber, 0.2]
+  tools: "Smith's tools"
+  craft_time_hrs: 8
+  market_value: 5  # derived: materials 4.4 CB
+  hidden: true
+
+- name: Steel Kite Shield
+  id: steel-kite-shield
+  kind: shield
+  emoji: "🛡️"
+  category: Tier 3 Weapon
+  upgrade_from: Iron Shield
+  stat: "Shield, +2 AC · bash 1d4 + STR + 2 bludgeoning · speed −5 ft below STR 15"
+  power: "True Guard — keeps its full +2 AC against a critical hit. Shield Wall — an ally within 5 ft of you gets +1 AC (one Shield Wall at a time)."
+  materials:
+    - [Crucible Steel Ingot, 2]
+    - [Skywood Timber, 0.5]
+    - [Castfield Leather, 0.3]
+  tools: "Smith's tools (basic forge)"
+  craft_time_hrs: 48
+  market_value: 11  # derived: materials 9.6 CB
+  hidden: true
+
+- name: Buckler
+  id: buckler
+  kind: shield
+  emoji: "🛡️"
+  category: Tier 3 Weapon
+  upgrade_from: Iron Shield
+  stat: "Shield, +1 AC · bash 1d4 + STR + DEX bludgeoning (Hybrid)"
+  power: "Deflect — when a melee attack hits you, your reaction adds +2 AC against it, perhaps turning it to a miss (proficiency bonus times per long rest)."
+  materials:
+    - [Crucible Steel Ingot, 1]
+    - [Castfield Leather, 0.2]
+  tools: "Smith's tools"
+  craft_time_hrs: 24
+  market_value: 5  # derived: materials 4.4 CB
+  hidden: true
+
+- name: Steel-Backed Longbow
+  id: steel-backed-longbow
+  kind: weapon
+  damage: {dice: 1d8, bonus: 2, type: piercing, ability: dex}
+  properties: [ranged (150/600), ammunition, two-handed]
+  emoji: "🏹"
+  category: Tier 3 Weapon
+  upgrade_from: Seasoned Bow
+  stat: "Ranged (150/600), Ammunition, 2H · 1d8 + DEX + 2 piercing"
+  power: "True Limbs — no disadvantage beyond normal range, and you can gain advantage there."
+  materials:
+    - [Skywood Timber, 1]
+    - [Feathersteel Strip, 0.5]
+    - [Castfield Leather, 0.3]
+  tools: "Bowyer's kit"
+  craft_time_hrs: 48
+  market_value: 5  # derived: materials 4.1 CB
+  hidden: true
+
+- name: Warbow
+  id: warbow
+  kind: weapon
+  damage: {dice: 1d10, type: piercing, ability: hybrid}
+  properties: [ranged (200/800), ammunition, two-handed, hybrid]
+  emoji: "🏹"
+  category: Tier 3 Weapon
+  upgrade_from: Composite Bow
+  stat: "Ranged (200/800), Ammunition, 2H, Hybrid · 1d10 + DEX + STR piercing"
+  power: "Siege Draw — ignores half cover. Heavy Draw — your speed is halved on a turn you shoot it."
+  materials:
+    - [Skywood Timber, 1]
+    - [Feathersteel Strip, 1]
+    - [Cured Hide, 0.5]
+    - [Binding Fiber, 0.5]
+    - [Animal Oil/Resin, 1]
+  tools: "Bowyer's kit"
+  craft_time_hrs: 96
+  market_value: 6  # derived: materials 5.75 CB
+  hidden: true
+
+- name: Arbalest
+  id: arbalest
+  kind: weapon
+  damage: {dice: 1d10, bonus: 2, type: piercing, ability: dex}
+  properties: [ranged (100/400), ammunition, loading, heavy, two-handed]
+  emoji: "🏹"
+  category: Tier 3 Weapon
+  upgrade_from: Iron Crossbow
+  stat: "Ranged (100/400), Ammunition (bolts), Loading, Heavy, 2H · 1d10 + DEX + 2 piercing"
+  power: "Punch-Through — ignores half cover; three-quarters cover counts as half. Steel Prod — a natural 1 slips the latch; re-span with a bonus action."
+  materials:
+    - [Skywood Timber, 1]
+    - [Spring Steel Coil, 1]
+    - [Crucible Steel Ingot, 1]
+  tools: "Bowyer's kit or Carpenter's tools, and Smith's tools"
+  craft_time_hrs: 48
+  market_value: 9  # derived: materials 8 CB
+  hidden: true
+
+- name: Hand Crossbow
+  id: hand-crossbow
+  kind: weapon
+  damage: {dice: 1d6, bonus: 2, type: piercing, ability: dex}
+  properties: [ranged (30/120), ammunition, loading, light]
+  emoji: "🏹"
+  category: Tier 3 Weapon
+  upgrade_from: Iron Crossbow
+  stat: "Ranged (30/120), Ammunition (bolts), Loading, Light · 1d6 + DEX + 2 piercing"
+  power: "Point Blank — no disadvantage on ranged attacks with it while a hostile creature is within 5 ft of you."
+  materials:
+    - [Skywood Timber, 0.3]
+    - [Spring Steel Coil, 0.5]
+    - [Crucible Steel Ingot, 0.3]
+  tools: "Bowyer's kit and Smith's tools"
+  craft_time_hrs: 24
+  market_value: 3  # derived: materials 2.8 CB
+  hidden: true
+
+- name: Bodkin Arrow Bundle (10)
+  id: bodkin-arrow-bundle
+  kind: ammunition
+  emoji: "🏹"
+  category: Tier 3 Weapon
+  upgrade_from: Iron-Tipped Arrow Bundle (10)
+  stat: "Consumable ammunition · uses the bow's attack bonus"
+  power: "Bodkin Points — +1 damage against medium or heavy armour, or natural armour of +2 AC or more. Never break on a 1; recover half fired, rounded up."
+  materials:
+    - [Skywood Timber, 0.3]
+    - [Crucible Steel Ingot, 0.1]
+    - [Binding Fiber, 0.1]
+  tools: "Fletcher's tools"
+  craft_time_hrs: 4
+  market_value: 1  # derived: materials 1.03 CB
+  hidden: true
+
+- name: Bodkin Bolt Bundle (10)
+  id: bodkin-bolt-bundle
+  kind: ammunition
+  emoji: "🏹"
+  category: Tier 3 Weapon
+  upgrade_from: Iron Bolt Bundle (10)
+  stat: "Consumable ammunition (crossbows) · uses the crossbow's attack bonus"
+  power: "Bodkin Points — +1 damage against medium or heavy armour, or natural armour of +2 AC or more. Never break on a 1; recover half fired, rounded up."
+  materials:
+    - [Skywood Timber, 0.2]
+    - [Crucible Steel Ingot, 0.2]
+    - [Binding Fiber, 0.1]
+  tools: "Fletcher's tools"
+  craft_time_hrs: 4
+  market_value: 1  # derived: materials 1.23 CB
+  hidden: true
+
+- name: Long Rifle
+  id: long-rifle
+  kind: weapon
+  damage: {dice: 1d12, bonus: 2, type: piercing, ability: dex}
+  properties: [firearm, ranged (120/300), ammunition, loading, two-handed, loud]
+  emoji: "🔫"
+  category: Tier 3 Weapon
+  upgrade_from: Black-Powder Rifle
+  stat: "Firearm, Ranged (120/300), Loading, 2H, Loud · 1d12 + DEX + 2 piercing"
+  power: "Cloudglass Sight — no disadvantage beyond normal range. Flintlock — a natural 1 fouls it; clearing takes a bonus action."
+  materials:
+    - [Crucible Steel Ingot, 3]
+    - [Skywood Timber, 1]
+    - [Spring Steel Coil, 0.5]
+    - [Cloudglass Lens, 1]
+  tools: "Smith's tools and Tinker's tools (basic forge)"
+  craft_time_hrs: 96
+  market_value: 24  # derived: priced by power, twice the Black-Powder Rifle as the rifle is twice the musket; materials 18 CB
+  hidden: true
+
+- name: Duelling Pistol
+  id: duelling-pistol
+  kind: weapon
+  damage: {dice: 1d10, bonus: 2, type: piercing, ability: dex}
+  properties: [firearm, ranged (40/120), ammunition, loading, loud]
+  emoji: "🔫"
+  category: Tier 3 Weapon
+  upgrade_from: Heavy Handgun
+  stat: "Firearm, Ranged (40/120), Loading, Loud · 1d10 + DEX + 2 piercing"
+  power: "Close Quarters — no disadvantage on ranged attacks with it while a hostile creature is within 5 ft of you. Flintlock as the Long Rifle."
+  materials:
+    - [Crucible Steel Ingot, 1.5]
+    - [Skywood Timber, 0.3]
+    - [Spring Steel Coil, 0.3]
+  tools: "Smith's tools and Tinker's tools (basic forge)"
+  craft_time_hrs: 48
+  market_value: 16  # derived: priced by power, twice the Heavy Handgun; materials 7.2 CB
+  hidden: true
+
+- name: Hand Bombard
+  id: hand-bombard
+  kind: weapon
+  damage: {dice: 2d8, type: fire, ability: dex}
+  properties: [firearm, ranged (30), ammunition, loading, two-handed, loud]
+  emoji: "🧨"
+  category: Tier 3 Weapon
+  stat: "Firearm, Ranged (30), Ammunition (Bombard Shells), Loading, 2H, Loud (600 ft) · 10-ft burst, DEX save (DC 8 + proficiency + DEX): 2d8 fire, half on a success"
+  power: "Burst — fired in place of your attack, at a point within 30 ft; it makes no attack roll, so nothing that needs a hit (Resonant Shot) applies. Recoil — below STR 13, firing it knocks you prone."
+  materials:
+    - [Crucible Steel Ingot, 3]
+    - [Skywood Timber, 1]
+    - [Steel Rivets, 0.5]
+  tools: "Smith's tools and Tinker's tools (basic forge)"
+  craft_time_hrs: 96
+  market_value: 30  # derived: priced by power, above the Long Rifle as the only area weapon; materials 14.5 CB
+  hidden: true
+
+- name: Crucible Cartridges (10)
+  id: crucible-cartridges
+  kind: ammunition
+  emoji: "🔫"
+  category: Tier 3 Weapon
+  upgrade_from: Paper Cartridges (10)
+  stat: "Consumable ammunition (firearms) · uses the firearm's attack bonus"
+  power: "Primed — a steel primer under every ball: a natural 1 is only a miss, and never fouls the barrel. Stay dry, as Paper Cartridges."
+  materials:
+    - [Crucible Steel Ingot, 0.2]
+    - [Black Powder, 1]
+    - [Fabric, 0.2]
+    - [Steel Rivets, 0.2]
+  tools: "Tinker's tools"
+  craft_time_hrs: 3
+  market_value: 3  # derived: materials 3.14 CB
+  hidden: true
+
+- name: Bombard Shells (4)
+  id: bombard-shells
+  kind: ammunition
+  emoji: "🧨"
+  category: Tier 3 Weapon
+  stat: "Consumable ammunition (Hand Bombard) · scarce outside Northreach"
+  power: "Keep Them Dry — a soaked shell won't fire until dried over a short rest."
+  materials:
+    - [Crucible Steel Ingot, 0.5]
+    - [Black Powder, 2]
+    - [Fabric, 0.2]
+  tools: "Tinker's tools"
+  craft_time_hrs: 4
+  market_value: 7  # derived: materials 6.14 CB
+  hidden: true
+
 - name: Leather Tunic
   id: leather-tunic
   kind: armor
@@ -654,6 +1085,107 @@
   craft_time_hrs: 7
   market_value: 4  # derived: priced by protection, a third of the body piece; materials 1.46 CB
 
+# ---------- Tier 3 armour: Crownweave steel (Ch.7, Tier 3 Armor), priced by
+# protection like Tier 2. Hidden until the party can reach it. ----------
+
+- name: Steel Harness
+  id: steel-harness
+  kind: armor
+  emoji: "🧥"
+  category: Tier 3 Armor
+  upgrade_from: Riveted Brigandine
+  stat: "Heavy Armor (Body) · +4 AC base, no Dex · disadvantage on Stealth · speed −10 ft below STR 13"
+  power: "Steel Guard — the first critical hit you take each combat is a normal hit instead."
+  materials:
+    - [Crucible Steel Ingot, 3]
+    - [Steel Rivets, 1]
+    - [Castfield Leather, 1]
+    - [Fabric, 1]
+  tools: "Smith's tools and Leatherworker's tools (basic forge)"
+  craft_time_hrs: 72
+  market_value: 50  # derived: priced by protection, as splint (200 gp); materials 15.7 CB
+  hidden: true
+
+- name: Feathersteel Jack
+  id: feathersteel-jack
+  kind: armor
+  emoji: "🧥"
+  category: Tier 3 Armor
+  upgrade_from: Leather Tunic
+  stat: "Light Armor (Body) · +2 AC base, +2 Dex scaling (max) · no Stealth penalty"
+  power: "Flight-Harness — Skyloom's flying harness under the plates: you take half damage from falling."
+  materials:
+    - [Feathersteel Strip, 2]
+    - [Castfield Leather, 1]
+    - [Fabric, 0.5]
+    - [Steel Rivets, 0.5]
+  tools: "Leatherworker's tools and Smith's tools"
+  craft_time_hrs: 48
+  market_value: 20  # derived: priced by protection, studded leather (45 gp) in feathersteel; materials 8.85 CB
+  hidden: true
+
+- name: Aegis Bonded Plate
+  id: aegis-bonded-plate
+  kind: armor
+  emoji: "🛡️"
+  category: Tier 3 Armor
+  upgrade_from: Steel Harness
+  stat: "Heavy Armor (Body), Aegisbound only · +4 AC base, no Dex · disadvantage on Stealth · speed −10 ft below STR 13"
+  power: "Mana Baffle — damage from spells and other magical effects is reduced by your proficiency bonus. Steel Guard as the Harness. Bonded to one wearer at the Infusion Forges; not sold."
+  market_value: null  # issued or bonded at the Infusion Forges, never sold over a counter
+  hidden: true
+
+- name: Splinted Greaves
+  id: splinted-greaves
+  kind: armor
+  emoji: "👖"
+  category: Tier 3 Armor
+  upgrade_from: Riveted Leggings
+  stat: "Heavy Armor (Legs) · +3 Dex save OR +10 ft movement (as chosen for the Leggings)"
+  power: "Splinted Steel — still no AC; the Heavy drawback is the body piece's."
+  materials:
+    - [Castfield Leather, 0.5]
+    - [Crucible Steel Ingot, 0.5]
+    - [Steel Rivets, 0.5]
+  tools: "Leatherworker's tools and Smith's tools"
+  craft_time_hrs: 12
+  market_value: 17  # derived: priced by protection, a third of the Steel Harness; materials 3.5 CB
+  hidden: true
+
+- name: Steel Sallet
+  id: steel-sallet
+  kind: armor
+  emoji: "🪖"
+  category: Tier 3 Armor
+  upgrade_from: Riveted Coif
+  stat: "Heavy Armor (Head) · +3 Perception OR advantage vs ambush and +2 initiative (as chosen for the Hood)"
+  power: "Open Visor — awareness, sharper still; the only combat number on a head piece."
+  materials:
+    - [Crucible Steel Ingot, 1]
+    - [Soft Lining, 1]
+    - [Steel Rivets, 0.3]
+  tools: "Smith's tools and Leatherworker's tools"
+  craft_time_hrs: 12
+  market_value: 18  # derived: priced by protection, a third of the Steel Harness plus the initiative; materials 4.8 CB
+  hidden: true
+
+- name: Steel Sabatons
+  id: steel-sabatons
+  kind: armor
+  emoji: "👢"
+  category: Tier 3 Armor
+  upgrade_from: Riveted Boots
+  stat: "Heavy Armor (Feet) · +5 ft and speed can't be cut by more than 5 ft by any effect, magical too, OR advantage vs prone and shoves and on saves against being moved (as chosen for the Boots)"
+  power: "Sure Footing — the choice made for the Leather Boots, made unbreakable."
+  materials:
+    - [Crucible Steel Ingot, 0.5]
+    - [Castfield Leather, 0.5]
+    - [Steel Rivets, 0.3]
+  tools: "Smith's tools and Leatherworker's tools"
+  craft_time_hrs: 10
+  market_value: 17  # derived: priced by protection, a third of the Steel Harness; materials 3.3 CB
+  hidden: true
+
 # ---------- raw materials and utilities (Ch.10, and the materials Ch.7's
 # recipes call for without Ch.10 pricing them) ----------
 
@@ -749,6 +1281,62 @@
   stat: "10 charges · refined at Flint-and-Steel, Cleoti; scarce outside Northreach · soaked powder won't fire until dried"
   market_value: 2  # derived: about twice an arrow's price per shot, as Ch.3 has Gunmen dependent on scarce powder
 
+- name: Crucible Steel Ingot
+  id: crucible-steel-ingot
+  kind: material
+  category: Tier 3 Raw Item
+  stat: "150 g · steel from the Iron Crucible, Northreach · the base of every Tier 3 blade and plate"
+  market_value: 4  # derived: about 2.7 times the Iron Ingot, as steel to wrought iron
+  hidden: true
+
+- name: Feathersteel Strip
+  id: feathersteel-strip
+  kind: material
+  category: Tier 3 Raw Item
+  stat: "Thin, springing steel worked at Castfield, Skyloom, for flight harness · light armour and bow backing"
+  market_value: 3  # derived: a little under the Crucible Steel Ingot it is rolled from
+  hidden: true
+
+- name: Skywood Timber
+  id: skywood-timber
+  kind: material
+  category: Tier 3 Raw Item
+  stat: "5 m · Burtonrith's light, close-grained wood, grown for skycraft frames · hafts, stocks and bows"
+  market_value: 2  # derived: twice Seasoned Timber, as a select hardwood
+  hidden: true
+
+- name: Castfield Leather
+  id: castfield-leather
+  kind: material
+  category: Tier 3 Raw Item
+  stat: "Hardened, oil-sealed leather from Castfield, Skyloom · grips, straps and armour backing"
+  market_value: 2  # derived: twice Cured Hide, for the harness-makers' finish
+  hidden: true
+
+- name: Spring Steel Coil
+  id: spring-steel-coil
+  kind: material
+  category: Tier 3 Raw Item
+  stat: "Tempered spring steel from the Gear-Makers' Walks, Bybdetos · crossbow prods, locks and launchers"
+  market_value: 2  # derived: half a Crucible Steel Ingot's weight, drawn and tempered
+  hidden: true
+
+- name: Steel Rivets
+  id: steel-rivets
+  kind: material
+  category: Tier 3 Raw Item
+  stat: "30 rivets · Crucible steel, for plate and fittings"
+  market_value: 1  # derived: twice Iron Rivets
+  hidden: true
+
+- name: Cloudglass Lens
+  id: cloudglass-lens
+  kind: material
+  category: Tier 3 Raw Item
+  stat: "A ground lens of Midhurstnes cloudglass, Skyloom · sights, spyglasses and lanterns"
+  market_value: 3  # derived: a fine lens at about the price of a Feathersteel Strip
+  hidden: true
+
 - name: Rations
   id: rations
   kind: utility
@@ -826,6 +1414,74 @@
   tools: "Tinker's tools or Smith's tools"
   craft_time_hrs: 24
   market_value: 2  # derived: materials 1.85 CB
+
+- name: Feathersteel Line & Spring Grapnel (20 m)
+  id: feathersteel-line-grapnel
+  kind: utility
+  emoji: "🪝"
+  category: Tier 3 Utility
+  upgrade_from: Tarred Rope & Grapnel (15 m)
+  stat: "Spring-launched grapnel to 60 ft (DC 10 Athletics) · advantage on climbing it · holds two climbers · AC 15, 15 HP"
+  power: "A way up from twice as far, and a line that doesn't part."
+  materials:
+    - [Feathersteel Strip, 0.5]
+    - [Cord Bundle, 2]
+    - [Spring Steel Coil, 0.5]
+    - [Crucible Steel Ingot, 0.3]
+  tools: "Weaver's tools and Tinker's tools"
+  craft_time_hrs: 24
+  market_value: 5  # derived: materials 4.1 CB
+  hidden: true
+
+- name: Bullseye Lantern
+  id: bullseye-lantern
+  kind: utility
+  emoji: "🏮"
+  category: Tier 3 Utility
+  upgrade_from: Hooded Lantern
+  stat: "Bright 60-ft cone, dim 60 ft more · hood to 5 ft or shut (bonus action) · Animal Oil/Resin x1 burns 8 hours"
+  power: "A cloudglass lens throws the light where you point it, and hangs free of your hands as the Hooded Lantern."
+  materials:
+    - [Crucible Steel Ingot, 0.5]
+    - [Cloudglass Lens, 1]
+    - [Steel Rivets, 0.3]
+    - [Animal Oil/Resin, 1]
+  tools: "Tinker's tools"
+  craft_time_hrs: 24
+  market_value: 6  # derived: materials 5.4 CB
+  hidden: true
+
+- name: Cloudglass Spyglass
+  id: cloudglass-spyglass
+  kind: utility
+  emoji: "🔭"
+  category: Tier 3 Utility
+  stat: "Brings things ten times closer · advantage on sight-based Perception for anything more than 60 ft away"
+  power: "Midhurstnes lenses in a Bybdetos tube: what the Gear-Makers' Walks sell as 'predictable'."
+  materials:
+    - [Cloudglass Lens, 2]
+    - [Crucible Steel Ingot, 0.3]
+    - [Castfield Leather, 0.1]
+  tools: "Tinker's tools"
+  craft_time_hrs: 48
+  market_value: 8  # derived: materials 7.4 CB
+  hidden: true
+
+- name: Signal Flares (3)
+  id: signal-flares
+  kind: utility
+  emoji: "🎆"
+  category: Tier 3 Utility
+  stat: "Fired 300 ft up from a hand tube · seen for miles at night · in a pinch, a ranged attack (30/90) for 1d6 fire that lights what it hits"
+  power: "Flint-and-Steel's answer to 'where are you?'"
+  materials:
+    - [Black Powder, 0.5]
+    - [Fabric, 0.2]
+    - [Animal Oil/Resin, 0.2]
+  tools: "Tinker's tools"
+  craft_time_hrs: 2
+  market_value: 1  # derived: materials 1.16 CB
+  hidden: true
 
 # ---------- tools and the workshop (Ch.7, Tools & the Workshop): priced on
 # 5e's ratios like the armour (1 CB ~ 4 gp), rounded the Guild's way ----------

@@ -10,7 +10,8 @@ Usage, from the repo root:
 
 dist/ is the hub's reception page at the root (index.html, style.css, app.js,
 clerk.js from hub/, with the page marked data-hosted so it needs no hub
-server, and balance-patch.md for its notice board), library/ (the output of library/build.py), market/
+server, balance-patch.md for its notice board and atlas/ for the map on its
+easel, as last drawn by hub/atlas.py), library/ (the output of library/build.py), market/
 (market.html as its index.html), bestiary/
 (bestiary.html as its index.html, plus bestiary/images/ if there is one) and
 barracks/ (just items.json, the output of barracks/build.py: the hub loads the
@@ -66,6 +67,8 @@ def main():
     for name in ("style.css", "app.js", "clerk.js"):
         shutil.copy(HUB / name, DIST / name)
     shutil.copy(ROOT / "balance-patch.md", DIST / "balance-patch.md")  # pinned to the hub's notice board
+    if (HUB / "atlas").is_dir():  # the map on the hub's easel (hub/atlas.py)
+        shutil.copytree(HUB / "atlas", DIST / "atlas")
 
     size = sum(p.stat().st_size for p in DIST.rglob("*") if p.is_file())
     print(f"wrote {DIST.relative_to(ROOT)}/ ({size / 1e6:.1f} MB)")

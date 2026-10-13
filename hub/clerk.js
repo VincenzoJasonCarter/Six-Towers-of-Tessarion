@@ -95,7 +95,7 @@ const HALLS = {
   },
   market: {
     name: "The Market", app: "market",
-    line: ["smug", "The Guild's chartered stall. Everything at the Official Value, a tag on every item, the recipe on the back. Keep a tally and the clerks round it for you. Haggling is done elsewhere, and badly."],
+    line: ["smug", "The Guild's chartered stall. Everything at the Official Value, a tag on every item, the recipe on the back. Talvender runs it: twenty-two years on the road, and he'll tell you about every one of them. Haggling is done elsewhere, and badly."],
   },
   barracks: {
     name: "The Barracks", app: "barracks",
@@ -127,6 +127,7 @@ function menu() {
     asked.has("who") ? ["How's work?", "work"] : ["Who are you?", "who"],
     ["What's back there?", "halls"],
     ["Any new notices?", "notice"],
+    ...(atlas ? [["What's that map on the easel?", "map"]] : []),
     ["Heard anything interesting?", "gossip"],
     ["Tell me about Tessarion.", "lore"],
     ["Can I see the restricted section?", "restricted"],
@@ -165,6 +166,13 @@ const TALK = {
       : noticeUnread() ? ["flat", `${notice.title}, posted ${notice.date}. Rules changes, mostly to the subclasses. The Guild calls it a balance patch. I call it more filing.`]
       : ["smug", `Nothing since ${notice.title}. You've read it already. I watched you.`],
     replies: () => notice ? [["Show me.", () => { hide(); openNotice(); }], MORE] : [MORE],
+  },
+  map: {
+    line: [
+      ["smile", "The Union, all of it, as the Loom Council's surveyors last drew it. The Crown in the middle, the Weaves round it, and every town that pays a tax. Pick one and it'll tell you what the Compendium says."],
+      ["smug", "That's Crownweave. You're in it. Roughly here. The map's very good; the surveyors were very well paid; I have opinions about both."],
+    ],
+    replies: [["Show me.", () => { hide(); openAtlas(); }], MORE],
   },
   restricted: { line: ["flat", "No."], replies: [["Please?", "restricted2"], ["Fair enough.", "menu"]] },
   restricted2: {

@@ -45,9 +45,8 @@ const frames = {};
 // The resting picture is cz = 0, k = 1; walking down a corridor redraws it
 // with the camera further in (see the walks below).
 //
-// A corridor is first described as a list of shapes, then drawn either as SVG
-// (the doorways at rest, whose lamps flicker and eyes blink by CSS) or onto a
-// canvas (every frame of a walk, where rebuilding SVG would be far too slow).
+// A corridor is first described as a list of shapes, then drawn onto canvases:
+// once for each doorway at rest (see paintCorridor), and every frame of a walk.
 
 const D = 4.2;
 const NEAR = .06;  // nothing closer to the camera than this is drawn
@@ -70,7 +69,19 @@ const add = s => { shapes.push(s); };
 const polygon = (pts, fill, alpha = 1) => { if (pts) add({ t: "poly", pts, fill, alpha }); };
 const line = (a, b, stroke, width, more = {}) => add({ t: "line", a, b, stroke, width, alpha: 1, ...more });
 const ellipse = (x, y, rx, ry, fill, more = {}) => add({ t: "ellipse", x, y, rx, ry, fill, alpha: 1, ...more });
-const glowAt = (x, y, rx, ry, colour, alpha, more = {}) => ellipse(x, y, rx, ry, { soft: colour }, { alpha, ...more });
+// A glow is lamplight in the air. Walked right up to, it would fill the view (and
+// cost a full-screen gradient every frame), so past half the picture's width it
+// fades away.
+function glowAt(x, y, rx, ry, colour, alpha, more = {}) {
+  const size = Math.max(rx, ry) / 200;
+  if (size < 1) ellipse(x, y, rx, ry, { soft: colour }, { alpha: alpha * Math.min(1, 2 - 2 * size), ...more });
+}
+// A lamp's fainter light on what is round it: a plain two-stop circle (a glow's
+// three stops cost more to paint over a wide area), gone before it gets large.
+function wash(x, y, r, colour, alpha) {
+  const f = Math.min(1, (100 - r) / 50);
+  if (f > 0) ellipse(x, y, r, r, { rad: [x, y, r], stops: [[0, colour, alpha * f], [1, colour, 0]] });
+}
 function group(more, draw) {
   const outer = shapes;
   shapes = [];
@@ -95,13 +106,40 @@ function shell(c) {
   polygon(side(-1, 1, D, 0, 2), { lin: [0, 0, 100, 0], stops: [[0, c.wall], [1, c.wallFar]] });
   polygon(side(1, 1, D, 0, 2), { lin: [200, 0, 100, 0], stops: [[0, c.wall], [1, c.wallFar]] });
   polygon(end(-1, 1, 0, 2), c.far);
+  // Where the floor meets the walls and the walls the ceiling, the light doesn't reach.
+  for (const X of [-1, 1]) {
+    for (const [w, a] of [[.06, .26], [.18, .14]]) {
+      polygon(flat(.001, X, X * (1 - w), 1, D), "#000", a);
+      polygon(side(X * .999, 1, D, 0, w * .9), "#000", a);
+      polygon(side(X * .999, 1, D, 2 - w, 2), "#000", a);
+    }
+  }
+}
+
+// The far end's light falling back down the corridor: across the floor from
+// the opening (c.door wide), and along the bottom of both walls.
+function spill(c, alpha = .32) {
+  const w = c.door ?? .34, z1 = Math.max(D - 2.2, cam.cz + NEAR);
+  if (z1 >= D) return;
+  const [, yFar] = P(0, 0, D), [, yNear] = P(0, 0, z1);
+  // (Two stops only: a gradient with more is far slower to paint, and this one is painted every frame of a walk.)
+  const fall = a => ({ lin: [0, yFar, 0, yNear], stops: [[0, c.glow, a], [1, c.glow, 0]] });
+  polygon([P(-w, 0, D), P(w, 0, D), P(Math.min(1, w * 2.6), 0, z1), P(-Math.min(1, w * 2.6), 0, z1)], fall(alpha));
+  for (const X of [-1, 1]) {
+    const pts = side(X, D - 1.6, D, 0, 1.3);
+    if (!pts) continue;
+    const [xFar] = P(X, 0, D), [xNear] = P(X, 0, Math.max(D - 1.6, cam.cz + NEAR));
+    polygon(pts, { lin: [xFar, 0, xNear, 0], stops: [[0, c.glow, alpha * .7], [1, c.glow, 0]] });
+  }
 }
 
 // The far end's light, over everything; it grows as the camera nears it.
 function farGlow(c) {
-  const near = depth(D) * D;
-  add({ t: "rect", x: -400, y: -400, w: 1000, h: 1120,
-    fill: { rad: [100, 160 + ((c.glowY ?? 165) - 160) * near, (c.glowR ?? 80) * near], stops: [[0, c.glow, c.glowA], [1, c.glow, 0]] } });
+  spill(c, c.spillA);
+  const near = depth(D) * D, y = 160 + ((c.glowY ?? 165) - 160) * near, r = (c.glowR ?? 80) * near;
+  // Only the square round its circle: outside that it is clear, and painting
+  // clear pixels over the whole picture every frame of a walk is not free.
+  add({ t: "rect", x: 100 - r, y: y - r, w: 2 * r, h: 2 * r, fill: { rad: [100, y, r], stops: [[0, c.glow, c.glowA], [1, c.glow, 0]] } });
 }
 
 // Mortar lines for stone or brick walls, courses staggered.
@@ -120,7 +158,7 @@ const CORRIDORS = {
   library() {
     const rnd = random(7);
     const books = ["#7a2e24", "#2f4d3a", "#28405e", "#6b4b1f", "#5a2f4f", "#8a6a2a", "#3b3b52", "#7d4a2a", "#9a7b3c"];
-    const c = { wall: "#6b4a2e", wallFar: "#140d07", floor: "#4a3222", floorFar: "#0e0905", ceil: "#2b1d12", far: "#2a170b", glow: "#ffd98a", glowA: .55 };
+    const c = { wall: "#6b4a2e", wallFar: "#140d07", floor: "#4a3222", floorFar: "#0e0905", ceil: "#2b1d12", far: "#2a170b", glow: "#ffd98a", glowA: .55, door: .36 };
     shell(c);
     polygon(end(-.36, .36, 0, 1.25), "#f6d68d");
     polygon(end(-.36, .36, 1.25, 1.33), "#4a2c16");
@@ -145,7 +183,12 @@ const CORRIDORS = {
       const d = depth(z);
       line(P(0, 2, z), P(0, 1.78, z), "#3a2a18", 1.6 * d);
       const [x, y] = P(0, 1.73, z);
-      glowAt(x, y, 26 * d, 26 * d, "#ffd98a", .6, { cls: "flicker" });
+      // the lamp's light on the shelves either side, and its pool on the carpet
+      // (held still: only the lamps themselves flicker, which keeps repainting cheap)
+      wash(x, y + 50 * d, 105 * d, "#ffc978", .16);
+      const [fx, fy] = P(0, 0, z);
+      glowAt(fx, fy, 90 * d, 22 * d, "#ffd98a", .22);
+      glowAt(x, y, 26 * d, 26 * d, "#ffd98a", .7, { cls: "flicker" });
       ellipse(x, y, 7 * d, 7 * d, "#fff0c4");
     }
     farGlow(c);
@@ -153,7 +196,7 @@ const CORRIDORS = {
 
   bestiary() {
     const rnd = random(3);
-    const c = { wall: "#3c423a", wallFar: "#060806", floor: "#2a2f28", floorFar: "#040504", ceil: "#1c201b", far: "#07120d", glow: "#57d19b", glowA: .35, glowR: 60 };
+    const c = { wall: "#3c423a", wallFar: "#060806", floor: "#2a2f28", floorFar: "#040504", ceil: "#1c201b", far: "#07120d", glow: "#57d19b", glowA: .35, glowR: 60, door: .3, spillA: .26 };
     shell(c);
     polygon(end(-.3, .3, 0, 1.15), "#123a2a");
     masonry(.28, .55, "#0b0e0b", 1.4);
@@ -179,7 +222,7 @@ const CORRIDORS = {
       group({ cls: "blink", style: `animation-delay:${delay}s` }, () => {
         for (const dx of [-.07, .07]) {
           const [x, y] = P(X + dx, Y, z);
-          glowAt(x, y, 12 * d, 9 * d, colour, .55);
+          glowAt(x, y, 16 * d, 11 * d, colour, .6);
           ellipse(x, y, 3.4 * d, 2.2 * d, colour);
         }
       });
@@ -191,7 +234,7 @@ const CORRIDORS = {
   // The barracks: bunks down both walls with a footlocker at the foot of
   // each, spears racked between them, banners from the beams, lamps low.
   barracks() {
-    const c = { wall: "#5f4b37", wallFar: "#120c07", floor: "#4f3a26", floorFar: "#0d0805", ceil: "#2a1d12", far: "#1d120a", glow: "#ff9a55", glowA: .5, glowY: 180 };
+    const c = { wall: "#5f4b37", wallFar: "#120c07", floor: "#4f3a26", floorFar: "#0d0805", ceil: "#2a1d12", far: "#1d120a", glow: "#ff9a55", glowA: .5, glowY: 180, door: .3 };
     shell(c);
     polygon(end(-.3, .3, 0, 1.2), "#ffc27a");
     polygon(end(-.34, .34, 1.2, 1.28), "#2e1f12");
@@ -225,7 +268,8 @@ const CORRIDORS = {
         if (seen(lz)) {
           const d = depth(lz);
           const [x, y] = P(s * .96, 1.5, lz);
-          glowAt(x, y, 22 * d, 22 * d, "#ffb870", .5, { cls: "flicker" });
+          wash(x, y + 30 * d, 80 * d, "#ffa860", .26);
+          glowAt(x, y, 22 * d, 22 * d, "#ffb870", .6, { cls: "flicker" });
           ellipse(x, y, 3.2 * d, 4.6 * d, "#ffe2b0");
         }
         // lower bunk: dark underneath, the frame, the blanket on top, a pillow
@@ -270,7 +314,7 @@ const CORRIDORS = {
   // of goods under a striped awning with a lantern hung from its edge,
   // bunting strung across overhead, and the lit square at the far end.
   market() {
-    const c = { wall: "#8a5a32", wallFar: "#130b05", floor: "#5a4632", floorFar: "#0d0905", ceil: "#2e1e10", far: "#2a1608", glow: "#ffc46b", glowA: .55, glowY: 172 };
+    const c = { wall: "#8a5a32", wallFar: "#130b05", floor: "#5a4632", floorFar: "#0d0905", ceil: "#2e1e10", far: "#2a1608", glow: "#ffc46b", glowA: .55, glowY: 172, door: .34 };
     shell(c);
     polygon(end(-.34, .34, 0, 1.3), "#ffd58a");
     polygon(end(-.38, .38, 1.3, 1.38), "#3a2414");
@@ -313,7 +357,8 @@ const CORRIDORS = {
         if (seen(lz)) {
           const d = depth(lz), [x, y] = P(s * .6, .98, lz);
           line(P(s * .6, 1.07, lz), P(s * .6, 1.01, lz), shade("#3a2414", a), 1.2 * d);
-          glowAt(x, y, 22 * d, 22 * d, "#ffc46b", .5, { cls: "flicker" });
+          wash(x, y + 24 * d, 58 * d, "#ffb860", .3);
+          glowAt(x, y, 22 * d, 22 * d, "#ffc46b", .6, { cls: "flicker" });
           ellipse(x, y, 3.4 * d, 4.6 * d, "#ffe2a8");
         }
       }
@@ -339,7 +384,7 @@ const CORRIDORS = {
   // The Memoria: a marble gallery with glass cases on plinths down both
   // walls, columns between them, and the rotunda's daylight at the far end.
   memoria() {
-    const c = { wall: "#d9cfbb", wallFar: "#241f18", floor: "#d3c8b0", floorFar: "#1c1813", ceil: "#8f846f", far: "#3a3226", glow: "#fff2d0", glowA: .6, glowR: 90 };
+    const c = { wall: "#d9cfbb", wallFar: "#241f18", floor: "#d3c8b0", floorFar: "#1c1813", ceil: "#8f846f", far: "#3a3226", glow: "#fff2d0", glowA: .5, glowR: 90, door: .42, spillA: .22 };
     shell(c);
     const shade = (hex, f) => {
       const n = parseInt(hex.slice(1), 16), k = v => Math.round(v * f).toString(16).padStart(2, "0");
@@ -397,36 +442,6 @@ function describe(theme, cz = 0, k = 1) {
   }
 }
 
-// ---- drawing the shapes as SVG ----
-
-const n1 = v => (Math.round(v * 10) / 10).toString();
-function toSVG(list, id) {
-  let defs = "", count = 0;
-  const stops = s => s.map(([o, c, a = 1]) => `<stop offset="${o}" stop-color="${c}" stop-opacity="${a}"/>`).join("");
-  const paint = f => {
-    if (typeof f === "string") return f;
-    const g = `${id}-${count++}`;
-    if (f.lin) defs += `<linearGradient id="${g}" gradientUnits="userSpaceOnUse" x1="${f.lin[0]}" y1="${f.lin[1]}" x2="${f.lin[2]}" y2="${f.lin[3]}">${stops(f.stops)}</linearGradient>`;
-    else if (f.rad) defs += `<radialGradient id="${g}" gradientUnits="userSpaceOnUse" cx="${n1(f.rad[0])}" cy="${n1(f.rad[1])}" r="${n1(f.rad[2])}">${stops(f.stops)}</radialGradient>`;
-    else defs += `<radialGradient id="${g}">${stops([[0, f.soft], [.45, f.soft, .55], [1, f.soft, 0]])}</radialGradient>`;
-    return `url(#${g})`;
-  };
-  const extra = s => `${s.alpha !== 1 ? ` opacity="${s.alpha.toFixed(2)}"` : ""}${s.cls ? ` class="${s.cls}"` : ""}${s.style ? ` style="${s.style}"` : ""}`;
-  const one = s => {
-    switch (s.t) {
-      case "poly": return `<polygon points="${s.pts.map(([x, y]) => `${n1(x)},${n1(y)}`).join(" ")}" fill="${paint(s.fill)}"${extra(s)}/>`;
-      case "line": return `<line x1="${n1(s.a[0])}" y1="${n1(s.a[1])}" x2="${n1(s.b[0])}" y2="${n1(s.b[1])}" stroke="${s.stroke}" stroke-width="${s.width.toFixed(2)}"${s.dash ? ` stroke-dasharray="${s.dash.map(n1).join(" ")}"` : ""}${s.cap ? ` stroke-linecap="${s.cap}"` : ""}${extra(s)}/>`;
-      case "ellipse": return `<ellipse cx="${n1(s.x)}" cy="${n1(s.y)}" rx="${n1(s.rx)}" ry="${n1(s.ry)}" fill="${paint(s.fill)}"${extra(s)}/>`;
-      case "rect": return `<rect x="${s.x}" y="${s.y}" width="${s.w}" height="${s.h}" fill="${paint(s.fill)}"/>`;
-      case "path": return `<path d="${s.d}" fill="${s.fill}"${s.at ? ` transform="translate(${s.at[0]} ${s.at[1]}) scale(${s.at[2]} ${s.at[3]})"` : ""}${s.stroke ? ` stroke="${s.stroke}" stroke-width="${s.width}" stroke-opacity="${s.strokeAlpha}"` : ""}${extra(s)}/>`;
-      case "group": return `<g${s.cls ? ` class="${s.cls}"` : ""}${s.style ? ` style="${s.style}"` : ""}>${s.shapes.map(one).join("")}</g>`;
-    }
-    return "";
-  };
-  const body = list.map(one).join("");
-  return `<defs>${defs}</defs>${body}`;
-}
-
 // ---- drawing the shapes on a canvas ----
 
 function rgba(hex, a = 1) {
@@ -436,14 +451,15 @@ function rgba(hex, a = 1) {
 
 // Paint the 200x320 picture onto a canvas the way preserveAspectRatio="xMidYMid
 // slice" would, with the canvas backing store `density` pixels per CSS pixel.
-function toCanvas(canvas, list, density, bob = 0) {
+function toCanvas(canvas, list, density, bob = 0, clear = false) {
   const ctx = canvas.getContext("2d");
   const w = canvas.width, h = canvas.height;
   const scale = Math.max(w / 200, h / 320);
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.globalAlpha = 1;
   ctx.fillStyle = "#000";
-  ctx.fillRect(0, 0, w, h);
+  if (clear) ctx.clearRect(0, 0, w, h);
+  else ctx.fillRect(0, 0, w, h);
   ctx.setTransform(scale, 0, 0, scale, (w - 200 * scale) / 2, (h - 320 * scale) / 2 + bob * density);
   const paint = f => {
     if (typeof f === "string") return f;
@@ -530,10 +546,50 @@ function toCanvas(canvas, list, density, bob = 0) {
   list.forEach(one);
 }
 
-document.querySelectorAll(".corridor").forEach((svg, i) => {
-  svg.dataset.id = `c${i}`;
-  svg.innerHTML = toSVG(describe(svg.dataset.theme), svg.dataset.id);
-});
+// A doorway at rest: its corridor drawn once (and again if the doorway changes
+// size). What holds still becomes a plain image, with the lamps' glow at most
+// of its strength; on top, a canvas holds the rest of the glow, and flickers,
+// and one for each pair of eyes blinks. Flickering and blinking are opacity
+// animations of whole canvases (style.css) that the GPU plays on its own, so
+// nothing is redrawn while they run. (As SVG, with the lamps animated inside it,
+// every doorway was redrawn every frame.) On a walk the canvases are hidden:
+// as layers of their own they would make the hall costly to zoom; the image,
+// part of the hall's own drawing, zooms with it for nothing.
+const STEADY = .78;  // how much of a lamp's glow stays when its flicker is at its dimmest
+function paintCorridor(view, i) {
+  const r = view.getBoundingClientRect(), density = devicePixelRatio || 1;
+  const w = Math.round(r.width * density), h = Math.round(r.height * density);
+  if (!w || !h || view.dataset.size === `${w}x${h}`) return;
+  view.dataset.size = `${w}x${h}`;
+  const shapes = describe(view.dataset.theme);
+  const lamps = shapes.filter(s => s.cls === "flicker");
+  const share = k => lamps.map(s => ({ ...s, alpha: s.alpha * k }));
+  const canvas = (list, cls = "", style = "") => {
+    const c = document.createElement("canvas");
+    c.width = w;
+    c.height = h;
+    c.className = cls;
+    c.style.cssText = style;
+    toCanvas(c, list, density, 0, true);
+    return c;
+  };
+  const still = canvas([...shapes.filter(s => !s.cls), ...share(STEADY)]);
+  // Each doorway's lamps flicker out of step with the others'.
+  const layers = lamps.length ? [canvas(share(1 - STEADY), "flicker", `animation-delay:${-i * .9}s`)] : [];
+  for (const g of shapes.filter(s => s.cls === "blink")) layers.push(canvas([g], "blink", g.style || ""));
+  // Shown as a canvas until its image is ready, so the doorway is never empty.
+  view.replaceChildren(still, ...layers);
+  still.toBlob(blob => {
+    if (!blob || !still.isConnected) return;
+    const img = new Image();
+    img.alt = "";
+    img.onload = () => { if (still.isConnected) still.replaceWith(img); URL.revokeObjectURL(img.src); };
+    img.src = URL.createObjectURL(blob);
+  });
+}
+const corridors = [...document.querySelectorAll(".corridor")];
+const repaint = new ResizeObserver(entries => entries.forEach(e => paintCorridor(e.target, corridors.indexOf(e.target))));
+corridors.forEach(view => repaint.observe(view));
 
 // ---------- views ----------
 
@@ -705,7 +761,13 @@ const REVEAL_MS = 420;  // the light fading into the tool (or back into the corr
 // The doorway canvas is magnified with the hall; past this zoom it stops
 // gaining pixels (you are nearly through, and moving fast).
 const SHARP_UP_TO = 2.5;
+// Walk frames are drawn at no more than one pixel per CSS pixel, however fine
+// the screen: in motion the difference doesn't show, and on a 1.5x or 2x
+// screen it is two to four times fewer pixels to draw and hand over each frame.
+const WALK_DPR = Math.min(devicePixelRatio || 1, 1);
 let walking = false;
+// Frames spent bringing reception up to the doorway's zoom before a walk out (see walkOut).
+const ZOOM_UP_FRAMES = 10;
 // The canvases are made once and reused: allocating a full-screen canvas
 // mid-walk costs the GPU a visible pause.
 let tunnelEl = null;
@@ -740,10 +802,9 @@ function measure(door) {
 function walker(view) {
   const door = document.querySelector(`.door[href="#${view}"]`);
   const arch = door.querySelector(".arch");
-  const svg = arch.querySelector(".corridor");
-  const theme = svg.dataset.theme;
+  const theme = arch.querySelector(".corridor").dataset.theme;
   const hall = $("#hall");
-  const dpr = devicePixelRatio || 1;
+  const dpr = WALK_DPR;
   let geo = measure(door);
   let doorway = null, tunnel = null;
   // Which door, for style.css (Hessa stands in front of the Barracks').
@@ -806,7 +867,7 @@ function walker(view) {
         if (!tunnelEl) {
           tunnelEl = document.createElement("div");
           tunnelEl.className = "tunnel";
-          tunnelEl.innerHTML = `<canvas></canvas><i class="light"></i>`;
+          tunnelEl.innerHTML = `<canvas></canvas><i class="lens"></i><i class="light"></i>`;
           document.body.append(tunnelEl);
         }
         tunnel = tunnelEl;
@@ -920,7 +981,15 @@ function walkOut(view) {
     w.settle();
     if (matchMedia("(max-width: 760px)").matches) document.querySelector(`.door[href="#${view}"]`).scrollIntoView({ block: "center" });
     w.remeasure();
-    await settled();  // let reception be drawn while the light holds still
+    // While the light still covers it, bring reception up to the doorway's
+    // zoom a step at a time. Shown at that zoom all at once, it would be drawn
+    // afresh at that size, and zooming out would stall for seconds as more of
+    // it came into view; grown into, it keeps the drawing it has.
+    const fill = 1 / (1 - w.handoff);
+    for (let i = 1; i <= ZOOM_UP_FRAMES; i++) {
+      w.approach(1 - 1 / (1 + (fill - 1) * i / (ZOOM_UP_FRAMES + 1)));
+      await settled();
+    }
     let out = false;
     await travel(WALK_MS, p => {
       const t = 1 - p, cz = cameraAt(t);
@@ -949,6 +1018,99 @@ async function walk(view, moves) {
     w.leaveHall();
     walking = false;
     render();
+    light();  // in case the window changed size mid-walk
+  }
+}
+
+// ---------- reception's lighting ----------
+// The hall has no light of its own: it is lit by what is in it, each doorway's
+// corridor and a sconce between each pair of doorways. light() measures the
+// doorways and lays that out. The lightmap is a canvas of shade (--shade) over
+// the room with the light cut out of it where it reaches; the bloom puts the
+// light itself on top (a pool on the floor in front of each doorway, a halo
+// round each sconce). The desk, nearest of all, has its candle instead
+// (style.css). On narrow screens the hall isn't a room and none of this shows.
+// Nothing here blends: plain transparency is all a walk can afford to zoom.
+
+const SPILL = { library: "#ffd9a0", market: "#ffcf8f", bestiary: "#9fe8c4", barracks: "#ffb27a", memoria: "#fff1d6" };
+
+function light() {
+  if (walking || matchMedia("(max-width: 760px)").matches) return;
+  const hall = $("#hall").getBoundingClientRect();
+  if (!hall.width) return;
+  const px = n => `${Math.round(n)}px`;
+  const arches = [...document.querySelectorAll(".door")].map(door => {
+    const r = door.querySelector(".arch").getBoundingClientRect();
+    return { view: door.dataset.go, x: r.left - hall.left, y: r.top - hall.top, w: r.width, h: r.height };
+  });
+  // Soft light needs few pixels: the map is drawn at half size and stretched.
+  // It is drawn on a canvas but shown as an image: a canvas is a layer of its
+  // own, which would make the hall costly to zoom on a walk.
+  const map = document.createElement("canvas"), ctx = map.getContext("2d"), res = .5;
+  map.width = Math.ceil(hall.width * res);
+  map.height = Math.ceil(hall.height * res);
+  ctx.scale(res, res);
+  ctx.fillStyle = getComputedStyle($("#lightmap")).getPropertyValue("--shade");
+  ctx.fillRect(0, 0, hall.width, hall.height);
+  // An oval of light: with stops [offset, how much] it takes that much of the
+  // shade away (or, given a colour, lays that much of the colour on).
+  const pool = (x, y, rx, ry, stops, colour) => {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.scale(rx, ry);
+    const g = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
+    for (const [o, a] of stops) g.addColorStop(o, rgba(colour || "#000000", a));
+    ctx.fillStyle = g;
+    ctx.fillRect(-1, -1, 2, 2);
+    ctx.restore();
+  };
+  const sconceAt = [];
+  for (let i = 1; i < arches.length; i++) {
+    const l = arches[i - 1], r = arches[i];
+    sconceAt.push({ x: (l.x + l.w + r.x) / 2, y: r.y + r.h * .05, gap: r.x + r.w / 2 - (l.x + l.w / 2) });
+  }
+  ctx.globalCompositeOperation = "destination-out";
+  for (const a of arches) {
+    const cx = a.x + a.w / 2, base = a.y + a.h;
+    pool(cx, base - a.h * .36, a.w * .64, a.h * .66, [[0, 1], [.7, 1], [1, 0]]);  // the doorway, lit from inside
+    pool(cx, base, a.w * .95, hall.height * .2, [[0, .85], [1, 0]]);  // its light out across the floor
+    pool(cx, a.y - a.h * .07, a.w * .34, a.h * .08, [[0, .55], [.5, .55], [1, 0]]);  // the plaque over it, catching the sconces
+  }
+  for (const s of sconceAt) pool(s.x, s.y + s.gap * .1, s.gap * .42, s.gap * .66, [[0, 1], [.25, .85], [1, 0]]);
+  ctx.globalCompositeOperation = "source-over";
+  // The light's colour: each doorway's on the floor before it, the sconces' warm.
+  for (const a of arches) pool(a.x + a.w / 2, a.y + a.h, a.w * .9, hall.height * .18, [[0, .14], [1, 0]], SPILL[a.view]);
+  for (const s of sconceAt) pool(s.x, s.y + s.gap * .1, s.gap * .42, s.gap * .66, [[0, .12], [1, 0]], "#ffb060");
+  map.toBlob(blob => {
+    if (!blob) return;
+    const img = $("#lightmap"), old = img.src;
+    img.src = URL.createObjectURL(blob);
+    if (old.startsWith("blob:")) URL.revokeObjectURL(old);
+  });
+
+  const bloom = [], sconces = [];
+  for (const a of arches) {
+    const cx = a.x + a.w / 2, base = a.y + a.h, tint = SPILL[a.view];
+    bloom.push(`<i class="spill" data-for="${a.view}" style="left:${px(cx)};top:${px(base)};width:${px(a.w * 1.5)};height:${px(hall.height * .34)};--c:${tint}"></i>`);
+  }
+  // A sconce where each pair of arches part.
+  for (const { x, y, gap } of sconceAt) {
+    sconces.push(`<span class="sconce" style="left:${px(x)};top:${px(y)}"></span>`);
+    bloom.push(`<i class="halo" style="left:${px(x)};top:${px(y)};width:${px(gap * .9)};height:${px(gap * 1.1)}"></i>`);
+  }
+  $("#bloom").innerHTML = bloom.join("");
+  $("#sconces").innerHTML = sconces.join("");
+}
+
+// Relaid whenever the hall or a doorway changes size (the plaques' font arriving, say).
+const relight = new ResizeObserver(light);
+relight.observe($("#hall"));
+document.querySelectorAll(".arch").forEach(a => relight.observe(a));
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", light);
+// A doorway pointed at (or focused) throws more light out onto the floor.
+for (const door of document.querySelectorAll(".door")) {
+  for (const [type, on] of [["pointerenter", true], ["pointerleave", false], ["focus", true], ["blur", false]]) {
+    door.addEventListener(type, () => $(`.spill[data-for="${door.dataset.go}"]`)?.classList.toggle("lit", on));
   }
 }
 
@@ -1049,6 +1211,242 @@ $("#patchClose").addEventListener("click", () => $("#patchnotes").close());
 // A click on the dimmed backdrop (the dialog itself, outside its contents) closes it.
 $("#patchnotes").addEventListener("click", ev => { if (ev.target === ev.currentTarget) ev.currentTarget.close(); });
 
+// ---------- the map on the easel ----------
+// hub/atlas.py draws the Union of Crownweave from the Azgaar save and the
+// lore-book into atlas/: terrain.webp (land and sea, as one picture) and
+// crownweave.json (borders, rivers, roads, towns with their gazetteer entries,
+// and labels). The easel shows the picture; opened, the rest is drawn over it
+// in SVG, to drag and zoom, and a town chosen shows its entry beside the map.
+// Markers and names stay the same size on screen however far in you zoom
+// (--u is map units per screen pixel), and the smaller places' names only
+// appear once there is room for them.
+
+let atlas = null;  // crownweave.json, once loaded
+const atlasView = { x: 0, y: 0, w: 1, h: 1 };
+const SVGNS = "http://www.w3.org/2000/svg";
+const KIND = { capital: "City", city: "City", town: "Town", village: "Village", hamlet: "Hamlet", fort: "Fort",
+  caravanserai: "Caravanserai", trading_post: "Trading post", monastery: "Monastery" };
+const HAS = { walls: "walled", citadel: "a citadel", temple: "a temple", plaza: "a market square", shanty: "a shanty-quarter", port: "a harbour" };
+const atlasLayers = [["roads", "Roads"], ["rivers", "Rivers"], ["borders", "Borders"], ["names", "Names"]];
+
+// A smooth line through the points (Catmull-Rom, as Azgaar draws its routes).
+function curvePath(pts) {
+  let d = `M${pts[0][0]} ${pts[0][1]}`;
+  for (let i = 0; i < pts.length - 1; i++) {
+    const p0 = pts[Math.max(i - 1, 0)], p1 = pts[i], p2 = pts[i + 1], p3 = pts[Math.min(i + 2, pts.length - 1)];
+    const c = (a, b, k) => (a + (b * k)).toFixed(2);
+    d += `C${c(p1[0], (p2[0] - p0[0]) / 6, 1)} ${c(p1[1], (p2[1] - p0[1]) / 6, 1)} ${c(p2[0], -(p3[0] - p1[0]) / 6, 1)} ${c(p2[1], -(p3[1] - p1[1]) / 6, 1)} ${p2[0]} ${p2[1]}`;
+  }
+  return d;
+}
+
+function svgEl(tag, attrs = {}, parent = null) {
+  const el = document.createElementNS(SVGNS, tag);
+  for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+  if (parent) parent.append(el);
+  return el;
+}
+
+function townMarker(t, g) {
+  const seat = t.seat || t.group === "capital";
+  if (seat) svgEl("rect", { x: -4.2, y: -4.2, width: 8.4, height: 8.4, class: "pin" }, g);
+  else if (t.group === "fort") svgEl("path", { d: "M0 -4L4 0 0 4-4 0Z", class: "pin" }, g);
+  else if (t.group === "caravanserai" || t.group === "trading_post") svgEl("path", { d: "M0 -4L3.8 3H-3.8Z", class: "pin" }, g);
+  else svgEl("circle", { r: { city: 4.4, town: 3.4, village: 2.5, hamlet: 1.9 }[t.group] || 2.5, class: "pin" }, g);
+}
+
+function drawAtlas() {
+  const d = atlas, svg = $("#atlasSvg"), [x, y, w, h] = d.terrainBox || d.viewBox;
+  svg.replaceChildren();
+  svgEl("image", { href: d.terrain, x, y, width: w, height: h, preserveAspectRatio: "none" }, svg);
+  const layer = name => svgEl("g", { class: `layer ${name}` }, svg);
+  const borders = layer("borders"), rivers = layer("rivers"), roads = layer("roads"), names = layer("names"), towns = layer("towns");
+  for (const line of d.provinceBorders) svgEl("path", { d: curvePath(line), class: "border" }, borders);
+  for (const r of d.rivers) svgEl("path", { d: curvePath(r.pts), class: "river", "stroke-width": (r.w * 2.4).toFixed(2) }, rivers);
+  const order = { searoutes: 0, trails: 1, roads: 2 };
+  for (const r of [...d.routes].sort((a, b) => order[a.group] - order[b.group])) {
+    const path = svgEl("path", { d: curvePath(r.pts), class: `route ${r.group}` }, roads);
+    if (r.name) svgEl("title", {}, path).textContent = r.name;
+  }
+  for (const l of d.labels) {
+    const g = svgEl("g", { transform: `translate(${l.x} ${l.y})` }, names);
+    svgEl("text", { class: (l.kind === "prov" ? "plabel" : "llabel") + (l.small ? " small" : ""), "text-anchor": "middle" }, svgEl("g", { class: "mk" }, g)).textContent = l.text;
+  }
+  // Biggest last, so the cities sit on top of the villages round them.
+  const rank = { hamlet: 0, fort: 1, village: 1, caravanserai: 1, trading_post: 1, town: 2, city: 3, capital: 4 };
+  const list = d.towns.map((t, i) => ({ ...t, i })).sort((a, b) => (rank[a.group] ?? 1) - (rank[b.group] ?? 1));
+  for (const t of list) {
+    const g = svgEl("g", { transform: `translate(${t.x} ${t.y})`, class: `town ${t.group}${t.seat ? " seat" : ""}${t.union ? "" : " abroad"}`,
+      tabindex: 0, role: "button", "data-i": t.i, "aria-label": `${t.name}, ${KIND[t.group] || "Settlement"}${t.prov ? `, ${t.prov}` : ""}` }, towns);
+    const mk = svgEl("g", { class: "mk" }, g);
+    townMarker(t, mk);
+    svgEl("text", { x: 6, y: 4, class: "tname" }, mk).textContent = t.name;
+  }
+  $("#atlasTowns").innerHTML = d.towns.filter(t => t.union).map(t => `<option value="${escapeHTML(t.name)}">`).sort().join("");
+}
+
+// The view: a rectangle of the map, shown as the svg's viewBox.
+function atlasPPU() {
+  const r = $("#atlasSvg").getBoundingClientRect();
+  return Math.min(r.width / atlasView.w, r.height / atlasView.h) || 1;
+}
+function setAtlasView() {
+  const [x, y, w, h] = atlas.viewBox, v = atlasView;
+  v.w = Math.min(Math.max(v.w, w / 16), w);
+  v.h = v.w * h / w;
+  // The view's middle stays over the island.
+  v.x = Math.min(Math.max(v.x, x - v.w / 2), x + w - v.w / 2);
+  v.y = Math.min(Math.max(v.y, y - v.h / 2), y + h - v.h / 2);
+  const svg = $("#atlasSvg"), ppu = atlasPPU();
+  svg.setAttribute("viewBox", `${v.x} ${v.y} ${v.w} ${v.h}`);
+  svg.style.setProperty("--u", (1 / ppu).toFixed(4));
+  svg.dataset.zoom = ppu < 4.2 ? "far" : ppu < 7.5 ? "mid" : "near";
+}
+function fitAtlas() {
+  const [x, y, w, h] = atlas.viewBox;
+  Object.assign(atlasView, { x, y, w, h });
+  setAtlasView();
+}
+function zoomAtlas(factor, cx, cy) {
+  const v = atlasView;
+  if (cx === undefined) { cx = v.x + v.w / 2; cy = v.y + v.h / 2; }
+  const nw = Math.min(Math.max(v.w / factor, atlas.viewBox[2] / 16), atlas.viewBox[2]), k = nw / v.w;
+  Object.assign(v, { x: cx - (cx - v.x) * k, y: cy - (cy - v.y) * k, w: nw });
+  setAtlasView();
+}
+function atlasPoint(ev) {  // the map point under the pointer
+  const svg = $("#atlasSvg"), pt = svg.createSVGPoint();
+  pt.x = ev.clientX; pt.y = ev.clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+
+const people = n => n >= 1000 ? `about ${n.toLocaleString("en-GB")} people` : n > 0 ? `about ${n} people` : "a handful of people";
+const listing = items => items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items.at(-1)}`;
+
+function atlasLegend() {
+  const toggles = atlasLayers.map(([key, label]) =>
+    `<label><input type="checkbox" data-layer="${key}" ${$("#atlasSvg").classList.contains(`no-${key}`) ? "" : "checked"}> ${label}</label>`).join("");
+  $("#atlasCard").innerHTML = `
+    <p class="atlas-intro">One island in the middle sea. The Crown stands at its heart, ringed by the Crownlands and the Everstorm; Skyloom lies west, Northreach north, Stormwake east and Emberweave south. Choose any town for what the Compendium says of it.</p>
+    <ul class="atlas-key">
+      <li><i class="k seat"></i>Seat of a Weave</li><li><i class="k city"></i>City</li><li><i class="k town"></i>Town</li>
+      <li><i class="k village"></i>Village or hamlet</li><li><i class="k fort"></i>Fort or stormgate</li><li><i class="k cara"></i>Caravanserai or trading post</li>
+      <li><i class="k road"></i>Road</li><li><i class="k trail"></i>Trail</li><li><i class="k sea"></i>Sea lane</li><li><i class="k border"></i>Prefecture border</li>
+    </ul>
+    <div class="atlas-layers">${toggles}</div>
+    <p class="atlas-src">Surveyed from ${escapeHTML(atlas.source.replace(/\.map$/, ""))}.</p>`;
+}
+
+function showTown(i, fly) {
+  const t = atlas.towns[i], svg = $("#atlasSvg");
+  svg.querySelector(".town.sel")?.classList.remove("sel");
+  const g = svg.querySelector(`.town[data-i="${i}"]`);
+  g?.classList.add("sel");
+  if (fly) {
+    const w = Math.min(atlasView.w, atlas.viewBox[2] / 4);
+    Object.assign(atlasView, { w, x: t.x - w / 2, y: t.y - (w * atlas.viewBox[3] / atlas.viewBox[2]) / 2 });
+    setAtlasView();
+  }
+  const lore = t.lore || {};
+  const kind = t.name === "The Crown" ? "Heart of the Union" : t.seat ? `Seat of ${t.prov}` : KIND[t.group] || "Settlement";
+  const has = listing(t.has.map(k => HAS[k]).filter(Boolean));
+  $("#atlasCard").innerHTML = `
+    <button class="atlas-back" type="button">← The whole Union</button>
+    <p class="kicker">${escapeHTML(t.prov || "Beyond the Union")}</p>
+    <h3>${escapeHTML(t.name)}</h3>
+    ${lore.epithet ? `<p class="epithet">${escapeHTML(lore.epithet)}</p>` : ""}
+    <p class="meta">${escapeHTML(kind)} · ${people(t.pop)}${has ? ` · ${escapeHTML(has)}` : ""}</p>
+    ${lore.text ? `<p>${escapeHTML(lore.text)}</p><p class="atlas-src">From <i>${escapeHTML(lore.chapter)}</i>. <a href="#library" data-close>Read on in the Library →</a></p>`
+      : `<p class="atlas-src">The Compendium has no entry for ${escapeHTML(t.name)} yet.</p>`}`;
+}
+
+function openAtlas() {
+  if (!atlas) return;
+  if (!$("#atlasSvg").firstChild) { drawAtlas(); atlasLegend(); }
+  $("#atlas").showModal();
+  requestAnimationFrame(fitAtlas);
+}
+
+async function loadAtlas() {
+  try {
+    const res = await fetch("atlas/crownweave.json");
+    if (!res.ok) return;
+    atlas = await res.json();
+    $("#mapstand").hidden = false;
+    dispatchEvent(new Event("atlas"));
+  } catch { /* no map drawn yet (uv run hub/atlas.py); the easel stays away */ }
+}
+
+{
+  // The svg captures the pointer so a drag can leave it, which also sends it
+  // the click: so a town is chosen by the press and release, not the click.
+  const svg = $("#atlasSvg"), pointers = new Map();
+  let moved = 0, pinch = 0, pressed = null;
+  svg.addEventListener("wheel", ev => {
+    ev.preventDefault();
+    const p = atlasPoint(ev);
+    zoomAtlas(Math.exp(-ev.deltaY * (ev.deltaMode ? .05 : .0018)), p.x, p.y);
+  }, { passive: false });
+  svg.addEventListener("pointerdown", ev => {
+    pressed = pointers.size ? null : ev.target.closest(".town");
+    pointers.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+    svg.setPointerCapture(ev.pointerId);
+    moved = 0;
+    if (pointers.size === 2) { const [a, b] = pointers.values(); pinch = Math.hypot(a.x - b.x, a.y - b.y); }
+  });
+  svg.addEventListener("pointermove", ev => {
+    const last = pointers.get(ev.pointerId);
+    if (!last) return;
+    const dx = ev.clientX - last.x, dy = ev.clientY - last.y;
+    pointers.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+    moved += Math.abs(dx) + Math.abs(dy);
+    if (pointers.size === 2) {
+      const [a, b] = pointers.values(), dist = Math.hypot(a.x - b.x, a.y - b.y);
+      const mid = atlasPoint({ clientX: (a.x + b.x) / 2, clientY: (a.y + b.y) / 2 });
+      if (pinch) zoomAtlas(dist / pinch, mid.x, mid.y);
+      pinch = dist;
+    } else {
+      const ppu = atlasPPU();
+      atlasView.x -= dx / ppu; atlasView.y -= dy / ppu;
+      setAtlasView();
+    }
+    svg.classList.toggle("dragging", moved > 4);
+  });
+  const lift = ev => {
+    if (ev.type === "pointerup" && pressed && moved < 5) showTown(+pressed.dataset.i);
+    pointers.delete(ev.pointerId); pinch = 0; pressed = null;
+    if (!pointers.size) svg.classList.remove("dragging");
+  };
+  svg.addEventListener("pointerup", lift);
+  svg.addEventListener("pointercancel", lift);
+  svg.addEventListener("keydown", ev => {
+    const g = ev.target.closest?.(".town");
+    if (g && (ev.key === "Enter" || ev.key === " ")) { ev.preventDefault(); showTown(+g.dataset.i); return; }
+    const pan = { ArrowLeft: [-1, 0], ArrowRight: [1, 0], ArrowUp: [0, -1], ArrowDown: [0, 1] }[ev.key];
+    if (pan && !g) { ev.preventDefault(); atlasView.x += pan[0] * atlasView.w * .1; atlasView.y += pan[1] * atlasView.h * .1; setAtlasView(); }
+    if (ev.key === "+" || ev.key === "=") zoomAtlas(1.4);
+    if (ev.key === "-") zoomAtlas(1 / 1.4);
+  });
+  for (const b of document.querySelectorAll("[data-zoom]"))
+    b.addEventListener("click", () => b.dataset.zoom === "fit" ? fitAtlas() : zoomAtlas(b.dataset.zoom === "in" ? 1.6 : 1 / 1.6));
+  new ResizeObserver(() => { if (atlas && $("#atlas").open) setAtlasView(); }).observe($("#atlasMap"));
+  $("#atlasCard").addEventListener("click", ev => {
+    if (ev.target.closest(".atlas-back")) { svg.querySelector(".town.sel")?.classList.remove("sel"); atlasLegend(); }
+    if (ev.target.closest("[data-close]")) $("#atlas").close();
+  });
+  $("#atlasCard").addEventListener("change", ev => {
+    const key = ev.target.dataset.layer;
+    if (key) svg.classList.toggle(`no-${key}`, !ev.target.checked);
+  });
+  $("#atlasFind").addEventListener("change", ev => {
+    const name = ev.target.value.trim().toLowerCase(), i = atlas.towns.findIndex(t => t.name.toLowerCase() === name);
+    if (i >= 0) { showTown(i, true); ev.target.value = ""; }
+  });
+  $("#mapstand").addEventListener("click", openAtlas);
+  $("#atlasClose").addEventListener("click", () => $("#atlas").close());
+  $("#atlas").addEventListener("click", ev => { if (ev.target === ev.currentTarget) ev.currentTarget.close(); });
+}
+
 // ---------- the desk bell ----------
 // Rung by clerk.js, which also decides what Hessa says about it.
 
@@ -1086,5 +1484,6 @@ setMotion(motion);
 
 render();
 poll();
-// After clerk.js has run too, so she hears about the notice.
+// After clerk.js has run too, so she hears about the notice and the map.
 addEventListener("DOMContentLoaded", loadNotice);
+addEventListener("DOMContentLoaded", loadAtlas);

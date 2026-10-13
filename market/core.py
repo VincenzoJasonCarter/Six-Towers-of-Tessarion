@@ -22,12 +22,15 @@ MARKET_CHAPTER = LORE / "10-official-tessarion-market-value.md"
 TEMPLATE = HERE / "template.html"
 STYLE = HERE / "style.css"
 SCRIPT = HERE / "app.js"
+KEEPER = HERE / "keeper.js"
 ICONS = HERE / "icons"
 ICON_TYPES = {".svg": "image/svg+xml", ".png": "image/png", ".webp": "image/webp", ".jpg": "image/jpeg", ".jpeg": "image/jpeg"}
 # serve.py serves these next to the page; the static export inlines them.
-ASSETS = {"/style.css": (STYLE, "text/css; charset=utf-8"), "/app.js": (SCRIPT, "text/javascript; charset=utf-8")}
+ASSETS = {"/style.css": (STYLE, "text/css; charset=utf-8"), "/app.js": (SCRIPT, "text/javascript; charset=utf-8"),
+          "/keeper.js": (KEEPER, "text/javascript; charset=utf-8")}
 STYLE_LINK = '<link rel="stylesheet" href="style.css">'
 SCRIPT_TAG = '<script src="app.js"></script>'
+KEEPER_TAG = '<script src="keeper.js"></script>'
 DATA_MARK = "/*__MARKET_DATA__*/null"
 LIVE_MARK = "/*__MARKET_LIVE__*/false"
 
@@ -102,18 +105,19 @@ def load():
 
 def version():
     """Changes whenever items.yaml, Ch.10, an icon or the page's files change."""
-    paths = [SOURCE, MARKET_CHAPTER, TEMPLATE, STYLE, SCRIPT, *_icon_files().values()]
+    paths = [SOURCE, MARKET_CHAPTER, TEMPLATE, STYLE, SCRIPT, KEEPER, *_icon_files().values()]
     return "|".join(f"{p.name}:{p.stat().st_mtime_ns}" for p in paths if p.exists())
 
 
 def render(payload, live=False):
     data = json.dumps(payload, ensure_ascii=False).replace("</", "<\\/")
     html = TEMPLATE.read_text(encoding="utf-8")
-    for mark in (DATA_MARK, LIVE_MARK, STYLE_LINK, SCRIPT_TAG):
+    for mark in (DATA_MARK, LIVE_MARK, STYLE_LINK, SCRIPT_TAG, KEEPER_TAG):
         if mark not in html:
             raise SystemExit(f"{TEMPLATE.name} is missing {mark}")
     if not live:
-        # The export is one self-contained file, so its stylesheet and script go inline.
+        # The export is one self-contained file, so its stylesheet and scripts go inline.
         html = html.replace(STYLE_LINK, f"<style>\n{STYLE.read_text(encoding='utf-8')}</style>", 1)
         html = html.replace(SCRIPT_TAG, f"<script>\n{SCRIPT.read_text(encoding='utf-8')}</script>", 1)
+        html = html.replace(KEEPER_TAG, f"<script>\n{KEEPER.read_text(encoding='utf-8')}</script>", 1)
     return html.replace(DATA_MARK, data, 1).replace(LIVE_MARK, "true" if live else "false", 1)

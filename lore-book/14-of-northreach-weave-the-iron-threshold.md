@@ -44,6 +44,7 @@ The principal routes are:
 * the **Cobbled Myro Trail**, dropping south-west through Myros toward the Skyloom border;
 * the **Maramersban Path** and its older companion, the **Silent Maramersban Path**, crossing the eastern moors to Ormsbury and the coast;
 * the **Newbomyard Trail**, leaving Durdenbeck south-east for Stormwake;
+* the **Iron Road**, south from Phais around the western foot of the Everstorm’s mountain and through the Ironward stormgate to The Crown;
 * and at sea, the **Great Frost Route** and the **Serpentine Ebon Route**, coastal lanes that carry ore and ice-ships between Ormsbury, Durdenbeck, and Stormwake’s northern harbor at Cleoverbot.
 
 Northreach is not loud.  

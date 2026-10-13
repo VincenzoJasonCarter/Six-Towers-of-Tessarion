@@ -40,6 +40,8 @@ PAGE_FILES = {
     "/app.js": ("app.js", "text/javascript; charset=utf-8"),
     "/clerk.js": ("clerk.js", "text/javascript; charset=utf-8"),
     "/balance-patch.md": ("../balance-patch.md", "text/markdown; charset=utf-8"),  # the notice board
+    "/atlas/terrain.webp": ("atlas/terrain.webp", "image/webp"),  # the map on the easel (hub/atlas.py)
+    "/atlas/crownweave.json": ("atlas/crownweave.json", "application/json; charset=utf-8"),
 }
 
 # Same commands as the Makefile targets, minus the browser tab each one opens:

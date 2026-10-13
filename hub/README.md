@@ -29,7 +29,8 @@ The desk opens at http://127.0.0.1:8760/ on a reception hall: a desk in
 front and five corridors behind it, one per tool (the Library's bookshelves,
 the Market's stalls under striped awnings, the Barracks' bunks right behind
 the clerk, the Memoria's marble gallery, the Bestiary's dark stone). The lamp on each corridor's plaque shows whether
-that tool is running. Click a corridor and you walk into it: the camera
+that tool is running. The hall has no light of its own: it is lit by the corridors,
+a sconce between each pair of doorways and the candle on the desk. Click a corridor and you walk into it: the camera
 crosses reception, passes through the doorway and goes down the corridor
 (redrawn in perspective as it moves) towards the light at the far end, which
 opens onto the tool. Go back to Reception (the bar along the top, or the
@@ -87,6 +88,32 @@ notes: headings, paragraphs, lists, tables, block quotes and rules. Write
 list item, a table cell) and it shows as a coloured badge with an arrow:
 ▲ Buff, ▼ Nerf, ✦ New, ◆ Change.
 
+## The map on the easel
+
+An easel stands on the floor right of the desk, the notice board's twin, with
+a framed map of the Union of Crownweave on it. Click it (or ask Hessa about
+it) and the map opens over the hall: the island's terrain, the prefecture
+borders, rivers, roads, trails and sea lanes, and every town. Drag to move,
+scroll or pinch to zoom; the smaller places' names appear as you zoom in.
+Choose a town, or find it by name, and its gazetteer entry from the
+lore-book shows beside the map: what it is, roughly how many live there, and
+the Compendium's own words on it.
+
+The map is drawn ahead of time by `atlas.py` from the Azgaar save in `map/`
+(the newest `.map` file) and the gazetteers in `lore-book/12`–`16`:
+
+```
+make atlas
+```
+
+or `uv run hub/atlas.py` (`--map "map/<file>.map"` for another save). It
+writes `atlas/terrain.webp` (the land and sea, shaded) and
+`atlas/crownweave.json` (everything drawn over it). Rerun it after changing
+the map or a gazetteer, and commit the two files: the public website copies
+them as they are. It reports any town in the Union with no gazetteer entry;
+those still show on the map, with a note that the Compendium has nothing on
+them yet. The easel stays away if `atlas/` hasn't been drawn.
+
 ## The Barracks
 
 The Barracks is charasheet as its author hosts it, at the `url` given for it
@@ -111,6 +138,8 @@ serve.py: there every hall is always open, and the other tools load from
 serve.py     starts the tools and serves the desk (stdlib only)
 index.html   page markup: the reception hall and tool tabs
 style.css    page styles
-app.js       corridor drawings (SVG), tool status, views, notice board, desk bell
+app.js       corridor drawings (canvas), tool status, views, reception's lighting, notice board, the map, desk bell
 clerk.js     the clerk's conversation: every line, the replies, and when she says what
+atlas.py     draws the map on the easel from map/*.map and the lore-book (needs uv)
+atlas/       its output: terrain.webp and crownweave.json
 ```

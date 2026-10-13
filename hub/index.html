@@ -32,33 +32,34 @@
   <section id="view-desk">
     <div class="hall" id="hall">
       <div class="wall"></div>
-      <span class="sconce" style="left:4.5%"></span>
-      <span class="sconce" style="left:95.5%"></span>
       <div class="hangsign"><span>Threadmint</span></div>
       <div class="floor"></div>
 
       <nav class="doors" aria-label="The halls">
         <a class="door" href="#library" data-go="library">
           <span class="plaque"><b>The Library</b><small><i class="dot" data-dot="library"></i><span data-state="library">…</span></small></span>
-          <span class="frame-wrap"><span class="keystone"></span><span class="arch"><svg class="corridor" data-theme="library" viewBox="0 0 200 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg></span></span>
+          <span class="frame-wrap"><span class="keystone"></span><span class="arch"><span class="corridor" data-theme="library" aria-hidden="true"></span></span></span>
         </a>
         <a class="door" href="#market" data-go="market">
           <span class="plaque"><b>The Market</b><small><i class="dot" data-dot="market"></i><span data-state="market">…</span></small></span>
-          <span class="frame-wrap"><span class="keystone"></span><span class="arch"><svg class="corridor" data-theme="market" viewBox="0 0 200 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg></span></span>
+          <span class="frame-wrap"><span class="keystone"></span><span class="arch"><span class="corridor" data-theme="market" aria-hidden="true"></span></span></span>
         </a>
         <a class="door" href="#barracks" data-go="barracks">
           <span class="plaque"><b>The Barracks</b><small><i class="dot" data-dot="barracks"></i><span data-state="barracks">…</span></small></span>
-          <span class="frame-wrap"><span class="keystone"></span><span class="arch"><svg class="corridor" data-theme="barracks" viewBox="0 0 200 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg></span></span>
+          <span class="frame-wrap"><span class="keystone"></span><span class="arch"><span class="corridor" data-theme="barracks" aria-hidden="true"></span></span></span>
         </a>
         <a class="door" href="#memoria" data-go="memoria">
           <span class="plaque"><b>The Memoria</b><small><i class="dot" data-dot="memoria"></i><span data-state="memoria">…</span></small></span>
-          <span class="frame-wrap"><span class="keystone"></span><span class="arch"><svg class="corridor" data-theme="memoria" viewBox="0 0 200 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg></span></span>
+          <span class="frame-wrap"><span class="keystone"></span><span class="arch"><span class="corridor" data-theme="memoria" aria-hidden="true"></span></span></span>
         </a>
         <a class="door" href="#bestiary" data-go="bestiary">
           <span class="plaque"><b>The Bestiary</b><small><i class="dot" data-dot="bestiary"></i><span data-state="bestiary">…</span></small></span>
-          <span class="frame-wrap"><span class="keystone"></span><span class="arch"><svg class="corridor" data-theme="bestiary" viewBox="0 0 200 320" preserveAspectRatio="xMidYMid slice" aria-hidden="true"></svg></span></span>
+          <span class="frame-wrap"><span class="keystone"></span><span class="arch"><span class="corridor" data-theme="bestiary" aria-hidden="true"></span></span></span>
         </a>
       </nav>
+      <div class="sconces" id="sconces" aria-hidden="true"></div>
+      <img class="lightmap" id="lightmap" alt="" aria-hidden="true">
+      <div class="bloom" id="bloom" aria-hidden="true"></div>
 
       <button class="guildboard" id="guildboard" type="button" aria-haspopup="dialog" hidden>
         <span class="board">
@@ -68,22 +69,42 @@
         <span class="legs"></span>
       </button>
 
+      <button class="mapstand" id="mapstand" type="button" aria-haspopup="dialog" aria-label="The map of the Union of Crownweave" hidden>
+        <span class="mapframe">
+          <img src="atlas/terrain.webp" alt="" decoding="async">
+          <span class="mapframe-plate">The Union of Crownweave</span>
+        </span>
+        <span class="easel"></span>
+      </button>
+
       <div class="desk">
         <button class="clerk" id="clerk" type="button" data-mood="flat" aria-label="Talk to Hessa, the clerk at the desk">
           <svg viewBox="0 -12 160 202" aria-hidden="true">
+            <defs>
+              <linearGradient id="hv-robe" x1="0" y1="0" x2="1" y2="1"><stop offset=".1" stop-color="#ffcf8a" stop-opacity=".16"/><stop offset=".5" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#140603" stop-opacity=".6"/></linearGradient>
+              <radialGradient id="hv-face" cx=".36" cy=".58" r=".72"><stop offset=".15" stop-color="#ffe6c0" stop-opacity=".3"/><stop offset=".55" stop-color="#7a3018" stop-opacity="0"/><stop offset="1" stop-color="#4a160a" stop-opacity=".55"/></radialGradient>
+              <linearGradient id="hv-neck" x1="0" y1="0" x2="0" y2="1"><stop offset=".45" stop-color="#4a1a0c" stop-opacity=".55"/><stop offset="1" stop-color="#4a1a0c" stop-opacity=".1"/></linearGradient>
+              <linearGradient id="hv-hair" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffb070" stop-opacity=".45"/><stop offset=".35" stop-color="#ffb070" stop-opacity="0"/></linearGradient>
+            </defs>
             <g class="bodyg">
               <path class="hair" d="M44 96c-6-34 8-58 36-58s42 24 36 58c-2 14-8 26-10 34H54c-2-8-8-20-10-34z"/>
               <path class="robe" d="M8 190c2-40 22-58 50-64h44c28 6 48 24 50 64z"/>
               <path d="M62 126l18 32 18-32z" fill="#eadfc6"/>
               <path d="M57 126l23 38 23-38" fill="none" stroke="#d9bb70" stroke-width="3"/>
               <circle cx="112" cy="150" r="4.5" fill="#d9bb70"/><circle cx="112" cy="150" r="2" fill="#8c2f23"/>
+              <path class="shade" d="M8 190c2-40 22-58 50-64h44c28 6 48 24 50 64z" fill="url(#hv-robe)"/>
+              <path class="rim" d="M10 178c4-30 22-46 48-52M102 126c26 6 44 22 48 52"/>
               <rect class="skin" x="70" y="104" width="20" height="26" rx="6"/>
+              <rect class="shade" x="70" y="104" width="20" height="26" rx="6" fill="url(#hv-neck)"/>
               <g class="head">
                 <ellipse class="skin" cx="50" cy="88" rx="5" ry="8"/><ellipse class="skin" cx="110" cy="88" rx="5" ry="8"/>
                 <ellipse class="skin" cx="80" cy="84" rx="30" ry="34"/>
+                <ellipse class="shade" cx="80" cy="84" rx="30" ry="34" fill="url(#hv-face)"/>
                 <ellipse class="flush" cx="80" cy="94" rx="24" ry="17"/>
                 <path class="hair" d="M49 82c-3-26 12-40 31-40s34 14 31 40c-3-10-8-18-15-22-10 7-30 9-41 3-3 5-5 11-6 19z"/>
                 <circle class="hair" cx="80" cy="34" r="14"/>
+                <path class="shade" d="M49 82c-3-26 12-40 31-40s34 14 31 40c-3-10-8-18-15-22-10 7-30 9-41 3-3 5-5 11-6 19zM66 34a14 14 0 1 0 28 0a14 14 0 1 0-28 0" fill="url(#hv-hair)"/>
+                <path class="rim" d="M50 76c0-22 13-34 30-34s30 12 30 34M67 30a13.5 13.5 0 0 1 26 0"/>
                 <path d="M86 32 116 0" stroke="#3a2a1c" stroke-width="1.6"/>
                 <path d="M104 14c6-10 14-15 22-18-3 9-9 16-17 21z" fill="#efe7d6"/>
                 <ellipse cx="66" cy="96" rx="5" ry="3" fill="#d9776a" opacity=".25"/><ellipse cx="94" cy="96" rx="5" ry="3" fill="#d9776a" opacity=".25"/>
@@ -111,6 +132,7 @@
           </svg>
         </button>
         <div class="counter"></div>
+        <span class="candlelight" aria-hidden="true"></span>
         <div class="things">
           <svg class="candle" viewBox="0 0 34 64" aria-hidden="true">
             <ellipse cx="17" cy="16" rx="15" ry="15" fill="rgb(255 210 120 / .25)"/>
@@ -157,6 +179,7 @@
         </div>
       </div>
     </div>
+    <div class="lens" aria-hidden="true"></div>
   </section>
 
   <section id="view-wait" class="wait" hidden>
@@ -179,6 +202,31 @@
       <button class="close" id="patchClose" type="button" aria-label="Close the notice"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2 2 12"/></svg></button>
     </header>
     <div class="patch-body" id="patchBody"></div>
+  </dialog>
+
+  <dialog class="atlas" id="atlas" aria-labelledby="atlasHead">
+    <header class="patch-head">
+      <div>
+        <p class="kicker">Threadmint · The Map Room</p>
+        <h2 id="atlasHead">The Union of Crownweave</h2>
+      </div>
+      <button class="close" id="atlasClose" type="button" aria-label="Close the map"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2 2l10 10M12 2 2 12"/></svg></button>
+    </header>
+    <div class="atlas-body">
+      <div class="atlas-map" id="atlasMap">
+        <svg id="atlasSvg" role="group" aria-label="Map of the Union of Crownweave. Drag to move, scroll or pinch to zoom, and choose a town for its entry."></svg>
+        <div class="atlas-zoom">
+          <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
+          <button type="button" data-zoom="out" aria-label="Zoom out">−</button>
+          <button type="button" data-zoom="fit" aria-label="Show the whole Union">⤢</button>
+        </div>
+      </div>
+      <aside class="atlas-side">
+        <label class="atlas-find"><span>Find a town</span><input id="atlasFind" list="atlasTowns" placeholder="Fjerfi, Caer Veyn…" autocomplete="off"></label>
+        <datalist id="atlasTowns"></datalist>
+        <div class="atlas-card" id="atlasCard" aria-live="polite"></div>
+      </aside>
+    </div>
   </dialog>
 </main>
 

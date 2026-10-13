@@ -1,13 +1,17 @@
 # The Threadmint Market
 
 Everything in `../data/items.yaml` as the Merchant's Guild would sell it.
-The home page is a market hall with a stall for each kind of goods (Arms,
-Armour & Shields, Provisions, Raw Stock, and the Workshop for tools and
-forge hire). Each stall is a wooden cabinet of
-shelves under a striped awning, its name on a brass plaque on the head
-board. Inside, each tier has a shelf of its own, named on a plate in its
-metal (bronze for Tier I, steel for Tier II, plain paper for untiered
-supplies) and parted from the next by a heavier fixed board. Every item
+The home page is a market hall with an aisle for each kind of goods: 1 Arms,
+2 Armour & Shields, 3 Provisions, 4 Raw Stock and 5 the Workshop (tools and
+forge hire). A beam runs across the hall with a numbered sign hung from it
+for each aisle, banded in the aisle's colour and saying what's down it; click
+one to walk that aisle (the page remembers the last one), and at the far end
+of an aisle the next one is a click away. A search looks down every aisle at
+once: each sign says how many matches are down it, and a click on it jumps to
+them. An aisle is a run of wooden shelving, its number and its name on a
+brass plaque on the head board. Down it, each tier has a shelf of its own, named on a plate in its
+metal (bronze for Tier I, steel for Tier II, blued Crucible steel for
+Tier III, plain paper for untiered supplies) and parted from the next by a heavier fixed board. Every item
 stands on a plank as a paper tag edged in its tier's colour, showing its
 picture, its stat line (up to three lines; the slip has the rest) and its
 price in Crownsblood (CB). Click a tag to open
@@ -36,9 +40,33 @@ To get a single file you can open without the server, or send to someone:
 make market-build             # or: uv run market/build.py
 ```
 
-That writes `market.html`, a snapshot (about 95 KB, icons included).
+That writes `market.html`, a snapshot (about 340 KB, icons included).
 Run the command again after editing `items.yaml`. `web/build.py` puts it at
 `/market/` on the public site.
+
+## The quartermaster
+
+Talvender Prolyman, the stall's quartermaster (a retired adventurer: twenty-two
+years on the road, eleven behind this counter), stands behind his own counter
+beside the intro, scales and abacus in front of him. Click him and he talks:
+who he is and why he stopped, what to buy for each calling (Aegisbound, Archer,
+Gunman, crystal mage, or just starting out), how Guild and local prices work,
+market gossip, stories from the road, and what might be coming in. Each line
+comes with replies to pick from, as with Hessa at the hub's front desk.
+
+He also has a word for every item: it sits at the top of the item's slip. At
+the top of the tally he gives his opinion of the purchase, the most pressing
+thing first: a bow with no arrows, a gun with nothing to load, a two-handed
+weapon bought with a shield, a month of rations, a local market's markup, a
+foreign coin, or just the size of the bill. Adding things from the shelves
+gets a word now and then, and when the total passes 20 and 50 CB. His eyes
+follow the pointer, he mutters if left alone, and he'd rather you didn't touch
+his scales.
+
+Everything he says is written out in `keeper.js` (the comment at the top
+explains the format, the same as the hub's `clerk.js`). An item with no line
+of its own gets a line for its kind, so new items in `items.yaml` don't need
+one, but deserve one. He uses no AI model and needs no network.
 
 ## The tally
 
@@ -92,6 +120,7 @@ core.py         shared: reads items.yaml, the icons and Ch.10, checks Ch.10 agai
 icons/          one cartoon SVG per item, named after its id
 template.html   page markup; core.py fills in the data
 style.css       page styles
-app.js          the stalls, the item slips and the tally
+app.js          the aisles, the item slips and the tally
+keeper.js       Talvender, the quartermaster: everything he says, and when
 market.html     the static export
 ```

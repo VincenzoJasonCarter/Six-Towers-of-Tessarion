@@ -5,18 +5,26 @@ const items = DATA.items;
 const byId = Object.fromEntries(items.map(i => [i.id, i]));
 const byName = Object.fromEntries(items.map(i => [i.name, i]));
 
-// The market's stalls, in the order they stand. An item goes to the first
-// stall that takes its kind; a kind no stall takes ends up under "Other".
-const STALLS = [
-  { id: "arms", name: "Arms", kinds: ["weapon", "ammunition"], blurb: "Blades, bows, clubs and the arrows to go with them." },
-  { id: "armour", name: "Armour & Shields", kinds: ["shield", "armor"], blurb: "Things to stand behind, and things to wear." },
-  { id: "provisions", name: "Provisions", kinds: ["utility"], blurb: "Food, rope and fire for the road." },
-  { id: "stock", name: "Raw Stock", kinds: ["material"], blurb: "What the crafting codices build everything else from." },
-  { id: "workshop", name: "The Workshop", kinds: ["tool", "service"], untiered: "Tools & Hire",
+// The market's aisles, in the order they stand, each under a numbered sign
+// (`sign` is what the sign says is down it). An item goes to the first aisle
+// that takes its kind; a kind no aisle takes ends up in "Other", at the end.
+const AISLES = [
+  { id: "arms", name: "Arms", kinds: ["weapon", "ammunition"], sign: "Blades · Bows · Guns · Shot",
+    blurb: "Blades, bows, clubs and the arrows to go with them." },
+  { id: "armour", name: "Armour & Shields", kinds: ["shield", "armor"], sign: "Shields · Coats · Hoods · Boots",
+    blurb: "Things to stand behind, and things to wear." },
+  { id: "provisions", name: "Provisions", kinds: ["utility"], sign: "Rations · Rope · Light",
+    blurb: "Food, rope and fire for the road." },
+  { id: "stock", name: "Raw Stock", kinds: ["material"], sign: "Ingots · Timber · Hide · Cord",
+    blurb: "What the crafting codices build everything else from." },
+  { id: "workshop", name: "The Workshop", kinds: ["tool", "service"], untiered: "Tools & Hire", sign: "Tools · Forge hire",
     blurb: "The tools every recipe in the Crafting Book asks for, and a forge by the day." },
 ];
-const OTHER = { id: "other", name: "Other", kinds: [], blurb: "" };
-const stallOf = item => STALLS.find(s => s.kinds.includes(item.kind)) || OTHER;
+const OTHER = { id: "other", name: "Other", kinds: [], sign: "Odds & ends", blurb: "" };
+const aisleOf = item => AISLES.find(s => s.kinds.includes(item.kind)) || OTHER;
+// The aisles with anything in them, numbered as they stand.
+const aisles = [...AISLES, OTHER].filter(s => items.some(i => aisleOf(i) === s));
+aisles.forEach((s, n) => { s.n = n + 1; });
 const EMOJI = { weapon: "🗡️", ammunition: "🏹", shield: "🛡️", armor: "🧥", utility: "🎒", material: "📦", tool: "🔨", service: "🔥" };
 
 // Ch.9, Economy of Tessarion: the Guild's coins against the Trade Unit, how
@@ -44,7 +52,9 @@ const LOCAL = [
 ];
 const SCARCE = 2;  // goods the region has to bring in from elsewhere
 
-const state = { q: "", stall: "all", tier: "all" };
+// One aisle is walked at a time (the last one is remembered); a search looks down all of them.
+const state = { q: "", aisle: storage("market.aisle"), tier: "all" };
+if (!aisles.some(s => s.id === state.aisle)) state.aisle = aisles[0].id;
 let tally = load("market.tally", {});
 let market = MARKETS[storage("market.kind")] ? storage("market.kind") : "guild";
 let local = { kind: "street", markup: 3, scarce: false, ...load("market.local", {}) };
@@ -58,8 +68,8 @@ const cb = n => n == null ? "—" : `${num(n)} CB`;
 const cents = n => Math.round(n * 100) / 100;
 const tierOf = item => +(String(item.category || "").match(/Tier (\d+)/) || [])[1] || null;
 const ROMAN = ["", "I", "II", "III", "IV", "V", "VI"];
-// An untiered shelf is named by its stall ("Tools & Hire"), or "Supplies".
-const tierName = (t, stall) => t ? `Tier ${ROMAN[t] || t}` : (stall && stall.untiered) || "Supplies";
+// An untiered shelf is named by its aisle ("Tools & Hire"), or "Supplies".
+const tierName = (t, aisle) => t ? `Tier ${ROMAN[t] || t}` : (aisle && aisle.untiered) || "Supplies";
 // "Tier 2 Armor" on a tag that already shows its tier reads as just "Armor".
 const kindOf = item => String(item.category || "").replace(/^Tier \d+\s*/, "");
 const hours = h => h % 24 === 0 ? `${h / 24} day${h === 24 ? "" : "s"}` : `${h} hour${h === 1 ? "" : "s"}`;
@@ -130,55 +140,72 @@ function card(item) {
   </article>`;
 }
 
+// An aisle's shelving: its head board (number, name and what it's for), then
+// a shelf for each tier, lowest first, with untiered supplies last.
+function aisle(s, here) {
+  here = here.slice().sort((a, b) => (tierOf(a) || 99) - (tierOf(b) || 99) || items.indexOf(a) - items.indexOf(b));
+  const tiers = [...new Set(here.map(tierOf))].sort((a, b) => (a || 99) - (b || 99));
+  return `<section class="aisle" id="aisle-${esc(s.id)}" data-aisle-of="${esc(s.id)}" aria-labelledby="aisle-${esc(s.id)}-name">
+    <div class="cabinet">
+      <header class="cabinet-head">
+        <p class="aisle-no">Aisle ${s.n}</p>
+        <h2 id="aisle-${esc(s.id)}-name"><span>${esc(s.name)}</span></h2>
+        ${s.blurb ? `<p class="blurb">${esc(s.blurb)}</p>` : ""}
+      </header>
+      ${tiers.map(t => `<div class="shelf" data-tier="${t || 0}">
+        <h3 class="tier-plate"><span>${esc(tierName(t, s))}</span></h3>
+        <div class="items">${here.filter(i => tierOf(i) === t).map(card).join("")}</div>
+      </div>`).join("")}
+    </div>
+  </section>`;
+}
+
+// The sign over an aisle; while searching, it says how many matches are down it.
+function sign(s, found) {
+  const on = !state.q.trim() && s.id === state.aisle;
+  return `<button class="sign" type="button" data-aisle="${esc(s.id)}" aria-pressed="${on}"${found === 0 ? " disabled" : ""}>
+    <i class="no">${s.n}</i><b>${esc(s.name)}</b><small>${esc(s.sign)}</small>${found == null ? "" : `<em>${found ? `${found} found` : "nothing"}</em>`}
+  </button>`;
+}
+
 function render() {
   const q = state.q.trim().toLowerCase();
   const shown = items.filter(i =>
-    (state.stall === "all" || stallOf(i).id === state.stall) &&
     (state.tier === "all" || tierOf(i) === +state.tier) &&
     (!q || q.split(/\s+/).every(w => i._hay.includes(w))));
   const tiers = [...new Set(items.map(tierOf).filter(Boolean))].sort();
-  const stalls = [...STALLS, OTHER].filter(s => items.some(i => stallOf(i) === s));
+  const down = s => shown.filter(i => aisleOf(i) === s);
 
-  let h = DATA.error ? `<div class="error">${esc(DATA.error)}\n\nFix the file and save; this page reloads itself.</div>` : "";
-  h += `<section class="intro">
-    <p class="kicker">Merchant's Guild of Tessarion · Chartered Stall</p>
-    <h1>The Threadmint Market</h1>
-    <p class="lead">Every price on these tags is the Official Tessarion Market Value, set by the Merchant's Guild and paid in
-    Crownsblood (CB). Open a tag for the item's rules and recipe, or add it to the tally to price a purchase the way the Guild's clerks would.</p>
-    <div class="filters">
-      ${chips("stall", [["all", "All stalls"], ...stalls.map(s => [s.id, s.name])], state.stall)}
-      ${tiers.length > 1 ? chips("tier", [["all", "All tiers"], ...tiers.map(t => [t, `Tier ${t}`])], state.tier) : ""}
-    </div>
-  </section>`;
+  // The intro and the quartermaster's post stay put (template.html); only the
+  // filters, the signs and the aisles are redrawn.
+  $("#error").innerHTML = DATA.error ? `<div class="error">${esc(DATA.error)}\n\nFix the file and save; this page reloads itself.</div>` : "";
+  $("#filters").innerHTML = tiers.length > 1 ? chips("tier", [["all", "All tiers"], ...tiers.map(t => [t, `Tier ${t}`])], state.tier) : "";
 
-  for (const s of stalls) {
-    const here = shown.filter(i => stallOf(i) === s).sort((a, b) => (tierOf(a) || 99) - (tierOf(b) || 99) || items.indexOf(a) - items.indexOf(b));
-    if (!here.length) continue;
-    // One shelf per tier, lowest first, with untiered supplies last.
-    const tiers = [...new Set(here.map(tierOf))].sort((a, b) => (a || 99) - (b || 99));
-    h += `<section class="stall" data-stall="${esc(s.id)}">
-      <div class="awning" aria-hidden="true"></div>
-      <div class="cabinet">
-        <header class="cabinet-head">
-          <h2><span>${esc(s.name)}</span></h2>
-          ${s.blurb ? `<p class="blurb">${esc(s.blurb)}</p>` : ""}
-        </header>
-        ${tiers.map(t => `<div class="shelf" data-tier="${t || 0}">
-          <h3 class="tier-plate"><span>${esc(tierName(t, s))}</span></h3>
-          <div class="items">${here.filter(i => tierOf(i) === t).map(card).join("")}</div>
-        </div>`).join("")}
-      </div>
-    </section>`;
+  let h = `<nav class="aisles" style="--n:${aisles.length}" aria-label="Aisles">${aisles.map(s => sign(s, q ? down(s).length : null)).join("")}</nav>`;
+  if (q) {
+    // A search walks every aisle and shows what it found down each.
+    for (const s of aisles) if (down(s).length) h += aisle(s, down(s));
+    if (!shown.length) h += `<p class="empty">Nothing in any aisle matches “${esc(state.q)}”.</p>`;
+  } else {
+    const at = aisles.findIndex(s => s.id === state.aisle), s = aisles[at];
+    h += down(s).length ? aisle(s, down(s)) : `<p class="empty">Nothing down this aisle at Tier ${esc(state.tier)}.</p>`;
+    // At the end of the aisle, the way on to the ones either side.
+    const by = (t, cls, arrow) => t ? `<button class="walk ${cls}" type="button" data-aisle="${esc(t.id)}" data-walk>
+      ${cls === "prev" ? arrow : ""}<span><small>Aisle ${t.n}</small>${esc(t.name)}</span>${cls === "next" ? arrow : ""}</button>` : "<span></span>";
+    h += `<nav class="aisle-walk" aria-label="On to the next aisle">${by(aisles[at - 1], "prev", "←")}${by(aisles[at + 1], "next", "→")}</nav>`;
   }
-  if (!shown.length) h += `<p class="empty">Nothing on the shelves matches “${esc(state.q)}”.</p>`;
 
   if (LIVE && DATA.warnings && DATA.warnings.length) {
     h += `<details class="notes"><summary>Data notes (${DATA.warnings.length}), shown on the live server only</summary>
       <p>Where data/items.yaml and Ch.10 of the lore-book disagree:</p>
       <ul>${DATA.warnings.map(w => `<li>${esc(w)}</li>`).join("")}</ul></details>`;
   }
-  $("#main").innerHTML = h;
+  $("#floor").innerHTML = h;
 }
+
+// keeper.js listens for these: an item's slip opening, the tally redrawn, and
+// something added to (or taken off) the tally.
+const announce = (name, detail) => document.dispatchEvent(new CustomEvent(name, { detail }));
 
 /* ---------- an item's slip ---------- */
 
@@ -267,6 +294,7 @@ function showSlip(id) {
   dlg.scrollTop = 0;
   if (!dlg.open) dlg.showModal();
   dlg.querySelector(".close").focus();
+  announce("market:slip", item);
 }
 function closeSlip() {
   if (!byId[location.hash.slice(1)]) return void $("#slip").close();
@@ -274,7 +302,9 @@ function closeSlip() {
     pushed = false;
     history.back();
   } else {
+    // Opened from a link: replaceState fires no hashchange, so close it here.
     history.replaceState(null, "", location.pathname + location.search);
+    route();
   }
 }
 function route() {
@@ -310,9 +340,14 @@ function add(id, by = 1) {
   tally[id] = Math.max(0, (tally[id] || 0) + by);
   if (!tally[id]) delete tally[id];
   saveTally();
+  announce("market:add", { item: byId[id], by });
 }
 
 function renderTally() {
+  drawTally();
+  announce("market:tally");
+}
+function drawTally() {
   const t = totals(), m = MARKETS[market];
   if (!t.lines.length) {
     $("#tallyBody").innerHTML = `<p class="empty">Nothing on the tally yet. Add items with the <b>+</b> on their tags.</p>`;
@@ -375,9 +410,27 @@ function tallyText() {
 
 /* ---------- events ---------- */
 
+// Into an aisle (or, while searching, down to what was found in it). From the
+// far end of one, the page goes back up to the signs. kbd: chosen from the
+// keyboard, so its sign keeps the focus once redrawn.
+function walkTo(id, kbd, fromEnd) {
+  if (state.q.trim()) {
+    const at = document.getElementById(`aisle-${id}`);
+    if (at) at.scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+  state.aisle = id;
+  storage("market.aisle", id);
+  render();
+  if (kbd) document.querySelector(`.sign[data-aisle="${CSS.escape(id)}"]`).focus({ preventScroll: true });
+  const signs = $(".aisles");
+  if (fromEnd || signs.getBoundingClientRect().top < 0) signs.scrollIntoView({ block: "start" });
+  announce("market:aisle", aisles.find(s => s.id === id));
+}
+
 $("#q").addEventListener("input", e => { state.q = e.target.value; render(); });
 document.addEventListener("click", e => {
-  const t = e.target.closest("[data-open], [data-add], [data-stall], [data-tier], [data-inc], [data-dec], [data-close]");
+  const t = e.target.closest("[data-open], [data-add], [data-aisle], [data-tier], [data-inc], [data-dec], [data-close]");
   if (!t) {
     // A click on a dialog's dimmed backdrop (the dialog itself, outside its contents) closes it.
     if (e.target === $("#slip")) closeSlip();
@@ -399,7 +452,7 @@ document.addEventListener("click", e => {
     t.classList.add("bump");
   } else if (t.dataset.inc) add(t.dataset.inc);
   else if (t.dataset.dec) add(t.dataset.dec, -1);
-  else if (t.dataset.stall) { state.stall = t.dataset.stall; render(); }
+  else if (t.dataset.aisle) walkTo(t.dataset.aisle, e.detail === 0, t.dataset.walk !== undefined);
   else if (t.dataset.tier) { state.tier = t.dataset.tier; render(); }
   else if (t.dataset.close !== undefined) {
     if (t.closest("#slip")) closeSlip();

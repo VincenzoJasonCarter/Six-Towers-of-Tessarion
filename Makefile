@@ -105,6 +105,10 @@ web-build: ## Build the public site (hub + library + market + bestiary + barrack
 hub: ## Open everything in one place at http://127.0.0.1:8760/ (starts the library, market, bestiary and memoria)
 	uv run hub/serve.py $(ARGS)
 
+.PHONY: atlas
+atlas: ## Redraw the map on the hub's easel (hub/atlas/) from the newest map/*.map and the lore-book
+	uv run hub/atlas.py $(ARGS)
+
 # --- misc ---
 
 .PHONY: help

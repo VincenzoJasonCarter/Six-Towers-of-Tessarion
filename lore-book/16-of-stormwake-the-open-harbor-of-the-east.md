@@ -8,7 +8,7 @@
 They say Crownweave was stitched from streets and stories.  
  If that is so, then Stormwake is where the threads loosen—where the pattern opens just enough to let the outside world press its fingers through.
 
-Within the city walls, “Stormwake” names a single salt-smelling quarter of shipping offices and sailors’ shrines. Beyond them, the name belongs to the **eastern prefecture of the Union**, the largest of the Weaves by settlement count: twenty-eight towns, villages, and forts wrapped around a deep, sheltered bay called the **Wakewater** and the long, curling peninsula that encloses it, known everywhere simply as **the Hook**.
+Within the city walls, “Stormwake” names a single salt-smelling quarter of shipping offices and sailors’ shrines. Beyond them, the name belongs to the **eastern prefecture of the Union**, the largest of the Weaves by settlement count: forty-three towns, villages, and forts wrapped around a deep, sheltered bay called the **Wakewater** and the long, curling peninsula that encloses it, known everywhere simply as **the Hook**, with the rolling **Lavenhurst Downs** at its back.
 
 Eastward, the Union’s stone gives way to salt-dark quays and wind-worn walls. The air smells of brine, pitch, spice, and strange perfumes that do not belong to any one shore. Masts crowd the skyline like a forest of bare branches, their rigging humming softly even in still weather. Canvas sails—patched, painted, sigiled—hang furled above the docks, each bearing marks of places far beyond Crownweave’s maps.
 
@@ -34,11 +34,12 @@ Stormwake is loud when it needs to be and silent when it must. Prices fluctuate 
 
 Stormwake faces outward more than any other Weave. It is the only part of the Union from which a ship may sail **north to the Obsidian Crown**, **north-east to Khazrund**, and east along the long coasts toward Emberfall without first rounding the island.
 
-Locals divide the prefecture into four parts:
+Locals divide the prefecture into five parts:
 
 * **The Harbor Shore** – the northern coast around Caer Veyn, where the great quays, mints, and gun-foundries stand.
 * **The Westlands** – the inland country toward Northreach and The Crown, around Marlmond, where foreign cargo is refined, repackaged, and made respectable.
 * **The Wakewater** – the inner bay and its western shore, lined with quarantine forts, customs posts, and one very old grudge.
+* **The Downs** – the green uplands south of the Westlands, between the Wakewater and Emberweave, where Marlmond’s flowers are grown.
 * **The Hook** – the eastern peninsula, walled, fortified, and home to those foreigners who have stopped pretending they will leave.
 
 Its principal routes are:
@@ -47,7 +48,8 @@ Its principal routes are:
 * the **Shaky Sun Lane**, which leaves Caer Veyn’s headland due north across open water toward the Obsidian Crown;
 * the **Stardust Lane**, branching north-east toward Khazrund;
 * the **Serpentine Ebon Route**, the coastal run west to Northreach’s Durdenbeck;
-* by land, the **Amethyst Road**, the great highway south-west through the Westlands to The Crown;
+* by land, the **Amethyst Road**, the great highway south from Marlmond to Witford, where it turns west through the Tideward stormgate to The Crown, while its older branch runs on south-east to the Wakewater;
+* the **Downs Road**, south from Lavenhurst through Tansy Cross to Emberweave’s Kilnbridge;
 * the **Newbomyard Trail**, north-west to Northreach;
 * the **Sacred Cleoverbot Trail**, the **Dunscastonese Trail**, and the **Marlney Path**, linking the Harbor Shore’s towns to one another;
 * the **Wihulbover Trails** and the **Misty Presterling Path**, running down the Wakewater’s western shore;
@@ -207,6 +209,11 @@ The second city of Stormwake stands inland at the western end of the Weave, wher
 
 **The Assay Line** — **Buclester**, **Skipseade**, **Widetonces**, **Newbomyard**, and **Presterling**. See *Of Foreign Coin*, above. Skipseade and Widetonces also cut the timber for the Wake’s shipyards.
 
+**Witford** — *The Turning Ford.*  
+A plaza-town on the Witford river where the Amethyst Road, coming south from Marlmond, turns west for The Crown. Witford lives on the turn: coaching inns, remount stables, and the last customs post before the stormgate, where cargo already cleared at the Tidecall is cleared again, more politely, for the Crown’s benefit.
+
+**Salseading** and **Harmouth** — A river-town and a small walled fort on the Westlands’ northern edge, where the road from Northreach comes down to Marlmond.
+
 #### **The Wakewater**
 
 **Stotfordbu** — *The Lazaret.*  
@@ -225,7 +232,30 @@ A walled village south-west of the bay where amber is dug from old sea-beds. Wih
 **Hinckburgh** — *The Wakewatch.*  
 A hill-city on the southern headland, where the Caer Veynese Lane leaves the Wakewater for the open sea. Hinckburgh’s weather-readers keep a constant watch on the southern and eastern horizons and exchange signals with Skyloom’s Loomwardens—cordially, now, though Hinckburgh has never entirely forgiven the Western Gale either.
 
+**Wakefold** — *The Inner Harbor.*  
+A plaza-port at the mouth of the Helscom on the Wakewater’s western shore. Ships too large or too suspect for Caer Veyn’s inner quays lie off Wakefold instead, and its lighters carry their cargo up the shore to the forts and inland to Marlmond. Wakefold is cheaper than Caer Veyn, slower than Caer Veyn, and asks fewer questions than Caer Veyn, in roughly that order of importance to its customers.
+
+**Gullridge** — *The Ridge Fort.*  
+A small walled citadel on the Stotham ridge, high enough to see over the whole inner bay. Its signal-mast relays Hinckburgh’s weather warnings north to Caer Veyn, and the forts’ quarantine flags south to Hinckburgh.
+
+**Saltmere**, **Stotham**, and **Marlbrook** — A salt-boiling village on the shore below Gullridge, a farming village on the Stotham river, and a hamlet of reed-cutters behind Wakefold.
+
 **The Wreckers’ Shallows** — The southern reach of the Wakewater, between Hinckburgh and the tip of the Hook, is shallow, shifting, and poorly lit. It is also where Stormwake’s pirates operate. They do not raid the great ships of the Shaky Sun Lane. They wait for the small ones, for the fog, and for a captain in a hurry.
+
+#### **The Downs**
+
+South of the Westlands the ground rises into the **Lavenhurst Downs**: long green hills, chalk-white tracks, and field after field of lavender, rose, tansy, and larkspur. Marlmond makes Stormwake’s perfumes respectable; the Downs make them in the first place, or at least make the half of them that did not arrive by ship.
+
+**Lavenhurst** — *The Lavender Town.*  
+A plaza-town in the lee of the Downs whose distilleries render the first oils from the fields before the casks go north to Marlmond. In flowering season the whole town smells so strongly of lavender that Marlmond’s perfumers send their apprentices here to ruin their noses on purpose, so they will learn to work by measure instead.
+
+**Tansy Cross** — *The Downs Market.*  
+A market village where the Downs Road crosses the hill-tracks, and where the flower-farmers sell their harvest to Marlmond’s buyers under the eye of a Merchant’s Guild weigh-master.
+
+**Threadmeet** — *The Three Borders.*  
+A river village at the point where Stormwake, Emberweave, and the Crownlands meet. Its boundary stone is carved with three crossing threads, and its people are taxed, by long custom, by whichever Warden asks first.
+
+**Larkspur**, **Rosemoor**, **Atnesbury**, and **Shepherd’s Down** — Flower-villages, a river village, and a shepherds’ hamlet on the high Downs. Shepherd’s Down’s sheep are the only thing on the hills not grown for scent, and the shepherds will tell you that the wool smells of lavender anyway.
 
 #### **The Hook**
 

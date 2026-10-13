@@ -16,6 +16,8 @@ By day, Emberweave feels like standing in the mouth of a furnace that has only j
 
 If The Crown is where crowns speak, and Skyloom is where winds are woven, then **Emberweave is where caravans are born, broken, measured, and sent back out again.**
 
+Within the city walls, “Emberweave” names the southern quarter described below. Beyond them, the name belongs to the **southern prefecture of the Union**: the broadest of the Weaves, thirty-six towns, villages, and forts scattered across hot river-country, a dry western tableland, and a long coast facing the Iron Hordes across the water. It is governed from the river-port of **Fjerfi**; its towns are described in the gazetteer that follows the quarter’s own entry.
+
 ---
 
 ### **I. The Temper of Emberweave**
@@ -234,7 +236,107 @@ Some call it superstition, some courtesy to the Temple. In Embercoil, most simpl
 
 ---
 
-### **VI. Advice to the Traveller**
+### **VI. The South Beyond the Walls**
+
+*A gazetteer of the prefecture, arranged by region. Settlements of note are given in full; lesser ones in brief.*
+
+Past the Emberward stormgate the land drops away from the Crownlands into warm river-country: half a dozen rivers run south to the sea through seasonal forest, savanna, and, nearer the coast, a thick green tangle that the Compendium’s older editions call jungle and Emberweavers call “the wet.” Only the west is truly dry. In the middle of it all stands the prefecture’s one mountain, and around its foot every road in the Weave eventually bends.
+
+Locals divide the prefecture into five parts:
+
+* **The Fjerfi Basin** – the river-country below the Crownlands, around the seat.
+* **The Ashen Tableland** – the dry western upland, where the caravans that give the Weave its name actually live.
+* **Emberpeak** – the lone mountain at the prefecture’s heart, and the mines and watch-posts on its slopes.
+* **The Burning Coast** – the southern shore, facing the Iron Hordes.
+* **The Saffron Shore** – the wet eastern coast and its spice-port.
+
+Its principal routes are:
+
+* the **Ember Road**, from The Crown through the Emberward stormgate to Fjerfi—the road the caravans of the city quarter actually take;
+* the **Fjerfian Trail**, from Skyloom’s Central District south down the river valleys past Thornfold and Pepperwick to Fjerfi;
+* the **Brand Road**, south from Fjerfi down the Newleighin valley, round the end of the ridge at Redbank, and along the shore to Brandmouth;
+* the **Saffron Road**, east from Fjerfi past the foot of Emberpeak, through Slagbarrow and Tuskhold, to Saffron Quay;
+* the **Downs Road**, north-east from Kilnbridge into Stormwake’s Lavenhurst Downs;
+* and by water, the **Fjerfian Route**, the sea lane that enters the Newleighin at Lightermouth and runs up the river to Fjerfi’s quays.
+
+Beyond these, the west is stitched together by caravan trails that move a little every season, and the coast by footpaths that move a little every storm.
+
+#### **The Fjerfi Basin**
+
+**Fjerfi** — *Seat of the Weave.*  
+A walled river-port on the Newleighin, a day’s ride below the Emberward stormgate. Sea-going ships cannot reach it, but river-lighters can, and the Fjerfian Route brings cargo up from the coast to quays that are, by Emberweave standards, almost orderly. Fjerfi is where the Weave Warden holds court, where caravan charters for the south are sealed, and where the Iron-Tusk lodges of the city quarter keep their country halls. Its great plaza is a smaller, hotter twin of the Ashward; its temple keeps a Dustveil altar of its own. Anything that leaves the Crown for the south passes through Fjerfi, and is counted there.
+
+**Pepperwick** and **Thornfold** — A village of pepper-gardens on the river below Fjerfi, and a thorn-hedged hamlet on the Skyloom side whose stock-pens hold the Weave’s spare draught animals.
+
+**Gatewell** — *The Last Water.*  
+A walled caravanserai just below the Emberward stormgate, built around a deep well and a long stone trough. Caravans bound for The Crown water their animals here, wash off the road, and put on whatever they intend to be seen arriving in.
+
+**Spicegarth** — A village of walled spice-gardens on the slope south-east of Fjerfi, whose cumin and coriander season half the stews in the city quarter.
+
+**Sunscar** — A village on the bare red ridge south of Fjerfi, named for the long scar of rock the Brand Road climbs. Its people sell water and shade to travellers on the ridge, at prices that make the climb feel longer.
+
+#### **The Ashen Tableland**
+
+**Cinderford** — *The Western Ford.*  
+A plaza-town at the ford where Skyloom’s southern trails come down to Emberweave, and the first place in the Weave where the grass goes yellow. Cinderford is where caravans bound for the Tableland take on their last cheap water and their first expensive guides.
+
+**Ashline** — *The Lodge in the Dust.*  
+A walled caravanserai in the dry heart of the Tableland, held by the orc clans whose banners hang in the Iron-Tusk lodges of the city quarter. Every caravan that crosses the west stops at Ashline, pays the clans for passage, and is better guarded for it. The **Ashline Accords** take their name from it; the Compendium refers the reader to Volume XII for the circumstances, and declines to summarise them here.
+
+**Glasspan** — *The Salt Flats.*  
+A coastal village beside the white pans where the Tableland meets the sea. Its salt dries in crusts so clear they are sold as “glass salt” to the Crown’s better kitchens and the Collegium’s worse experiments. The **Glass Salt Uprisings** began in its salt-yards; see likewise Volume XII.
+
+**Dustford** and **Tawnyford** — Two fords on the Tableland’s rivers: Dustford, where the coast trail from Skyloom crosses the Mitfordling, and Tawnyford, a herders’ hamlet in the tawny grass below Highdust.
+
+**Highdust**, **Drywell**, and **Saltcliff** — The Tableland’s upland village, its one dependable well, and its southern fishing cove. Drywell’s water-keepers hold their office by inheritance and keep a ledger of every barrel drawn; there are older entries in it than in Fjerfi’s town charter.
+
+#### **Emberpeak**
+
+A single dark mountain rising out of the river-country, and the only true peak in the south. It is not a volcano, though the name and the colour of its rock persuade most visitors otherwise.
+
+**Brandwatch** — *The Southern Eye.*  
+A walled fort on Emberpeak’s summit. From its tower a watch-fire can be seen from Brandmouth to the Emberward stormgate, and on clear nights from the decks of ships halfway to the Iron Hordes. Brandwatch is held by Crown Guard veterans who were sent there, in their words, “to cool off.”
+
+**Slagbarrow** — *The Mines.*  
+A mining village on the mountain’s northern shoulder, where the Saffron Road crosses it. Its dwarven-run diggings bring up iron, copper, and a dark heavy ore that Northreach buys without saying why. The slag-heaps that name the village glow faintly after rain.
+
+**Brandfoot** — A village at the western foot of the mountain, where the Perstoketon comes off its slopes. Brandfoot’s goats are the only creatures that climb Emberpeak for pleasure.
+
+**Kilnbridge** — *The Wheelwrights’ Town.*  
+A river-town north of Emberpeak where the Downs Road comes in from Stormwake. Its kilns, smithies, and wheelwright yards are the dwarven waystations of the city quarter writ large: half the axles and wheel-bands in the south were made or mended here.
+
+#### **The Burning Coast**
+
+**Brandmouth** — *The Southern Harbor.*  
+A walled port at the mouth of the Kingham, and the Union’s nearest harbor to the Iron Hordes. Ships that dare the crossing load and unload here; so do the envoys, mercenaries, and soulstone-traders who make the crossing worth daring. Brandmouth’s plaza has a permanent market for orcish goods and a permanent watch for orcish trouble, and the two are often the same people on different days.
+
+**Lightermouth** — *The River Door.*  
+A plaza-town and port at the mouth of the Newleighin, where the Fjerfian Route leaves the sea for the river. Sea-going ships unload into the flat-bottomed lighters that give the town its name, and the lightermen’s guild, which owns every one of them, sets the price of everything that reaches Fjerfi by water.
+
+**Perstoke** — *The Market Below the Mountain.*  
+A plaza-town on the Perstoketon, in the warm valley under Emberpeak’s southern face. Slagbarrow’s ore comes down to it for smelting, Brandmouth’s imports come up to it for sale, and its weekly market is the busiest in the south outside Fjerfi.
+
+**Redbank**, **Blackstrand**, and **Sunwick** — A river village where the Brand Road turns along the coast, a fishing village on the black-sand beach west of Brandmouth, and a cove-village at the prefecture’s south-western tip.
+
+**Reedmouth**, **Charwick**, **Shellhythe**, and **Smokesands** — Fishing villages along the Burning Coast; Shellhythe’s divers bring up the pearl-shell that Saffron Quay sells as Emberfall work. Charwick and Smokesands cure their catch in smokehouses that stain the whole shore grey; Reedmouth, on the next river east of Brandmouth, takes the overflow when Brandmouth’s harbor is full.
+
+#### **The Saffron Shore**
+
+**Saffron Quay** — *The Spice-Port.*  
+A plaza-port at the mouth of the Knavereley, the Weave’s door to the eastern sea and to Emberfall’s trade. Spice, dye, resin, and saffron come ashore here, and most of the spice stalls in the city quarter are stocked from its warehouses. Its temple is the only one on the coast with a Dustveil altar *and* a sea-shrine, and keeps both busy.
+
+**Tuskhold** — *The Clan Town.*  
+A walled river-town on the Saffron Road, built around an Iron-Tusk lodge large enough to be called a fortress. Caravans heading east hire their guards here; caravans arriving from the east report to it, whether or not they meant to.
+
+**Dyewater** and **Oxbow** — Two river villages on the Knavereley: Dyewater, whose vats turn the river below it red, blue, or saffron depending on the day, and Oxbow, a ferry-and-cattle village on the great bend upstream.
+
+**Palmhaven** and **Vinehollow** — A fishing village in the palms south of Saffron Quay, and a hamlet of vine-growers in the wet woods inland.
+
+**Tinderholt** and **Cinnabar Point** — A hamlet of charcoal-burners in the wet woods below Emberpeak, and a fishing village north of Saffron Quay whose red cliffs are mined for vermilion pigment.
+
+---
+
+### **VII. Advice to the Traveller**
 
 *A marginal note, copied from a dog-eared guide owned by a spice-merchant of the Ashward:*
 

@@ -17,7 +17,80 @@
     <i class="coin" aria-hidden="true"></i><span>Tally</span><b id="tallySum">empty</b>
   </button>
 </header>
-<main id="main"></main>
+<main>
+  <div id="error"></div>
+  <div class="hall-head">
+    <section class="intro">
+      <p class="kicker">Merchant's Guild of Tessarion · Chartered Stall</p>
+      <h1>The Threadmint Market</h1>
+      <p class="lead">Every price on these tags is the Official Tessarion Market Value, set by the Merchant's Guild and paid in
+      Crownsblood (CB). Open a tag for the item's rules and recipe, or add it to the tally to price a purchase the way the Guild's clerks would.</p>
+      <div class="filters" id="filters"></div>
+    </section>
+
+    <!-- Talvender Prolyman, the stall's quartermaster (keeper.js). -->
+    <div class="keeper-post">
+      <div class="bubble" id="bubble" aria-hidden="true">
+        <b class="who">Talvender</b>
+        <p class="say" aria-hidden="true"></p>
+        <div class="replies"></div>
+      </div>
+      <button class="keeper kf" id="keeper" type="button" data-mood="flat" aria-label="Talk to Talvender, the quartermaster">
+        <svg viewBox="0 -12 160 202" aria-hidden="true">
+          <g class="bodyg">
+            <path class="shirt" d="M10 190c2-40 22-58 48-64h44c26 6 46 24 48 64z"/>
+            <path class="apron" d="M44 190V140q36-12 72 0v50z"/>
+            <path d="M44 140q36-12 72 0" fill="none" stroke="#3a2412" stroke-width="2"/>
+            <path class="strap" d="M50 128 60 142M110 128 100 142"/>
+            <circle cx="62" cy="160" r="2.6" fill="#d9bb70"/><circle cx="98" cy="160" r="2.6" fill="#d9bb70"/>
+            <path class="kerchief" d="M62 122h36l-6 14-12 6-12-6z"/>
+            <rect class="skin" x="70" y="104" width="20" height="22" rx="6"/>
+            <g class="head">
+              <ellipse class="skin" cx="50" cy="86" rx="5" ry="8"/><ellipse class="skin" cx="110" cy="86" rx="5" ry="8"/>
+              <ellipse class="skin" cx="80" cy="82" rx="30" ry="34"/>
+              <path class="hair" d="M50 80c-2-14 2-24 8-30q-1 10 3 14M110 80c2-14-2-24-8-30q1 10-3 14"/>
+              <path class="beard" d="M50 86c0 26 12 40 30 40s30-14 30-40q-4 10-12 12-8-6-18-6t-18 6q-8-2-12-12z"/>
+              <path class="tache" d="M64 101q8-7 16-3 8-4 16 3-8 1-16-1-8 2-16 1z"/>
+              <ellipse cx="66" cy="94" rx="5" ry="3" fill="#d9776a" opacity=".25"/><ellipse cx="94" cy="94" rx="5" ry="3" fill="#d9776a" opacity=".25"/>
+              <path class="brow l" d="M59 68q8-6 16-2"/><path class="brow r" d="M85 66q8-4 16 2"/>
+              <path class="scar" d="M93 62l5 24M95 68l3-1M96 75l3-1"/>
+              <g class="eyes"><g class="pupils"><ellipse class="eye-l" cx="68" cy="80" rx="2.6" ry="3.2"/><ellipse class="eye-r" cx="92" cy="80" rx="2.6" ry="3.2"/></g></g>
+              <path class="wink" d="M88 81q4 3 8 0"/>
+              <path d="M80 84q-4 10 2 11" fill="none" stroke="#b98563" stroke-width="1.8" stroke-linecap="round"/>
+              <path class="m m-flat" d="M74 106h12"/>
+              <path class="m m-smile" d="M72 104q8 7 16 0"/>
+              <path class="m m-smug" d="M73 106q9 2 15-4"/>
+              <path class="m m-frown" d="M73 108q7-5 14 0"/>
+              <ellipse class="m m-surprised" cx="80" cy="107" rx="3" ry="4"/>
+              <path class="m m-laugh" d="M71 103q9 11 18 0z"/>
+              <ellipse class="m-talk" cx="80" cy="106" rx="5" ry="3.4"/>
+            </g>
+          </g>
+        </svg>
+      </button>
+      <div class="keeper-counter" aria-hidden="true">
+        <svg class="scales" viewBox="0 0 70 56">
+          <path d="M35 8v40" stroke="#8a6a2a" stroke-width="3"/>
+          <g class="beam"><path d="M8 12h54" stroke="#a9843a" stroke-width="3" stroke-linecap="round"/>
+            <path d="M8 12 2 30h12zM62 12l-6 18h12z" fill="none" stroke="#a9843a" stroke-width="1"/>
+            <path d="M0 30q8 8 16 0zM54 30q8 8 16 0z" fill="#d9bb70"/></g>
+          <circle cx="35" cy="8" r="4" fill="#e6c97e"/>
+          <rect x="22" y="47" width="26" height="6" rx="2" fill="#5a3a18"/>
+        </svg>
+        <svg class="abacus" viewBox="0 0 80 46">
+          <rect x="2" y="2" width="76" height="42" rx="3" fill="none" stroke="#5a3a18" stroke-width="4"/>
+          <g stroke="#3b2312" stroke-width="1.4"><path d="M4 13h72M4 23h72M4 33h72"/></g>
+          <g fill="#8c2f23"><circle cx="12" cy="13" r="3.6"/><circle cx="20" cy="13" r="3.6"/><circle cx="54" cy="13" r="3.6"/>
+            <circle cx="12" cy="23" r="3.6"/><circle cx="46" cy="23" r="3.6"/><circle cx="54" cy="23" r="3.6"/><circle cx="62" cy="23" r="3.6"/>
+            <circle cx="28" cy="33" r="3.6"/><circle cx="62" cy="33" r="3.6"/><circle cx="70" cy="33" r="3.6"/></g>
+        </svg>
+        <span class="nameplate">T. Prolyman · Quartermaster</span>
+      </div>
+      <p class="sr" id="keeper-sr" aria-live="polite"></p>
+    </div>
+  </div>
+  <div id="floor"></div>
+</main>
 
 <dialog class="slip" id="slip" aria-labelledby="slipTitle"></dialog>
 
@@ -37,5 +110,6 @@ const DATA = /*__MARKET_DATA__*/null;
 const LIVE = /*__MARKET_LIVE__*/false;  // true when served by serve.py
 </script>
 <script src="app.js"></script>
+<script src="keeper.js"></script>
 </body>
 </html>

@@ -895,6 +895,734 @@ Tools: Smith's tools or Carpenter's tools | Craft Time: 4 hours
 **Craft Time:** 3 hours
 **Market Value:** 3 CB
 
+# **TIER 3 WEAPONS**
+
+## ---
+
+Tier 3 is **Crownweave steel**: the Union's own best work, with no crystal in it. Its steel is poured at the Iron Crucible, its timber grown at Burtonrith for skycraft frames, its fittings drawn at Castfield and the Gear-Makers' Walks. Everything here is still foundational crafting (see the Soulforge Codex): it will not sing and it will not shine. It will work better than anything before it.
+
+Each Tier 3 weapon upgrades a Tier 2 weapon, and some Tier 2 weapons branch into two. A branch is a choice of how to fight, not a step up: the Steel Longsword and the Sabre both come from the Iron Sword.
+
+**The Tier 3 step.** A Tier 3 weapon adds **\+2** to damage (Tier 2 added \+1), and some take the full martial die their Tier 1 and 2 forebears never had. Every power modifier now has two sides: an **edge** the weapon gives, and, on some, a **cost** it still asks.
+
+### **Property — *Hybrid***
+
+Tessarion's weapons have never been finesse weapons; a Hybrid weapon is the first that rewards both hands and eye.
+
+* **Attack Bonus:** **the higher of your STR and DEX modifiers** \+ Proficiency  
+* **Damage Roll:** the weapon's die \+ **your STR modifier \+ your DEX modifier** (the lower one only if it is positive)  
+* A Hybrid weapon does **not** add the Tier 3 \+2: your other modifier takes its place.
+
+> Design intent: with a second modifier of \+2 a Hybrid weapon matches its straight counterpart, above that it beats it, below it trails. A character who lives by DEX finally has a melee weapon worth carrying; one who lives by STR alone is still better served by a straight blade.
+
+### **Tier 3 Raw Materials**
+
+| Material | From | Market Value |
+| ----- | ----- | ----- |
+| **Crucible Steel Ingot (150 g)** | The Iron Crucible, Northreach | 4 CB |
+| **Feathersteel Strip** | Castfield, Skyloom: the steel of flight harness | 3 CB |
+| **Skywood Timber (5 m)** | Burtonrith, Skyloom: light, close-grained skycraft wood | 2 CB |
+| **Castfield Leather** | Castfield, Skyloom: hardened and oil-sealed | 2 CB |
+| **Spring Steel Coil** | The Gear-Makers' Walks, Bybdetos | 2 CB |
+| **Steel Rivets (30)** | Northreach | 1 CB |
+| **Cloudglass Lens** | Midhurstnes, Skyloom | 3 CB |
+
+## **🗡️ Steel Longsword**
+
+*(Upgraded from Iron Sword, beside the Sabre)*
+
+**Damage Type:** Slashing
+**Weapon Type:** Melee, Versatile
+
+### **Attack & Damage**
+
+* **Attack Bonus:** STR mod \+ Proficiency
+* **Damage Roll:**
+  * One-handed: **1d8 \+ STR mod \+ 2** slashing
+  * Two-handed: **1d10 \+ STR mod \+ 2** slashing
+
+### **Power Modifier — *Riposte***
+
+* When a creature within 5 ft misses you with a melee attack, you can use your **reaction** to make one melee attack against it with this sword.
+* You can do this a number of times equal to your **proficiency bonus** per long rest.
+
+> Design intent: the all-rounder, with no cost. One attack a turn makes a reaction attack worth more than it would be elsewhere, so it is counted out by the rest.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×2
+* Skywood Timber ×0.5
+* Castfield Leather ×0.2
+
+**Tools:** Smith’s tools
+**Craft Time:** 2 days (basic forge)
+**Market Value:** 10 CB
+
+## **🗡️ Sabre**
+
+*(Upgraded from Iron Sword, beside the Steel Longsword)*
+
+**Damage Type:** Slashing
+**Weapon Type:** Melee, Light, **Hybrid**
+
+### **Attack & Damage**
+
+* **Attack Bonus:** higher of STR and DEX mod \+ Proficiency
+* **Damage Roll:** **1d6 \+ STR mod \+ DEX mod** slashing
+
+### **Power Modifier — *Slash & Step***
+
+* **Edge:** after you hit with it, you can move **5 ft** without provoking opportunity attacks. This movement doesn’t count against your speed.
+* **Cost — Thin Blade:** on a **natural 1** the blade bends: **−1 damage** with it until you straighten it over a short rest.
+
+> Design intent: a duelist’s blade for those who fight on their feet, and the Range’s answer to being caught in melee.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×1.5
+* Skywood Timber ×0.3
+* Castfield Leather ×0.2
+
+**Tools:** Smith’s tools
+**Craft Time:** 1 day
+**Market Value:** 8 CB
+
+## **🔱 Spear**
+
+*(Upgraded from Quarterstaff, beside the Steel-Capped Staff)*
+
+**Damage Type:** Piercing
+**Weapon Type:** Melee, Versatile, Thrown (20/60), **Hybrid**
+
+### **Attack & Damage**
+
+* **Attack Bonus:** higher of STR and DEX mod \+ Proficiency
+* **Damage Roll:**
+  * One-handed or thrown: **1d6 \+ STR mod \+ DEX mod** piercing
+  * Two-handed: **1d8 \+ STR mod \+ DEX mod** piercing
+
+### **Power Modifier — *Long Haft***
+
+* **Edge:** held in two hands, it has **10 ft reach**.
+* **Cost:** held in two hands, your attacks against a creature **within 5 ft** of you have **disadvantage**.
+
+> Design intent: the spear the Hybrid property was made for: aimed with the eye, driven with the arm. Keep the enemy at the end of it.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Skywood Timber ×1
+* Crucible Steel Ingot ×0.5 (head)
+* Castfield Leather ×0.2
+
+**Tools:** Carpenter’s tools and Smith’s tools
+**Craft Time:** 1 day
+**Market Value:** 5 CB
+
+## **🪵 Steel-Capped Staff**
+
+*(Upgraded from Quarterstaff, beside the Spear)*
+
+**Damage Type:** Bludgeoning
+**Weapon Type:** Melee, Versatile
+
+### **Attack & Damage**
+
+* **Attack Bonus:** STR mod \+ Proficiency
+* **Damage Roll:**
+  * One-handed: **1d6 \+ STR mod \+ 2** bludgeoning
+  * Two-handed: **1d8 \+ STR mod \+ 2** bludgeoning
+
+### **Power Modifier — *Topple***
+
+* On a hit, a **Large or smaller** target must succeed on a **CON save (DC 8 \+ your proficiency bonus \+ your STR mod)** or fall **prone**.
+
+> Design intent: the Quarterstaff’s rattle grown into a sweep. Still the cheapest weapon on the shelf for what it does.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Skywood Timber ×1
+* Crucible Steel Ingot ×0.3 (caps)
+
+**Tools:** Carpenter’s tools and Smith’s tools
+**Craft Time:** 8 hours
+**Market Value:** 4 CB
+
+## **⚔️ Steel Greatsword**
+
+*(Upgraded from Iron Greatsword, beside the Halberd)*
+
+**Damage Type:** Slashing
+**Weapon Type:** Melee, Heavy, Two-Handed
+
+### **Attack & Damage**
+
+* **Attack Bonus:** STR mod \+ Proficiency
+* **Damage Roll:** **2d6 \+ STR mod \+ 2** slashing
+
+### **Power Modifier — *Graze***
+
+* **Edge:** when you **miss** with it, the target still takes slashing damage equal to your **STR modifier**.
+* **Cost — Inertia Drag:** if you miss by **5 or more**, your speed is reduced by **5 ft** until the end of your turn.
+
+> Design intent: a blade that never fully stops. Both sides of it live on the miss.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×3
+* Skywood Timber ×0.5
+* Castfield Leather ×0.3
+
+**Tools:** Smith’s tools
+**Craft Time:** 3 days (basic forge)
+**Market Value:** 15 CB
+
+## **🪓 Halberd**
+
+*(Upgraded from Iron Greatsword, beside the Steel Greatsword)*
+
+**Damage Type:** Slashing
+**Weapon Type:** Melee, Heavy, Reach, Two-Handed
+
+### **Attack & Damage**
+
+* **Attack Bonus:** STR mod \+ Proficiency
+* **Damage Roll:** **1d10 \+ STR mod \+ 2** slashing
+
+### **Power Modifier — *Hook & Haul***
+
+* **Edge:** on a hit against a **Large or smaller** creature, you can **pull it 5 ft** toward you or **push it 10 ft** away.
+* **Cost — Long Haft:** in a space **less than 10 ft wide** (a tunnel, a ship’s companionway), attacks with it have **disadvantage**.
+
+> Design intent: a smaller die than the greatsword, paid back in where the enemy ends up standing.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×2
+* Skywood Timber ×1 (haft)
+* Steel Rivets ×0.3
+
+**Tools:** Smith’s tools and Carpenter’s tools
+**Craft Time:** 2 days (basic forge)
+**Market Value:** 11 CB
+
+## **🪓 Bearded Axe**
+
+*(Upgraded from Iron Battle Axe)*
+
+**Damage Type:** Slashing
+**Weapon Type:** Melee, Versatile
+
+### **Attack & Damage**
+
+* **Attack Bonus:** STR mod \+ Proficiency
+* **Damage Roll:**
+  * One-handed: **1d8 \+ STR mod \+ 2** slashing
+  * Two-handed: **1d10 \+ STR mod \+ 2** slashing
+
+### **Power Modifier — *Hook the Rim***
+
+* **Edge:** on a hit, the target’s **shield gives it no AC** until the start of your next turn.
+* **Cost — Head Pull:** if you miss by **5 or more**, your speed is reduced by **5 ft** until the end of your turn.
+
+> Design intent: the beard hooks over a shield’s rim and drags it aside, for whoever swings next.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×2
+* Skywood Timber ×0.4
+* Castfield Leather ×0.2
+
+**Tools:** Smith’s tools
+**Craft Time:** 1 day
+**Market Value:** 10 CB
+
+## **🔨 Steel Warhammer**
+
+*(Upgraded from Iron Mace)*
+
+**Damage Type:** Bludgeoning
+**Weapon Type:** Melee
+
+### **Attack & Damage**
+
+* **Attack Bonus:** STR mod \+ Proficiency
+* **Damage Roll:** **1d8 \+ STR mod \+ 2** bludgeoning
+
+### **Power Modifier — *Crushing Weight***
+
+* On a hit against a target wearing **medium or heavy armor** (or with natural armor granting \+2 AC or more), you deal an additional **\+2** bludgeoning damage.
+
+> Design intent: the mace’s niche, sharpened. Dead weight against the unarmored, a can-opener against everything else.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×1.5
+* Skywood Timber ×0.3
+* Castfield Leather ×0.1
+
+**Tools:** Smith’s tools
+**Craft Time:** 1 day
+**Market Value:** 7 CB
+
+## **🔨 Watchman’s Cudgel**
+
+*(Upgraded from Iron-Shod Club)*
+
+**Damage Type:** Bludgeoning
+**Weapon Type:** Melee, Light
+
+### **Attack & Damage**
+
+* **Attack Bonus:** STR mod \+ Proficiency
+* **Damage Roll:** **1d6 \+ STR mod \+ 2** bludgeoning
+
+### **Power Modifier — *Sap***
+
+* On a hit, a **Medium or smaller** target has **disadvantage on its next attack roll** before the start of your next turn.
+
+### **Utility Modifier — *Door Breaker***
+
+* As the Club.
+
+> Design intent: the City Watch’s weapon of choice: it doesn’t kill quickly, it makes the other one miss.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×0.5
+* Skywood Timber ×0.3
+* Castfield Leather ×0.1
+
+**Tools:** Smith’s tools or Carpenter’s tools
+**Craft Time:** 4 hours
+**Market Value:** 3 CB
+
+## **🔪 Stiletto**
+
+*(Upgraded from Iron Dagger)*
+
+**Damage Type:** Piercing
+**Weapon Type:** Melee, Light, Thrown (20/60), **Hybrid**
+
+### **Attack & Damage**
+
+* **Attack Bonus:** higher of STR and DEX mod \+ Proficiency
+* **Damage Roll:** **1d4 \+ STR mod \+ DEX mod** piercing
+
+### **Power Modifier — *Gap-Finder***
+
+* You score a **critical hit on a 19 or 20** with it.
+
+### **Utility Modifier — *Working Knife***
+
+* As the Basic Dagger.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×1
+* Skywood Timber ×0.2
+
+**Tools:** Smith’s tools
+**Craft Time:** 8 hours
+**Market Value:** 5 CB
+
+## **🛡️ Steel Kite Shield**
+
+*(Upgraded from Iron Shield, beside the Buckler)*
+
+### **Defensive Profile**
+
+* **Item Type:** Shield
+* **AC Bonus:** **\+2 AC**
+
+### **Attack & Damage (Shield Bash)**
+
+* **Attack Bonus:** STR mod \+ Proficiency
+* **Damage Roll:** **1d4 \+ STR mod \+ 2** bludgeoning
+
+### **Defensive Modifier — *True Guard***
+
+* **Edge:** the shield keeps its **full \+2 AC** against a critical hit.
+* **Edge — Shield Wall:** one ally within 5 ft of you gains **\+1 AC**. An ally gains this from only one Shield Wall at a time.
+* **Cost — Heft:** unless your Strength is **15 or higher**, your speed is reduced by **5 ft** while you carry it.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×2
+* Skywood Timber ×0.5
+* Castfield Leather ×0.3
+
+**Tools:** Smith’s tools
+**Craft Time:** 2 days (basic forge)
+**Market Value:** 11 CB
+
+## **🛡️ Buckler**
+
+*(Upgraded from Iron Shield, beside the Steel Kite Shield)*
+
+### **Defensive Profile**
+
+* **Item Type:** Shield
+* **AC Bonus:** **\+1 AC**
+
+### **Attack & Damage (Shield Bash) — Hybrid**
+
+* **Attack Bonus:** higher of STR and DEX mod \+ Proficiency
+* **Damage Roll:** **1d4 \+ STR mod \+ DEX mod** bludgeoning
+
+### **Defensive Modifier — *Deflect***
+
+* **Edge:** when a melee attack hits you, you can use your **reaction** to gain **\+2 AC** against that attack, possibly turning the hit into a miss. You can do this a number of times equal to your **proficiency bonus** per long rest.
+* **Cost:** only \+1 AC the rest of the time.
+
+> Design intent: the shield for those who would rather not be hit than survive being hit.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×1
+* Castfield Leather ×0.2
+
+**Tools:** Smith’s tools
+**Craft Time:** 1 day
+**Market Value:** 5 CB
+
+## **🏹 Steel-Backed Longbow**
+
+*(Upgraded from Seasoned Bow)*
+
+**Damage Type:** Piercing
+**Weapon Type:** Ranged (150/600), Ammunition, Two-Handed
+
+### **Attack & Damage**
+
+* **Attack Bonus:** DEX mod \+ Proficiency
+* **Damage Roll:** **1d8 \+ DEX mod \+ 2** piercing
+
+### **Power Modifier — *True Limbs***
+
+* Attacks beyond normal range are **not at disadvantage**, and you **can** gain advantage on them.
+
+> Design intent: the mobile bow, at last as strong as the heavy one. The Warbow is the other road.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Skywood Timber ×1
+* Feathersteel Strip ×0.5 (backing)
+* Castfield Leather ×0.3
+
+**Tools:** Bowyer’s kit
+**Craft Time:** 2 days
+**Market Value:** 5 CB
+
+## **🏹 Warbow**
+
+*(Upgraded from Composite Bow)*
+
+**Damage Type:** Piercing
+**Weapon Type:** Ranged (200/800), Ammunition, Two-Handed, **Hybrid**
+
+### **Attack & Damage**
+
+* **Attack Bonus:** higher of STR and DEX mod \+ Proficiency
+* **Damage Roll:** **1d10 \+ DEX mod \+ STR mod** piercing
+
+### **Power Modifier — *Siege Draw***
+
+* **Edge:** its arrows **ignore half cover**.
+* **Cost — Heavy Draw:** on a turn you fire it, your **movement speed is halved** (as the Composite Bow).
+
+> Design intent: the bow that wants a strong back. Pure DEX archers keep the Longbow; an archer with some STR plants their feet and outreaches everything.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Skywood Timber ×1
+* Feathersteel Strip ×1
+* Cured Hide ×0.5 (horn and backing)
+* Binding Fiber ×0.5 (sinew)
+* Animal Oil / Resin ×1 (glue)
+
+**Tools:** Bowyer’s kit
+**Craft Time:** 4 days
+**Market Value:** 6 CB
+
+## **🏹 Arbalest**
+
+*(Upgraded from Iron Crossbow, beside the Hand Crossbow)*
+
+**Damage Type:** Piercing
+**Weapon Type:** Ranged (100/400), Ammunition (bolts), Loading, Heavy, Two-Handed
+
+### **Attack & Damage**
+
+* **Attack Bonus:** DEX mod \+ Proficiency
+* **Damage Roll:** **1d10 \+ DEX mod \+ 2** piercing
+
+### **Power Modifier — *Punch-Through***
+
+* **Edge:** its bolts **ignore half cover**, and three-quarters cover counts only as half.
+* **Cost — Steel Prod:** on a **natural 1** the latch still slips; re-spanning takes a **bonus action**.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Skywood Timber ×1
+* Spring Steel Coil ×1 (prod)
+* Crucible Steel Ingot ×1 (windlass and latch)
+
+**Tools:** Bowyer’s kit or Carpenter’s tools, and Smith’s tools
+**Craft Time:** 2 days
+**Market Value:** 9 CB
+
+## **🏹 Hand Crossbow**
+
+*(Upgraded from Iron Crossbow, beside the Arbalest)*
+
+**Damage Type:** Piercing
+**Weapon Type:** Ranged (30/120), Ammunition (bolts), Loading, Light
+
+### **Attack & Damage**
+
+* **Attack Bonus:** DEX mod \+ Proficiency
+* **Damage Roll:** **1d6 \+ DEX mod \+ 2** piercing
+
+### **Power Modifier — *Point Blank***
+
+* **Edge:** your ranged attacks with it **aren’t at disadvantage** for a hostile creature within 5 ft of you.
+* **Cost:** the shortest reach of any bow or crossbow.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Skywood Timber ×0.3
+* Spring Steel Coil ×0.5
+* Crucible Steel Ingot ×0.3
+
+**Tools:** Bowyer’s kit and Smith’s tools
+**Craft Time:** 1 day
+**Market Value:** 3 CB
+
+## **🏹 Bodkin Arrow Bundle (10)**
+
+*(Upgraded from Iron-Tipped Arrow Bundle)*
+
+**Damage Type:** Piercing
+**Consumable Ammunition**
+
+### **Power Modifier — *Bodkin Points***
+
+* Narrow steel heads made to find the gaps in plate: **\+1 damage** against a target in **medium or heavy armor** (or with natural armor granting \+2 AC or more).
+* As True Fletching, they never break on a natural 1, and after a combat you recover **half the arrows you fired, rounded up**.
+
+> Design intent: the Archer was always weakest against heavy armor (Classes, Range). These are the answer, and the base the soulstone dust coatings go on.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Skywood Timber ×0.3
+* Crucible Steel Ingot ×0.1 (heads)
+* Binding Fiber ×0.1
+
+**Tools:** Fletcher’s tools
+**Craft Time:** 4 hours
+**Market Value:** 1 CB
+
+## **🏹 Bodkin Bolt Bundle (10)**
+
+*(Upgraded from Iron Bolt Bundle)*
+
+**Damage Type:** Piercing
+**Consumable Ammunition** (crossbows)
+
+### **Power Modifier — *Bodkin Points***
+
+* As the Bodkin Arrow Bundle.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Skywood Timber ×0.2
+* Crucible Steel Ingot ×0.2 (heads)
+* Binding Fiber ×0.1
+
+**Tools:** Fletcher’s tools
+**Craft Time:** 4 hours
+**Market Value:** 1 CB
+
+## **🔫 Long Rifle**
+
+*(Upgraded from Black-Powder Rifle)*
+
+**Damage Type:** Piercing
+**Weapon Type:** Firearm, Ranged (120/300), Ammunition (shot and powder), Loading, Two-Handed, Loud
+
+### **Attack & Damage**
+
+* **Attack Bonus:** DEX mod \+ Proficiency
+* **Damage Roll:** **1d12 \+ DEX mod \+ 2** piercing
+
+### **Power Modifier — *Cloudglass Sight***
+
+* **Edge:** a Midhurstnes lens on the barrel: attacks beyond normal range are **not at disadvantage**.
+* **Cost — Flintlock:** a **natural 1** still fouls the barrel; clearing it takes a **bonus action**.
+
+### **Property — *Loud***
+
+* As the Matchlock Musket.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×3 (barrel)
+* Skywood Timber ×1 (stock)
+* Spring Steel Coil ×0.5 (lock)
+* Cloudglass Lens ×1 (sight)
+
+**Tools:** Smith’s tools and Tinker’s tools
+**Craft Time:** 4 days (basic forge)
+**Market Value:** 24 CB
+
+## **🔫 Duelling Pistol**
+
+*(Upgraded from Heavy Handgun)*
+
+**Damage Type:** Piercing
+**Weapon Type:** Firearm, Ranged (40/120), Ammunition (shot and powder), Loading, Loud
+
+### **Attack & Damage**
+
+* **Attack Bonus:** DEX mod \+ Proficiency
+* **Damage Roll:** **1d10 \+ DEX mod \+ 2** piercing
+
+### **Power Modifier — *Close Quarters***
+
+* **Edge:** your ranged attacks with it **aren’t at disadvantage** for a hostile creature within 5 ft of you.
+* **Cost — Flintlock:** as the Long Rifle.
+
+> Design intent: Gunmen are vulnerable in close quarters (Classes, Range). This is the gun for when the thing reaches you anyway.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×1.5
+* Skywood Timber ×0.3
+* Spring Steel Coil ×0.3
+
+**Tools:** Smith’s tools and Tinker’s tools
+**Craft Time:** 2 days (basic forge)
+**Market Value:** 16 CB
+
+## **🧨 Hand Bombard**
+
+*(New at Tier 3: the Gunman’s Bombard, named in Classes)*
+
+**Damage Type:** Fire
+**Weapon Type:** Firearm, Ranged (30), Ammunition (Bombard Shells), Loading, Two-Handed, Loud
+
+### **Burst**
+
+* In place of your attack, fire a shell at a point within **30 ft**. Each creature in a **10-ft radius** of it makes a **DEX save (DC 8 \+ your proficiency bonus \+ your DEX mod)**, taking **2d8 fire damage** on a failure, or half as much on a success.
+* It makes **no attack roll**, so nothing that needs a hit (such as Resonant Shot) applies to it.
+
+### **Power Modifier — *Recoil***
+
+* **Cost:** unless your Strength is **13 or higher**, firing it knocks you **prone**.
+
+### **Property — *Loud***
+
+* Every shot is heard within **600 ft**, twice as far as a musket.
+
+> Design intent: the only area weapon in the book, and nothing a Gunman can carry is louder. Its shells are scarce outside Northreach, so it is a weapon for the moment the enemy bunches up, not for every turn.
+
+### **Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×3 (barrel and bell)
+* Skywood Timber ×1
+* Steel Rivets ×0.5
+
+**Tools:** Smith’s tools and Tinker’s tools
+**Craft Time:** 4 days (basic forge)
+**Market Value:** 30 CB
+
+## **🔫 Crucible Cartridges (10)**
+
+*(Upgraded from Paper Cartridges)*
+
+**Damage Type:** Piercing
+**Consumable Ammunition** (firearms)
+
+### **Power Modifier — *Primed***
+
+* A steel primer under every ball: a **natural 1** is only a miss, and **never fouls the barrel**.
+* They stay dry, as Paper Cartridges.
+
+### **Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×0.2 (shot)
+* Black Powder ×1
+* Fabric ×0.2 (paper and wadding)
+* Steel Rivets ×0.2 (primers)
+
+**Tools:** Tinker’s tools
+**Craft Time:** 3 hours
+**Market Value:** 3 CB
+
+## **🧨 Bombard Shells (4)**
+
+**Consumable Ammunition** (Hand Bombard)
+
+* A steel shell packed with powder, fused to burst on landing.
+* **Keep them dry:** a soaked shell won’t fire until dried over a short rest.
+* Like Black Powder, they count as **scarce** at a local market outside Northreach.
+
+### **Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×0.5
+* Black Powder ×2
+* Fabric ×0.2
+
+**Tools:** Tinker’s tools
+**Craft Time:** 4 hours
+**Market Value:** 7 CB
+
 # **TIER 1 ARMOR**
 
 ---
@@ -1214,6 +1942,233 @@ Craft Notes
 
 * As at Tier 1, the effect stays the one chosen for the Leather Boots.
 
+# **TIER 3 ARMOR**
+
+---
+
+Tier 3 armor offers **three body pieces**, and none of them is a step up from the others. Each ends at about the same Armor Class by a different road. The **Steel Harness** is heavy plate for those who live by Strength. The **Feathersteel Jack** is light and quiet for those who live by Dexterity. The **Aegis Bonded Plate** is the Harness bonded with soulstone for the Aegisbound, and it is the first armor that turns magic.
+
+The leg, head and foot pieces are steel upgrades of the Tier 2 pieces. As before, each **keeps the effect chosen when its Tier 1 piece was crafted**, strengthened again, and still adds no Armor Class. The Heavy drawback sits on the body piece alone, so a Jack wearer can still put on steel sabatons.
+
+## **🧥 Steel Harness**
+
+*(Upgraded from Riveted Brigandine)*
+
+**Armor Profile**
+
+* Armor Type: Heavy Armor (Body)  
+* Armor Tier: 3  
+* Material Tier: 3  
+* Base AC Bonus: \+4  
+* Dex Scaling: none  
+* Stealth Penalty: **Disadvantage** on Stealth checks  
+* Strength: **13**; below it, your speed is reduced by **10 ft**  
+* Weight Class: Heavy
+
+**Defense & Utility**
+
+* Damage Mitigation: None  
+* Special — **Steel Guard:** the **first critical hit** you take in each combat is a **normal hit** instead.
+
+**Design Intent**  
+Plate over the whole body, Crucible steel on a Castfield leather harness. Two more points of AC than the Brigandine, and none of it from Dexterity, so it is for those who live by Strength. The Riveted Guard of Tier 2 blunted the worst blow of a fight; Steel Guard turns it.
+
+**Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×3 (plates)  
+* Steel Rivets ×1  
+* Castfield Leather ×1 (harness)  
+* Fabric ×1 (arming coat)
+
+**Tools**  
+ Smith’s tools and Leatherworker’s Tools (basic forge)
+
+**Craft Time**  
+ 3 days
+
+**Market Value:** 50 CB
+
+**Craft Notes**
+
+* Failed crafting roll may result in *Fractured Steel Harness*.
+
+## **🧥 Feathersteel Jack**
+
+*(Upgraded from Leather Tunic)*
+
+**Armor Profile**
+
+* Armor Type: Light Armor (Body)  
+* Armor Tier: 3  
+* Material Tier: 3  
+* Base AC Bonus: \+2  
+* Dex Scaling: \+2 (max)  
+* Stealth Penalty: None  
+* Weight Class: Light
+
+**Defense & Utility**
+
+* Damage Mitigation: None  
+* Special — **Flight-Harness:** the jack is built on a Skyloom flying harness, and you take **half damage from falling**.
+
+**Design Intent**  
+Castfield’s feathersteel, the springing steel of Skyloom’s flight harness, riveted in small plates inside a leather jack. With Dexterity \+2 it reaches the Steel Harness’s Armor Class and makes no sound. It upgrades the Leather Tunic directly, so a character who never wore the Brigandine doesn’t have to start now.
+
+**Upgrade Recipe**
+
+**Materials**
+
+* Feathersteel Strip ×2  
+* Castfield Leather ×1  
+* Fabric ×0.5 (lining)  
+* Steel Rivets ×0.5
+
+**Tools**  
+ Leatherworker’s Tools and Smith’s tools
+
+**Craft Time**  
+ 2 days
+
+**Market Value:** 20 CB
+
+## **🛡️ Aegis Bonded Plate**
+
+*(Bonded from a Steel Harness at the Infusion Forges)*
+
+**Armor Profile**
+
+* Armor Type: Heavy Armor (Body), **Aegisbound only**  
+* Armor Tier: 3  
+* Material Tier: 3, bonded  
+* Base AC Bonus: \+4  
+* Dex Scaling: none  
+* Stealth Penalty: **Disadvantage** on Stealth checks  
+* Strength: **13**; below it, your speed is reduced by **10 ft**  
+* Weight Class: Heavy
+
+**Defense & Utility**
+
+* Special — **Mana Baffle:** when a **spell or other magical effect** deals damage to you, that damage is reduced by your **proficiency bonus**. Like Reinforced Plating, it applies before any resistance.  
+* Special — **Steel Guard:** as the Steel Harness.
+
+**Design Intent**  
+This is the magic-resistant armor Classes promises the Aegisbound “from Tier 3 up”. At the Infusion Forges on the Forge Run, a Steel Harness is etched with anchoring runes and packed with soulstone dust, so that it carries mana into the ground the way Reinforced Plating carries off a blow. Mana Baffle is Reinforced Plating’s twin: one blunts the weapon, the other blunts the spell.
+
+**Bonding**
+
+* A Bonded Plate is not crafted at a forge or sold over a counter. The Forges **issue** it to licensed Aegisbound, or **bond** a Steel Harness brought to them by one, which takes 3 days.  
+* It is bonded to **one wearer**. Anyone else who puts it on, an Aegisbound included, wears a plain Steel Harness until it is rebonded at the Forges.  
+* It answers only to a body that left the neutral crystal dull at the Age-20 Rite. On anyone with crystal affinity the dust lies dead.
+
+> *Bonding failures are classified as structural incompatibilities.* (Of Northreach, The Forge Run)
+
+## **👖 Splinted Greaves**
+
+*(Upgraded from Riveted Leggings)*
+
+**Armor Profile**
+
+* Armor Type: Heavy Armor (Legs)  
+* Armor Tier: 3  
+* Base AC Bonus: \+0  
+* Stealth Penalty: None (the Heavy drawback is the body piece’s)  
+* Weight Class: Heavy
+
+**Defense & Utility**  
+ Effect (as chosen for the Leather Leggings):
+
+* \+2 Dex Save becomes **\+3 Dex Save**, **or**  
+* \+5 ft movement becomes **\+10 ft movement**
+
+**Upgrade Recipe**
+
+**Materials**
+
+* Castfield Leather ×0.5  
+* Crucible Steel Ingot ×0.5 (splints)  
+* Steel Rivets ×0.5
+
+**Tools**  
+ Leatherworker’s Tools and Smith’s tools
+
+**Craft Time**  
+ 12 hours
+
+**Market Value:** 17 CB
+
+## **🪖 Steel Sallet**
+
+*(Upgraded from Riveted Coif)*
+
+**Armor Profile**
+
+* Armor Type: Heavy Armor (Head)  
+* Armor Tier: 3  
+* Base AC Bonus: \+0  
+* Stealth Penalty: None (the Heavy drawback is the body piece’s)  
+* Weight Class: Heavy
+
+**Defense & Utility**  
+ Effect (as chosen for the Leather Hood):
+
+* \+2 Perception becomes **\+3 Perception**, **or**  
+* Advantage vs ambush detection, plus **\+2 to initiative**
+
+**Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×1  
+* Soft Lining ×1  
+* Steel Rivets ×0.3
+
+**Tools**  
+ Smith’s tools and Leatherworker’s Tools
+
+**Craft Time**  
+ 12 hours
+
+**Market Value:** 18 CB
+
+## **👢 Steel Sabatons**
+
+*(Upgraded from Riveted Boots)*
+
+**Armor Profile**
+
+* Armor Type: Heavy Armor (Feet)  
+* Armor Tier: 3  
+* Base AC Bonus: \+0  
+* Stealth Penalty: None (the Heavy drawback is the body piece’s)  
+* Weight Class: Heavy
+
+**Defense & Utility**  
+ Effect (as chosen for the Leather Boots):
+
+* \+5 ft movement, and your speed can’t be reduced by more than 5 ft by **any** effect, magical ones included, **or**  
+* Advantage on DEX saves to avoid being knocked prone, on checks to resist being shoved, **and on saves against being moved against your will**
+
+**Design Intent**  
+ Tier 2 held against nonmagical slowing and shoves. Tier 3 holds against spells too.
+
+**Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×0.5  
+* Castfield Leather ×0.5  
+* Steel Rivets ×0.3
+
+**Tools**  
+ Smith’s tools and Leatherworker’s Tools
+
+**Craft Time**  
+ 10 hours
+
+**Market Value:** 17 CB
+
 # **TIER 2 UTILITIES**
 
 ---
@@ -1344,11 +2299,143 @@ Tier 1 utilities (Rations, Rope, the Compression Lighter) are bought, not made; 
 **Market Value:** 2 CB
 
 
+# **TIER 3 UTILITIES**
+
+---
+
+Tier 3 road gear is built from the same steel and glass as the Tier 3 weapons. The Rope and the Lantern get one more step each, and two new pieces come from the Union’s workshops: a spyglass and a flare. Rations and lighters get no Tier 3: the Crucible’s tins never spoil, and the Storm Lighter already lights in any weather.
+
+## **🪝 Feathersteel Line & Spring Grapnel (20 m)**
+
+*(Upgraded from Tarred Rope & Grapnel)*
+
+**Utility Profile**
+
+* Item Type: Gear  
+* Length: 20 m of feathersteel-cored line, with a spring-launched grapnel
+
+**Effect**
+
+* A spring in the grapnel’s tube throws it up to **60 ft** to catch a ledge, rail or sill (DC 10 Athletics; on a failure it falls back).  
+* Climbing the line gives **advantage** on the Athletics check, and it holds **two climbers** at once.  
+* It can’t be cut by a casual slash (AC 15, 15 HP).
+
+**Upgrade Recipe**
+
+**Materials**
+
+* Feathersteel Strip ×0.5 (core)  
+* Cord Bundle ×2  
+* Spring Steel Coil ×0.5 (launcher)  
+* Crucible Steel Ingot ×0.3 (grapnel)
+
+**Tools**  
+ Weaver’s tools and Tinker’s tools
+
+**Craft Time**  
+ 1 day
+
+**Market Value:** 5 CB
+
+## **🏮 Bullseye Lantern**
+
+*(Upgraded from Hooded Lantern)*
+
+**Utility Profile**
+
+* Item Type: Gear  
+* Fuel: Animal Oil / Resin ×1 burns for 8 hours
+
+**Effect**
+
+* A cloudglass lens throws bright light in a **60-ft cone** and dim light for 60 ft more.  
+* The hood closes it to dim light in a **5 ft** radius, or shuts it entirely, as a bonus action.  
+* It hangs from a belt or pack and leaves both hands free, as the Hooded Lantern does.
+
+**Upgrade Recipe**
+
+**Materials**
+
+* Crucible Steel Ingot ×0.5  
+* Cloudglass Lens ×1  
+* Steel Rivets ×0.3  
+* Animal Oil / Resin ×1 (first fill)
+
+**Tools**  
+ Tinker’s tools
+
+**Craft Time**  
+ 1 day
+
+**Market Value:** 6 CB
+
+## **🔭 Cloudglass Spyglass**
+
+**Utility Profile**
+
+* Item Type: Gear
+
+**Effect**
+
+* It makes distant things appear **ten times closer**.  
+* You have **advantage** on Wisdom (Perception) checks that rely on sight for anything **more than 60 ft** away.
+
+**Design Intent**  
+ Lenses from Midhurstnes in a tube from the Gear-Makers’ Walks, the kind of thing Bybdetos sells because it is predictable rather than clever.
+
+**Recipe**
+
+**Materials**
+
+* Cloudglass Lens ×2  
+* Crucible Steel Ingot ×0.3 (tube)  
+* Castfield Leather ×0.1
+
+**Tools**  
+ Tinker’s tools
+
+**Craft Time**  
+ 2 days
+
+**Market Value:** 8 CB
+
+## **🎆 Signal Flares (3)**
+
+**Utility Profile**
+
+* Item Type: Consumable  
+* Uses: 3
+
+**Effect**
+
+* Fired from a hand tube, a flare climbs **300 ft** and burns red for a minute. At night it can be seen for miles.  
+* In a pinch you can fire one at a creature as a ranged attack (30/90): **1d6 fire damage**, and it sets alight anything flammable it hits.
+
+**Design Intent**  
+ Flint-and-Steel’s answer to “where are you?” Black powder makes it scarce outside Northreach, like the powder itself.
+
+**Recipe**
+
+**Materials**
+
+* Black Powder ×0.5  
+* Fabric ×0.2  
+* Animal Oil / Resin ×0.2
+
+**Tools**  
+ Tinker’s tools
+
+**Craft Time**  
+ 2 hours
+
+**Market Value:** 1 CB
+
+
 # **TOOLS & THE WORKSHOP**
 
 ---
 
-Every recipe in this book names the tools it is worked with; without them in hand, it can’t be worked. The Guild prices tools on the same footing as armor and weapons (a set of smith’s tools costs a little more than an Iron Sword). Tools are not tiered: the same kit works Tier 1 and Tier 2 recipes alike.
+Every recipe in this book names the tools it is worked with; without them in hand, it can’t be worked. The Guild prices tools on the same footing as armor and weapons (a set of smith’s tools costs a little more than an Iron Sword). Tools are not tiered: the same kit works the recipes of every tier.
 
 ## **🔨 Smith’s Tools**
 
@@ -1359,7 +2446,7 @@ Every recipe in this book names the tools it is worked with; without them in han
 ## **🧵 Leatherworker’s Tools**
 
 * Knives, awls, an edger and a stitching pony.
-* Works the leather armor, the Riveted pieces (with Smith’s tools for the Brigandine), and leather fittings.
+* Works the leather armor, the Riveted and steel pieces (with Smith’s tools where there is plate), and leather fittings.
 * **Market Value:** 1 CB
 
 ## **🪚 Carpenter’s Tools**
@@ -1383,7 +2470,7 @@ Every recipe in this book names the tools it is worked with; without them in han
 ## **⚙️ Tinker’s Tools**
 
 * Files, small hammers, a vice and a hand drill: the gunsmith’s kit.
-* Works locks, lighters, lanterns, firearms and their cartridges.
+* Works locks, lighters, lanterns, spyglasses, firearms and their cartridges, shells and flares.
 * **Market Value:** 13 CB
 
 ## **🧶 Weaver’s Tools**

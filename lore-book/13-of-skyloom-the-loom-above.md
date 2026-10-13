@@ -32,8 +32,10 @@ It divides, by local habit, into three parts:
 The principal roads are:
 
 * the **Skyfall Reach Road**, running from the northern tip down the Arm to Windperch, with a branch east toward Northreach’s Iron Crucible;
-* the **Sapphire Road**, linking Cloudmoor Harbor, Chadon, and Burbotford—the route along which most instruments, glass, and flight-gear travel;
-* the **Old Trail**, cutting inland from Windperch past Gimorand toward the heart of the Shadowline;
+* the **Sapphire Road**, linking Cloudmoor Harbor, Chadon, and Burbotford, and running on through Clitford, Castfield, and Midhurstnes to Central District—the route along which most instruments, glass, and flight-gear travel;
+* the **Reaford Trail**, north from Central District through Waringley and Reaford into Northreach by way of Myros;
+* the **Loom Road**, east from Central District through the Loomward stormgate to The Crown;
+* the **Old Trail**, south from Windperch past Gimorand along the foot of the western heights, where it meets the Sapphire Road and goes on with it toward the heart of the Shadowline;
 * the **Stillmerean Trail** and **Chaillean Trail**, stitching together the southern lake-towns;
 * the **Fjerfian Trail**, leaving Central District south-east toward Emberweave.
 

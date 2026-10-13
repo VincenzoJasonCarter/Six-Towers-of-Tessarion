@@ -64,6 +64,23 @@ Around the walls lie the **Crownlands**—marked on Loom Council charts, with bu
 
 Over the Crownlands hangs the **Everstorm**: a slow, silent ring of churning cloud that encircles the heart of the island and has never, in recorded memory, dispersed. It brings no lightning and little rain. It simply turns. The Loomwardens of Skyloom keep it from drifting; scholars of the Collegium hold that it marks the line at which the Meridian Spire’s mediation of the Outer Towers’ pressures is strongest, though every such paper is careful to say *appears to mark*. The great roads pass beneath it through the **stormgates**, and travellers arriving from the Weaves speak of the moment the light changes overhead as the moment they truly arrived.
 
+There are four stormgates, one for each road out of The Crown, and each is a small walled post of the Crown Guard rather than a town:
+
+* **Loomward Gate**, on the **Loom Road** west to Skyloom’s Central District;
+* **Ironward Gate**, on the **Iron Road** north-west to Phais and Northreach, skirting the foot of the Everstorm’s mountain;
+* **Tideward Gate**, on the **Amethyst Road** east to Witford, Marlmond, and Stormwake;
+* **Emberward Gate**, on the **Ember Road** south to Fjerfi and Emberweave.
+
+The Crown itself stands on its hill above the crossing of the Quatford, the river that gives the Crownlands most of their orchards and all of their mills.
+
+Seen from the Skyward Towers, the roads of the Crownlands look like a spider’s web, and they were laid out to. Eight straight roads run out from The Crown like the spokes of a wheel: the four gate roads, and four lesser ones running north toward the mountain, east to Larkspur, south-east to Threadmeet, and south-west to Gatewell. Three ring roads cross them:
+
+* the **Crown Ring**, close under the walls, where the market-gardens and the Crown Guard’s stables are;
+* the **Orchard Ring**, through the middle of the farmland, lined with the estates of every family that can afford a house within sight of the Hall of the Woven Crown;
+* the **Stormgate Ring**, the outermost, which joins all four stormgates beneath the edge of the Everstorm and is the only road in the Union patrolled day and night by the Crown Guard.
+
+Crownweavers call the pattern **the Web** and swear it was the Weaving Oath’s first act of law: every road in the Crownlands crosses every other, so that no lord could ever again hold one road against The Crown. Visitors who get lost on the rings are told that is also the point.
+
 ### **A Capital of Record**
 
 By an old quirk of maritime law, foreign charters and ships’ papers name **Caer Veyn**, the harbor city of Stormwake, as the Union’s seat rather than The Crown. The Crown finds this convenient. It means that foreign disputes arrive in Caer Veyn first, and are frequently settled there before anyone in the Hall of the Woven Crown has to hear of them.
@@ -77,7 +94,7 @@ As the Union grew, each Weave’s name stretched outward along its roads until i
 * **Skyloom** *(the west)* – Within the walls, slim towers and observatories at the foot of the Skyward Towers. Beyond them, the green western hill-country beneath the floating Loom, facing the sea toward Thal’Vireth, governed from **Central District**. Arcanists, star-readers, Loomwardens, and winged folk. *See: Of Skyloom, the Loom Above.*
 * **Northreach Weave** *(the north)* – Within the walls, stone longhouses, smoke-stained beams, and forges ringing day and night. Beyond them, the cold northern highlands facing Khazrund and the Obsidian Crown across the water, governed from **The Iron Crucible**. Iron, artifice, Hearthmark coin, and hardy dwarven clans. *See: Of Northreach Weave, the Iron Threshold.*
 * **Stormwake Weave** *(the east)* – Within the walls, salty air, shipping offices, and shrines to sea-gods. Beyond them, the great eastern bay of the Wakewater and the peninsula called the Hook, governed from the harbor city of **Caer Veyn**. Captains, factors, and every foreign coin in Tessarion. *See: Of Stormwake, the Open Harbor of the East.*
-* **Emberweave** *(the south)* – Within the walls, canvas awnings in bright colors shading spice stalls and hookah dens. Beyond them, the broad, dry, thinly settled south, facing the Iron Hordes across the water. Traders from hot deserts and sun-baked plains bargain in a dozen tongues. *See: Of Emberweave, the Burning Gate of the South.*
+* **Emberweave** *(the south)* – Within the walls, canvas awnings in bright colors shading spice stalls and hookah dens. Beyond them, the broad, hot river-country of the south, facing the Iron Hordes across the water, governed from the river-port of **Fjerfi**. Traders from hot deserts and sun-baked plains bargain in a dozen tongues. *See: Of Emberweave, the Burning Gate of the South.*
 * **Underweave** *(beneath)* – The one Weave with no land beyond the walls. The city’s underside: vaulted under-bridges, half-flooded alleys, and forgotten arches. Thieves’ guilds, smugglers, and those who “slip between the threads” make their lives in the dim light. It has no prefecture, no seat, and—officially—no Warden worth the name.
 
 At the centre of them all lie the Crownlands, which belong to no Weave and to The Crown alone.
@@ -158,7 +175,7 @@ Elite soldiers sworn to defend The Crown, the Hall of the Woven Crown, and high 
 
 #### **Weave Wardens & City Watch**
 
-Each major Weave is assigned a **Warden**, overseeing a mixed force of watchmen in both its city quarter and its prefecture. Wardens hold court at their Weave’s seat—Central District, The Iron Crucible, Caer Veyn—and keep a deputy within the walls.
+Each major Weave is assigned a **Warden**, overseeing a mixed force of watchmen in both its city quarter and its prefecture. Wardens hold court at their Weave’s seat—Central District, The Iron Crucible, Caer Veyn, Fjerfi—and keep a deputy within the walls.
 
 * **Variation.**
    Law in Northreach is stern and methodical; in Skyloom, quiet and precise; in Stormwake, light-handed and selective; in Emberweave, noisy and flexible; in Underweave, selective at best.    
