@@ -1,0 +1,57 @@
+{
+ "id": "skyfall-reach",
+ "town": "Skyfall Reach",
+ "epithet": "Where the Sky Is Put Down",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "grove",
+   "name": "The Skyfall Grove",
+   "epithet": "Wood that remembers the storms that shaped it",
+   "text": "A sacred forest of tall, storm-scarred trees grown under constant weather. Elven Loomwardens tend it as a shrine; wood taken from it, rarely and only with permission, is said to remember the storms that shaped it.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "reach-tear",
+   "name": "The Reach Tear",
+   "epithet": "A pressure valve",
+   "text": "A standing rift at the edge of the town. The Loomwardens send surplus weather into it. What is on the other side has never been formally described.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "loomwardens-house",
+   "name": "The Loomwardens' House",
+   "epithet": "Where the storms are set down",
+   "text": "When the Loom Temple turns a storm away from the Union, the weather has to go somewhere; much of it is sent north and set down here, and the Loomwardens in this house decide where.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "weaving-sheds",
+   "name": "The Weaving Sheds",
+   "epithet": "",
+   "text": "The Reach weaves cloth, mostly, one suspects, because nothing else wears out quite as fast there.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "boot-hall",
+   "name": "The Boot Hall",
+   "epithet": "",
+   "text": "The bootmakers' hall; the Reach goes through boots faster than anywhere in the Union.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "copper-square",
+   "name": "Copper Square",
+   "epithet": "Low, rounded, and grounded with copper",
+   "text": "The town square, with a copper rod at each corner. Every house in the Reach is built low and rounded, and grounded with copper.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "reach-road",
+   "name": "The Skyfall Reach Road",
+   "epithet": "",
+   "text": "Down the Northern Arm to Windperch, with a branch east toward the Iron Crucible.",
+   "source": "Of Skyloom, the Loom Above"
+  }
+ ]
+}

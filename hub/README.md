@@ -92,27 +92,49 @@ list item, a table cell) and it shows as a coloured badge with an arrow:
 
 An easel stands on the floor right of the desk, the notice board's twin, with
 a framed map of the Union of Crownweave on it. Click it (or ask Hessa about
-it) and the map opens over the hall: the island's terrain, the prefecture
-borders, rivers, roads, trails and sea lanes, and every town. Drag to move,
-scroll or pinch to zoom; the smaller places' names appear as you zoom in.
-Choose a town, or find it by name, and its gazetteer entry from the
-lore-book shows beside the map: what it is, roughly how many live there, and
-the Compendium's own words on it.
+it) and the map opens over the hall. Along its top are the countries:
+Crownweave, Thal'vireth, the Obsidian Crown, Khazrund, Emberfall and the Iron
+Hordes, each with a map of its own, so none of them is squeezed in beside the
+others. A map shows the country's terrain (the lands beyond its borders
+faded), its province borders, rivers, roads, trails and sea lanes, and every
+town. Drag to move, scroll or pinch to zoom; the smaller places' names appear
+as you zoom in. Choose a town, or find it by name, and its gazetteer entry
+from the lore-book shows beside the map: what it is, roughly how many live
+there, and the Compendium's own words on it. A place with no gazetteer entry
+shows the note the Azgaar save keeps on it, if any (Thal'vireth's villages
+have one saying what their names mean).
 
-The map is drawn ahead of time by `atlas.py` from the Azgaar save in `map/`
-(the newest `.map` file) and the gazetteers in `lore-book/12`–`16`:
+The maps are drawn ahead of time by `atlas.py` from the Azgaar save in `map/`
+(the newest `.map` file) and the gazetteers in the lore-book (`12`–`16` for
+Crownweave, for Thal'vireth, each district's own book, such as `18` for the White Road,
+then the gazetteer section of `17`):
 
 ```
 make atlas
 ```
 
 or `uv run hub/atlas.py` (`--map "map/<file>.map"` for another save). It
-writes `atlas/terrain.webp` (the land and sea, shaded) and
-`atlas/crownweave.json` (everything drawn over it). Rerun it after changing
-the map or a gazetteer, and commit the two files: the public website copies
-them as they are. It reports any town in the Union with no gazetteer entry;
-those still show on the map, with a note that the Compendium has nothing on
-them yet. The easel stays away if `atlas/` hasn't been drawn.
+writes `atlas/index.json` (the countries, in order) and, for each country,
+`atlas/<id>.webp` (the land and sea, shaded) and `atlas/<id>.json`
+(everything drawn over it, and the words the page uses for that country:
+its title, its introduction, what a province seat is called). The countries,
+their chapters and those words are listed in `COUNTRIES` at the top of
+`atlas.py`. Rerun it after changing the map or a gazetteer, and commit the
+files: the public website copies them as they are. It reports any town of a
+country with chapters that has no gazetteer entry; those still show on the
+map, with a note that the Compendium has nothing on them yet. The four
+countries without chapters of their own are marked as unsurveyed. The easel
+stays away if `atlas/` hasn't been drawn.
+
+### Town plans
+
+The major towns have plans of their own, street by street:
+- **Thal'vireth:** Nabireth.
+- **Crownweave:** The Crown and every other seat and city, seventeen in all.
+
+Choose a town on the map and its card offers **Open the town plan**. The plan opens over the map (drag and zoom as usual), and its landmarks, from the Sixfold Quarter's embassies to the Long Tide, can be chosen on the plan or from the key beside it to read their entries.
+
+The plans are drawn by `plans.py`, which `make atlas` runs before `atlas.py`. Each town is one file, `towns/<country>/<town>.py`, so that folder shows which towns have a plan. See `towns/README.md` for how a town file is written. Each Crownweave town takes its roads and river from the Azgaar map, so its roads leave town the way they do on the map. The output is `atlas/plans/<id>.svg` and `<id>.json` (the places and their entries). `atlas.py` gives a town the button when a plan exists under its name.
 
 ## The Barracks
 
@@ -140,6 +162,8 @@ index.html   page markup: the reception hall and tool tabs
 style.css    page styles
 app.js       corridor drawings (canvas), tool status, views, reception's lighting, notice board, the map, desk bell
 clerk.js     the clerk's conversation: every line, the replies, and when she says what
+plans.py     the town-plan toolkit; draws every town in towns/ (needs uv)
+towns/       one file per town plan, by country
 atlas.py     draws the map on the easel from map/*.map and the lore-book (needs uv)
-atlas/       its output: terrain.webp and crownweave.json
+atlas/       its output: index.json, and <country>.webp and <country>.json for each country
 ```

@@ -1,0 +1,85 @@
+{
+ "id": "the-iron-crucible",
+ "town": "The Iron Crucible",
+ "epithet": "Seat of the Weave",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "resonance-crucible",
+   "name": "The Resonance Crucible",
+   "epithet": "A laboratory that learned to defend itself",
+   "text": "The fortress-complex at the summit: lead-lined halls, reinforced glass vats and sealed scriptoriums, where research is organised round the three sanctioned pillars of Mana Conversion, Corruption Containment and Glass Circuitry. From without it resembles a keep. The town took its name from it long before anyone gave it a charter.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "chapel",
+   "name": "The Chapel of Tolerances",
+   "epithet": "Congregants listen for their own family names",
+   "text": "The Weave's only temple of note, at the Crucible's heart. It holds no idol; its walls are lined floor to ceiling with bronze plates, each stamped with the date, place and margin of a structural failure, and its priests read from them on feast-days.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "chapel-close",
+   "name": "The Chapel Close",
+   "epithet": "",
+   "text": "The slate-paved square round the Chapel, warm underfoot in all weathers: its seams are cut with grooves that bleed the Vessels' excess heat into the ground so that it never ices.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "scriptoriums",
+   "name": "The Sealed Scriptoriums",
+   "epithet": "Reviewed, stamped, and quietly classified",
+   "text": "The highest terrace below the fortress, where laboratories, archives and fortified offices review the Crucible's results and decide which of them anyone else will ever read.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "containment-yards",
+   "name": "The Containment Yards",
+   "epithet": "Sub-levels whose purpose has been lost to reinforcement",
+   "text": "Testing halls and containment yards on the terrace beneath the laboratories, where sinks are proved before they go to the Orcholis Aperture, and where some of the older sub-levels are no longer entered at all.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "deepdelve-head",
+   "name": "The Deepdelve Shaft-head",
+   "epithet": "Light is indirect. Warmth is routed. Silence is engineered.",
+   "text": "Where the shafts, ramps and pressure-rated stairwells of the town's lower conclaves go down into the Deepdelve Faces under the Crucible. Entire clan lines live closer to bedrock than sky; most of the Weave's candles end up down there.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "waste-heat-works",
+   "name": "The Waste-Heat Works",
+   "epithet": "Nothing warm is wasted in Northreach",
+   "text": "The potteries, distilleries and preserving-houses that the Crucible runs on heat bled from the Vessels, because its cold hills will not feed it otherwise.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "terraces",
+   "name": "The Upper Terraces",
+   "epithet": "",
+   "text": "The stone terraces that step down from the fortress: laboratories and archives highest, testing halls beneath them, and beneath those, the people.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "conclaves",
+   "name": "The Conclaves",
+   "epithet": "Each begins as shelter and ends as infrastructure",
+   "text": "The dwarven residential quarters, which are not streets or blocks but irregular stone masses accreted, reinforced and re-hollowed over generations. Hearths sit where heat already sheds; walls thicken where the resonance hums strongest.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "penilworth-trail",
+   "name": "The Penilworth Trail",
+   "epithet": "",
+   "text": "The main highland road east from the Crucible through Bybdetos to the Penilworth fort.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "forge-run",
+   "name": "The Forge Run road",
+   "epithet": "",
+   "text": "South down the river valley where the Infusion Forges burn, past Naurias and Pekion.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  }
+ ]
+}

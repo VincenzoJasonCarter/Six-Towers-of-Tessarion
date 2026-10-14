@@ -214,7 +214,7 @@ Jangan sebutkan nama Tallier. Pemain baru sadar siapa dia di Babak 1a.
 1. **Jalan utama.** Rumah-rumah yang masih utuh, pot bunga di jendela, sepatu anak kecil di ambang pintu. Kota ini nggak ditinggalkan. Kota ini dikubur.
 2. **Zona blight-host** di sisi utara jalan. Mantan penggali yang ditumbuhi gumpalan ungu bercahaya, bergumam *"satu kali lagi..."*. Mereka lambat dan menghindari cahaya. **Salah satunya memakai lencana guild.** Dia anggota tim Vander, dan Everly mengenalinya. Bagi Tallier, ini masa depannya sendiri.
 3. **Kuil sumur (opsional).** Mural yang menggambarkan warga Hexaspire mengelilingi sebuah sumur, dengan cahaya berbentuk menara di bawahnya. Mereka menjaga sumur itu, dan The Crown mengubur mereka.
-4. **Tambang Salbaster.** Dinding berkilau penuh kristal, para penggali bekerja tanpa suara, dua penjaga mengawasi. Penggalinya bukan musuh. Di gubuk ada **buku besar** (Handout C): catatan pemilahan, penerima di Sak Bahil untuk seorang Ah K'in, dan tanda tangan ***A. Salbaster*** di setiap halaman. Kalau ada penjaga yang lolos, dia lari ke alun-alun dan jadi minion di Babak 4.
+4. **Tambang Salbaster.** Dinding berkilau penuh kristal, para penggali bekerja tanpa suara, dua penjaga mengawasi. Penggalinya bukan musuh. Di gubuk ada **buku besar** (Handout C): catatan pemilahan, penerima di Sakbeleth untuk seorang Ah K'in, dan tanda tangan ***A. Salbaster*** di setiap halaman. Kalau ada penjaga yang lolos, dia lari ke alun-alun dan jadi minion di Babak 4.
 5. **Kandang.** Vander masih hidup tapi setengah terkorupsi: *"...Ev?"* Kunci kandang ada pada Salbaster. Kandang juga bisa dibongkar paksa (STR DC 14, berisik).
 
 > *"Dia tahu kristalnya busuk. Kami lihat dia memilah: yang paling ungu dikirim keluar, ke kapal. Dia ada di alun-alun. Dia selalu menunggu di tempat gelap."*
@@ -288,7 +288,7 @@ Salbaster sengaja dibiarkan kabur supaya pemain mengejarnya ke Babak 5 dan menem
 
 > Halaman terakhir buku besar Salbaster. Tulisan tangannya rapi:
 >
-> *"Pengiriman terakhir: 12 peti, ungu pekat. Kapal [NAMA KAPAL PARTY], tujuan Sak Bahil, Thal'vireth. Untuk Ah K'in. Berangkat: [TANGGAL KEBERANGKATAN PARTY]."*
+> *"Pengiriman terakhir: 12 peti, ungu pekat. Kapal [NAMA KAPAL PARTY], tujuan Sakbeleth, Thal'vireth. Untuk Ah K'in. Berangkat: [TANGGAL KEBERANGKATAN PARTY]."*
 >
 > Jauh di barat, di tengah laut. Hari keduapuluh dari tiga puluh empat. Di palka sebuah kapal, di antara karung gandum dan tong air, ada sebuah peti kayu biasa bertanda segel lilin pucat. Di atasnya, di dek, party utama sedang tertidur.
 >
@@ -363,7 +363,7 @@ Pakai `corrupted_rat_swarm` dari `enemies.yaml` (AC 12, HP 10, +3, 1d4 piercing 
 >
 > *Pemilahan: ungu tipis → jual sebagai Aetherite, pasar Crownweave. Ungu pekat → kirim ke barat.*
 >
-> *Penerima: Sak Bahil, untuk Ah K'in. Kontrak rumah dagang ███.*
+> *Penerima: Sakbeleth, untuk Ah K'in. Kontrak rumah dagang ███.*
 >
 > *— A. Salbaster*
 

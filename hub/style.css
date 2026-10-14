@@ -529,42 +529,79 @@ html.in-tool .bar { touch-action: pan-x; }
 }
 .atlas[open] { display: flex; flex-direction: column; }
 .atlas::backdrop { background: rgb(20 14 8 / .6); }
+/* a town plan (hub/plans.py), opened over the map from a town's card */
+.atlas-plan { position: absolute; inset: 0; z-index: 3; background: #efe4c8; }
+.plan-view { position: absolute; inset: 0; touch-action: none; cursor: grab; }
+.plan-view.dragging { cursor: grabbing; }
+.plan-view svg { display: block; width: 100%; height: 100%; user-select: none; }
+.plan-view .place { transition: filter .15s; }
+.plan-view path.place:hover { filter: brightness(1.15) drop-shadow(0 0 3px rgb(140 47 35 / .6)); }
+.plan-view text.place:hover, .plan-view text.place.sel { fill: #8c2f23; }
+.plan-view path.place.sel { stroke: #8c2f23; stroke-width: 3.5; filter: drop-shadow(0 0 5px rgb(140 47 35 / .7)); }
+.plan-close {
+  position: absolute; left: 12px; top: 12px; padding: 6px 14px; border: 1px solid var(--rule); border-radius: 999px;
+  background: var(--panel); color: var(--ink); font: 14px var(--sans); cursor: pointer; box-shadow: 0 2px 6px rgb(0 0 0 / .2);
+}
+.plan-close:hover, .plan-close:focus-visible { color: var(--accent); border-color: var(--accent); outline: none; }
+.atlas-plan-btn {
+  margin-top: 6px; padding: 8px 16px; border: 1px solid var(--accent); border-radius: 6px;
+  background: var(--accent); color: var(--panel); font: 600 14px var(--sans); cursor: pointer;
+}
+.atlas-plan-btn:hover, .atlas-plan-btn:focus-visible { filter: brightness(1.08); outline: none; }
+.plan-key { list-style: none; margin: 4px 0 0; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+.plan-key button {
+  padding: 3px 0; border: 0; background: none; color: var(--accent); font: 15px var(--serif); text-align: left; cursor: pointer;
+}
+.plan-key button:hover, .plan-key button:focus-visible { text-decoration: underline; outline: none; }
+
+/* one map per country, chosen here */
+.atlas-countries {
+  flex: none; display: flex; gap: 6px; padding: 9px 22px; overflow-x: auto; scrollbar-width: none;
+  border-bottom: 1px solid var(--rule); background: color-mix(in srgb, var(--bg) 60%, var(--panel));
+}
+.atlas-countries::-webkit-scrollbar { display: none; }
+.atlas-countries button {
+  flex: none; padding: 4px 13px 5px; border: 1px solid var(--rule); border-radius: 999px; background: var(--panel);
+  font: 13.5px var(--sans); color: var(--muted); white-space: nowrap; cursor: pointer;
+}
+.atlas-countries button:hover, .atlas-countries button:focus-visible { color: var(--ink); border-color: var(--muted); outline: none; }
+.atlas-countries button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--panel); }
 .atlas-body { flex: 1; min-height: 0; display: grid; grid-template-columns: 1fr 300px; }
 .atlas-map { position: relative; min-width: 0; min-height: 0; background: #5c7c94; }
-.atlas-map svg { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; user-select: none; font-family: var(--display); }
-.atlas-map svg.dragging { cursor: grabbing; }
-.atlas-map svg .mk { transform: scale(var(--u, 1)); }
-.atlas-map svg path { fill: none; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
-.atlas-map svg .pin { vector-effect: none; }
-.atlas-map svg .border { stroke: #6b2a3a; stroke-width: 1.6; stroke-dasharray: 5 4; opacity: .75; }
-.atlas-map svg .river { stroke: #4f7fb0; opacity: .9; }
-.atlas-map svg .route.roads { stroke: #7a3a14; stroke-width: 1.9; }
-.atlas-map svg .route.trails { stroke: #7a3a14; stroke-width: 1.1; stroke-dasharray: 3 2.5; opacity: .85; }
-.atlas-map svg .route.searoutes { stroke: #f4efe2; stroke-width: 1.1; stroke-dasharray: 6 4; opacity: .7; }
-.atlas-map svg text { paint-order: stroke; stroke: rgb(244 236 214 / .9); stroke-width: 3px; stroke-linejoin: round; fill: #2b2117; }
-.atlas-map svg .plabel { font-size: 16px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; fill: #5a2230; opacity: .8; }
-.atlas-map svg .llabel { font-size: 15px; font-style: italic; font-weight: 600; fill: #4a3a28; }
-.atlas-map svg .tname { font-size: 13px; font-weight: 600; pointer-events: none; }
-.atlas-map svg .town { cursor: pointer; outline: none; }
-.atlas-map svg .pin { fill: #fbf6ea; stroke: #2b2117; stroke-width: 1.3; }
-.atlas-map svg .town.seat .pin { fill: #8c2f23; stroke: #f3dc9a; stroke-width: 1.5; }
-.atlas-map svg .town.city .pin { fill: #f3dc9a; }
-.atlas-map svg .town.abroad { opacity: .55; }
-.atlas-map svg .town:hover .pin, .atlas-map svg .town:focus-visible .pin { stroke: #8c2f23; stroke-width: 2.4; }
-.atlas-map svg .town.sel .pin { stroke: #8c2f23; stroke-width: 3; }
-.atlas-map svg .town.sel .tname, .atlas-map svg .town:hover .tname, .atlas-map svg .town:focus-visible .tname { display: inline; fill: #8c2f23; }
+.atlas-map > svg { display: block; width: 100%; height: 100%; touch-action: none; cursor: grab; user-select: none; font-family: var(--display); }
+.atlas-map > svg.dragging { cursor: grabbing; }
+.atlas-map > svg .mk { transform: scale(var(--u, 1)); }
+.atlas-map > svg path { fill: none; vector-effect: non-scaling-stroke; stroke-linecap: round; stroke-linejoin: round; }
+.atlas-map > svg .pin { vector-effect: none; }
+.atlas-map > svg .border { stroke: #6b2a3a; stroke-width: 1.6; stroke-dasharray: 5 4; opacity: .75; }
+.atlas-map > svg .river { stroke: #4f7fb0; opacity: .9; }
+.atlas-map > svg .route.roads { stroke: #7a3a14; stroke-width: 1.9; }
+.atlas-map > svg .route.trails { stroke: #7a3a14; stroke-width: 1.1; stroke-dasharray: 3 2.5; opacity: .85; }
+.atlas-map > svg .route.searoutes { stroke: #f4efe2; stroke-width: 1.1; stroke-dasharray: 6 4; opacity: .7; }
+.atlas-map > svg text { paint-order: stroke; stroke: rgb(244 236 214 / .9); stroke-width: 3px; stroke-linejoin: round; fill: #2b2117; }
+.atlas-map > svg .plabel { font-size: 16px; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; fill: #5a2230; opacity: .8; }
+.atlas-map > svg .llabel { font-size: 15px; font-style: italic; font-weight: 600; fill: #4a3a28; }
+.atlas-map > svg .tname { font-size: 13px; font-weight: 600; pointer-events: none; }
+.atlas-map > svg .town { cursor: pointer; outline: none; }
+.atlas-map > svg .pin { fill: #fbf6ea; stroke: #2b2117; stroke-width: 1.3; }
+.atlas-map > svg .town.seat .pin { fill: #8c2f23; stroke: #f3dc9a; stroke-width: 1.5; }
+.atlas-map > svg .town.city .pin { fill: #f3dc9a; }
+.atlas-map > svg .town.abroad { opacity: .55; }
+.atlas-map > svg .town:hover .pin, .atlas-map > svg .town:focus-visible .pin { stroke: #8c2f23; stroke-width: 2.4; }
+.atlas-map > svg .town.sel .pin { stroke: #8c2f23; stroke-width: 3; }
+.atlas-map > svg .town.sel .tname, .atlas-map > svg .town:hover .tname, .atlas-map > svg .town:focus-visible .tname { display: inline; fill: #8c2f23; }
 /* names only where there is room: seats and cities from afar, towns closer, everything up close */
-.atlas-map svg[data-zoom="far"] .town:not(.seat, .city, .capital) .tname,
-.atlas-map svg[data-zoom="mid"] .town:is(.village, .hamlet, .fort, .caravanserai, .trading_post) .tname { display: none; }
-.atlas-map svg[data-zoom="near"] .plabel { opacity: .35; }
-.atlas-map svg:is([data-zoom="far"], [data-zoom="tiny"]) .plabel.small { display: none; }  /* the Crownlands: too small to name from afar */
+.atlas-map > svg[data-zoom="far"] .town:not(.seat, .city, .capital) .tname,
+.atlas-map > svg[data-zoom="mid"] .town:is(.village, .hamlet, .fort, .caravanserai, .trading_post) .tname { display: none; }
+.atlas-map > svg[data-zoom="near"] .plabel { opacity: .35; }
+.atlas-map > svg:is([data-zoom="far"], [data-zoom="tiny"]) .plabel.small { display: none; }  /* the Crownlands: too small to name from afar */
 /* The whole island on a phone: only the Weaves are named, in smaller letters,
    and a town once it's chosen; one step in brings the cities' names back. */
-.atlas-map svg[data-zoom="tiny"] .town:not(.sel) .tname,
-.atlas-map svg[data-zoom="tiny"] .llabel { display: none; }
-.atlas-map svg[data-zoom="tiny"] .plabel { font-size: 10.5px; letter-spacing: .08em; }
-.atlas-map svg.no-roads .roads, .atlas-map svg.no-rivers .rivers, .atlas-map svg.no-borders .borders,
-.atlas-map svg.no-names :is(.names, .tname) { display: none; }
+.atlas-map > svg[data-zoom="tiny"] .town:not(.sel) .tname,
+.atlas-map > svg[data-zoom="tiny"] .llabel { display: none; }
+.atlas-map > svg[data-zoom="tiny"] .plabel { font-size: 10.5px; letter-spacing: .08em; }
+.atlas-map > svg.no-roads .roads, .atlas-map > svg.no-rivers .rivers, .atlas-map > svg.no-borders .borders,
+.atlas-map > svg.no-names :is(.names, .tname) { display: none; }
 .atlas-zoom { position: absolute; right: 12px; top: 12px; display: flex; flex-direction: column; gap: 6px; }
 .atlas-zoom button {
   width: 34px; height: 34px; padding: 0; border: 1px solid var(--rule); border-radius: 6px; cursor: pointer;
@@ -728,6 +765,7 @@ pre.log { margin: 12px 0 0; padding: 12px 14px; max-height: 280px; overflow: aut
   .atlas-body { grid-template-columns: 1fr; grid-template-rows: 1fr minmax(0, 40%); }
   .atlas-side { border-left: 0; border-top: 1px solid var(--rule); padding: 12px 16px 18px; }
   .patch-head { padding: 14px 16px 10px; }
+  .atlas-countries { padding: 8px 16px; }
   .patch-head h2 { font-size: 25px; }
   .patch-body { padding: 4px 16px 22px; }
 }

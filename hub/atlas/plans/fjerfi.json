@@ -1,0 +1,87 @@
+{
+ "id": "fjerfi",
+ "town": "Fjerfi",
+ "epithet": "Seat of the Weave",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "great-plaza",
+   "name": "The Great Plaza",
+   "epithet": "A smaller, hotter twin of the Ashward",
+   "text": "Fjerfi's great square, where caravans for the south are assembled in uncertain lines, as they are on the Ashward Plaza in the city quarter, only hotter and with fewer people watching.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "wardens-court",
+   "name": "The Warden's Court",
+   "epithet": "Where the Weave Warden holds court",
+   "text": "The hall on the plaza's north side where the Weave Warden of Emberweave sits: usually a veteran of the road, sun-scarred, pragmatic, and more interested in keeping blades sheathed than in filing neat reports.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "charter-house",
+   "name": "The Charter House",
+   "epithet": "Where caravan charters for the south are sealed",
+   "text": "Scribes in triplicate, a long queue and a longer ledger. Anything that leaves the Crown for the south passes through Fjerfi and is counted here.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "temple",
+   "name": "The Temple and its Dustveil Altar",
+   "epithet": "Every journey is another line in the pattern",
+   "text": "Fjerfi's temple keeps a Dustveil altar of its own, a twin of the way-altar in the city quarter, where caravan hands tie a length of coloured thread to belt or wagon before they roll out.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "citadel",
+   "name": "The Citadel",
+   "epithet": "The Warden's last argument",
+   "text": "A squat keep in the wall's southern arc, garrisoned by the Weave's watch. Its yard holds the town's water-cisterns, which in a dry year are guarded more closely than its treasury."
+  },
+  {
+   "id": "tusk-halls",
+   "name": "The Iron-Tusk Country Halls",
+   "epithet": "Where the clans' contracts actually get signed",
+   "text": "The country halls of the Iron-Tusk lodges of the city quarter: long timber halls banded in iron, hung with clan banners, where caravan masters and clan envoys argue over the price of protection.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "lighter-quays",
+   "name": "The Lighter Quays",
+   "epithet": "By Emberweave standards, almost orderly",
+   "text": "Sea-going ships cannot reach Fjerfi; the flat-bottomed lighters of the Fjerfian Route can, and bring cargo up from the coast to these quays. The lightermen's guild sets the price of everything that arrives by water.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "caravan-yards",
+   "name": "The Caravan Yards",
+   "epithet": "Water, measured more carefully than gold",
+   "text": "Pens, sheds and water-troughs outside the south gate, where the caravans that will take the Brand Road to the coast are watered, loaded and argued over before dawn."
+  },
+  {
+   "id": "walls",
+   "name": "The Walls of Fjerfi",
+   "epithet": "Dark brick, warm to the touch at midnight",
+   "text": "A ring of dark brick round the river-port, with a gate on every road. The river runs through the wall under a pair of water-gates that are closed at sunset and opened, for a fee, at any hour."
+  },
+  {
+   "id": "lighter-quarter",
+   "name": "The Lightermen's Quarter",
+   "epithet": "",
+   "text": "The riverside streets where the lightermen live, mend their boats and drink, and from which the guild runs the river."
+  },
+  {
+   "id": "hookah-lanes",
+   "name": "The Awning Lanes",
+   "epithet": "",
+   "text": "Narrow streets east of the plaza, shaded by canvas awnings in sun-faded reds and oranges: spice stalls, hookah dens, and the smell of hot iron."
+  },
+  {
+   "id": "ember-road",
+   "name": "The Ember Road",
+   "epithet": "A day's ride to the Emberward stormgate",
+   "text": "The road north to The Crown, the one the caravans of the city quarter actually take.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  }
+ ]
+}

@@ -1260,16 +1260,19 @@ $("#patchClose").addEventListener("click", () => $("#patchnotes").close());
 $("#patchnotes").addEventListener("click", ev => { if (ev.target === ev.currentTarget) ev.currentTarget.close(); });
 
 // ---------- the map on the easel ----------
-// hub/atlas.py draws the Union of Crownweave from the Azgaar save and the
-// lore-book into atlas/: terrain.webp (land and sea, as one picture) and
-// crownweave.json (borders, rivers, roads, towns with their gazetteer entries,
-// and labels). The easel shows the picture; opened, the rest is drawn over it
-// in SVG, to drag and zoom, and a town chosen shows its entry beside the map.
-// Markers and names stay the same size on screen however far in you zoom
-// (--u is map units per screen pixel), and the smaller places' names only
-// appear once there is room for them.
+// hub/atlas.py draws each country from the Azgaar save and the lore-book into
+// atlas/: index.json (the countries, in order), and per country <id>.webp
+// (land and sea, as one picture) and <id>.json (borders, rivers, roads, towns
+// with their gazetteer entries, labels, and the words the page uses for it).
+// The easel shows Crownweave's picture; opened, a country is chosen along the
+// top and the rest is drawn over its picture in SVG, to drag and zoom, and a
+// town chosen shows its entry beside the map. Markers and names stay the same
+// size on screen however far in you zoom (--u is map units per screen pixel),
+// and the smaller places' names only appear once there is room for them.
 
-let atlas = null;  // crownweave.json, once loaded
+let atlas = null;  // the country on show: its <id>.json
+let atlasIndex = [];  // index.json
+const atlasCache = {};  // id -> its <id>.json, once fetched
 const atlasView = { x: 0, y: 0, w: 1, h: 1 };
 const SVGNS = "http://www.w3.org/2000/svg";
 const KIND = { capital: "City", city: "City", town: "Town", village: "Village", hamlet: "Hamlet", fort: "Fort",
@@ -1324,13 +1327,16 @@ function drawAtlas() {
   const rank = { hamlet: 0, fort: 1, village: 1, caravanserai: 1, trading_post: 1, town: 2, city: 3, capital: 4 };
   const list = d.towns.map((t, i) => ({ ...t, i })).sort((a, b) => (rank[a.group] ?? 1) - (rank[b.group] ?? 1));
   for (const t of list) {
-    const g = svgEl("g", { transform: `translate(${t.x} ${t.y})`, class: `town ${t.group}${t.seat ? " seat" : ""}${t.union ? "" : " abroad"}`,
+    const g = svgEl("g", { transform: `translate(${t.x} ${t.y})`, class: `town ${t.group}${t.seat ? " seat" : ""}${t.home ? "" : " abroad"}`,
       tabindex: 0, role: "button", "data-i": t.i, "aria-label": `${t.name}, ${KIND[t.group] || "Settlement"}${t.prov ? `, ${t.prov}` : ""}` }, towns);
     const mk = svgEl("g", { class: "mk" }, g);
     townMarker(t, mk);
     svgEl("text", { x: 6, y: 4, class: "tname" }, mk).textContent = t.name;
   }
-  $("#atlasTowns").innerHTML = d.towns.filter(t => t.union).map(t => `<option value="${escapeHTML(t.name)}">`).sort().join("");
+  const home = d.towns.filter(t => t.home);
+  $("#atlasTowns").innerHTML = home.map(t => `<option value="${escapeHTML(t.name)}">`).sort().join("");
+  const biggest = [...home].sort((a, b) => b.pop - a.pop).slice(0, 2).map(t => t.name);
+  $("#atlasFind").placeholder = biggest.length ? `${biggest.join(", ")}…` : "";
 }
 
 // The view: a rectangle of the map, shown as the svg's viewBox.
@@ -1374,12 +1380,13 @@ const listing = items => items.length < 2 ? items.join("") : `${items.slice(0, -
 function atlasLegend() {
   const toggles = atlasLayers.map(([key, label]) =>
     `<label><input type="checkbox" data-layer="${key}" ${$("#atlasSvg").classList.contains(`no-${key}`) ? "" : "checked"}> ${label}</label>`).join("");
+  const terms = atlas.terms;
   $("#atlasCard").innerHTML = `
-    <p class="atlas-intro">One island in the middle sea. The Crown stands at its heart, ringed by the Crownlands and the Everstorm; Skyloom lies west, Northreach north, Stormwake east and Emberweave south. Choose any town for what the Compendium says of it.</p>
+    <p class="atlas-intro">${escapeHTML(atlas.intro)}</p>
     <ul class="atlas-key">
-      <li><i class="k seat"></i>Seat of a Weave</li><li><i class="k city"></i>City</li><li><i class="k town"></i>Town</li>
-      <li><i class="k village"></i>Village or hamlet</li><li><i class="k fort"></i>Fort or stormgate</li><li><i class="k cara"></i>Caravanserai or trading post</li>
-      <li><i class="k road"></i>Road</li><li><i class="k trail"></i>Trail</li><li><i class="k sea"></i>Sea lane</li><li><i class="k border"></i>Prefecture border</li>
+      <li><i class="k seat"></i>${escapeHTML(terms.seat)}</li><li><i class="k city"></i>City</li><li><i class="k town"></i>Town</li>
+      <li><i class="k village"></i>Village or hamlet</li><li><i class="k fort"></i>${escapeHTML(terms.fort)}</li><li><i class="k cara"></i>Caravanserai or trading post</li>
+      <li><i class="k road"></i>Road</li><li><i class="k trail"></i>Trail</li><li><i class="k sea"></i>Sea lane</li><li><i class="k border"></i>${escapeHTML(terms.border)}</li>
     </ul>
     <div class="atlas-layers">${toggles}</div>
     <p class="atlas-src">Surveyed from ${escapeHTML(atlas.source.replace(/\.map$/, ""))}.</p>`;
@@ -1396,16 +1403,146 @@ function showTown(i, fly) {
     setAtlasView();
   }
   const lore = t.lore || {};
-  const kind = t.name === "The Crown" ? "Heart of the Union" : t.seat ? `Seat of ${t.prov}` : KIND[t.group] || "Settlement";
+  const special = t.home && atlas.special[t.name];
+  const kind = special || (t.seat && t.home ? `Seat of ${t.prov}` : KIND[t.group] || "Settlement");
   const has = listing(t.has.map(k => HAS[k]).filter(Boolean));
+  const source = lore.chapter ? `<p class="atlas-src">From <i>${escapeHTML(lore.chapter)}</i>. <a href="#library" data-close>Read on in the Library →</a></p>` : "";
   $("#atlasCard").innerHTML = `
-    <button class="atlas-back" type="button">← The whole Union</button>
-    <p class="kicker">${escapeHTML(t.prov || "Beyond the Union")}</p>
+    <button class="atlas-back" type="button">← ${escapeHTML(atlas.terms.whole)}</button>
+    <p class="kicker">${escapeHTML(t.home ? t.prov || atlas.name : atlas.terms.beyond + (t.prov ? ` · ${t.prov}` : ""))}</p>
     <h3>${escapeHTML(t.name)}</h3>
     ${lore.epithet ? `<p class="epithet">${escapeHTML(lore.epithet)}</p>` : ""}
     <p class="meta">${escapeHTML(kind)} · ${people(t.pop)}${has ? ` · ${escapeHTML(has)}` : ""}</p>
-    ${lore.text ? `<p>${escapeHTML(lore.text)}</p><p class="atlas-src">From <i>${escapeHTML(lore.chapter)}</i>. <a href="#library" data-close>Read on in the Library →</a></p>`
-      : `<p class="atlas-src">The Compendium has no entry for ${escapeHTML(t.name)} yet.</p>`}`;
+    ${lore.text ? `<p>${escapeHTML(lore.text)}</p>${source}`
+      : `<p class="atlas-src">The Compendium has no entry for ${escapeHTML(t.name)} yet.</p>`}
+    ${t.plan ? `<button class="atlas-plan-btn" type="button" data-plan="${escapeHTML(t.plan)}" data-town="${i}">Open the town plan →</button>` : ""}`;
+}
+
+// ---------- town plans ----------
+// hub/plans.py draws a few towns street by street: atlas/plans/<id>.svg, with
+// <id>.json for the places marked on it. A town that has one offers it on its
+// card; the plan opens over the map, drags and zooms the same way, and a place
+// chosen on it (or from its key) shows its entry in the card.
+const planCache = {};
+let plan = null;  // the plan on show: { id, town, data, vb: [x, y, w, h], view: {x, y, w, h} }
+
+async function openPlan(id, townIndex) {
+  try {
+    if (!planCache[id]) {
+      const [data, svg] = await Promise.all([fetch(`atlas/plans/${id}.json`).then(r => r.json()), fetch(`atlas/plans/${id}.svg`).then(r => r.text())]);
+      planCache[id] = { data, svg };
+    }
+  } catch { return; }
+  const { data, svg } = planCache[id];
+  $("#planView").innerHTML = svg;
+  const vb = $("#planView svg").getAttribute("viewBox").split(/\s+/).map(Number);
+  plan = { id, town: townIndex, data, vb, view: { x: vb[0], y: vb[1], w: vb[2], h: vb[3] } };
+  $("#atlasPlan").hidden = false;
+  setPlanView();
+  planKey();
+}
+function closePlan() {
+  if (!plan) return;
+  const town = plan.town;
+  plan = null;
+  $("#atlasPlan").hidden = true;
+  $("#planView").replaceChildren();
+  showTown(town);
+}
+function setPlanView() {
+  const [x, y, w, h] = plan.vb, v = plan.view;
+  v.w = Math.min(Math.max(v.w, w / 8), w); v.h = v.w * h / w;
+  v.x = Math.min(Math.max(v.x, x - v.w / 3), x + w - v.w * 2 / 3);
+  v.y = Math.min(Math.max(v.y, y - v.h / 3), y + h - v.h * 2 / 3);
+  $("#planView svg").setAttribute("viewBox", `${v.x} ${v.y} ${v.w} ${v.h}`);
+}
+function zoomPlan(factor, cx, cy) {
+  const v = plan.view;
+  if (cx === undefined) { cx = v.x + v.w / 2; cy = v.y + v.h / 2; }
+  const nw = Math.min(Math.max(v.w / factor, plan.vb[2] / 8), plan.vb[2]), k = nw / v.w;
+  Object.assign(v, { x: cx - (cx - v.x) * k, y: cy - (cy - v.y) * k, w: nw });
+  setPlanView();
+}
+function planPoint(ev) {
+  const svg = $("#planView svg"), pt = svg.createSVGPoint();
+  pt.x = ev.clientX; pt.y = ev.clientY;
+  return pt.matrixTransform(svg.getScreenCTM().inverse());
+}
+function planKey() {
+  const d = plan.data;
+  $("#planView").querySelectorAll(".sel").forEach(el => el.classList.remove("sel"));
+  $("#atlasCard").innerHTML = `
+    <button class="atlas-back plan-back" type="button">← ${escapeHTML(d.town)}</button>
+    <p class="kicker">Town plan</p>
+    <h3>${escapeHTML(d.town)}</h3>
+    <p class="epithet">${escapeHTML(d.epithet)}</p>
+    <p class="atlas-src">Choose a place on the plan, or from the key:</p>
+    <ul class="plan-key">${d.places.map(p => `<li><button type="button" data-pplace="${escapeHTML(p.id)}">${escapeHTML(p.name)}</button></li>`).join("")}</ul>`;
+}
+function showPlace(id) {
+  const p = plan.data.places.find(p => p.id === id);
+  if (!p) return;
+  $("#planView").querySelectorAll(".sel").forEach(el => el.classList.remove("sel"));
+  $("#planView").querySelectorAll(`[data-place="${CSS.escape(id)}"]`).forEach(el => el.classList.add("sel"));
+  $("#atlasCard").innerHTML = `
+    <button class="atlas-back plan-home" type="button">← The whole of ${escapeHTML(plan.data.town)}</button>
+    <p class="kicker">${escapeHTML(plan.data.town)}</p>
+    <h3>${escapeHTML(p.name)}</h3>
+    ${p.epithet ? `<p class="epithet">${escapeHTML(p.epithet)}</p>` : ""}
+    <p>${escapeHTML(p.text)}</p>
+    ${p.source ? `<p class="atlas-src">From <i>${escapeHTML(p.source)}</i>. <a href="#library" data-close>Read on in the Library →</a></p>` : ""}`;
+}
+
+{
+  const view = $("#planView"), pointers = new Map();
+  let moved = 0, pinch = 0, pressed = null;
+  view.addEventListener("wheel", ev => {
+    if (!plan) return;
+    ev.preventDefault();
+    const p = planPoint(ev);
+    zoomPlan(Math.exp(-ev.deltaY * (ev.deltaMode ? .05 : .0018)), p.x, p.y);
+  }, { passive: false });
+  view.addEventListener("pointerdown", ev => {
+    if (!plan) return;
+    pressed = pointers.size ? null : ev.target.closest("[data-place]");
+    pointers.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+    view.setPointerCapture(ev.pointerId);
+    moved = 0;
+    if (pointers.size === 2) { const [a, b] = pointers.values(); pinch = Math.hypot(a.x - b.x, a.y - b.y); }
+  });
+  view.addEventListener("pointermove", ev => {
+    const last = pointers.get(ev.pointerId);
+    if (!last || !plan) return;
+    const dx = ev.clientX - last.x, dy = ev.clientY - last.y;
+    pointers.set(ev.pointerId, { x: ev.clientX, y: ev.clientY });
+    moved += Math.abs(dx) + Math.abs(dy);
+    if (pointers.size === 2) {
+      const [a, b] = pointers.values(), dist = Math.hypot(a.x - b.x, a.y - b.y);
+      const mid = planPoint({ clientX: (a.x + b.x) / 2, clientY: (a.y + b.y) / 2 });
+      if (pinch) zoomPlan(dist / pinch, mid.x, mid.y);
+      pinch = dist;
+    } else {
+      const r = $("#planView svg").getBoundingClientRect(), ppu = Math.min(r.width / plan.view.w, r.height / plan.view.h);
+      plan.view.x -= dx / ppu; plan.view.y -= dy / ppu;
+      setPlanView();
+    }
+    view.classList.toggle("dragging", moved > 4);
+  });
+  const lift = ev => {
+    if (ev.type === "pointerup" && pressed && moved < 5) showPlace(pressed.dataset.place);
+    pointers.delete(ev.pointerId); pinch = 0; pressed = null;
+    if (!pointers.size) view.classList.remove("dragging");
+  };
+  view.addEventListener("pointerup", lift);
+  view.addEventListener("pointercancel", lift);
+  for (const b of document.querySelectorAll("[data-pzoom]"))
+    b.addEventListener("click", () => {
+      if (!plan) return;
+      if (b.dataset.pzoom === "fit") { Object.assign(plan.view, { x: plan.vb[0], y: plan.vb[1], w: plan.vb[2], h: plan.vb[3] }); setPlanView(); }
+      else zoomPlan(b.dataset.pzoom === "in" ? 1.6 : 1 / 1.6);
+    });
+  $("#planClose").addEventListener("click", closePlan);
+  $("#atlas").addEventListener("close", () => { if (plan) closePlan(); });
 }
 
 function openAtlas() {
@@ -1415,11 +1552,38 @@ function openAtlas() {
   requestAnimationFrame(fitAtlas);
 }
 
+// The countries along the top of the map; choosing one draws it in place of the last.
+function atlasCountries() {
+  $("#atlasCountries").innerHTML = atlasIndex.map(c =>
+    `<button type="button" data-country="${escapeHTML(c.id)}" aria-pressed="${c.id === atlas.id}">${escapeHTML(c.name)}</button>`).join("");
+}
+async function showCountry(id) {
+  if (atlas && atlas.id === id) return;
+  try {
+    if (!atlasCache[id]) {
+      const res = await fetch(`atlas/${id}.json`);
+      if (!res.ok) return;
+      atlasCache[id] = await res.json();
+    }
+  } catch { return; }
+  atlas = atlasCache[id];
+  if (plan) { plan = null; $("#atlasPlan").hidden = true; $("#planView").replaceChildren(); }
+  $("#atlasHead").textContent = atlas.title;
+  for (const b of $("#atlasCountries").querySelectorAll("button")) b.setAttribute("aria-pressed", b.dataset.country === id);
+  $("#atlasFind").value = "";
+  drawAtlas(); atlasLegend(); fitAtlas();
+}
+
 async function loadAtlas() {
   try {
-    const res = await fetch("atlas/crownweave.json");
+    const res = await fetch("atlas/index.json");
     if (!res.ok) return;
-    atlas = await res.json();
+    atlasIndex = await res.json();
+    const first = atlasIndex[0].id, page = await fetch(`atlas/${first}.json`);
+    if (!page.ok) return;
+    atlas = atlasCache[first] = await page.json();
+    $("#atlasHead").textContent = atlas.title;
+    atlasCountries();
     $("#mapstand").hidden = false;
     dispatchEvent(new Event("atlas"));
   } catch { /* no map drawn yet (uv run hub/atlas.py); the easel stays away */ }
@@ -1479,6 +1643,11 @@ async function loadAtlas() {
     b.addEventListener("click", () => b.dataset.zoom === "fit" ? fitAtlas() : zoomAtlas(b.dataset.zoom === "in" ? 1.6 : 1 / 1.6));
   new ResizeObserver(() => { if (atlas && $("#atlas").open) setAtlasView(); }).observe($("#atlasMap"));
   $("#atlasCard").addEventListener("click", ev => {
+    const planBtn = ev.target.closest("[data-plan]"), placeBtn = ev.target.closest("[data-pplace]");
+    if (planBtn) return openPlan(planBtn.dataset.plan, +planBtn.dataset.town);
+    if (placeBtn) return showPlace(placeBtn.dataset.pplace);
+    if (ev.target.closest(".plan-back")) return closePlan();
+    if (ev.target.closest(".plan-home")) return planKey();
     if (ev.target.closest(".atlas-back")) { svg.querySelector(".town.sel")?.classList.remove("sel"); atlasLegend(); }
     if (ev.target.closest("[data-close]")) $("#atlas").close();
   });
@@ -1489,6 +1658,10 @@ async function loadAtlas() {
   $("#atlasFind").addEventListener("change", ev => {
     const name = ev.target.value.trim().toLowerCase(), i = atlas.towns.findIndex(t => t.name.toLowerCase() === name);
     if (i >= 0) { showTown(i, true); ev.target.value = ""; }
+  });
+  $("#atlasCountries").addEventListener("click", ev => {
+    const b = ev.target.closest("[data-country]");
+    if (b) showCountry(b.dataset.country);
   });
   $("#mapstand").addEventListener("click", openAtlas);
   $("#atlasClose").addEventListener("click", () => $("#atlas").close());

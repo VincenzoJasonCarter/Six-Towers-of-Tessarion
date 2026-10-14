@@ -1,0 +1,186 @@
+{
+ "id": "the-crown",
+ "town": "The Crown",
+ "epithet": "City of a Hundred Crowns, Loom of the Realms",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "the-crown-citadel",
+   "name": "The Crown",
+   "epithet": "A ring of ancient stone walls on the central hill",
+   "text": "At the city's heart rises The Crown, a ring of ancient walls and steep streets clinging to the central hill above the crossing of the Quatford.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "hall-woven-crown",
+   "name": "The Hall of the Woven Crown",
+   "epithet": "Where the Council of Crowns convenes",
+   "text": "A great chamber of carved pillars and inlaid floors. Seats wait for each sovereign or their envoy; a few remain empty, their realms lost, fallen, or whispered to endure in shadow. It anchors the upper side of the Sixfold Quarter and serves as the human embassy too.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "old-loom",
+   "name": "The Old Loom",
+   "epithet": "More wars averted, or quietly arranged, than on any battlefield",
+   "text": "Labyrinthine offices, archive-vaults and counting-houses where scribes, advocates and clerks spin law and coin into power.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "spire-corridors",
+   "name": "The Spire Corridors",
+   "epithet": "Most citizens will never walk them. All of them live on top of them.",
+   "text": "Sealed transit halls beneath The Crown, leading down toward the approved observation levels of the Meridian Spire. This is the door; it is guarded.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "sixfold-quarter",
+   "name": "The Sixfold Quarter",
+   "epithet": "One loom, six voices",
+   "text": "A dignified district of plazas, gardens and fortified houses on the slope between The Crown and the lower city, where the six signatory peoples keep their embassies facing one another across shared streets. No embassy is sovereign soil; city law still applies.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "sixfold-court",
+   "name": "The Sixfold Court",
+   "epithet": "Disputes between peoples are heard here first",
+   "text": "The square at the heart of the Sixfold Quarter, round which the embassies stand. Disputes between peoples are heard in the Quarter before they reach the Loom Council.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "charter-gate",
+   "name": "The Charter Gate",
+   "epithet": "No wall may divide what the Charter has bound",
+   "text": "The stone gate at the Quarter's main entrance, inscribed: 'One loom, six threads. No wall may divide what the Charter has bound.'",
+   "source": "Crownweave"
+  },
+  {
+   "id": "verdant-spire",
+   "name": "The Verdant Spire",
+   "epithet": "The elven embassy",
+   "text": "A garden-tower of living stone and magic-fed greenery, where elven envoys treat centuries-old agreements as current affairs.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "stonefast",
+   "name": "Stonefast Hall",
+   "epithet": "The dwarven embassy",
+   "text": "A rune-carved, half-sunken stronghold that serves as court of record for contracts, weights and measures. When Stonefast declares a debt valid, not even a king's denial can easily outweigh it.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "iron-tusk-court",
+   "name": "The Iron-Tusk Court",
+   "epithet": "The orc embassy",
+   "text": "A broad courtyard ringed by clan halls and war lodges, where mercenary charters, frontier truces and right-of-passage pacts are thrashed out to the sound of practice steel.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "ashglass",
+   "name": "The Ashglass Consulate",
+   "epithet": "The tiefling embassy",
+   "text": "A dark-stone manor lit by stained-glass windows. Secrets, reputations and off-the-record agreements are the true currency of its halls.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "crimson-thread",
+   "name": "The Crimson Thread House",
+   "epithet": "The Sangrith embassy",
+   "text": "A pale building stitched with crimson lines, dedicated to oaths and bargains sealed in blood and magic. Sangrith oath-keepers witness pacts here that even the Loom Council hesitates to overturn.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "temple-thousand-threads",
+   "name": "The Temple of a Thousand Threads",
+   "epithet": "Sacred neutral ground, at least in theory",
+   "text": "A sprawling complex at the edge of The Crown where shrines to many human deities coexist.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "crossing-square",
+   "name": "The Crossing Square",
+   "epithet": "Where the Ember Road crosses the Quatford",
+   "text": "The square at the head of the bridge below The Crown, where the city's markets meet the river and the southern roads begin."
+  },
+  {
+   "id": "the-crossing",
+   "name": "The Crossing",
+   "epithet": "The crossing of the Quatford",
+   "text": "The quarter round the bridges below the hill. The Crown stands above the crossing of the Quatford, the river that gives the Crownlands most of their orchards and all of their mills.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "riverside-markets",
+   "name": "The Riverside Markets",
+   "epithet": "",
+   "text": "Warehouses and market-halls along the Quatford's north bank, where the Crownlands' orchard fruit and milled flour come into the city."
+  },
+  {
+   "id": "under-bridges",
+   "name": "The Under-Bridges",
+   "epithet": "The Underweave: the one Weave with no land beyond the walls",
+   "text": "The vaulted under-bridges of the Quatford crossing, where the half-flooded alleys and forgotten arches of the Underweave open. Thieves' guilds, smugglers, and those who slip between the threads make their lives in the dim light below.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "guard-stables",
+   "name": "The Crown Guard Yards",
+   "epithet": "",
+   "text": "Barracks and stables of the Crown Guard inside the north-west wall, by the Iron Road gate. The Guard patrols the Stormgate Ring beneath the Everstorm day and night, and comes home here.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "upper-town",
+   "name": "The Upper Town",
+   "epithet": "",
+   "text": "The streets on the hill's northern shoulders, round The Crown's walls."
+  },
+  {
+   "id": "lower-town",
+   "name": "The Lower Town",
+   "epithet": "",
+   "text": "The city south of the Quatford, along the Ember Road and the road to Gatewell."
+  },
+  {
+   "id": "city-walls",
+   "name": "The City Walls",
+   "epithet": "",
+   "text": "The outer walls of the city, with a gate on each of the Web's eight roads.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "crown-walls",
+   "name": "The Walls of The Crown",
+   "epithet": "Ancient stone",
+   "text": "The ring of ancient walls round the central hill.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "loom-road",
+   "name": "The Loom Road",
+   "epithet": "",
+   "text": "West through the Loomward stormgate to Skyloom's Central District.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "iron-road",
+   "name": "The Iron Road",
+   "epithet": "",
+   "text": "North-west through the Ironward stormgate to Phais and Northreach.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "amethyst-road",
+   "name": "The Amethyst Road",
+   "epithet": "",
+   "text": "East through the Tideward stormgate to Witford, Marlmond and Stormwake.",
+   "source": "Crownweave"
+  },
+  {
+   "id": "ember-road",
+   "name": "The Ember Road",
+   "epithet": "",
+   "text": "South through the Emberward stormgate to Fjerfi and Emberweave.",
+   "source": "Crownweave"
+  }
+ ]
+}

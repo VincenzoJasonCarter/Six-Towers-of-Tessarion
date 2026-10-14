@@ -1,0 +1,49 @@
+{
+ "id": "windperch",
+ "town": "Windperch",
+ "epithet": "The Aerie Town",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "aeries",
+   "name": "The Aeries",
+   "epithet": "Doors halfway up the wall",
+   "text": "Tall houses with landing-ledges in place of front doors, where Windperch's winged folk live. The town is the largest settlement of them outside the Aerialring.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "training-field",
+   "name": "The Open-Air Field",
+   "epithet": "Before they ever approach the Dropway",
+   "text": "The slope where young fliers are trained in open air before they are ever allowed near the Dropway above.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "weather-station",
+   "name": "The Weather-Station",
+   "epithet": "The Weave's ground stations",
+   "text": "The chief of the ground weather-stations Windperch keeps for the Weave: vanes, gauges, and a reader on watch at every hour.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "distillery",
+   "name": "The Hard-Landing Distillery",
+   "epithet": "Considered medicinal after a hard landing",
+   "text": "Where Windperch distils its strong liquor, which is prescribed, poured and not argued with after a bad fall.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "landing-square",
+   "name": "Landing Square",
+   "epithet": "",
+   "text": "The town square, kept clear of awnings and washing-lines so that anyone can come down into it."
+  },
+  {
+   "id": "old-trail",
+   "name": "The Old Trail",
+   "epithet": "",
+   "text": "South from Windperch past Gimorand along the foot of the western heights.",
+   "source": "Of Skyloom, the Loom Above"
+  }
+ ]
+}

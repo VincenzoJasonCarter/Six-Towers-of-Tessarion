@@ -1,0 +1,75 @@
+{
+ "id": "cloudmoor-harbor",
+ "town": "Cloudmoor Harbor",
+ "epithet": "Where Keel Meets Cloud",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "mooring-masts",
+   "name": "The Mooring Masts",
+   "epithet": "The only quay in the Union where mast and mooring-ring share a stone",
+   "text": "Tall iron masts along the quay, each crowned with a mooring-ring for skycraft. Sea-going ships tie up below; skycraft moor above; cargo is swung between them on cranes.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "aurora",
+   "name": "Aurora's Rest",
+   "epithet": "A spilled drink can cost more than a ship",
+   "text": "The navigators' inn, with charts spread across every table, where captains of sea and sky compare winds and lie about routes.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "crane-yard",
+   "name": "The Crane Yard",
+   "epithet": "Where keel meets cloud",
+   "text": "The great cranes that swing cargo from ship to skycraft and back, and the yard where it waits between them.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "harbormaster",
+   "name": "The Harbormaster's House",
+   "epithet": "First landfall",
+   "text": "Where ships from the western sea make their first landfall in the Union and declare it, including the rare elven vessel out of Thal'vireth.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "provision-houses",
+   "name": "The Provision Houses",
+   "epithet": "Preserved, packed and labelled",
+   "text": "Salting, drying and packing houses, which make the preserved provisions Cloudmoor is famous for and the Loom eats a great deal of.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "bootmakers",
+   "name": "The Bootmakers' Guildhall",
+   "epithet": "Boots and harness for those who fall for a living",
+   "text": "Cloudmoor's boots and flying-harnesses are famous; this is the hall of the guild that makes them, and keeps the patterns locked up.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "crane-square",
+   "name": "Crane Square",
+   "epithet": "",
+   "text": "The square behind the quays, where the Sapphire Road comes in and the hiring-boards for crane-crews hang."
+  },
+  {
+   "id": "high-quay",
+   "name": "The High Quay",
+   "epithet": "",
+   "text": "The long quay under the mooring-masts, with ships below and skycraft above."
+  },
+  {
+   "id": "cobblers-row",
+   "name": "Cobblers' Row",
+   "epithet": "",
+   "text": "The bootmakers' and harness-makers' street, loud with hammers from dawn."
+  },
+  {
+   "id": "sapphire-road",
+   "name": "The Sapphire Road",
+   "epithet": "Instruments, glass and flight-gear",
+   "text": "The road east through Chadon and Burbotford toward Central District, along which most instruments, glass and flight-gear travel.",
+   "source": "Of Skyloom, the Loom Above"
+  }
+ ]
+}

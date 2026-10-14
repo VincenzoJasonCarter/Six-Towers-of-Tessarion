@@ -1,0 +1,56 @@
+{
+ "id": "stillmere",
+ "town": "Stillmere",
+ "epithet": "The Still Water",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "lens-houses",
+   "name": "The Lens-Houses",
+   "epithet": "The most delicate work in the Weave",
+   "text": "Where lenses are ground in air so still that not a mote of dust settles crooked.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "calibration-hall",
+   "name": "The Calibration Hall",
+   "epithet": "",
+   "text": "Where wind-instruments from all over Skyloom are brought to be set against air that does not move.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "ring-foundry",
+   "name": "The Anchor-Ring Foundry",
+   "epithet": "",
+   "text": "Where the bronze anchor-rings that hold the Loom to the Skyward Towers are cast.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "range",
+   "name": "The Firing Range",
+   "epithet": "Flight measured without interference",
+   "text": "A long cleared strip along the mere's shore, where artillery is test-fired and the fall of every shot measured with no wind to blame.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "wardens-post",
+   "name": "The Loomwardens' Post",
+   "epithet": "By long-standing agreement",
+   "text": "Where the Loomwardens who hold Stillmere's air perfectly still keep watch. The silence unsettles visitors; the locals no longer hear it.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "quiet-square",
+   "name": "Quiet Square",
+   "epithet": "",
+   "text": "The market square, where hawkers do not shout because the still air carries a whisper across it."
+  },
+  {
+   "id": "stillmerean-trail",
+   "name": "The Stillmerean Trail",
+   "epithet": "",
+   "text": "One of the trails stitching together Skyloom's southern lake-towns.",
+   "source": "Of Skyloom, the Loom Above"
+  }
+ ]
+}

@@ -1,0 +1,62 @@
+{
+ "id": "saffron-quay",
+ "town": "Saffron Quay",
+ "epithet": "The Spice-Port",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "saffron-plaza",
+   "name": "The Saffron Plaza",
+   "epithet": "The Weave's door to the eastern sea",
+   "text": "A plaza-port square where spice, dye, resin and saffron come ashore and are first sold.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "temple",
+   "name": "The Temple of Two Altars",
+   "epithet": "A Dustveil altar and a sea-shrine",
+   "text": "The only temple on the coast with a Dustveil altar for those who go inland and a sea-shrine for those who go out, and it keeps both busy.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "sea-shrine",
+   "name": "The Harbour Shrine",
+   "epithet": "",
+   "text": "The temple's sea-shrine keeps a lamp at the end of the quays as well, lit for every ship still out.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "spice-warehouses",
+   "name": "The Spice Warehouses",
+   "epithet": "Most of the spice stalls in the city quarter are stocked from here",
+   "text": "Long warehouses along the quay, cool and dark and overwhelming, where the spice waits for the caravans up the Saffron Road.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "dye-house",
+   "name": "The Dye-House",
+   "epithet": "",
+   "text": "Where dyes landed from the east are tested and mixed before going upriver to Dyewater's vats."
+  },
+  {
+   "id": "emberfall-factory",
+   "name": "The Emberfall Factory",
+   "epithet": "Emberfall's trade",
+   "text": "The house of the Emberfall trading houses' factors, where contracts with the tiefling ports are written in very small ink.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "pepper-lanes",
+   "name": "The Pepper Lanes",
+   "epithet": "",
+   "text": "The streets north of the river, where spice is ground, bagged and argued over."
+  },
+  {
+   "id": "saffron-road",
+   "name": "The Saffron Road",
+   "epithet": "",
+   "text": "West through Tuskhold and Slagbarrow, past the foot of Emberpeak, to Fjerfi.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  }
+ ]
+}

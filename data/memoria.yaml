@@ -375,7 +375,7 @@ items:
     wing: thalvireth
     name: The Mirror That Drinks
     model: { type: mirror, frame: "#4f9e76", glass: "#8fb7a4" }
-    origin: Chun Ka'an, the Deep Count
+    origin: Baktuniel, the Deep Count
     period: Unknown. The Curia gives its age as "current"
     medium: Jade, polished obsidian, quetzal feather
     status: On loan from the High Priestess's Curia
@@ -393,7 +393,7 @@ items:
     wing: thalvireth
     name: A Farmer's Sickle
     model: { type: sickle, worn: true }
-    origin: K'aax Yaxché, the Green Cradle
+    origin: Iximvael, the Green Cradle
     period: Ten years ago, outside time
     medium: Iron, with a haft of jade-wood
     status: On loan from the Canopy Court
@@ -409,14 +409,14 @@ items:
 
   - id: the-xibal-hourglass
     wing: thalvireth
-    name: The Xibal Hourglass
+    name: The Xibaloth Hourglass
     model: { type: hourglass, sand: "#b9d98f" }
-    origin: Xibal Root, the Broken Deep
+    origin: Xibaloth, the Broken Deep
     period: In use until its warden's sentence ended
     medium: Glass, bronze, root-sand
     status: On loan. To be handled only by a Balam escort
     placard: >-
-      A warden's hourglass from the root-caverns of Xibal Root, where time
+      A warden's hourglass from the root-caverns of Xibaloth, where time
       does not merely slow but runs wrong. It measures a watch of
       indeterminate length. On occasion the sand runs upward.
 

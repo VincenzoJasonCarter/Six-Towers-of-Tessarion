@@ -1,0 +1,71 @@
+{
+ "id": "central-district",
+ "town": "Central District",
+ "epithet": "Seat of the Weave",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "skyward-towers",
+   "name": "The Skyward Towers",
+   "epithet": "Three tall spires rooted firmly in stone",
+   "text": "The anchors of the floating Loom: they house the anchor-runes, lift-wards and harassed clerks whose task is to make sure the sky-bound part of Skyloom stays attached to the rest. From The Crown, one reaches the Loom by way of them.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "loom-shadow",
+   "name": "The Loom's Shadow",
+   "epithet": "Shopkeepers set their clocks by it",
+   "text": "Every afternoon the shadow of the Loom, floating above, crosses the town end to end. Buildings here are low and broad so as not to foul the lift-wards, so nothing stands tall enough to be lit while the rest is dark.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "wardens-court",
+   "name": "The Warden's Court",
+   "epithet": "Where the Weave Warden holds court",
+   "text": "The seat of the Weave Warden of Skyloom, at the edge of the tower plazas.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "lift-seal-office",
+   "name": "The Lift-Seal Office",
+   "epithet": "No seal, no lift",
+   "text": "Where lift-seals are issued: the permits without which nobody rides the Skyward Towers up to the Groundring.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "candle-yards",
+   "name": "The Loom Stores",
+   "epithet": "Cheese, liquor, and a great many candles",
+   "text": "Where the Loom's own needs are gathered before being sent up: cheese, liquor, and a great many candles.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "cloudwine",
+   "name": "The Cloudwine Distilleries",
+   "epithet": "Drunk mostly by people who have just come down",
+   "text": "Distilleries that make cloudwine, a clear, cold spirit.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "lift-plaza",
+   "name": "The Tower Plazas",
+   "epithet": "",
+   "text": "Central District's plazas cluster round the roots of the Skyward Towers.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "loom-road",
+   "name": "The Loom Road",
+   "epithet": "",
+   "text": "East through the Loomward stormgate to The Crown.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "sapphire-road",
+   "name": "The Sapphire Road",
+   "epithet": "",
+   "text": "West through Midhurstnes, Castfield and Clitford toward Cloudmoor Harbor.",
+   "source": "Of Skyloom, the Loom Above"
+  }
+ ]
+}

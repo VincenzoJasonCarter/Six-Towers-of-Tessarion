@@ -1,0 +1,48 @@
+{
+ "id": "craftry",
+ "town": "Craftry",
+ "epithet": "The Shipwrights' Tools",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "charter-hall",
+   "name": "The Charter Hall",
+   "epithet": "A charter out of all proportion to its size",
+   "text": "A town hall fit for a city, in a town of under three thousand. Craftry's charter was granted in gratitude for the tools that rebuilt Caer Veyn's harbour after the Western Gale, and the town has built up to it ever since.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "toolsmiths",
+   "name": "The Tool-Forges",
+   "epithet": "Every shipyard in the Union",
+   "text": "Where the adzes, augers, caulking irons and rope-hooks of every shipyard in the Union are forged, hardened and stamped with the Craftry mark.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "edge-mill",
+   "name": "The Edge-Mill",
+   "epithet": "",
+   "text": "A water-mill on the brook that grinds and hones the forges' blades."
+  },
+  {
+   "id": "gale-tools",
+   "name": "The Gale Anvil",
+   "epithet": "",
+   "text": "The anvil on which the first of the tools for the rebuilding of Caer Veyn was struck, set up in the square on a plinth, with the date.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "charter-square",
+   "name": "Charter Square",
+   "epithet": "",
+   "text": "The square in front of the Charter Hall, larger than the town strictly needs."
+  },
+  {
+   "id": "dunscaston-trail",
+   "name": "The Dunscastonese Trail",
+   "epithet": "",
+   "text": "One of the trails linking the Harbor Shore's towns, north-east toward Dunscaston and Caer Veyn.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  }
+ ]
+}

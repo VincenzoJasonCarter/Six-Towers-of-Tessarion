@@ -1,0 +1,32 @@
+[
+ {
+  "id": "crownweave",
+  "name": "Crownweave",
+  "title": "The Union of Crownweave"
+ },
+ {
+  "id": "thalvireth",
+  "name": "Thal'vireth",
+  "title": "Thal'vireth, the Grove That Remembers"
+ },
+ {
+  "id": "obsidian",
+  "name": "Obsidian Crown",
+  "title": "The Obsidian Crown"
+ },
+ {
+  "id": "khazrund",
+  "name": "Khazrund",
+  "title": "Khazrund"
+ },
+ {
+  "id": "emberfall",
+  "name": "Emberfall",
+  "title": "Emberfall"
+ },
+ {
+  "id": "ironhordes",
+  "name": "Iron Hordes",
+  "title": "The Iron Hordes"
+ }
+]

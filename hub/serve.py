@@ -17,6 +17,7 @@ app.js). Ctrl+C stops everything the hub started.
 import argparse
 import json
 import os
+import re
 import shutil
 import signal
 import socket
@@ -40,9 +41,10 @@ PAGE_FILES = {
     "/app.js": ("app.js", "text/javascript; charset=utf-8"),
     "/clerk.js": ("clerk.js", "text/javascript; charset=utf-8"),
     "/balance-patch.md": ("../balance-patch.md", "text/markdown; charset=utf-8"),  # the notice board
-    "/atlas/terrain.webp": ("atlas/terrain.webp", "image/webp"),  # the map on the easel (hub/atlas.py)
-    "/atlas/crownweave.json": ("atlas/crownweave.json", "application/json; charset=utf-8"),
 }
+# the maps on the easel, one per country (hub/atlas.py): atlas/index.json, atlas/<id>.json, atlas/<id>.webp
+ATLAS_FILE = re.compile(r"^/atlas/((?:plans/)?[a-z0-9-]+\.(json|webp|svg))$")  # and the town plans (hub/plans.py)
+ATLAS_TYPES = {"json": "application/json; charset=utf-8", "webp": "image/webp", "svg": "image/svg+xml"}
 
 # Same commands as the Makefile targets, minus the browser tab each one opens:
 # name -> (port, script, the path its page is at).
@@ -158,6 +160,8 @@ def make_handler(hub):
             if path in PAGE_FILES:
                 filename, content_type = PAGE_FILES[path]
                 self._send(200, (HERE / filename).read_bytes(), content_type)
+            elif (m := ATLAS_FILE.match(path)) and (HERE / "atlas" / m[1]).is_file():
+                self._send(200, (HERE / "atlas" / m[1]).read_bytes(), ATLAS_TYPES[m[2]])
             elif path == "/api/status":
                 self._json(200, hub.status())
             else:

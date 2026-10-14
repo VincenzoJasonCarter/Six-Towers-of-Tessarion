@@ -1,0 +1,69 @@
+{
+ "id": "brandmouth",
+ "town": "Brandmouth",
+ "epithet": "The Southern Harbor",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "orc-market",
+   "name": "The Plaza Market",
+   "epithet": "A permanent market for orcish goods",
+   "text": "Brandmouth's plaza has a permanent market for orcish goods and a permanent watch for orcish trouble, and the two are often the same people on different days.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "watch-house",
+   "name": "The Watch-House",
+   "epithet": "A permanent watch for orcish trouble",
+   "text": "The tower on the plaza's edge from which the watch keeps an eye on the market, and on the sea beyond it.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "envoys-hall",
+   "name": "The Envoys' Hall",
+   "epithet": "The crossing worth daring",
+   "text": "Where envoys from the Iron Hordes are received on landing and where the Union's own envoys wait for a ship south.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "soulstone-house",
+   "name": "The Soulstone Exchange",
+   "epithet": "",
+   "text": "A small, very well-guarded house where the soulstone-traders who make the crossing worth daring meet their buyers.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "mole",
+   "name": "The Southern Mole",
+   "epithet": "",
+   "text": "The long breakwater where ships that dare the crossing to the Iron Hordes load and unload.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "mercenary-yard",
+   "name": "The Hiring Yard",
+   "epithet": "",
+   "text": "Where mercenaries for the crossing, and for the caravans inland, wait to be hired, and practise on one another while they wait."
+  },
+  {
+   "id": "walls",
+   "name": "The Walls of Brandmouth",
+   "epithet": "",
+   "text": "A walled port at the mouth of the Kingham.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  },
+  {
+   "id": "river-docks",
+   "name": "The River Docks",
+   "epithet": "",
+   "text": "Quays along the Kingham, where river-boats bring down what the coast villages catch and cure."
+  },
+  {
+   "id": "brand-road",
+   "name": "The Brand Road",
+   "epithet": "",
+   "text": "North-west along the shore, round the end of the ridge at Redbank, and up the Newleighin valley to Fjerfi.",
+   "source": "Of Emberweave, the Burning Gate of the South"
+  }
+ ]
+}

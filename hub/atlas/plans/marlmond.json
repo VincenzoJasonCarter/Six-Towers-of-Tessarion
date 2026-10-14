@@ -1,0 +1,60 @@
+{
+ "id": "marlmond",
+ "town": "Marlmond",
+ "epithet": "The Perfumers' City",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "distilleries",
+   "name": "The Distilleries",
+   "epithet": "Where foreign cargo is made respectable",
+   "text": "Resins, spices, oils and aromatics landed in Caer Veyn come up here to be distilled and blended into the perfumes Marlmond is famous for.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "bottling-houses",
+   "name": "The Bottling-Houses",
+   "epithet": "The reason the customs law runs to eleven pages",
+   "text": "Where foreign goods are rebottled in Marlmond glass and relabelled as Crownweave goods. Anything that smells of Stormwake in The Crown's markets probably passed through here on the way.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "glasshouse",
+   "name": "The Marlmond Glasshouse",
+   "epithet": "Marlmond glass",
+   "text": "The furnaces that blow the town's own bottles: thin, faintly violet, and stamped on the base with a mark that customs clerks have learned to trust a little too much."
+  },
+  {
+   "id": "customs",
+   "name": "The Customs House",
+   "epithet": "Eleven pages",
+   "text": "Where the Union tries to keep track of what goes into Marlmond's vats as foreign and comes out as domestic. The clerks are thorough; the bottlers are more so.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "label-house",
+   "name": "The Label House",
+   "epithet": "",
+   "text": "Printers and calligraphers who make the labels, in the right ink, the right hand and the right language for whichever market a bottle is going to."
+  },
+  {
+   "id": "blending-square",
+   "name": "Blending Square",
+   "epithet": "",
+   "text": "The market square, which smells of everything at once."
+  },
+  {
+   "id": "still-lanes",
+   "name": "The Still Lanes",
+   "epithet": "",
+   "text": "Streets of small family stills, each with a recipe it will not share and a neighbour it suspects of stealing it."
+  },
+  {
+   "id": "newbomyard-trail",
+   "name": "The Newbomyard Trail",
+   "epithet": "",
+   "text": "North-west to Northreach.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  }
+ ]
+}

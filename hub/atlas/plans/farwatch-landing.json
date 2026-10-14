@@ -1,0 +1,54 @@
+{
+ "id": "farwatch-landing",
+ "town": "Farwatch Landing",
+ "epithet": "The Ground-Field",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "watch-tower",
+   "name": "The Farwatch",
+   "epithet": "The westernmost manned post in the Union",
+   "text": "The citadel's watch-tower. On clear days its keepers claim to see the green line of Thal'vireth. Few believe them.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "landing-field",
+   "name": "The Ground-Field",
+   "epithet": "For skycraft too heavy to reach the Loom",
+   "text": "A broad, level field on the coastal highland, cleared and rolled, where skycraft too heavy to reach the Loom come down.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "hangars",
+   "name": "The Field Sheds",
+   "epithet": "",
+   "text": "Long sheds at the field's edge where skycraft are moored, mended and unloaded."
+  },
+  {
+   "id": "keep",
+   "name": "The Keep",
+   "epithet": "",
+   "text": "The citadel's commander's hall and armoury."
+  },
+  {
+   "id": "citadel-walls",
+   "name": "The Citadel Walls",
+   "epithet": "",
+   "text": "A citadel on the coastal highlands.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "parade",
+   "name": "The Parade",
+   "epithet": "",
+   "text": "The citadel's yard, where the garrison musters."
+  },
+  {
+   "id": "sapphire-road",
+   "name": "The Sapphire Road",
+   "epithet": "",
+   "text": "The road along which most of Skyloom's instruments, glass and flight-gear travel.",
+   "source": "Of Skyloom, the Loom Above"
+  }
+ ]
+}

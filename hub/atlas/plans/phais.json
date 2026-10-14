@@ -1,0 +1,70 @@
+{
+ "id": "phais",
+ "town": "Phais",
+ "epithet": "The Glass Citadel and the Margin",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "glass-citadel",
+   "name": "The Glass Citadel",
+   "epithet": "Fortified, and full of very careful people",
+   "text": "Phais's fortress on the town's high ground, walled and garrisoned: the Weave's gate toward The Crown, and the keep that watches everything leaving Northreach for the capital.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "temple",
+   "name": "The Temple of Phais",
+   "epithet": "Questions whose answers would need to be recorded",
+   "text": "A large temple within the walls. Its priests feed and house the people of the Margin outside them, and ask no questions whose answers would need to be recorded.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "glassworks",
+   "name": "The Glassworks",
+   "epithet": "The Union's greatest",
+   "text": "Furnace-halls where the circuits of Glass Circuitry, designed in the Crucible, are blown, along with most of the Vessels' glass linings and a surprising quantity of fine jewellery and southern-bound wine.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "circuit-house",
+   "name": "The Circuit House",
+   "epithet": "Carefully isolated",
+   "text": "Where finished circuits are tested before they go north, in rooms kept apart from one another for reasons described as technical and discussed as superstitious.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "twice-gate",
+   "name": "The Twice-Gate",
+   "epithet": "Everything leaving Northreach is inspected twice",
+   "text": "The south-east gate, on the Iron Road to The Crown. Everything bound for the capital passes through it and is inspected, and then, at the inner yard, inspected again.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "margin",
+   "name": "The Margin",
+   "epithet": "Patched stone and salvaged plating",
+   "text": "The shanty-quarter sprawling outside the walls, where artificers rotated out of the Crucible go when they have nowhere else to go, and where 'reassigned' bonding subjects tend, eventually, to surface.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "walls",
+   "name": "The Walls of Phais",
+   "epithet": "",
+   "text": "Walled and fortified, as befits the Weave's gate toward The Crown.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "glass-market",
+   "name": "The Glass Market",
+   "epithet": "",
+   "text": "The square inside the walls where jewellers and wine-glass merchants sell what the glassworks make for people who are not the Crucible."
+  },
+  {
+   "id": "iron-road",
+   "name": "The Iron Road",
+   "epithet": "",
+   "text": "South from Phais round the western foot of the Everstorm's mountain and through the Ironward stormgate to The Crown.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  }
+ ]
+}

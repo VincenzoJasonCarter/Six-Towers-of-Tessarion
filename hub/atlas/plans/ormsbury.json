@@ -1,0 +1,49 @@
+{
+ "id": "ormsbury",
+ "town": "Ormsbury",
+ "epithet": "The Ore Harbor",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "ore-quays",
+   "name": "The Ore Quays",
+   "epithet": "Where the Great Frost Route comes in",
+   "text": "Where ore, cold-cured timber and the occasional Khazrund cargo are landed from the north and sent inland along the Maramersban Path.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "ice-house",
+   "name": "The Dockers' Hall",
+   "epithet": "Good ice from bad, by listening to it",
+   "text": "The harbour ices over in deep winter, and Ormsbury's dockers are said to be the only people in the Union who can tell good ice from bad by listening to it. This is where they meet to decide whether to.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "candle-works",
+   "name": "The Candle-Works",
+   "epithet": "For the Deepdelve, where open flame is forbidden",
+   "text": "Ormsbury is one of the towns that pours wax and tallow for the Deepdelve, where a sealed candle is the only light a family can call its own.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "factor-house",
+   "name": "The Khazrund Factor's House",
+   "epithet": "Occasional Khazrund cargoes",
+   "text": "Where Khazrund's factor in the harbour keeps rooms, and an unusually good door.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  },
+  {
+   "id": "chandlery-square",
+   "name": "Chandlery Square",
+   "epithet": "",
+   "text": "The town square, ringed by chandlers who sell rope, tar, and stoves for ships that have to winter here."
+  },
+  {
+   "id": "maramersban-path",
+   "name": "The Maramersban Path",
+   "epithet": "",
+   "text": "Across the eastern moors from Ormsbury inland.",
+   "source": "Of Northreach Weave, the Iron Threshold"
+  }
+ ]
+}

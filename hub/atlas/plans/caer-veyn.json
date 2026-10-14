@@ -1,0 +1,84 @@
+{
+ "id": "caer-veyn",
+ "town": "Caer Veyn",
+ "epithet": "Seat of the Weave, and capital of record of the Union",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "tidecall",
+   "name": "The Tidecall Exchange",
+   "epithet": "Where cargo becomes claim",
+   "text": "A broad stone concourse at the heart of the inner harbour, built low and wide and sloping toward the water, with brass tide-markers set into its paving. At high tide it is chaos made orderly; by low tide it empties. Once cargo leaves the Tidecall under seal, its story has officially begun.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "saltbond",
+   "name": "The Saltbond Vaults",
+   "epithet": "Stone remembers what water forgets",
+   "text": "Bonded warehouses behind thick walls of pale granite, under dwarven charter and Crownweave writ, each door layered with locks, runic wards and lead-plate contracts. Neutral ground: those who break the peace inside find their accounts frozen and their names circulated among the dockmasters.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "breakwater-row",
+   "name": "Breakwater Row",
+   "epithet": "The market that shifts with the tide",
+   "text": "Less a street than a habit, parallel to the outer quay: stalls put up at dawn and taken down by nightfall, selling foreign potions labelled in three languages and one approximation, wands with carefully vague instructions, and reagents too valuable to discard. No map shows it the same way twice, this one included.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "mooring-bell",
+   "name": "The Mooring Bell Shrine",
+   "epithet": "A prayer before the ropes are cast off",
+   "text": "A single bronze bell on a weathered timber frame by the easternmost pier: rung once for safe arrival, twice for safe departure, or not at all. Coloured threads are tied to the frame, blue for calm seas, green for profit, red for return.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "keel-knot",
+   "name": "The Keel & Knot",
+   "epithet": "Eat well, listen better, leave quietly",
+   "text": "A narrow tavern tucked beneath an overhanging warehouse a short walk from the Tidecall, its tables bolted to the floor. Old Sera Vant keeps the house's memory behind the bar, and writes nothing down.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "potteries",
+   "name": "The Jar Potteries",
+   "epithet": "Shipping jars and amphorae by the thousand",
+   "text": "Kilns and drying-yards on the town's landward side, where the Union's shipping jars are thrown.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "ink-works",
+   "name": "The Ink-Works",
+   "epithet": "Veyn black",
+   "text": "Where Veyn black is made: the ink of nearly every manifest, bill of lading and customs seal in the Union. Clerks elsewhere will refuse a manifest written in anything else; it is said Caer Veyn's true export is paperwork.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "wardens-hall",
+   "name": "The Hall of Record",
+   "epithet": "Where foreign disputes arrive first",
+   "text": "The Weave Warden's hall, and by an old quirk of maritime law the seat named on every foreign ship's papers and every treaty sealed at sea. Foreign disputes are heard here, and frequently settled before anyone in the Hall of the Woven Crown has to hear of them.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "customs-square",
+   "name": "Customs Square",
+   "epithet": "",
+   "text": "The square where the Marlney Path comes into town, ringed by the offices that will want to see your papers."
+  },
+  {
+   "id": "counting-houses",
+   "name": "The Counting-Houses",
+   "epithet": "",
+   "text": "Cargo yards and counting-houses on the inner docks, stacked with goods awaiting inspection.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "marlney-path",
+   "name": "The Marlney Path",
+   "epithet": "",
+   "text": "One of the paths that link the Harbor Shore's towns to one another.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  }
+ ]
+}

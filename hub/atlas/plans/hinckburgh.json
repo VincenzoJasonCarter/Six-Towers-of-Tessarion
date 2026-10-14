@@ -1,0 +1,54 @@
+{
+ "id": "hinckburgh",
+ "town": "Hinckburgh",
+ "epithet": "The Wakewatch",
+ "country": "crownweave",
+ "places": [
+  {
+   "id": "wakewatch",
+   "name": "The Wakewatch",
+   "epithet": "A constant watch on the southern and eastern horizons",
+   "text": "The tower on the headland's crown from which Hinckburgh's weather-readers watch the sea, day and night, for anything blowing in.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "signal-mast",
+   "name": "The Signal Mast",
+   "epithet": "Cordially, now",
+   "text": "Where Hinckburgh exchanges signals with Skyloom's Loomwardens across the island: cordially, now, though Hinckburgh has never entirely forgiven the Western Gale.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "readers-hall",
+   "name": "The Readers' Hall",
+   "epithet": "",
+   "text": "Where the weather-readers keep their logs, their barometers and their grudges."
+  },
+  {
+   "id": "gale-stone",
+   "name": "The Gale Stone",
+   "epithet": "Never entirely forgiven",
+   "text": "A marker stone carved with the names of those the Western Gale took from Hinckburgh, and, at the bottom, in smaller letters, the word Skyloom.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "pilots-house",
+   "name": "The Pilots' House",
+   "epithet": "Where the Lane leaves the Wakewater",
+   "text": "Home of the pilots who take ships out where the Caer Veynese Lane leaves the Wakewater for the open sea.",
+   "source": "Of Stormwake, the Open Harbor of the East"
+  },
+  {
+   "id": "lantern-square",
+   "name": "Lantern Square",
+   "epithet": "",
+   "text": "The town's square, where a lantern is hung for every ship the Wakewatch has seen go out and not yet seen come back."
+  },
+  {
+   "id": "steps",
+   "name": "The Hundred Steps",
+   "epithet": "",
+   "text": "The stair-streets climbing from the harbour to the hilltop; there are rather more than a hundred."
+  }
+ ]
+}

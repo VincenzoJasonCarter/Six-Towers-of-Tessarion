@@ -1,0 +1,134 @@
+{
+ "id": "nabireth",
+ "town": "Nabireth",
+ "epithet": "the Landing",
+ "country": "thalvireth",
+ "places": [
+  {
+   "id": "counting-pier",
+   "name": "The Counting Pier",
+   "epithet": "Where a foreigner's years begin to be counted",
+   "text": "A long jetty of jade-wood at the centre of the quays, laid on the White Road's own line, so that the Road begins, quite literally, at the end of the pier. Every ship that docks at Nabireth ties up here first, and every passenger walks its length before setting foot on the Road.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "counting-hall",
+   "name": "The Counting Hall",
+   "epithet": "Where Ledgers are opened",
+   "text": "A low, open hall at the pier's landward end, under a carved frieze of the Ten Stones. The Daykeepers of the Landing sit at a row of tables here and open a Ledger of Hours for every foreigner who lands, and close it again, and keep it, when they leave.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "customs-hall",
+   "name": "The Customs-Hall",
+   "epithet": "Thorough, slow, and honest about almost everything",
+   "text": "Where the Daykeepers of the Landing open, weigh, count and enter every cargo that comes ashore. Its yard runs back from the quay behind it, and on a busy morning the queue of carts reaches the Landing Way.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "keepers-shed",
+   "name": "The Keepers' Shed",
+   "epithet": "The one door customs does not open",
+   "text": "A locked shed at the far end of the customs yard. Cargo consigned by name to an Ah K'in passes customs unopened, as a courtesy to the Keepers of the Count, and waits here until its consignee's people come down the Road to collect it. The Daykeepers keep the key, keep a list of what goes in, and are not paid to wonder why."
+  },
+  {
+   "id": "long-tide",
+   "name": "The Long Tide",
+   "epithet": "Drink your days slowly. You only get the one kind here.",
+   "text": "A two-storey inn of grown wood three doors down from the Counting Pier, with a ship's figurehead over its door: where Crownweave sailors drink, factors meet their contacts, and anyone who wants to know what is happening on the Road goes first. Its innkeeper, Mariel Hostner, came ashore for one night twenty-six years ago and missed the tide.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "gate-tower",
+   "name": "The Gate-Tower",
+   "epithet": "Where the White Road begins",
+   "text": "A square tower of the Road's pale stone at the top of the rise, and the town's one gate. The Balam detachment of the Landing keeps it, and the yard behind it, and from its roof a watch on both the Road and the Gulf. Past it the White Road runs west, dead straight, ten days to the Canopy Steps.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "bearers-yard",
+   "name": "The Bearers' Yard",
+   "epithet": "Where the slow procession is hired",
+   "text": "A walled yard and hall just below the gate, where litters and bearers are hired for the dying who come to be carried up the Road to the Waiting Wards. The bearers' guild sets its own prices and walks at its own pace, and nobody in the yard asks who is in the litters."
+  },
+  {
+   "id": "warehouse-row",
+   "name": "Warehouse Row",
+   "epithet": "The realm's harvest, waiting for a ship",
+   "text": "Long grown-wood warehouses on the northern quays, where grain, beans and cacao from the Green Cradle and instruments from the Quickening Wards wait to be loaded, and Crownweave iron, salt and wool wait to be carted up the Road."
+  },
+  {
+   "id": "chandlers-row",
+   "name": "Chandlers' Row",
+   "epithet": "Rope, tar, salt pork and gossip",
+   "text": "The lane behind the northern quays where ships are victualled and refitted: chandlers, ropewalks, sailmakers and the Landing's few money-lenders. Foreign coin is not changed for jade-tally anywhere in Nabireth, only at Koneleth, so the Row's shops keep a slate for every ship's crew and settle it in Crownsblood when they sail."
+  },
+  {
+   "id": "foreign-lanes",
+   "name": "The Foreign Lanes",
+   "epithet": "Crownweave, a long way from home",
+   "text": "The streets south of the Landing Way where Nabireth's humans live: factors, sailors who missed their ship, and a few families who came three generations ago and never quite left. The houses are built of grown wood like everyone else's, but the doors have Crownweave knockers and the windows have Crownweave glass."
+  },
+  {
+   "id": "the-rise",
+   "name": "The Rise",
+   "epithet": "Where the Road-elves live",
+   "text": "The upper town, climbing to the gate-tower: the houses of the elves who work the Landing, and who have chosen to live their whole lives at true time. Their Count-bead cords are long and almost entirely white, and they will tell you, at length, that this is sensible.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "quays",
+   "name": "The Quays",
+   "epithet": "Inns, warehouses and chandlers that would not look out of place in Stormwake",
+   "text": "The waterfront street that runs the length of the harbour, with houses on piles over the shallows on its seaward side. Everything that enters or leaves Thal'vireth crosses it.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "landing-way",
+   "name": "The Landing Way",
+   "epithet": "The Road, before it is the Road",
+   "text": "The town's main street, running dead straight from the Counting Hall up the rise to the gate-tower, on the same line as the White Road and the Counting Pier. It is paved in the Road's own pale stone and held at true time by the same wards."
+  },
+  {
+   "id": "white-road",
+   "name": "The White Road",
+   "epithet": "Ten days, dead straight, to the Canopy Court",
+   "text": "A raised causeway of pale, close-fitted stone, broad enough for two carts to pass, running west from the gate-tower to the steps of the Canopy Court. The first of the Ten Stones stands a day's walk out.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "granary-road",
+   "name": "The Granary Road",
+   "epithet": "The Green Cradle's harvest, coming down to the sea",
+   "text": "The road from the Threshing Mounds at Chaakvael, which joins the White Road just below the gate for its last stretch into Nabireth. In harvest season its carts queue back past the bend.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "anchorage",
+   "name": "The Anchorage",
+   "epithet": "The Long Tide",
+   "text": "Where ships ride at anchor off Nabireth when the quays are full, and through the five wayeb days, when the Road is closed while its wards are renewed and nothing moves on it. Sailors call those five days the Long Tide, after the inn where they spend them.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "jaeleth",
+   "name": "Ja'eleth",
+   "epithet": "The Water-Road",
+   "text": "A village on the shore just south of Nabireth, beside the stream that gives the harbour its fresh water. Its people fill and sell ships' water by the barrel and ferry passengers out to vessels at anchor during the wayeb.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "boatyard",
+   "name": "Ja'eleth Boatyard",
+   "epithet": "The only yard in the realm that will mend a foreign hull",
+   "text": "A slipway and sheds on the shore at Ja'eleth. Elvish shipwrights grow their hulls; this yard has learned to nail them, and charges accordingly.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "water-stair",
+   "name": "The Water-Stair",
+   "epithet": "Ships' water, by the barrel",
+   "text": "Stone steps down to the stream's mouth where Ja'eleth's water-sellers fill barrels for the ships, and where the ferries leave for the Anchorage."
+  }
+ ]
+}

@@ -2,20 +2,23 @@
 # requires-python = ">=3.11"
 # dependencies = ["numpy>=1.26", "scipy>=1.11", "pillow>=10"]
 # ///
-"""Draw the Union of Crownweave for the map on the hub's easel.
+"""Draw the countries of Tessarion for the map on the hub's easel.
 
 Usage, from the repo root:
 
     uv run hub/atlas.py                 # newest map/*.map
     uv run hub/atlas.py --map "map/Tessarion 2026-10-13.map"
 
-Reads the Azgaar save and the lore-book, and writes hub/atlas/:
+Reads the Azgaar save and the lore-book, and writes hub/atlas/, one map per
+country in COUNTRIES (the page has a selector for them):
 
-    terrain.webp     the island's land and sea, shaded, as one picture
-    crownweave.json  everything drawn over it: borders, rivers, roads,
+    index.json       the countries, in order, with their names
+    <id>.webp        the country's land and sea, shaded, as one picture
+    <id>.json        everything drawn over it: borders, rivers, roads,
                      towns (with their gazetteer entries) and labels
 
-Rebuild after editing the map or the gazetteers in lore-book/12-16.
+Rebuild after editing the map or a country's gazetteer in the lore-book
+(12-16 for Crownweave, 17 for Thal'vireth).
 """
 import argparse
 import json
@@ -31,18 +34,60 @@ from scipy.spatial import Delaunay, Voronoi, cKDTree
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 OUT = HERE / "atlas"
-STATE = 5           # Crownweave in the save
-SCALE = 8           # picture pixels per map unit
-PAD = 14            # map units of sea around the island in the opening view
+SCALE = 8           # picture pixels per map unit, at most
+MAX_SIDE = 3200     # and no picture side longer than this (a big country gets fewer pixels per unit)
+PAD = 14            # map units of sea around the country in the opening view
 SEA = 45            # and how far the picture of the sea runs on past that, for dragging about
-NAMES = {"Central City": "The Crownlands"}  # what the lore calls a prefecture, where the save differs
-LORE = {            # chapter file -> where the library shelves it
-    "12-crownweave.md": "Crownweave",
-    "13-of-skyloom-the-loom-above.md": "Of Skyloom, the Loom Above",
-    "14-of-northreach-weave-the-iron-threshold.md": "Of Northreach Weave, the Iron Threshold",
-    "15-of-emberweave-the-burning-gate-of-the-south.md": "Of Emberweave, the Burning Gate of the South",
-    "16-of-stormwake-the-open-harbor-of-the-east.md": "Of Stormwake, the Open Harbor of the East",
-}
+UNSURVEYED = "The Compendium has not surveyed it yet; what is drawn here is the Guild's chart, and the names are the chart's."
+COUNTRIES = [
+    {
+        "id": "crownweave", "state": 5, "name": "Crownweave", "title": "The Union of Crownweave",
+        "intro": "One island in the middle sea. The Crown stands at its heart, ringed by the Crownlands and the Everstorm; "
+                 "Skyloom lies west, Northreach north, Stormwake east and Emberweave south. Choose any town for what the Compendium says of it.",
+        "terms": {"seat": "Seat of a Weave", "border": "Prefecture border", "fort": "Fort or stormgate", "whole": "The whole Union", "beyond": "Beyond the Union"},
+        "names": {"Central City": "The Crownlands"},  # what the lore calls a prefecture, where the save differs
+        "special": {"The Crown": "Heart of the Union"},
+        "lore": {  # chapter file -> where the library shelves it
+            "12-crownweave.md": "Crownweave",
+            "13-of-skyloom-the-loom-above.md": "Of Skyloom, the Loom Above",
+            "14-of-northreach-weave-the-iron-threshold.md": "Of Northreach Weave, the Iron Threshold",
+            "15-of-emberweave-the-burning-gate-of-the-south.md": "Of Emberweave, the Burning Gate of the South",
+            "16-of-stormwake-the-open-harbor-of-the-east.md": "Of Stormwake, the Open Harbor of the East",
+        },
+    },
+    {
+        "id": "thalvireth", "state": 6, "name": "Thal'vireth", "title": "Thal'vireth, the Grove That Remembers",
+        "intro": "The western realm, wrapped round the Verdant Tower. Six districts ring the Tower, each keeping its own pace of time; "
+                 "the White Road runs east from it to Nabireth, the only harbour. Beyond the forest lie the Sound and the Hushwood, "
+                 "and south across the Gulf the Desertborn's Sunward Reach. Choose any place for what the Compendium says of it.",
+        "terms": {"seat": "Seat of a district", "border": "District border", "fort": "Fort or drum-tower", "whole": "The whole realm", "beyond": "Beyond Thal'vireth"},
+        "special": {"Ix'kaanil": "The Tower, and seat of the High Priestess"},
+        # a district's own book first, then the realm's gazetteer (only that section: the rest names towns in passing)
+        "lore": {"18-of-the-white-road.md": "Of The White Road", "17-thalvireth.md": "Thal’Vireth"},
+        "section": {"18-of-the-white-road.md": "From the Sea to the Steps", "17-thalvireth.md": "Gazetteer of the Western Reach"},
+    },
+    {
+        "id": "obsidian", "state": 1, "name": "Obsidian Crown", "title": "The Obsidian Crown",
+        "intro": "To the north, high above them all, where clouds scrape exposed stone and even dragons grow wary: the sixth and highest Tower, "
+                 "and the Sangrith who dwell beneath it, few in number and vast in influence. " + UNSURVEYED,
+    },
+    {
+        "id": "khazrund", "state": 4, "name": "Khazrund", "title": "Khazrund",
+        "intro": "The jagged north-east, beneath mountains that never thaw, where the dwarves tunnelled under the Deep Tower and stacked "
+                 "their cities downward instead of upward. " + UNSURVEYED,
+    },
+    {
+        "id": "emberfall", "state": 2, "name": "Emberfall", "title": "Emberfall",
+        "intro": "The far east, where the land is cracked and kissed by ember-winds, and the tieflings built tiered cities round the Ashen Tower. "
+                 "Deals are struck there in whispers and ink. " + UNSURVEYED,
+    },
+    {
+        "id": "ironhordes", "state": 3, "name": "Iron Hordes", "title": "The Iron Hordes",
+        "intro": "The harsh, ragged south, where the orcs raised war-camps in the shadow of the Red Tower and carve their history into scars and steel. "
+                 + UNSURVEYED,
+    },
+]
+GENERIC_TERMS = {"seat": "Capital", "border": "Province border", "fort": "Fort", "whole": "The whole country", "beyond": "Beyond its borders"}
 BIOME_TINT = {  # muted, parchment-friendly versions of Azgaar's biomes, by name
     "Hot desert": (216, 196, 146), "Cold desert": (200, 192, 162), "Savanna": (205, 196, 140),
     "Grassland": (190, 195, 138), "Tropical seasonal forest": (170, 184, 122), "Temperate deciduous forest": (160, 181, 124),
@@ -62,6 +107,8 @@ def load(path):
         "biome": ints(16), "burg": ints(17), "river": ints(22), "state": ints(25), "prov": ints(27),
         "provinces": json.loads(L[30]), "rivers": json.loads(L[32]), "routes": json.loads(L[37]),
         "labels": json.loads(L[47]) if L[47] else [],
+        "notes": {n["id"]: n for n in json.loads(L[4])} if L[4] else {},  # a village's says what its name means
+        "size": tuple(int(v) for v in L[0].split("|")[4:6]),  # the map's width and height
     }
 
 
@@ -103,8 +150,9 @@ def first_sentences(text, limit=340):
     return out
 
 
-def gazetteer(names):
-    """name -> {epithet, text, chapter} from the lore-book's gazetteers and the stormgate list."""
+def gazetteer(names, chapters, sections=None):
+    """name -> {epithet, text, chapter} from a country's gazetteers (and Crownweave's stormgate list).
+    chapters: file -> library title; sections: file -> the heading to read under, if not the whole chapter."""
     norm = lambda s: clean(s).replace("’", "'")
     known = {norm(n): n for n in names}
     found = {}
@@ -119,9 +167,15 @@ def gazetteer(names):
             found.setdefault(name, {"epithet": epithet, "text": first_sentences(body), "chapter": chapter})
     def split_epithet(body):  # "*The Harbor Guns.*" then the entry
         m = re.match(r"^\*([^*]+)\*\s*\n?(.*)$", body.strip(), re.S)
-        return (m[1].strip().rstrip("."), m[2]) if m else ("", body)
-    for file, chapter in LORE.items():
-        paras = [p.strip() for p in re.split(r"\n\s*\n", (ROOT / "lore-book" / file).read_text(encoding="utf-8"))]
+        return (m[1].strip().rstrip(".,"), m[2]) if m else ("", body)
+    for file, chapter in chapters.items():
+        text = (ROOT / "lore-book" / file).read_text(encoding="utf-8")
+        if sections and file in sections:  # from that heading to the next one of its rank
+            m = re.search(r"^(#+)[^\n]*" + re.escape(sections[file]) + r"[^\n]*\n", text, re.M)
+            end = re.compile(r"^" + m[1] + r" ", re.M).search(text, m.end()) if m else None
+            text = text[m.end():end.start() if end else None] if m else ""
+        # "●        **Ix'kaanil** — *The Tower and the Tree.* ..." reads like "**Name** — ..."
+        paras = [re.sub(r"^[●•]\s*", "", p.strip()) for p in re.split(r"\n\s*\n", text)]
         for k, p in enumerate(paras):
             if p.startswith("#"):  # a section given to one town: "### **V. Caer Veyn, the Harbor City**"
                 hits = names_in(p) or [known[n] for n in known if n in norm(p.lstrip("# "))]
@@ -142,15 +196,20 @@ def gazetteer(names):
                 hits, rest = names_in(first), f"{clean(head)}: {rest}"
             if hits:
                 put(hits, *split_epithet(rest), chapter)
-    crown = (ROOT / "lore-book" / "12-crownweave.md").read_text(encoding="utf-8")
-    sub = re.search(r"^\*([^*\n]+)\*\s*$", crown, re.M)
-    if "The Crown" in names:
+    if "The Crown" in names and "12-crownweave.md" in chapters:
+        crown = (ROOT / "lore-book" / "12-crownweave.md").read_text(encoding="utf-8")
+        sub = re.search(r"^\*([^*\n]+)\*\s*$", crown, re.M)
         found["The Crown"] = {
             "epithet": sub[1].strip() if sub else "",
             "text": "The city itself: The Crown and its walled Weaves, on a broad hill above the Quatford, where every road in the Union knots together above the Meridian Spire.",
             "chapter": "Crownweave",
         }
     return found
+
+
+def plan_id(name):
+    """A town's plan, if hub/plans.py has drawn one: atlas/plans/<id>.svg"""
+    return re.sub(r"[^a-z0-9]+", "-", name.lower().replace("'", "").replace("’", "")).strip("-")
 
 
 # ---------------------------------------------------------------- drawing
@@ -163,18 +222,34 @@ def main():
     P, G, bnd = pack_points(d)
     if len(P) != len(d["burg"]):
         raise SystemExit(f"rebuilt {len(P)} cells but the save has {len(d['burg'])}; is this an Azgaar save of another version?")
+    vor = Voronoi(np.vstack([P, bnd]))
+    OUT.mkdir(exist_ok=True)
+    index = []
+    for country in COUNTRIES:
+        draw(d, P, G, bnd, vor, src, country)
+        index.append({"id": country["id"], "name": country["name"], "title": country["title"]})
+    (OUT / "index.json").write_text(json.dumps(index, ensure_ascii=False, indent=1), encoding="utf-8")
+    keep = {f"{c['id']}.{ext}" for c in COUNTRIES for ext in ("json", "webp")} | {"index.json"}
+    for old in OUT.iterdir():  # a country taken off the list, or the old single-map files
+        if old.is_file() and old.name not in keep: old.unlink()
+
+
+def draw(d, P, G, bnd, vor, src, country):
+    """One country's picture and vector layers."""
+    STATE, cid = country["state"], country["id"]
+    NAMES = country.get("names", {})
     h = d["gh"][G]
     land = h >= 20
-    island = d["gf"][G]  # the Union's own island, not the odd stray cell the save files under it elsewhere
+    island = d["gf"][G]  # the country's own landmass, not the odd stray cell the save files under it elsewhere
     ours = land & (d["state"] == STATE)
     mine = ours & (island == np.bincount(island[ours]).argmax())
-    x0, y0 = P[mine].min(0) - PAD
-    x1, y1 = P[mine].max(0) + PAD
+    mw, mh = d["size"]  # nothing is drawn past the map's own edge (a country at the edge runs off it)
+    x0, y0 = np.maximum(P[mine].min(0) - PAD, 0)
+    x1, y1 = np.minimum(P[mine].max(0) + PAD, (mw, mh))
     vb = [round(float(x0), 1), round(float(y0), 1), round(float(x1 - x0), 1), round(float(y1 - y0), 1)]
-    tx0, ty0, tx1, ty1 = x0 - SEA, y0 - SEA, x1 + SEA, y1 + SEA
+    tx0, ty0, tx1, ty1 = max(x0 - SEA, 0), max(y0 - SEA, 0), min(x1 + SEA, mw), min(y1 + SEA, mh)
     tb = [round(float(tx0), 1), round(float(ty0), 1), round(float(tx1 - tx0), 1), round(float(ty1 - ty0), 1)]
 
-    vor = Voronoi(np.vstack([P, bnd]))
     N = len(P)
     polys = [vor.vertices[vor.regions[vor.point_region[i]]] for i in range(N)]
     near = lambda pts: ((pts[:, 0] > tx0 - 20) & (pts[:, 0] < tx1 + 20) & (pts[:, 1] > ty0 - 20) & (pts[:, 1] < ty1 + 20)).any()
@@ -182,7 +257,8 @@ def main():
 
     # -------- terrain picture: biome colours and heights smoothed between cells, hill-shaded,
     # with a crisp coastline and a paper grain
-    W, H = round((tx1 - tx0) * SCALE), round((ty1 - ty0) * SCALE)
+    SC = min(SCALE, MAX_SIDE / max(tx1 - tx0, ty1 - ty0))  # pixels per map unit for this country
+    W, H = round((tx1 - tx0) * SC), round((ty1 - ty0) * SC)
     LO = 2  # pixels per map unit for the smooth fields
     biome_names = [b["name"] for b in d["biomes"]]
     def colour(i):
@@ -190,11 +266,11 @@ def main():
             q = h[i] / 19
             return [a + (b - a) * q for a, b in zip((84, 116, 140), (120, 154, 170))]
         base = np.array(BIOME_TINT.get(biome_names[d["biome"][i]], (170, 180, 130)), float)
-        if d["state"][i] != STATE:  # lands beyond the Union, faded
+        if d["state"][i] != STATE:  # lands beyond the country, faded
             base = base * .35 + base.mean() * .65
         return list(base)
-    def field(scale, value, cells, mode="F"):
-        im = Image.new(mode, (round((tx1 - tx0) * scale), round((ty1 - ty0) * scale)), 0)
+    def field(scale, value, cells, mode="F", bg=0):  # bg: what lies where no cell does (a corner of the map)
+        im = Image.new(mode, (round((tx1 - tx0) * scale), round((ty1 - ty0) * scale)), bg)
         dr = ImageDraw.Draw(im)
         for i in cells:
             dr.polygon([((x - tx0) * scale, (y - ty0) * scale) for x, y in polys[i]], fill=value(i), outline=value(i))
@@ -209,14 +285,14 @@ def main():
     sea_lo = 1 - land_lo
     rgb_land, rgb_sea = [], []
     for ch in range(3):
-        c = field(LO, lambda i, ch=ch: colour(i)[ch], visible)
+        c = field(LO, lambda i, ch=ch: colour(i)[ch], visible, bg=(84, 116, 140)[ch])
         rgb_land.append(up(smooth(c, land_lo, LO * 2.2)))
         rgb_sea.append(up(smooth(c, sea_lo, LO * 4)))
     rgb_land, rgb_sea = np.dstack(rgb_land), np.dstack(rgb_sea)
 
-    z = up(gaussian_filter(field(LO, lambda i: float(max(h[i], 18)), visible), LO * 3.2))
-    gy, gx = np.gradient(z * SCALE * .55)  # height per pixel, exaggerated so hills read
-    gx, gy = gx / SCALE, gy / SCALE
+    z = up(gaussian_filter(field(LO, lambda i: float(max(h[i], 18)), visible, bg=18), LO * 3.2))
+    gy, gx = np.gradient(z * SC * .55)  # height per pixel, exaggerated so hills read
+    gx, gy = gx / SC, gy / SC
     az, alt = math.radians(315), math.radians(45)
     lx, ly, lz = math.cos(alt) * math.cos(az), math.cos(alt) * math.sin(az), math.sin(alt)
     shade = (-gx * lx - gy * ly + lz) / np.sqrt(gx * gx + gy * gy + 1)
@@ -227,20 +303,19 @@ def main():
     rgb_land = rgb_land * (1 - peak * .6) + np.array([138, 112, 90]) * peak * .6
 
     SS = 3  # the coastline itself, antialiased
-    hi = field(SCALE * SS / 2, lambda i: 1.0 if land[i] else 0.0, visible)  # rounded off, as Azgaar draws coasts
-    hi = gaussian_filter(hi, SCALE * SS / 2 * .9)
+    hi = field(SC * SS / 2, lambda i: 1.0 if land[i] else 0.0, visible)  # rounded off, as Azgaar draws coasts
+    hi = gaussian_filter(hi, SC * SS / 2 * .9)
     hi = np.clip((hi - .5) * 6 + .5, 0, 1)
     lm = np.asarray(Image.fromarray((hi * 255).astype("uint8")).resize((W, H), Image.LANCZOS), float)[..., None] / 255
     ink = np.clip(1 - np.abs(lm[..., 0] - .5) * 2.4, 0, 1)[..., None]  # a thin inked line along the shore
-    halo = gaussian_filter(lm[..., 0], SCALE * 2)[..., None]
+    halo = gaussian_filter(lm[..., 0], SC * 2)[..., None]
     sea = rgb_sea + halo * np.array([62, 56, 28]) * (1 - lm)   # the shallows glow along the coast
     rgb = rgb_land * relief[..., None] * lm + sea * (1 - lm)
     rgb = rgb * (1 - ink * .85) + np.array([58, 50, 38]) * ink * .85
     rng = np.random.default_rng(7)
     grain = gaussian_filter(rng.random((H, W)), 1.6)
     rgb *= (1 + (grain - grain.mean()) * .22)[..., None]
-    OUT.mkdir(exist_ok=True)
-    Image.fromarray(np.clip(rgb, 0, 255).astype("uint8")).save(OUT / "terrain.webp", quality=82, method=6)
+    Image.fromarray(np.clip(rgb, 0, 255).astype("uint8")).save(OUT / f"{cid}.webp", quality=82, method=6)
 
     # -------- vector layers
     r1 = lambda v: round(float(v), 1)
@@ -281,7 +356,12 @@ def main():
     provs = {p["i"]: p for p in d["provinces"] if p and not p.get("removed")}
     seats = {p["burg"] for p in provs.values()}
     alive = [b for b in d["burgs"] if b and b.get("i") and not b.get("removed") and inside(b["x"], b["y"])]
-    lore = gazetteer([b["name"] for b in alive])
+    home = [b for b in alive if b.get("state") == STATE]
+    lore = gazetteer([b["name"] for b in home], country.get("lore", {}), country.get("section"))
+    for b in home:  # no gazetteer entry: the save's own note on the place, if it has one
+        note = d["notes"].get(f"burg{b['i']}", {}).get("legend", "")
+        if b["name"] not in lore and note.strip():
+            lore[b["name"]] = {"epithet": "", "text": re.sub(r"<[^>]+>", "", note).strip()}
     towns = []
     for b in alive:
         p = provs.get(int(d["prov"][b["cell"]]))
@@ -289,9 +369,10 @@ def main():
             "name": b["name"], "x": r1(b["x"]), "y": r1(b["y"]), "group": b.get("group", "town"),
             "prov": p["name"] if p else (d["states"][b["state"]]["name"] if b.get("state") else ""),
             "pop": int(round(b.get("population", 0) * 1000, -1)), "seat": b["i"] in seats,
-            "union": b.get("state") == STATE,
+            "home": b.get("state") == STATE,
+            **({"plan": plan_id(b["name"])} if b.get("state") == STATE and (OUT / "plans" / f"{plan_id(b['name'])}.json").is_file() else {}),
             "has": [k for k in ("walls", "citadel", "temple", "plaza", "shanty") if b.get(k)] + (["port"] if b.get("port") else []),
-            **({"lore": lore[b["name"]]} if b["name"] in lore else {}),
+            **({"lore": lore[b["name"]]} if b["name"] in lore and b.get("state") == STATE else {}),
         })
     labels = []
     named = [t for t in towns if t["seat"] or t["group"] in ("city", "capital")]
@@ -319,15 +400,18 @@ def main():
         if inside(l["x"], l["y"]) and l.get("label", {}).get("text"):
             labels.append({"kind": "land", "text": l["label"]["text"], "x": r1(l["x"]), "y": r1(l["y"]), "size": 4})
     data = {
-        "source": src.name, "viewBox": vb, "terrain": "atlas/terrain.webp", "terrainBox": tb,
+        "id": cid, "name": country["name"], "title": country["title"], "intro": country["intro"],
+        "terms": {**GENERIC_TERMS, **country.get("terms", {})}, "special": country.get("special", {}),
+        "source": src.name, "viewBox": vb, "terrain": f"atlas/{cid}.webp", "terrainBox": tb,
         "provinceBorders": prov_border, "stateBorders": state_border,
         "rivers": rivers, "routes": routes, "towns": towns, "labels": labels,
     }
-    (OUT / "crownweave.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
-    with_lore = sum(1 for t in towns if "lore" in t and t["union"])
-    print(f"{src.name}: {W}x{H} terrain, {len(towns)} towns ({with_lore} with gazetteer entries), {len(routes)} routes, {len(rivers)} rivers")
-    missing = [t["name"] for t in towns if t["union"] and "lore" not in t]
-    if missing: print("no gazetteer entry:", ", ".join(missing))
+    (OUT / f"{cid}.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
+    mine_towns = [t for t in towns if t["home"]]
+    with_lore = sum(1 for t in mine_towns if "lore" in t)
+    print(f"{country['name']}: {W}x{H} terrain, {len(mine_towns)} towns ({with_lore} described), {len(routes)} routes, {len(rivers)} rivers")
+    missing = [t["name"] for t in mine_towns if "lore" not in t]
+    if country.get("lore") and missing: print("  no gazetteer entry:", ", ".join(missing))
 
 
 if __name__ == "__main__":

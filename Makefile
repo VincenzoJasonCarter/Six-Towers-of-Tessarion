@@ -106,7 +106,8 @@ hub: ## Open everything in one place at http://127.0.0.1:8760/ (starts the libra
 	uv run hub/serve.py $(ARGS)
 
 .PHONY: atlas
-atlas: ## Redraw the map on the hub's easel (hub/atlas/) from the newest map/*.map and the lore-book
+atlas: ## Redraw the maps on the hub's easel (hub/atlas/) from the newest map/*.map and the lore-book, town plans included
+	uv run hub/plans.py
 	uv run hub/atlas.py $(ARGS)
 
 # --- misc ---
