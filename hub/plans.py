@@ -118,7 +118,7 @@ class Plan:
     def __init__(self, pid, width, height, seed):
         self.id, self.W, self.H = pid, width, height
         self.rng = np.random.default_rng(seed)
-        self.layers = {k: [] for k in ("ground", "water", "contours", "streets", "piers", "houses", "marks", "trees", "boats", "labels", "key")}
+        self.layers = {k: [] for k in ("ground", "water", "contours", "kerbs", "streets", "piers", "houses", "marks", "trees", "boats", "labels", "key")}
         self.taken = {}      # footprints nothing else may overlap, filed by 50 m square
         self.places = []
         self.palette = PALETTES["elf"]
@@ -145,8 +145,8 @@ class Plan:
 
     def street(self, line, width, colour=ROAD, name=None, layer="streets", edge=True):
         d = path_d(line.coords)
-        if edge:
-            self.add(layer, f'<path d="{d}" fill="none" stroke="{INK}" stroke-width="{width + 2.4:.1f}" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>')
+        if edge:  # every edge goes under every street, so the streets join where they meet
+            self.add("kerbs" if layer == "streets" else layer, f'<path d="{d}" fill="none" stroke="{INK}" stroke-width="{width + 2.4:.1f}" stroke-linecap="round" stroke-linejoin="round" opacity=".55"/>')
         self.add(layer, f'<path d="{d}" fill="none" stroke="{colour}" stroke-width="{width:.1f}" stroke-linecap="round" stroke-linejoin="round"/>')
         self.block(line.buffer(width / 2 + 2))
 
