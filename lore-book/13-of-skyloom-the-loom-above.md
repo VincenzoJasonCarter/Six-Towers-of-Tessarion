@@ -1,7 +1,7 @@
 # Of Skyloom, the Loom Above
 
 *Excerpt from **The Crownweave Compendium**, Fourth Roadwarden’s Edition*  
- *Shelfmark: CW-SK-01, “On the Western Heights”*
+ *Shelfmark: CW-SK-001, “On the Western Heights”*
 
 ---
 

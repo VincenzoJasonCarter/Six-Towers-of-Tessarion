@@ -1,7 +1,7 @@
 # Of Northreach Weave, the Iron Threshold
 
 *Excerpt from **The Crownweave Compendium**, Fourth Roadwarden’s Edition*  
- *Shelfmark: CW-NR-03 · “On the Northern Foundations”*
+ *Shelfmark: CW-NR-003 · “On the Northern Foundations”*
 
 ---
 

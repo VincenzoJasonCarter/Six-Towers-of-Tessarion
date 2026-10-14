@@ -10,11 +10,12 @@ const hash = s => [...s].reduce((h, c) => (h * 31 + c.charCodeAt(0)) >>> 0, 7);
 const reEsc = s => s.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 const plural = (n, w, many = w + "s") => `${n} ${n === 1 ? w : many}`;
 
-function roman(n) {
-  const R = [[1000, "M"], [900, "CM"], [500, "D"], [400, "CD"], [100, "C"], [90, "XC"], [50, "L"], [40, "XL"], [10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]];
-  let s = "";
-  for (const [v, r] of R) while (n >= v) { s += r; n -= v; }
-  return s;
+// A spine is too narrow for "TV-EW-001" on one line: the collection and subject
+// go above, the number below.
+function spineNo(b) {
+  const cut = b.serial.lastIndexOf("-");
+  return cut < 0 ? `<span class="no">${esc(b.serial)}</span>`
+    : `<span class="no"><small>${esc(b.serial.slice(0, cut))}</small>${esc(b.serial.slice(cut + 1))}</span>`;
 }
 
 function luminance(hex) {
@@ -63,8 +64,8 @@ function spine(b) {
   const where = parent ? `${s.name}, ${parent.name}` : s.name;
   return `<a class="${cls}" href="#${esc(b.slug)}" data-slug="${esc(b.slug)}"
     style="--cloth:${esc(s.colour)};--band:${esc(parent ? parent.colour : "transparent")};--w:${w}px;--h:${h}px"
-    title="${esc(`${b.title} (Vol. ${roman(b.num)}, ${where})`)}" aria-label="${esc(`Volume ${b.num}: ${b.title}. ${where}.`)}">
-    <span class="t">${esc(b.spine)}</span><span class="no">${roman(b.num)}</span></a>`;
+    title="${esc(`${b.title} (${b.serial}, ${where})`)}" aria-label="${esc(`${b.serial}: ${b.title}. ${where}.`)}">
+    <span class="t">${esc(b.spine)}</span>${spineNo(b)}</a>`;
 }
 
 // Odds and ends for the free end of each bay, dealt out in turn. Crystals take
@@ -143,7 +144,7 @@ function results() {
   const hits = books.filter(b => inShelf(b) && matches(b));
   if (!hits.length) return `<p class="empty">No volume mentions “${esc(state.q)}”.</p>`;
   return `<h2>Found in ${plural(hits.length, "volume")}</h2><ul class="hits">` + hits.map(b =>
-    `<li><a href="#${esc(b.slug)}"><i style="background:${esc(shelfOf(b).colour)}"></i><b>${esc(b.title)}</b><small>Vol. ${roman(b.num)} · ${esc(shelfOf(b).name)}</small><span>${snippet(b, ws)}</span></a></li>`).join("") + "</ul>";
+    `<li><a href="#${esc(b.slug)}"><i style="background:${esc(shelfOf(b).colour)}"></i><b>${esc(b.title)}</b><small>${esc(b.serial)} · ${esc(shelfOf(b).name)}</small><span>${snippet(b, ws)}</span></a></li>`).join("") + "</ul>";
 }
 
 function banners() {
@@ -187,7 +188,7 @@ function whereOf(b) {
 }
 
 const titlePage = b => `<section class="titlepage">
-    <div class="lib">Threadmint Library · Volume ${roman(b.num)}</div>
+    <div class="lib">Threadmint Library · ${esc(b.serial)}</div>
     <div class="orn"></div>
     <div class="bt">${esc(b.title)}</div>
     <div class="orn"></div>
@@ -202,7 +203,7 @@ function readerHTML(b) {
   const body = b.words ? b.html : `<p class="unwritten">The pages of this volume are still blank. Its account has yet to be set down.</p>`;
   return `<div class="rbar">
       <a class="back" href="#">← Library</a>
-      <div class="rtitle"><span class="sw"></span><div><b>${esc(b.title)}</b><small>Vol. ${roman(b.num)} · ${esc(where)}</small></div></div>
+      <div class="rtitle"><span class="sw"></span><div><b>${esc(b.title)}</b><small>${esc(b.serial)} · ${esc(where)}</small></div></div>
       <div class="rtools">
         <span class="hitbar" hidden></span>
         <button type="button" class="btn" data-act="toc" aria-expanded="false">Contents</button>
@@ -227,7 +228,7 @@ function readerHTML(b) {
           ${titlePage(b)}
           ${body}
           <div class="finis"><div class="orn"></div><p>Here ends <i>${esc(b.title)}</i>.</p>
-            ${next ? `<a href="#${esc(next.slug)}">Next: Vol. ${roman(next.num)}, ${esc(next.title)} →</a>` : `<a href="#">Return to the library</a>`}</div>
+            ${next ? `<a href="#${esc(next.slug)}">Next: ${esc(next.serial)}, ${esc(next.title)} →</a>` : `<a href="#">Return to the library</a>`}</div>
           <div class="end-mark"></div>
         </div></div>
       </div>
@@ -714,9 +715,9 @@ function buildPull(b, sw, sh, k, { to, B, single }) {
       <div class="ppages" style="inset:${B}px ${B}px ${B}px ${single ? B : 0}px;font-size:${state.fs}px">${titlePage(b)}</div>
       <div class="spine pspine${light ? " light" : ""}${parent ? " banded" : ""}"
         style="--cloth:${esc(s.colour)};--band:${esc(parent ? parent.colour : "transparent")};--w:${sw / k}px;--h:${sh / k}px;--k:${k * f};left:${-T}px">
-        <span class="t">${esc(b.spine)}</span><span class="no">${roman(b.num)}</span></div>
+        <span class="t">${esc(b.spine)}</span>${spineNo(b)}</div>
       <div class="pcover">
-        <div class="pc-front${light ? " light" : ""}"><div class="pc-no">VOLUME ${roman(b.num)}</div><div class="orn"></div>
+        <div class="pc-front${light ? " light" : ""}"><div class="pc-no">${esc(b.serial)}</div><div class="orn"></div>
           <div class="pc-title">${esc(b.title)}</div><div class="orn"></div><div class="pc-shelf">${esc(whereOf(b))}</div></div>
         <div class="pc-inside"><div class="ep">${EXPLATE}</div></div>
       </div>

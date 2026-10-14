@@ -1,7 +1,7 @@
 # Of Emberweave, the Burning Gate of the South
 
 *Excerpt from **The Crownweave Compendium**, Fourth Roadwarden’s Edition*  
- *Shelfmark: CW-EM-01, “On the Southern Approaches”*
+ *Shelfmark: CW-EM-001, “On the Southern Approaches”*
 
 ---
 

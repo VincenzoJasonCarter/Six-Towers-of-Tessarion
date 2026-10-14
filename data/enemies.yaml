@@ -1325,6 +1325,148 @@ enemies:
       - DC 17 Deception (lie about involvement)
       - Bribe - DC 13 Charisma save to see if accepted without consequence
 
+  # ---------------------------------------------------------------------------
+  # THAL'VIRETH - The Elderwood (lore 25, not from the Google Doc)
+  # ---------------------------------------------------------------------------
+  - id: sip
+    name: Sip, the Old Stag
+    aliases: [The Old Stag, Lord of the Deer, Keeper of the Elderwood]
+    category: legendary_boss
+    faction: The Elderwood (answers to no one)
+    type: Fey (guardian spirit of the Elderwood)
+    size: Huge
+    description: >-
+      A white stag half again the height of a horse at the shoulder, moving
+      through the trees without a sound. Antlers as wide as a cottage roof,
+      mossy and flowering, broken here and there like an old crown; between
+      them a barrel-sized wasps' nest that hums when he is near. Deer follow
+      at a distance. He never speaks. He is not angry, only attentive, and
+      leaves as soon as what is owed has been paid. Nobody who sees him can
+      afterwards say what colour his eyes are.
+    region: Thal'vireth · The Elderwood
+    lore:
+      classification: Individual — guardian spirit of the Elderwood
+      habitat: >-
+        The Elderwood, west of the Sound, under the Antlers. Seen most often
+        at the treeline in the hunting season and at the Mending Hollow at
+        any time.
+      entry: >-
+        The guardian of the Elderwood is a white stag older than the Count,
+        whom the elves call Sip and the hunters of the Sound, more carefully,
+        the Old Stag. He stands half again a horse’s height at the shoulder,
+        his antlers are grown over with moss and out-of-season flowers, and
+        between them he carries a nest of wild wasps whose hum is the first
+        thing any hunter of the Sound listens for.
+
+        He keeps the forest the way the Daykeepers keep the Ledger. Hunters
+        who ask leave at the Asking Stone, take only what they asked for and
+        bring the bones back are watched from the treeline and let go. Those
+        who do not are found at the forest’s edge some days later, unhurt,
+        with no memory of where they have been and nothing in their hands.
+        Wounded animals go to him to be healed, and, the story goes, so may
+        people, at the price of a memory.
+
+        The fjord-folk say he made a bargain with the First Keeper when the
+        tree was young: the dead of the people go to the tree, and the dead
+        of the forest go to the stag. It is why the Count stops at the
+        Elderwood’s edge, and why the tree has never eaten it.
+      field_notes:
+        - >-
+          “If you hear wasps where there should not be wasps, stop walking and
+          lower your eyes and wait. He is only looking.” — a note kept at
+          Kehir
+        - >-
+          “He’s not cruel. He just keeps count. Same as the priestesses, only
+          he doesn’t take bribes.” — a hunter of Kaynab
+    versions:
+      - label: The Reckoning (party level 3-4)
+        source: "Lore 25, Of The Elderwood"
+        role: Guardian / judgement encounter, run by the Debt, not by HP
+        ac: 16
+        ac_note: natural armor
+        hp: 190
+        hit_dice: 20d12+60
+        speed: { walk: 50 }
+        abilities: { str: 20, dex: 16, con: 16, int: 10, wis: 20, cha: 16 }
+        saving_throws: { con: 6, wis: 8 }
+        attack_bonus: 7
+        save_dc: { ability: con, dc: 14 }
+        combat_objective: >-
+          Collect what the party owes the forest, then leave. He is not trying
+          to kill anyone.
+        traits:
+          - name: The Forest's Count
+            description: >-
+              Sip knows exactly what the party has taken from the Elderwood.
+              Keep a Debt on the table (a d6 works): +1 for each animal killed
+              without asking leave at the Stone, each animal left wounded,
+              each set of bones kept, each living tree cut; +2 if the party
+              strikes first. At Debt 0 he never attacks; he watches, and goes.
+              At the end of every round the Debt falls by 1 on its own. When
+              it reaches 0 he walks into the trees and the fight is over.
+          - name: Paying What Is Owed
+            description: >-
+              A creature within 30 ft of Sip can use its action to pay: lower
+              its weapon and eyes, give back what was taken (meat, bones,
+              antler, timber), or give up a memory (the player names one
+              thing their character forgets for good). The Debt falls by 1,
+              and Sip will not attack that creature until the end of its next
+              turn.
+          - name: Into the Trees
+            description: >-
+              As a bonus action, Sip moves up to 25 ft without provoking
+              opportunity attacks. If he ends that move among trees, attacks
+              against him have Disadvantage until the start of his next turn.
+          - name: Unkept Ground
+            description: >-
+              A creature that drops to 0 HP fighting Sip in the Elderwood does
+              not make death saves. It falls unconscious and wakes at the
+              treeline below Kehir 1d4 days later with 1 HP, remembering
+              nothing after the Asking Stone. Whatever it was holding is gone.
+          - name: Not Here to Die
+            description: >-
+              If Sip drops to 0 HP in the Elderwood, he steps into the trees
+              and is gone. The Debt is paid in full, and every creature that
+              fought him makes a DC 14 Wis save or forgets the fight entirely.
+        actions:
+          - name: Antler Sweep
+            kind: melee_weapon
+            to_hit: 7
+            reach_ft: 10
+            targets: 1
+            damage: "2d8+5"
+            damage_type: bludgeoning
+            save: { ability: str, dc: 15 }
+            on_fail: Pushed 15 ft and knocked Prone.
+          - name: Wasp Crown
+            recharge: "5-6"
+            area: each creature of Sip's choice within 15 ft
+            damage: "3d6"
+            damage_type: poison
+            save: { ability: con, dc: 14 }
+            on_fail: Full damage and Poisoned until the end of its next turn.
+            on_success: Half damage.
+            note: The wasps sleep in winter; in the cold months he has no Wasp Crown.
+        tactics: >-
+          He goes for whoever owes the most: the one who made the kill, the
+          one carrying the antlers. He knocks them down and moves on rather
+          than finishing anyone, and uses Into the Trees every turn so the
+          party keeps losing sight of him. He never follows anyone past the
+          Asking Stone.
+        dm_tips: >-
+          Show the Debt die from the first round and let the hum of the wasps
+          rise and fall with it, so the players can see that the fight ends
+          on its own and that paying shortens it. Fleeing works. Paying works.
+          Winning only works on paper.
+    trivia:
+      - Nobody who has seen him can say what colour his eyes are, though all of them looked.
+      - He sheds his antlers every spring at the Shedding Ground, where they take root as white trees. Loose shed antler is the one thing the rite lets hunters take without asking.
+      - The oldest root-beds of the ring have a small stone with antlers cut into it at their western edge. Nobody will explain it.
+    notes:
+      - Not from the campaign Google Doc. Written with lore 25 (Of The Elderwood) for the Thal'vireth arc.
+      - Not yet simulated in boss_brain. The numbers assume 4 PCs of level 3-4 with one attack per turn; the Debt, not his HP, decides how long the fight lasts.
+      - Killing him for good is a campaign question, not a fight. If he dies, the Bargain of the Bones is broken and the tree can start to eat the Elderwood.
+
 # =============================================================================
 # Boss concepts (from the "Enemy Concepts" tab) - mechanics only, no stat blocks
 # =============================================================================

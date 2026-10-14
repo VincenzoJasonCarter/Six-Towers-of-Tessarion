@@ -36,7 +36,7 @@ Travellers who arrive by sea from Crownweave, thirty-odd days west across open w
 
 ●        **The Witzaran Heights.** North of the forest the ground climbs straight into a wall of glaciated mountains, the Witzaran, and the far side of them is the Obsidian Crown's. The Balam keep a drum-tower, Xamanir, at the foot of the ice and do not go higher.
 
-●        **The Sound and the Hushwood.** West of the forest, two long arms of the sea almost cut the land in two: **the Sound**, running down from the northern ocean, and the Gulf's own western arm reaching up to meet it, with only a narrow neck of land between them, which the Long Trail crosses. The Balam port of **Ek'thalas** stands on the Gulf's arm, and fishing villages line the Sound. North of them lies the dark pine country of **the Hushwood**, and west of all of it the wooded land runs on past the edge of every chart the Compendium holds. Ek'thalas's sailors navigate by stars no other harbour bothers to name.
+●        **The Sound and the Hushwood.** West of the forest, two long arms of the sea almost cut the land in two: **the Sound**, running down from the northern ocean, and the Gulf's own western arm reaching up to meet it, with only a narrow neck of land between them, which the Long Trail crosses. The Balam port of **Ek'thalas** stands on the Gulf's arm, and fishing villages line the Sound. North of them lies the dark pine country of **the Hushwood**, and west of all of it, under the white mountains the fjord-folk call the Antlers, lies **the Elderwood**, the old forest that the tree never took, which runs on past the edge of every chart the Compendium holds. Ek'thalas's sailors navigate by stars no other harbour bothers to name.
 
 ●        **The Gulf Islands.** A handful of islands in the Quiet Gulf, south of the forest. They are uninhabited by law, and Balam boats from the south drum-tower, Noholir, make sure of it.
 
@@ -96,6 +96,8 @@ A farmer of the Green Cradle who works there for ten outside years has lived six
 ## **The Two Ages**
 
 Every elf of the realm therefore has two ages, and the Daykeepers record both in the **Ledger of Hours**: their *outside years*, counted from birth by the sea-calendar, and their *lived years*, counted district by district as they move through the ring. Thal'vireth law reckons by lived years. A child raised in the Green Cradle comes of age long before a cousin born the same day in the Deep Count; a Quickening Wards inventor may inherit from a grandmother who is, to look at, younger than she is.
+
+The Ledger is kept twice. Every citizen carries their own: a slim book of bark-paper, opened at birth and stamped at every Count-gate they pass. And every stamp is copied, by the Daykeeper who makes it, into the **great register** in the Heartwood Stacks at Tun'iel, where the realm's whole Count is kept in one place, in the slowest ground there is. The two copies are meant to agree. Where they do not, the Daykeepers decide which one is wrong.
 
 Most of the realm's quieter litigation is about this. Inheritance, betrothal, debt and sentence are all measured in lived years, and the Daykeepers who keep the Ledger are the only people who can say, with authority, how old anyone is. It is not hard to see why the Ledger is where the realm's corruption lives.
 
@@ -259,6 +261,10 @@ Along the Sound, small fishing and sealing communities live in the inlets betwee
 
 In the pine country north of the Sound, the Balam keep a pair of outposts, Siisir and Witzir, against whatever comes down from the north, which is occasionally weather, occasionally beasts, and, more often of late, travellers in grey who say they are surveyors and are not. Witzir faces the Obsidian Crown's border across a few miles of pine. The elves and the Sangrith have never fought a war here. Both sides keep very careful records of why not.
 
+***The Elderwood***
+
+West of the Sound lies the one forest in the west that Ix'kaanil does not keep: **the Elderwood**, *Kehvireth* to the elves, older than the Count and guarded by a white stag the elves call **Sip** and the fjord-folk the Old Stag. Its hours are true, but it forgets: paths, footprints, names, and the ink of any Ledger carried into it, which greys page by page until it cannot be read. The law counts time spent there as no time at all, and to go in meaning to stay until one's Ledger is blank, *going unkept*, is a crime the Balam must stop before it is committed. The hunters of the Sound hunt its edge by an old rite (ask at the Stone, take only what was asked, bring the bones back), which the fjord-folk say goes back to a bargain between the stag and the First Keeper: *the dead of the people go to the tree, and the dead of the forest go to the stag.* The realm keeps one post on its edge, Kehir. See *Of The Elderwood*.
+
 ***The Iron Hordes Frontier***
 
 Where the Sunward Reach runs east into scrub and hill, it meets the borderlands of the Iron Hordes. The Desertborn trade and fight with the Horde clans as equals; the Curia regards the frontier as Balam business and pretends not to know what the Desertborn get up to there.
@@ -316,6 +322,12 @@ The settlements below are the towns the Daykeepers record, district by district,
 ●        **Xooknab** — *Shark-Water.* A sealing hamlet at the Sound's northern mouth.
 
 ●        **Siisir** and **Witzir** — *The Hushwood Posts.* Balam outposts in the northern pines; Witzir faces the Obsidian Crown.
+
+## **The Elderwood**
+
+The Elderwood keeps no towns and no Count. Beyond its one post, the Daykeepers record nothing.
+
+●        **Kehir** — *The Asking Post.* The Balam post at the wood's eastern edge, under the Antlers, where the Grey Ledger is kept and hunters ask leave at the Asking Stone.
 
 ## **K'inamar, the Sunward Reach**
 
@@ -445,6 +457,7 @@ Thal'vireth is united less by a single god than by a single ledger. The tree doe
 | *hol* | opening | Holoth |
 | *xaman*, *lak'in*, *nohol*, *chik'in* | north, east, south, west | the four drum-towers |
 | *kay*, *xook*, *siis* | fish; shark; cold | Kaynab, Xooknab, Siisir |
+| *keh* | deer | Kehvireth, the Elderwood; Kehir |
 
 The elvish endings are as regular: *-vireth* for a grove, *-vael* for a tended field, *-iel* for a place of keeping, *-arel* for a place of work, *-eleth* for a road, *-ir* for a watch, *-oth* for what lies below.
 
@@ -461,6 +474,8 @@ The elvish endings are as regular: *-vireth* for a grove, *-vael* for a tended f
 ●        **Do not buy soulstone.** Anything offered to you as Verdant Soulstone outside the Canopy Court's assent is either stolen, fake, or a test, and the penalty for all three is the same.
 
 ●        **Do not ask a Balam how long they were gone.**
+
+●        **Do not hunt west of the Sound without asking.** Ask at the Stone, take only what you asked for, and bring the bones back.
 
 ●        **Mind whose Count you are spending.** Every chronoflow contract has two parties and a tree. The tree always collects.
 

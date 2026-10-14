@@ -93,12 +93,12 @@ def _text(fragment):
 def _catalogue():
     doc = yaml.safe_load(CATALOGUE.read_text(encoding="utf-8")) or {}
     shelves = [dict(s) for s in doc.get("shelves") or []]
-    return shelves, doc.get("spine_titles") or {}
+    return shelves, doc.get("spine_titles") or {}, doc.get("serials") or {}
 
 
 def load():
     """Return (payload for the page, image pool {ref: data URI})."""
-    shelves, spine_titles = _catalogue()
+    shelves, spine_titles, serials = _catalogue()
     shelf_of = {slug: s["id"] for s in shelves for slug in s.get("books") or []}
     ids = {s["id"] for s in shelves}
     warnings = [f"catalogue.yaml: shelf {s['id']} is part_of unknown shelf {s['part_of']}"
@@ -120,6 +120,7 @@ def load():
         text = _text(page)
         books.append({
             "slug": slug, "num": num, "file": path.name, "title": title,
+            "serial": serials.get(slug) or f"UC-{num:02d}",  # an uncatalogued book still gets a name
             "spine": spine_titles.get(slug, title), "shelf": shelf_of.get(slug, UNCATALOGUED["id"]),
             "words": len(text.split()), "html": page, "text": text,
         })
@@ -127,6 +128,10 @@ def load():
     found = {b["slug"] for b in books}
     warnings += [f"catalogue.yaml lists {slug}, but lore-book/ has no such chapter"
                  for slug in shelf_of if slug not in found]
+    warnings += [f"catalogue.yaml has no serial for {b['slug']}" for b in books if b["slug"] not in serials]
+    taken = {}
+    for b in books: taken.setdefault(b["serial"], []).append(b["slug"])
+    warnings += [f"serial {s} is shared by {', '.join(slugs)}" for s, slugs in taken.items() if len(slugs) > 1]
     if any(b["shelf"] == UNCATALOGUED["id"] for b in books):
         shelves.append(dict(UNCATALOGUED))
     used = {ref for b in books for ref in re.findall(r'data-ref="(image\d+)"', b["html"])}

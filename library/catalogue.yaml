@@ -98,6 +98,7 @@ shelves:
       - of-the-white-road
       - of-the-structure-known-as-the-verdant-tower
       - artifacts-phenomenon
+      - of-the-elderwood
 
 # Shorter titles for spines where the full one will not fit. The full title
 # is still used everywhere else.
@@ -109,3 +110,35 @@ spine_titles:
   of-the-structure-known-as-the-verdant-tower: The Verdant Tower
   on-the-phenomenon-of-spire-confluence: Spire Confluence
   official-tessarion-market-value: Market Value
+
+# Each book's serial (its shelfmark), shown wherever the library names a book.
+# Collection - subject - number: TS Tessarion at large, AS Rites of Ascension,
+# SF the Soulforge, CW Crownweave, TV Thal'vireth. Books that print their own
+# shelfmark (the Compendium excerpts) keep it. Shelves still stand in chapter
+# order; the serial is only the name on the spine.
+serials:
+  prelude: TS-PR-001
+  regarding-the-countries: TS-CO-001
+  regarding-the-towers: TS-TW-001
+  on-the-phenomenon-of-spire-confluence: TS-TW-002
+  leveling-up: AS-LV-001
+  classes: AS-CL-001
+  subclasses-skill: AS-CL-002
+  crystals: AS-CR-001
+  on-threshold-assimilation: AS-CR-002
+  the-soulforge-codex: SF-CX-001
+  on-resonant-crafting: SF-CX-002
+  crafting-book: SF-CB-001
+  economy-of-tessarion: SF-EC-001
+  official-tessarion-market-value: SF-EC-002
+  crownweave: CW-UN-001
+  the-meridian-spire: CW-MS-001
+  of-skyloom-the-loom-above: CW-SK-001
+  of-northreach-weave-the-iron-threshold: CW-NR-003
+  of-emberweave-the-burning-gate-of-the-south: CW-EM-001
+  of-stormwake-the-open-harbor-of-the-east: CW-ST-003
+  thalvireth: TV-RE-001
+  of-the-white-road: TV-SB-001
+  of-the-structure-known-as-the-verdant-tower: TV-VT-001
+  artifacts-phenomenon: TV-AR-001
+  of-the-elderwood: TV-EW-001

@@ -774,10 +774,8 @@ _MAP = None
 RANK = {"roads": 0, "trails": 1}
 
 
-def map_town(name):
-    """Where a town's roads go and its river runs on the Azgaar map (the newest map/*.map):
-    {"roads": [(map name, group, heading)], "river": (name, upstream heading, downstream heading) | None}.
-    Headings are plan angles in degrees: 0 east, 90 south. Sea lanes are left out."""
+def _map():
+    """The newest map/*.map, read once: (save, pack cell points)."""
     global _MAP
     if _MAP is None:
         import atlas  # hub/atlas.py reads the save
@@ -785,10 +783,36 @@ def map_town(name):
         d = atlas.load(src)
         P, _, _ = atlas.pack_points(d)
         _MAP = (d, P)
-    d, P = _MAP
+    return _MAP
+
+
+def _burg(d, name):
     b = next((b for b in d["burgs"] if isinstance(b, dict) and b.get("name") == name and not b.get("removed")), None)
     if b is None:
         raise SystemExit(f"{name} is not on the map")
+    return b
+
+
+def map_near(name, radius=6.0):
+    """The map's land routes that pass within radius of a town, for towns that draw() themselves:
+    [(map name, group, points)], each point (dx, dy) from the town in map units (3 km), x east and y south."""
+    d, _ = _map()
+    b = _burg(d, name)
+    out = []
+    for r in d["routes"]:
+        if r["group"] not in RANK: continue
+        pts = [(q[0] - b["x"], q[1] - b["y"]) for q in r["points"]]
+        if min(math.hypot(*q) for q in pts) <= radius:
+            out.append((r.get("name"), r["group"], pts))
+    return out
+
+
+def map_town(name):
+    """Where a town's roads go and its river runs on the Azgaar map (the newest map/*.map):
+    {"roads": [(map name, group, heading)], "river": (name, upstream heading, downstream heading) | None}.
+    Headings are plan angles in degrees: 0 east, 90 south. Sea lanes are left out."""
+    d, P = _map()
+    b = _burg(d, name)
     x, y = b["x"], b["y"]
     heads = []
     for r in d["routes"]:

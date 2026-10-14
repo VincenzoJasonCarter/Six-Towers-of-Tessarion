@@ -1,0 +1,116 @@
+{
+ "id": "koneleth",
+ "town": "Koneleth",
+ "epithet": "the Exchange Houses",
+ "country": "thalvireth",
+ "places": [
+  {
+   "id": "exchange-square",
+   "name": "The Exchange Square",
+   "epithet": "Where the forest opens",
+   "text": "Halfway up the Road, on the fifth day out of Nabireth, the forest opens around a broad square paved in the Road's own pale stone, with the White Road set into the middle of it. The Exchange Houses stand on three sides. The fourth, the seaward side, is open, so a client coming up the Road sees every hall at once, and every hall sees them.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "fifth-stone",
+   "name": "The Fifth Stone",
+   "epithet": "Halfway",
+   "text": "The fifth of the Ten Stones, a squared pillar of the Road's pale rock twice a tall man's height, standing in the middle of the square: its number on the seaward face, that morning's sunrise hour on the landward. By custom, a contract witnessed at the foot of a Stone cannot later be disputed on the grounds that either party had lost track of the time. Elsewhere on the Road a broker walks a doubtful client out to the nearest Stone to sign. In Koneleth they only have to cross the square, and the paving round the Stone's foot is seldom empty.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "exchange-houses",
+   "name": "The Exchange Houses",
+   "epithet": "Where outside coin becomes inside time",
+   "text": "Six long halls of grown wood on pale stone footings, each the seat of a trading house licensed by the Curia, open from the first true hour to the last. At the front, brokers change Crownsblood and foreign coin for jade-tally at the Curia's rate, less the tenth. At the back, behind carved screens, the contract-rooms write chronoflow (ageing, keeping and waiting), a Daykeeper at every table. The largest Crownweave houses keep rooms of their own behind the screens, which the Road-elves call, without much affection, the cartel benches.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "arnabars-table",
+   "name": "Arnabar Cinnatrage's Table",
+   "epithet": "What will the Cradle say about it afterwards?",
+   "text": "The busiest table in Koneleth, in the same hall for twenty-two outside years. Arnabar, a tiefling, will tell any client unprompted what each contract will cost them in lived years, in jade-tally, and in what the Cradle will say about it afterwards. Arnabar keeps no permanent loyalties and many permanent accounts. A good deal of what the cartel benches know came from this table, and so did a good deal of what the Curia knows about the cartel benches.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "roll-house",
+   "name": "The Roll-House",
+   "epithet": "Every contract, on file",
+   "text": "The Daykeepers' hall behind the northern Exchange Houses. Every chronoflow contract written in Koneleth is copied here and the copy kept, with the Daykeepers of the Exchange who witnessed it. Among the files is the contract, still on file, for keeping an entire wedding cake. The Daykeepers lodge upstairs."
+  },
+  {
+   "id": "tenth-part",
+   "name": "The Tenth Part",
+   "epithet": "Named for the fee, and full of people complaining about it",
+   "text": "An inn on the open side of the square, where Crownweave factors drink after a day on the benches and complain about the tenth. Its keeper put the name over the door to save them the trouble of saying it."
+  },
+  {
+   "id": "balam-post",
+   "name": "The Balam Post",
+   "epithet": "More money than anywhere else on the Road, and a guard to match",
+   "text": "A tower of pale stone and a walled yard east of the square, where the Balam detachment that patrols this stretch of the Road keeps its watch. Weapons may be worn openly on the Road but not drawn on the stone, except by the Balam, and in Koneleth the Balam stand where everyone can see them.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "consignment-yards",
+   "name": "The Consignment Yards",
+   "epithet": "Cargo waiting to grow old, or not to",
+   "text": "Walled yards and sheds south-east of the square, near the head of the Ookeleth Strand. Cargo consigned for chronoflow waits here once its contract is sealed: wine and timber for ageing in the Cradle or the Wards, seed and medicines for keeping in the slow districts. Each crate gets the Roll-House's number chalked on it before the carters take it down a Strand or on up the Road."
+  },
+  {
+   "id": "carters-yards",
+   "name": "The Carters' Yards",
+   "epithet": "Paid by the Stone",
+   "text": "Ox-pens, cart-sheds and a hiring hall at the town's west end. The Road's carters are paid by the Stone, and the fifth is the halfway mark: most carters change loads here, and a good many change oxen.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "strand-gate",
+   "name": "The Ookeleth Strand-gate",
+   "epithet": "A step off the stone is a step into the Cradle's time",
+   "text": "A narrow arch of grown wood where the Strand to Ookeleth leaves the Road east of town, with a Daykeeper's post beside it. Every Ledger that goes through it is stamped. Beyond the arch the Strand runs in the Green Cradle's time, where a season passes in weeks.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "ookeleth-strand",
+   "name": "The Strand to Ookeleth",
+   "epithet": "Why the Road looks frayed from above",
+   "text": "A foot-trail that leaves the White Road at a shallow angle and runs beside it for a while before it bends away south-east to Ookeleth, where the Granary Road and three Strands meet.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "factors-row",
+   "name": "Factors' Row",
+   "epithet": "Crownweave, behind the screens and at home",
+   "text": "Streets north-east of the square where the permanent factors of the large Crownweave trading houses keep their houses and their clerks. Their houses have Crownweave doors and Crownweave shutters, and their windows face the square."
+  },
+  {
+   "id": "brokers-lanes",
+   "name": "The Brokers' Lanes",
+   "epithet": "Very good at it",
+   "text": "The lanes south-west of the square where the tiefling brokers and contract-scribes of the Exchange Houses live. They work the halls for the same reason they work Emberweave's: they are very good at it, and the elves would rather not be.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "advocates-walk",
+   "name": "Advocates' Walk",
+   "epithet": "Most of the Road's lawyers",
+   "text": "The back street behind the southern Exchange Houses, where most of the Road's lawyers keep their offices. Their business is contracts that went wrong, inheritances reckoned in lived years, and the petitions that larger contracts need before they can go up the Road to the Canopy Court for assent.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "tally-lanes",
+   "name": "The Tally Lanes",
+   "epithet": "Where the Road-elves live",
+   "text": "The older streets north-west of the square, home to the Road-elves who keep Koneleth running: hall-clerks, tally-counters, innkeepers and carters, all living their whole lives at true time, their Count-bead cords long and almost entirely white.",
+   "source": "Of The White Road"
+  },
+  {
+   "id": "white-road",
+   "name": "The White Road",
+   "epithet": "Five days to the sea, five to the Steps",
+   "text": "A raised causeway of pale, close-fitted stone, broad enough for two carts to pass, held at true time by the wards in its stones. Koneleth stands at its midpoint, on the fifth Stone. Chi'eleth and its old strand-gate lie a day west, toward the Canopy Steps.",
+   "source": "Of The White Road"
+  }
+ ]
+}

@@ -1,7 +1,7 @@
 # Of The White Road
 
 *Excerpt from **The Crownweave Compendium**, Fourth Roadwarden’s Edition*  
- *Shelfmark: TV-SB-01, “On the Road to the Canopy Court”*
+ *Shelfmark: TV-SB-001, “On the Road to the Canopy Court”*
 
 ---
 
@@ -105,7 +105,7 @@ Customs at Nabireth are thorough, slow, and, in the Compendium’s experience, h
 
 Every ship that docks at Nabireth ties up first at the **Counting Pier**, a long jetty of jade-wood at the centre of the quays, and every passenger walks its length before setting foot on the Road. At its landward end stands a low, open hall where the Daykeepers of the Landing sit at a row of tables under a carved frieze of the Ten Stones.
 
-Here each foreigner is asked their name, their purpose, and their age, and a **Ledger of Hours** is opened in their name: a slim book of bark-paper in which the Daykeepers will record every Count-gate they cross and every lived year they spend in the realm. It is handed to them sealed with the Road’s white stamp. Visitors who lose it may have it reopened, at the Pier, at a cost of one day’s wait and a fine. Visitors who lose it beyond the Road are advised to come back to the Pier as fast as they can, and to bring witnesses.
+Here each foreigner is asked their name, their purpose, and their age, and a **Ledger of Hours** is opened in their name: a slim book of bark-paper in which the Daykeepers will record every Count-gate they cross and every lived year they spend in the realm. It is handed to them sealed with the Road’s white stamp. The same entry goes up the Road the next morning, with the Pier’s other copies, to be written into the great register at Tun’iel. Visitors who lose it may have it reopened, at the Pier, at a cost of one day’s wait and a fine. Visitors who lose it beyond the Road are advised to come back to the Pier as fast as they can, and to bring witnesses.
 
 On leaving, the Ledger is closed at the same tables and kept in the realm. Thal’vireth does not let foreigners take their lived years home with them. The Daykeepers say this is a matter of record. Foreigners who have spent a decade in the Deep Count and come out a year older do not always find this comforting.
 

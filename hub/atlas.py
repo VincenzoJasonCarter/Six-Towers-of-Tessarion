@@ -18,7 +18,7 @@ country in COUNTRIES (the page has a selector for them):
                      towns (with their gazetteer entries) and labels
 
 Rebuild after editing the map or a country's gazetteer in the lore-book
-(12-16 for Crownweave, 17 for Thal'vireth).
+(12-16 for Crownweave, 17, 18 and 25 for Thal'vireth).
 """
 import argparse
 import json
@@ -59,12 +59,12 @@ COUNTRIES = [
         "id": "thalvireth", "state": 6, "name": "Thal'vireth", "title": "Thal'vireth, the Grove That Remembers",
         "intro": "The western realm, wrapped round the Verdant Tower. Six districts ring the Tower, each keeping its own pace of time; "
                  "the White Road runs east from it to Nabireth, the only harbour. Beyond the forest lie the Sound and the Hushwood, "
-                 "and south across the Gulf the Desertborn's Sunward Reach. Choose any place for what the Compendium says of it.",
+                 "the Elderwood west of them under the Antlers, and south across the Gulf the Desertborn's Sunward Reach. Choose any place for what the Compendium says of it.",
         "terms": {"seat": "Seat of a district", "border": "District border", "fort": "Fort or drum-tower", "whole": "The whole realm", "beyond": "Beyond Thal'vireth"},
         "special": {"Ix'kaanil": "The Tower, and seat of the High Priestess"},
         # a district's own book first, then the realm's gazetteer (only that section: the rest names towns in passing)
-        "lore": {"18-of-the-white-road.md": "Of The White Road", "17-thalvireth.md": "Thal’Vireth"},
-        "section": {"18-of-the-white-road.md": "From the Sea to the Steps", "17-thalvireth.md": "Gazetteer of the Western Reach"},
+        "lore": {"18-of-the-white-road.md": "Of The White Road", "25-of-the-elderwood.md": "Of The Elderwood", "17-thalvireth.md": "Thal’Vireth"},
+        "section": {"18-of-the-white-road.md": "From the Sea to the Steps", "25-of-the-elderwood.md": "Along the Edge", "17-thalvireth.md": "Gazetteer of the Western Reach"},
     },
     {
         "id": "obsidian", "state": 1, "name": "Obsidian Crown", "title": "The Obsidian Crown",

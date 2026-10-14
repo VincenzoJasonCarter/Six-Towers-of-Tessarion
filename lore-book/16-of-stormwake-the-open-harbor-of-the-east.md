@@ -3,7 +3,7 @@
 ## **Of Stormwake, the Open Harbor of the East**
 
 *Excerpt from The Crownweave Compendium, Fourth Roadwarden’s Edition*  
- Shelfmark: CW–ST–03, “On Tides and Foreign Coin”
+ Shelfmark: CW–ST–003, “On Tides and Foreign Coin”
 
 They say Crownweave was stitched from streets and stories.  
  If that is so, then Stormwake is where the threads loosen—where the pattern opens just enough to let the outside world press its fingers through.

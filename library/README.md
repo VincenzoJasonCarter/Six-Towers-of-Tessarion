@@ -77,7 +77,7 @@ switched off there, whatever the system's reduce-motion setting says.
   heading.
 
 On the shelves, the colour key highlights one subject, **In chapter order**
-lines every book up 1–23, and search matches the full text of every volume.
+lines every book up in chapter order (1–25), and search matches the full text of every volume.
 Opening a book from the search results highlights the matches, and **Next ↓**
 steps through them.
 
@@ -91,7 +91,10 @@ Chapters are named by filename without the number and `.md`
 
 A shelf with `part_of: crownweave` (the four Weaves) stands in Crownweave's
 bay and gets a band of Crownweave's colour at the top of each spine.
-`spine_titles` gives shorter spine text for long titles.
+`spine_titles` gives shorter spine text for long titles. `serials` gives each
+book its serial (shelfmark), e.g. `TV-EW-001`, which the library shows on the
+spine, the cover, the title page and the reader bar instead of a volume number.
+A book without one shows as `UC-<chapter>` and the build warns about it.
 
 ## What it fixes up from the Google Docs export
 
