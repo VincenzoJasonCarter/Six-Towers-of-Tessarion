@@ -35,6 +35,7 @@
       <div class="hangsign"><span>Threadmint</span></div>
       <div class="floor"></div>
 
+      <div class="hallpick">
       <nav class="doors" aria-label="The halls">
         <a class="door" href="#library" data-go="library">
           <span class="plaque"><b>The Library</b><small><i class="dot" data-dot="library"></i><span data-state="library">…</span></small></span>
@@ -57,6 +58,10 @@
           <span class="frame-wrap"><span class="keystone"></span><span class="arch"><span class="corridor" data-theme="bestiary" aria-hidden="true"></span></span></span>
         </a>
       </nav>
+      <button class="pick prev" type="button" aria-label="Previous hall"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M9 2 4 7l5 5"/></svg></button>
+      <button class="pick next" type="button" aria-label="Next hall"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="m5 2 5 5-5 5"/></svg></button>
+      <div class="pick-dots" role="group" aria-label="Choose a hall"></div>
+      </div>
       <div class="sconces" id="sconces" aria-hidden="true"></div>
       <img class="lightmap" id="lightmap" alt="" aria-hidden="true">
       <div class="bloom" id="bloom" aria-hidden="true"></div>

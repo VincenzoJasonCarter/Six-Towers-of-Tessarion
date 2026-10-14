@@ -618,11 +618,16 @@ function render() {
   if (walksIn) return walkIn(view);
   if (motion && from !== null && from !== "desk" && view === "desk") return walkOut(from);
   applyView(view, from !== null && from !== view);
+  // Back at reception, the hall just left is the one standing (on a phone).
+  if (view === "desk" && TOOLS[from]) {
+    const i = doorList.findIndex(d => d.dataset.go === from);
+    if (i >= 0) doorRow.scrollLeft = i * doorRow.clientWidth;
+  }
 }
 
 function applyView(view, fadeIn) {
   for (const a of document.querySelectorAll(".bar .nav a")) {
-    if (a.dataset.view === view) a.setAttribute("aria-current", "page");
+    if (a.dataset.view === view) { a.setAttribute("aria-current", "page"); showTab(a); }
     else a.removeAttribute("aria-current");
   }
   // Reception is never taken down, only covered: laying it out again (or a
@@ -671,6 +676,24 @@ function applyView(view, fadeIn) {
   }
   document.title = tool ? `${tool.name} · Threadmint` : "Threadmint Reception";
 }
+
+// On a phone the bar's tabs don't all fit, so they scroll sideways: the
+// current one is scrolled into sight, and an edge with more tabs past it fades.
+function showTab(a) {
+  const nav = a.parentElement;
+  if (nav.scrollWidth <= nav.clientWidth) return;
+  const left = a.offsetLeft - nav.offsetLeft, right = left + a.offsetWidth;
+  if (left < nav.scrollLeft + 24) nav.scrollLeft = left - 24;
+  else if (right > nav.scrollLeft + nav.clientWidth - 24) nav.scrollLeft = right - nav.clientWidth + 24;
+}
+function navEdges() {
+  const nav = $(".bar .nav");
+  nav.classList.toggle("more-l", nav.scrollLeft > 2);
+  nav.classList.toggle("more-r", nav.scrollLeft + nav.clientWidth < nav.scrollWidth - 2);
+}
+$(".bar .nav").addEventListener("scroll", navEdges, { passive: true });
+addEventListener("resize", navEdges);
+navEdges();
 
 // A tool's page, created (and so loaded) the first time it is needed. It
 // stays loaded afterwards, hidden while another view is showing.
@@ -979,7 +1002,7 @@ function walkOut(view) {
     await w.fadeTunnel(0, 1);
     applyView("desk", false);  // reception goes back underneath the tunnel
     w.settle();
-    if (matchMedia("(max-width: 760px)").matches) document.querySelector(`.door[href="#${view}"]`).scrollIntoView({ block: "center" });
+    if (matchMedia("(max-width: 760px)").matches) document.querySelector(`.door[href="#${view}"]`).scrollIntoView({ block: "center", inline: "center" });
     w.remeasure();
     // While the light still covers it, bring reception up to the doorway's
     // zoom a step at a time. Shown at that zoom all at once, it would be drawn
@@ -1113,6 +1136,31 @@ for (const door of document.querySelectorAll(".door")) {
     door.addEventListener(type, () => $(`.spill[data-for="${door.dataset.go}"]`)?.classList.toggle("lit", on));
   }
 }
+
+// On a phone the halls stand one at a time in a row that scrolls sideways
+// (style.css): the arrows step through them, round from the last to the
+// first, and the dots under them jump straight to one.
+const doorRow = $(".doors"), doorList = [...doorRow.querySelectorAll(".door")];
+const hallShown = () => Math.round(doorRow.scrollLeft / (doorRow.clientWidth || 1));
+function pickHall(i) {
+  i = (i + doorList.length) % doorList.length;
+  doorRow.scrollTo({ left: i * doorRow.clientWidth, behavior: motion ? "smooth" : "auto" });
+}
+for (const [i, door] of doorList.entries()) {
+  const dot = document.createElement("button");
+  dot.type = "button";
+  dot.setAttribute("aria-label", door.querySelector(".plaque b").textContent);
+  dot.addEventListener("click", () => pickHall(i));
+  $(".pick-dots").append(dot);
+}
+function markHall() {
+  const i = hallShown();
+  $(".pick-dots").querySelectorAll("button").forEach((b, j) => b.setAttribute("aria-current", i === j));
+}
+$(".pick.prev").addEventListener("click", () => pickHall(hallShown() - 1));
+$(".pick.next").addEventListener("click", () => pickHall(hallShown() + 1));
+doorRow.addEventListener("scroll", markHall, { passive: true });
+markHall();
 
 // ---------- the notice board ----------
 // balance-patch.md (at the repo root, served next to this page) is pinned to
@@ -1300,7 +1348,7 @@ function setAtlasView() {
   const svg = $("#atlasSvg"), ppu = atlasPPU();
   svg.setAttribute("viewBox", `${v.x} ${v.y} ${v.w} ${v.h}`);
   svg.style.setProperty("--u", (1 / ppu).toFixed(4));
-  svg.dataset.zoom = ppu < 4.2 ? "far" : ppu < 7.5 ? "mid" : "near";
+  svg.dataset.zoom = ppu < 1.6 ? "tiny" : ppu < 4.2 ? "far" : ppu < 7.5 ? "mid" : "near";
 }
 function fitAtlas() {
   const [x, y, w, h] = atlas.viewBox;

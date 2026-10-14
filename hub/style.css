@@ -223,6 +223,10 @@ html.in-tool .bar { touch-action: pan-x; }
 .door[data-go="memoria"] { --glow: rgb(255 242 208 / .45); }
 
 .floor { position: absolute; left: 0; right: 0; top: 74%; bottom: 0; overflow: hidden; z-index: 0; }
+
+/* On a phone the halls stand one at a time, chosen with the arrows, the dots
+   or a swipe (pickHall in app.js); with room for all five they aren't needed. */
+.pick, .pick-dots { display: none; }
 .floor::before {
   content: ""; position: absolute; left: -70%; right: -70%; top: 0; height: 320%;
   transform-origin: 50% 0; transform: perspective(520px) rotateX(60deg);
@@ -553,7 +557,12 @@ html.in-tool .bar { touch-action: pan-x; }
 .atlas-map svg[data-zoom="far"] .town:not(.seat, .city, .capital) .tname,
 .atlas-map svg[data-zoom="mid"] .town:is(.village, .hamlet, .fort, .caravanserai, .trading_post) .tname { display: none; }
 .atlas-map svg[data-zoom="near"] .plabel { opacity: .35; }
-.atlas-map svg[data-zoom="far"] .plabel.small { display: none; }  /* the Crownlands: too small to name from afar */
+.atlas-map svg:is([data-zoom="far"], [data-zoom="tiny"]) .plabel.small { display: none; }  /* the Crownlands: too small to name from afar */
+/* The whole island on a phone: only the Weaves are named, in smaller letters,
+   and a town once it's chosen; one step in brings the cities' names back. */
+.atlas-map svg[data-zoom="tiny"] .town:not(.sel) .tname,
+.atlas-map svg[data-zoom="tiny"] .llabel { display: none; }
+.atlas-map svg[data-zoom="tiny"] .plabel { font-size: 10.5px; letter-spacing: .08em; }
 .atlas-map svg.no-roads .roads, .atlas-map svg.no-rivers .rivers, .atlas-map svg.no-borders .borders,
 .atlas-map svg.no-names :is(.names, .tname) { display: none; }
 .atlas-zoom { position: absolute; right: 12px; top: 12px; display: flex; flex-direction: column; gap: 6px; }
@@ -663,17 +672,43 @@ pre.log { margin: 12px 0 0; padding: 12px 14px; max-height: 280px; overflow: aut
 
 /* ---------- narrow screens: the halls stack, the desk sits below ---------- */
 @media (max-width: 760px) {
-  .bar { gap: 12px; padding: 0 12px; }
-  .brand span, .pop { display: none; }
-  .nav a { padding: 0 9px; }
+  /* Reception's own tab names the place, so the brand gives its room to the
+     tabs, which scroll sideways (showTab and navEdges in app.js). */
+  .bar { gap: 8px; padding: 0 12px 0 0; }
+  .brand, .pop { display: none; }
+  .nav { flex: 1; min-width: 0; padding: 0 4px; scroll-behavior: smooth; }
+  .nav.more-r { mask-image: linear-gradient(90deg, #000 calc(100% - 36px), transparent); }
+  .nav.more-l { mask-image: linear-gradient(90deg, transparent, #000 36px); }
+  .nav.more-l.more-r { mask-image: linear-gradient(90deg, transparent, #000 36px, #000 calc(100% - 36px), transparent); }
+  .nav a { padding: 0 10px; font-size: 15px; }
+  .bar-end { margin-left: 0; flex: none; }
   .hall { height: auto; min-height: 0; padding: 58px 16px 0; background: linear-gradient(180deg, var(--plaster-lo), var(--plaster)); }
   .wall, .floor, .sconces, .lightmap, .bloom, .lens, .candlelight { display: none; }
-  .doors { position: static; display: grid; grid-template-columns: 1fr 1fr; gap: 30px 34px; padding: 0 6px 30px; }
-  .door { height: auto; max-width: none; aspect-ratio: auto; }
-  /* the halls two by two, the odd one out centred below */
+  /* the halls one at a time, side by side in a row that snaps to each */
+  .hallpick { position: relative; margin: 0 -16px; }
+  .doors {
+    position: static; display: flex; overflow-x: auto; overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory; scrollbar-width: none; padding: 16px 0 8px;
+  }
+  .doors::-webkit-scrollbar { display: none; }
+  .door { flex: 0 0 100%; height: auto; max-width: none; aspect-ratio: auto; padding: 0 max(64px, calc(50% - 130px)); scroll-snap-align: center; scroll-snap-stop: always; }
   .frame-wrap { aspect-ratio: .7; }
-  .door:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 17px); }
-  .plaque b { font-size: 17px; }
+  .plaque b { font-size: 19px; }
+  .pick {
+    display: grid; place-items: center; position: absolute; top: calc(50% - 4px); z-index: 2; width: 44px; height: 44px; margin-top: -22px;
+    border: 0; border-radius: 50%; padding: 0; cursor: pointer; color: var(--brass-ink); -webkit-tap-highlight-color: transparent;
+    background: linear-gradient(180deg, #f0d997, var(--brass) 45%, var(--brass-lo));
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), inset 0 -1px 0 rgb(0 0 0 / .2), 0 2px 6px rgb(0 0 0 / .35);
+  }
+  .pick:active { transform: scale(.94); }
+  .pick:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .pick svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+  .pick.prev { left: 12px; }
+  .pick.next { right: 12px; }
+  .pick-dots { display: flex; justify-content: center; gap: 4px; padding: 6px 0 28px; }
+  .pick-dots button { width: 28px; height: 28px; padding: 0; border: 0; background: none; cursor: pointer; display: grid; place-items: center; -webkit-tap-highlight-color: transparent; }
+  .pick-dots button::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--stone); box-shadow: inset 0 0 0 1px var(--stone-lo); transition: background .2s, transform .2s; }
+  .pick-dots button[aria-current="true"]::before { background: var(--brass); box-shadow: inset 0 0 0 1px var(--brass-lo), 0 0 6px var(--brass); transform: scale(1.25); }
   .desk { position: relative; left: auto; transform: none; width: auto; height: auto; margin: 36px -16px 0; }
   .front { padding: 20px 16px 26px; }
   .things .ledger, .things .candle { display: none; }
@@ -684,8 +719,11 @@ pre.log { margin: 12px 0 0; padding: 12px 14px; max-height: 280px; overflow: aut
   .desk { margin-top: 170px; }
   .bubble { left: 12px; right: 12px; width: auto; max-width: none; bottom: calc(100% + 150px); }
   .bubble::after { left: 50%; bottom: -9px; margin-left: -9px; border: 9px solid transparent; border-bottom: 0; border-top-color: var(--panel); }
-  .guildboard { position: relative; left: auto; bottom: auto; width: 180px; margin: 0 auto; }
-  .mapstand { position: relative; right: auto; bottom: auto; width: 200px; margin: 34px auto 0; }
+  /* the board and the easel side by side, under the halls */
+  .guildboard, .mapstand { position: relative; left: auto; right: auto; bottom: auto; display: inline-flex; vertical-align: bottom; }
+  .mapframe-plate { font-size: 8px; letter-spacing: .08em; }
+  .guildboard { width: calc(47% - 8px); margin: 0 4% 0 2%; }
+  .mapstand { width: calc(47% - 8px); margin: 0; }
   .atlas { width: 100vw; height: 100dvh; border-radius: 0; }
   .atlas-body { grid-template-columns: 1fr; grid-template-rows: 1fr minmax(0, 40%); }
   .atlas-side { border-left: 0; border-top: 1px solid var(--rule); padding: 12px 16px 18px; }

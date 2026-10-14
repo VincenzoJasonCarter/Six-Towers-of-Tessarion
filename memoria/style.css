@@ -55,7 +55,7 @@ button, input { font: inherit; color: inherit; }
 
 /* ---------- top bar ---------- */
 .top {
-  position: sticky; top: 0; z-index: 5;
+  position: sticky; top: 0; z-index: 10;
   display: flex; flex-wrap: wrap; align-items: center; gap: 10px 20px;
   padding: 12px 24px; background: var(--panel); border-bottom: 1px solid var(--rule);
 }
@@ -285,7 +285,11 @@ body.still .vitrine, body.still .art { transition: none; }
 }
 @media (max-width: 640px) {
   main { padding: 20px 16px 60px; }
-  .top { padding: 10px 16px; }
+  .top { padding: 10px 16px; position: static; }
+  .search { width: 100%; }
+  /* on a phone the intro comes first, the plan (a second way to the rooms) after it */
+  .hero { flex-direction: column; gap: 18px; }
+  .plan { width: 190px; }
   h1 { font-size: 34px; }
   .cases { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
   .vitrine .body b { font-size: 17px; }
