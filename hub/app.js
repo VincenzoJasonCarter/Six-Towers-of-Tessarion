@@ -1333,6 +1333,11 @@ function drawAtlas() {
     townMarker(t, mk);
     svgEl("text", { x: 6, y: 4, class: "tname" }, mk).textContent = t.name;
   }
+  if (d.under) {  // beneath the whole country, uncharted: blacked out over everything, towns included
+    const under = layer("under");
+    svgEl("path", { d: curvePath(d.under.outline) + "Z", class: "under-land" }, under);
+    svgEl("text", { x: d.under.at[0], y: d.under.at[1] + 12, class: "under-label", "text-anchor": "middle" }, under).textContent = "???";
+  }
   const home = d.towns.filter(t => t.home);
   $("#atlasTowns").innerHTML = home.map(t => `<option value="${escapeHTML(t.name)}">`).sort().join("");
   const biggest = [...home].sort((a, b) => b.pop - a.pop).slice(0, 2).map(t => t.name);
@@ -1378,7 +1383,7 @@ const people = n => n >= 1000 ? `about ${n.toLocaleString("en-GB")} people` : n 
 const listing = items => items.length < 2 ? items.join("") : `${items.slice(0, -1).join(", ")} and ${items.at(-1)}`;
 
 function atlasLegend() {
-  const toggles = atlasLayers.map(([key, label]) =>
+  const toggles = [...atlasLayers, ...(atlas.under ? [["under", atlas.under.name]] : [])].map(([key, label]) =>
     `<label><input type="checkbox" data-layer="${key}" ${$("#atlasSvg").classList.contains(`no-${key}`) ? "" : "checked"}> ${label}</label>`).join("");
   const terms = atlas.terms;
   $("#atlasCard").innerHTML = `
@@ -1422,9 +1427,11 @@ function showTown(i, fly) {
 // hub/plans.py draws a few towns street by street: atlas/plans/<id>.svg, with
 // <id>.json for the places marked on it. A town that has one offers it on its
 // card; the plan opens over the map, drags and zooms the same way, and a place
-// chosen on it (or from its key) shows its entry in the card.
+// chosen on it (or from its key) shows its entry in the card. A plan can carry
+// overlays (the Aerialring floating over Central District), drawn into its svg
+// but hidden: a button at the top left shows one over the town, with its own key.
 const planCache = {};
-let plan = null;  // the plan on show: { id, town, data, vb: [x, y, w, h], view: {x, y, w, h} }
+let plan = null;  // the plan on show: { id, town, data, aloft: the overlay shown or null, vb: [x, y, w, h], view: {x, y, w, h} }
 
 async function openPlan(id, townIndex) {
   try {
@@ -1436,9 +1443,21 @@ async function openPlan(id, townIndex) {
   const { data, svg } = planCache[id];
   $("#planView").innerHTML = svg;
   const vb = $("#planView svg").getAttribute("viewBox").split(/\s+/).map(Number);
-  plan = { id, town: townIndex, data, vb, view: { x: vb[0], y: vb[1], w: vb[2], h: vb[3] } };
+  plan = { id, town: townIndex, data, aloft: null, vb, view: { x: vb[0], y: vb[1], w: vb[2], h: vb[3] } };
+  const overlays = data.overlays || [];
+  $("#planOverlays").hidden = !overlays.length;
+  $("#planOverlays").innerHTML = overlays.map(o => `<button type="button" data-poverlay="${escapeHTML(o.id)}" aria-pressed="false">${escapeHTML(o.name)}</button>`).join("");
+  $("#planView").classList.remove("aloft");
   $("#atlasPlan").hidden = false;
   setPlanView();
+  planKey();
+}
+function toggleOverlay(id) {
+  const o = plan.data.overlays.find(o => o.id === id), on = plan.aloft !== o;
+  plan.aloft = on ? o : null;
+  $("#planView").querySelectorAll("[data-overlay]").forEach(g => g.setAttribute("display", on && g.dataset.overlay === id ? "inline" : "none"));
+  $("#planView").classList.toggle("aloft", on);
+  $("#planOverlays").querySelectorAll("button").forEach(b => b.setAttribute("aria-pressed", on && b.dataset.poverlay === id));
   planKey();
 }
 function closePlan() {
@@ -1469,24 +1488,26 @@ function planPoint(ev) {
   return pt.matrixTransform(svg.getScreenCTM().inverse());
 }
 function planKey() {
-  const d = plan.data;
+  const d = plan.data, o = plan.aloft, places = o ? o.places : d.places;
   $("#planView").querySelectorAll(".sel").forEach(el => el.classList.remove("sel"));
   $("#atlasCard").innerHTML = `
     <button class="atlas-back plan-back" type="button">← ${escapeHTML(d.town)}</button>
-    <p class="kicker">Town plan</p>
-    <h3>${escapeHTML(d.town)}</h3>
-    <p class="epithet">${escapeHTML(d.epithet)}</p>
+    <p class="kicker">Town plan${o ? ` · ${escapeHTML(o.name)}` : ""}</p>
+    <h3>${escapeHTML(o ? o.name : d.town)}</h3>
+    <p class="epithet">${escapeHTML(o ? o.epithet : d.epithet)}</p>
     <p class="atlas-src">Choose a place on the plan, or from the key:</p>
-    <ul class="plan-key">${d.places.map(p => `<li><button type="button" data-pplace="${escapeHTML(p.id)}">${escapeHTML(p.name)}</button></li>`).join("")}</ul>`;
+    <ul class="plan-key">${places.map(p => `<li><button type="button" data-pplace="${escapeHTML(p.id)}">${escapeHTML(p.name)}</button></li>`).join("")}</ul>`;
 }
 function showPlace(id) {
-  const p = plan.data.places.find(p => p.id === id);
+  // with an overlay shown, its places come first (the Windspire Lift has a foot in the town and a head in the air)
+  const p = (plan.aloft?.places || []).find(p => p.id === id) || plan.data.places.find(p => p.id === id);
   if (!p) return;
+  const aloft = plan.aloft?.places.includes(p);
   $("#planView").querySelectorAll(".sel").forEach(el => el.classList.remove("sel"));
   $("#planView").querySelectorAll(`[data-place="${CSS.escape(id)}"]`).forEach(el => el.classList.add("sel"));
   $("#atlasCard").innerHTML = `
-    <button class="atlas-back plan-home" type="button">← The whole of ${escapeHTML(plan.data.town)}</button>
-    <p class="kicker">${escapeHTML(plan.data.town)}</p>
+    <button class="atlas-back plan-home" type="button">← The whole of ${escapeHTML(aloft ? plan.aloft.name : plan.data.town)}</button>
+    <p class="kicker">${escapeHTML(plan.data.town)}${aloft ? ` · ${escapeHTML(plan.aloft.name)}` : ""}</p>
     <h3>${escapeHTML(p.name)}</h3>
     ${p.epithet ? `<p class="epithet">${escapeHTML(p.epithet)}</p>` : ""}
     <p>${escapeHTML(p.text)}</p>
@@ -1542,6 +1563,10 @@ function showPlace(id) {
       else zoomPlan(b.dataset.pzoom === "in" ? 1.6 : 1 / 1.6);
     });
   $("#planClose").addEventListener("click", closePlan);
+  $("#planOverlays").addEventListener("click", ev => {
+    const b = ev.target.closest("[data-poverlay]");
+    if (b && plan) toggleOverlay(b.dataset.poverlay);
+  });
   $("#atlas").addEventListener("close", () => { if (plan) closePlan(); });
 }
 

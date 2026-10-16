@@ -24,7 +24,9 @@ function that returns a Plan it has drawn itself (Nabireth does this). With
 has round it (map_town()): each road leaves town the way it does on the map.
 
 Writes hub/atlas/plans/<id>.svg and <id>.json (the places marked on the plan,
-each with its entry). hub/atlas.py gives a town the plan's button when a plan
+each with its entry). A plan can carry overlays (the Aerialring floating over
+Central District, say): drawn into the same svg, hidden until the page shows
+them, each with its own key in the json's "overlays". hub/atlas.py gives a town the plan's button when a plan
 exists under its name, so run this first (`make atlas` runs both).
 
 Each plan is laid out by hand where the lore-book says where things are and
@@ -124,6 +126,7 @@ class Plan:
         self.palette = PALETTES["elf"]
         self.corner = .22      # how round a house's corners are, as a share of its shorter side
         self.mpu = 1.0         # metres per unit, for the scale bar
+        self.overlays = []     # [{id, name, epithet, svg, places}]: drawn over the plan, hidden until the page shows one
 
     # ---- bookkeeping
     @staticmethod
@@ -262,10 +265,11 @@ class Plan:
   <pattern id="grass" width="22" height="22" patternUnits="userSpaceOnUse"><circle cx="4" cy="6" r=".9" fill="{INK}" opacity=".18"/><circle cx="15" cy="16" r=".9" fill="{INK}" opacity=".18"/><path d="M11 4l1-3 1 3" fill="none" stroke="{INK}" stroke-width=".6" opacity=".2"/></pattern>
 </defs>"""
         body = "\n".join("\n".join(self.layers[k]) for k in self.layers)
+        body += "".join(f'\n<g class="plan-overlay" data-overlay="{o["id"]}" display="none">\n{o["svg"]}\n</g>' for o in self.overlays)
         frame = f'<rect x="6" y="6" width="{W - 12}" height="{H - 12}" fill="none" stroke="{INK}" stroke-width="2.5"/><rect x="13" y="13" width="{W - 26}" height="{H - 26}" fill="none" stroke="{INK}" stroke-width=".8"/>'
         return (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" class="townplan" role="img" aria-label="Plan of {esc(title)}">\n'
                 f'<title>{esc(title)}, {esc(subtitle)}</title>\n{style}\n{defs}\n<rect width="{W}" height="{H}" fill="{PAPER}"/>\n{body}\n'
-                f'<rect width="{W}" height="{H}" filter="url(#paper)"/>\n{frame}\n</svg>\n')
+                f'<g style="pointer-events:none"><rect width="{W}" height="{H}" filter="url(#paper)"/>\n{frame}</g>\n</svg>\n')  # over everything, so clicks go through it
 
 
 def compass(p, x, y, r=34):
@@ -929,9 +933,11 @@ def main():
         p = mod.draw() if hasattr(mod, "draw") else build(dict(mod.SPEC, town=mod.TOWN))
         pid = plan_id(mod.TOWN)
         (OUT / f"{pid}.svg").write_text(p.svg(mod.TOWN, mod.EPITHET), encoding="utf-8")
-        (OUT / f"{pid}.json").write_text(json.dumps({"id": pid, "town": mod.TOWN, "epithet": mod.EPITHET, "country": country, "places": p.places},
-                                                    ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"{country:11} {mod.TOWN:18} {len(p.layers['houses']):5} houses {len(p.places):3} places -> {pid}.svg")
+        data = {"id": pid, "town": mod.TOWN, "epithet": mod.EPITHET, "country": country, "places": p.places}
+        if p.overlays:
+            data["overlays"] = [{k: o[k] for k in ("id", "name", "epithet", "places")} for o in p.overlays]
+        (OUT / f"{pid}.json").write_text(json.dumps(data, ensure_ascii=False, indent=1), encoding="utf-8")
         done += 1
     if not done:
         print("no towns matched", " ".join(sys.argv[1:]))

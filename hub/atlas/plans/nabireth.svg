@@ -2128,6 +2128,6 @@
 <g transform="translate(1560 1110)"><rect x="-165.0" y="-44" width="330" height="78" fill="#efe4c8" stroke="#4a3a28" stroke-width="1.6"/><rect x="-160.0" y="-39" width="320" height="68" fill="none" stroke="#4a3a28" stroke-width=".6"/><text y="-8" class="tp-title" font-size="34" text-anchor="middle">Nabireth</text><text y="20" class="tp-sub" font-size="16" text-anchor="middle">the Landing · Sakbeleth, Thal'vireth</text></g>
 <g transform="translate(1720 140)" opacity=".85"><circle r="34" fill="none" stroke="#4a3a28" stroke-width="1"/><path d="M0 -44L6 0 0 17.0-6 0Z" fill="#4a3a28"/><path d="M0 -44L6 0H-6Z" fill="#a5532f"/><text y="-48" class="tp-title" font-size="16" text-anchor="middle">N</text></g>
 <g transform="translate(70 1150)"><rect width="100.0" height="7" fill="#4a3a28"/><rect x="100.0" width="100.0" height="7" fill="none" stroke="#4a3a28"/><text y="-6" class="tp-sub" font-size="14">0</text><text x="100.0" y="-6" class="tp-sub" font-size="14" text-anchor="middle">100</text><text x="200.0" y="-6" class="tp-sub" font-size="14" text-anchor="middle">200 m</text></g>
-<rect width="1800" height="1200" filter="url(#paper)"/>
-<rect x="6" y="6" width="1788" height="1188" fill="none" stroke="#4a3a28" stroke-width="2.5"/><rect x="13" y="13" width="1774" height="1174" fill="none" stroke="#4a3a28" stroke-width=".8"/>
+<g style="pointer-events:none"><rect width="1800" height="1200" filter="url(#paper)"/>
+<rect x="6" y="6" width="1788" height="1188" fill="none" stroke="#4a3a28" stroke-width="2.5"/><rect x="13" y="13" width="1774" height="1174" fill="none" stroke="#4a3a28" stroke-width=".8"/></g>
 </svg>

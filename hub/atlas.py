@@ -46,6 +46,7 @@ COUNTRIES = [
                  "Skyloom lies west, Northreach north, Stormwake east and Emberweave south. Choose any town for what the Compendium says of it.",
         "terms": {"seat": "Seat of a Weave", "border": "Prefecture border", "fort": "Fort or stormgate", "whole": "The whole Union", "beyond": "Beyond the Union"},
         "names": {"Central City": "The Crownlands"},  # what the lore calls a prefecture, where the save differs
+        "under": "Underweave",  # what lies beneath the whole island: uncharted, so the page blacks it out
         "special": {"The Crown": "Heart of the Union"},
         "lore": {  # chapter file -> where the library shelves it
             "12-crownweave.md": "Crownweave",
@@ -343,6 +344,10 @@ def draw(d, P, G, bnd, vor, src, country):
     prov_border = edge_lines(lambda a, b: land[a] and land[b] and d["state"][a] == d["state"][b] == STATE and d["prov"][a] != d["prov"][b])
     state_border = edge_lines(lambda a, b: land[a] and land[b] and d["state"][a] != d["state"][b] and STATE in (d["state"][a], d["state"][b]))
     inside = lambda x, y: x0 - 10 < x < x1 + 10 and y0 - 10 < y < y1 + 10
+    under = None
+    if country.get("under"):  # the country's coast, as one closed line round its own landmass
+        coast = max(edge_lines(lambda a, b: mine[a] != mine[b]), key=len)
+        under = {"name": country["under"], "outline": coast, "at": [r1(v) for v in P[mine].mean(0)]}
 
     rivers = []
     for r in d["rivers"]:
@@ -405,6 +410,7 @@ def draw(d, P, G, bnd, vor, src, country):
         "source": src.name, "viewBox": vb, "terrain": f"atlas/{cid}.webp", "terrainBox": tb,
         "provinceBorders": prov_border, "stateBorders": state_border,
         "rivers": rivers, "routes": routes, "towns": towns, "labels": labels,
+        **({"under": under} if under else {}),
     }
     (OUT / f"{cid}.json").write_text(json.dumps(data, ensure_ascii=False, separators=(",", ":")), encoding="utf-8")
     mine_towns = [t for t in towns if t["home"]]

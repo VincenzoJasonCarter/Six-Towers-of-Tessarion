@@ -12,13 +12,16 @@ Branches are compared per adventuring day (evolve.py --open-share): over a day
 of two hard fights, a Corrupted character opens the seal for one, so a
 Corrupted kit should be worth about twice its Ascendant in the fight it opens.
 
-Each branch is a what-if variant of a subclass in heroes.py, the way
+Each branch is a what-if variant of a subclass in this package, the way
 SanguineMageNoSwap is. `uses` counts how often a branch feature fired, as a
 sanity check.
 """
-from engine import Zone, d20, deal, roll_damage, saving_throw
-from heroes import (AetherMage, BulwarkAegis, CrystalArcher, Gunman, HellboundMage, SanguineAegis,
-                    SanguineMage, StonewardenMage, VerdantMage, WarboundMage, WardenAegis)
+from engine import Ctx, Dice, Zone, d20, deal, flat, halved, roll_damage, saving_throw
+
+from .aegisbound import BulwarkAegis, SanguineAegis, WardenAegis
+from .base import most_hurt
+from .crystal_mages import AetherMage, HellboundMage, SanguineMage, StonewardenMage, VerdantMage, WarboundMage
+from .ranged import CrystalArcher, Gunman
 
 UNLOCK = 6
 
@@ -26,8 +29,8 @@ UNLOCK = 6
 class Branch:
     branch = None
 
-    def __init__(self, level, patched=True):
-        super().__init__(level, patched)
+    def __init__(self, level, gear=False):
+        super().__init__(level, gear)
         self.evolved = level >= UNLOCK
         self.uses = 0
 
@@ -44,10 +47,6 @@ class Corrupted(Branch):
         return src is not None and src.side != self.side and not src.dead
 
 
-def most_hurt(creatures):
-    return min(creatures, key=lambda c: c.hp / c.max_hp)
-
-
 # =========================================================================
 # Crystal Mages
 # =========================================================================
@@ -59,26 +58,24 @@ class VerdantAscendant(Ascendant, VerdantMage):
 
     (Round 3 had no save bonus: +1.5 points. Round 4, +1: +1.9. Round 5, a flat +2.)"""
 
-    def __init__(self, level, patched=True):
-        super().__init__(level, patched)
+    def __init__(self, level, gear=False):
+        super().__init__(level, gear)
         if self.evolved:
             self.grove += 1
 
     def aura_save_bonus(self, ally, abil):
-        return self.rk if self.evolved and self.dist_to(ally) <= 30 else 0
+        return self.rank if self.evolved and self.dist_to(ally) <= 30 else 0
 
     def grove_reroll(self, who, abil, dc, ctx):
         if not self.evolved:
             return super().grove_reroll(who, abil, dc, ctx)
-        if ((ctx.get("fear") or ctx.get("control") or ctx.get("damage")) and self.grove and self.reaction
+        if ((ctx.fear or ctx.control or ctx.damage) and self.grove and self.reaction
                 and not self.incapacitated() and self.dist_to(who) <= 30):
             self.grove -= 1
             self.reaction = False
             self.uses += 1
             return d20() + who.save_bonus(abil) >= dc
         return False
-
-
 
 
 class WarboundAscendant(Ascendant, WarboundMage):
@@ -91,8 +88,8 @@ class WarboundAscendant(Ascendant, WarboundMage):
     modifier: +3.4. Round 4 dropped the temporary HP: +0.9. Round 5, both
     with proficiency bonus - 1 uses: +3.0.)"""
 
-    def __init__(self, level, patched=True):
-        super().__init__(level, patched)
+    def __init__(self, level, gear=False):
+        super().__init__(level, gear)
         self.drums = (self.pb + 1) // 2 if self.evolved else 0
 
     def bonus_after(self, plan):
@@ -105,8 +102,6 @@ class WarboundAscendant(Ascendant, WarboundMage):
             for a in near:
                 a.gain_thp(max(1, self.mod("int")), self)
                 a.add("inspired", self, until=("end", a))
-
-
 
 
 class StonewardenAscendant(Ascendant, StonewardenMage):
@@ -124,10 +119,8 @@ class StonewardenAscendant(Ascendant, StonewardenMage):
             self.runic -= 1
             self.reaction = False
             self.uses += 1
-            return {k: v // 2 for k, v in dmg.items()}
+            return halved(dmg)
         return dmg
-
-
 
 
 class HellboundAscendant(Ascendant, HellboundMage):
@@ -154,8 +147,6 @@ class HellboundAscendant(Ascendant, HellboundMage):
                 e.add("next_atk_disadv", self, **self.until_my_next_end())
 
 
-
-
 class SanguineAscendant(Ascendant, SanguineMage):
     """Penitent: Soul Tether drains d8s instead of d6s, and heals a creature of
     your choice within 30 feet instead of you, for the damage plus your
@@ -167,28 +158,22 @@ class SanguineAscendant(Ascendant, SanguineMage):
     def bonus_after(self, plan):
         if not self.evolved:
             return super().bonus_after(plan)
-        if not self.tethers or self.bonus_used:
-            return
-        for e in self.enemies():
-            m = e.get("soul_tether")
-            if m and m.source is self:
-                self.tethers -= 1
-                self.bonus_used = True
-                self.uses += 1
-                got = deal(e, roll_damage([(self.rk, 8, 0, "necrotic")]), self, {"spell": True})
-                who = most_hurt([self] + [a for a in self.allies() if self.dist_to(a) <= 30])
-                who.heal(got + max(0, self.mod("int")), self)
-                return
-
-
+        e = self.tethered()
+        if self.tethers and not self.bonus_used and e:
+            self.tethers -= 1
+            self.bonus_used = True
+            self.uses += 1
+            got = deal(e, roll_damage([Dice(self.rank, 8, "necrotic")]), self, Ctx(spell=True))
+            who = most_hurt([self] + [a for a in self.allies() if self.dist_to(a) <= 30])
+            who.heal(got + max(0, self.mod("int")), self)
 
 
 class AetherAscendant(Ascendant, AetherMage):
     """Steadying Pulse: Stabilizing Pulse is a bonus action, and the creature also
     gains temporary HP equal to your wizard level. Uses: Intelligence modifier."""
 
-    def __init__(self, level, patched=True):
-        super().__init__(level, patched)
+    def __init__(self, level, gear=False):
+        super().__init__(level, gear)
         self.pulses = max(1, self.mod("int")) if self.evolved else 0
 
     def bonus_after(self, plan):
@@ -203,8 +188,6 @@ class AetherAscendant(Ascendant, AetherMage):
                 most_hurt(cands).gain_thp(self.level, self)
 
 
-
-
 # =========================================================================
 # Aegisbound
 # =========================================================================
@@ -217,16 +200,14 @@ class SanguineAegisAscendant(Ascendant, SanguineAegis):
     Aegis gave away its own sustain. Round 2 healed the ally by your
     proficiency bonus: +0.4.)"""
 
-    def after_damage_dealt(self, tgt, amount, ctx):
+    def on_damage_dealt(self, tgt, amount, ctx):
         leeched = self.leeched_turn
-        super().after_damage_dealt(tgt, amount, ctx)
+        super().on_damage_dealt(tgt, amount, ctx)
         if self.evolved and self.leeched_turn != leeched:
             hurt = [a for a in self.allies() if self.dist_to(a) <= 30 and a.hp < a.max_hp]
             if hurt:
                 self.uses += 1
                 most_hurt(hurt).heal(2 * self.pb, self)
-
-
 
 
 class BulwarkAscendant(Ascendant, BulwarkAegis):
@@ -237,9 +218,9 @@ class BulwarkAscendant(Ascendant, BulwarkAegis):
     (Round 1 gave proficiency bonus only: +0.6 points. Round 2 gave
     proficiency bonus + Constitution: +1.6.)"""
 
-    def guard_attack(self, att, ally, ctx):
+    def ally_attacked(self, att, ally, ctx):
         if not self.evolved:
-            return super().guard_attack(att, ally, ctx)
+            return super().ally_attacked(att, ally, ctx)
         if self.reaction and not self.incapacitated() and self.dist_to(ally) <= 10 and att is not self:
             self.reaction = False
             self.uses += 1
@@ -248,19 +229,15 @@ class BulwarkAscendant(Ascendant, BulwarkAegis):
         return False
 
 
-
-
 class WardenAscendant(Ascendant, WardenAegis):
     """Peacekeeper: a creature you Shackle Strike also has disadvantage on its next attack roll."""
 
-    def after_hit(self, tgt, ctx, crit):
+    def on_hit(self, tgt, ctx, crit):
         before = self.shackles
-        super().after_hit(tgt, ctx, crit)
+        super().on_hit(tgt, ctx, crit)
         if self.evolved and self.shackles < before and not tgt.dead:
             self.uses += 1
             tgt.add("next_atk_disadv", self, until=("start", self))
-
-
 
 
 # =========================================================================
@@ -274,15 +251,13 @@ class ArcherAscendant(Ascendant, CrystalArcher):
 
     (Round 1 gave only the next ally's attack advantage: +0.2 points.)"""
 
-    def after_hit(self, tgt, ctx, crit):
-        super().after_hit(tgt, ctx, crit)
-        if self.evolved and ctx.get("special") and not tgt.dead:
+    def on_hit(self, tgt, ctx, crit):
+        super().on_hit(tgt, ctx, crit)
+        if self.evolved and ctx.special and not tgt.dead:
             self.uses += 1
             tgt.add("spotted", self, until=("start", self), value="all")
-            if self.rk >= 3 and not tgt.has("spotted_dmg"):
-                tgt.add("spotted_dmg", self, until=("start", self), value=(self.rk, 6, 0, "piercing"))
-
-
+            if self.rank >= 3 and not tgt.has("spotted_dmg"):
+                tgt.add("spotted_dmg", self, until=("start", self), value=Dice(self.rank, 6, "piercing"))
 
 
 class GunmanAscendant(Ascendant, Gunman):
@@ -294,17 +269,17 @@ class GunmanAscendant(Ascendant, Gunman):
     (Round 1 imposed disadvantage, proficiency-bonus uses: +5.1 points.
     Round 2 cut the uses: +4.2.)"""
 
-    def __init__(self, level, patched=True):
-        super().__init__(level, patched)
+    def __init__(self, level, gear=False):
+        super().__init__(level, gear)
         self.covers = self.pb // 2 + 1 if self.evolved else 0
 
-    def guard_attack(self, att, ally, ctx):
+    def ally_attacked(self, att, ally, ctx):
         if (self.covers and self.reaction and not self.incapacitated() and att.side != self.side
-                and self.dist_to(att) <= self.weapon["normal"] and self.can_see(att)):
+                and self.dist_to(att) <= self.weapon.normal and self.can_see(att)):
             self.covers -= 1
             self.reaction = False
             self.uses += 1
-            att.add("next_atk_pen", self, value=2 + 2 * self.rk)   # taken by this very attack roll
+            att.add("next_atk_pen", self, value=2 + 2 * self.rank)   # taken by this very attack roll
         return False
 
 
@@ -320,7 +295,7 @@ class ThornZone(Zone):
         e = c.get("restrained")
         if e and e.source is o:
             o.uses += 1
-            deal(c, roll_damage([(o.rk + 1, 10, o.mod("int"), "piercing")]), o, {"spell": True})
+            deal(c, roll_damage([Dice(o.rank + 1, 10, "piercing", o.mod("int"))]), o, Ctx(spell=True))
 
 
 class VerdantCorrupted(Corrupted, VerdantMage):
@@ -338,16 +313,16 @@ class VerdantCorrupted(Corrupted, VerdantMage):
 
     def on_failed_save(self, tgt, ctx):
         super().on_failed_save(tgt, ctx)
-        if self.evolved and ctx.get("name") == "rootbind" and not tgt.dead:
+        if self.evolved and ctx.name == "rootbind" and not tgt.dead:
             self.uses += 1
-            deal(tgt, roll_damage([(self.rk, 8, 0, "piercing")]), self, {"spell": True})
+            deal(tgt, roll_damage([Dice(self.rank, 8, "piercing")]), self, Ctx(spell=True))
 
     def extra_options(self, opts):
         super().extra_options(opts)
         foe = self.foe
         if self.evolved and self.dist() <= 30 and self.can_see(foe):
-            pf = self.p_save_fail(foe, "str", {"name": "rootbind"})
-            opts.append((pf * 4.5 * self.rk, "thorned rootbind", lambda f=foe: self.rootbind(f)))
+            pf = self.p_save_fail(foe, "str", Ctx(name="rootbind"))
+            opts.append((pf * 4.5 * self.rank, "thorned rootbind", lambda f=foe: self.rootbind(f)))
 
 
 class WarboundCorrupted(Corrupted, WarboundMage):
@@ -356,18 +331,18 @@ class WarboundCorrupted(Corrupted, WarboundMage):
 
     (Kit round 1: d4s and twice: +2.3 points in an open fight.)"""
 
-    def hit_extra(self, tgt, ctx):
-        out = super().hit_extra(tgt, ctx)
+    def bonus_damage(self, tgt, ctx):
+        out = super().bonus_damage(tgt, ctx)
         if self.evolved and self.beats:
             self.uses += 1
-            out = out + [(self.beats, 8, 0, "fire")]
+            out = out + [Dice(self.beats, 8, "fire")]
         return out
 
-    def spell_bonus_parts(self, ctx):
+    def spell_bonus_damage(self):
         bfp = self.bfp
-        out = super().spell_bonus_parts(ctx)
+        out = super().spell_bonus_damage()
         if self.evolved and bfp and not self.bfp:      # Blood for Power just went into this spell
-            out = out + [(0, 0, 2 * bfp, "fire")]
+            out = out + [flat(2 * bfp, "fire")]
         return out
 
 
@@ -378,8 +353,8 @@ class StonewardenCorrupted(Corrupted, StonewardenMage):
     (Kit round 1 also gave melee attackers force equal to your Intelligence
     modifier: +5.6 points in an open fight.)"""
 
-    def __init__(self, level, patched=True):
-        super().__init__(level, patched)
+    def __init__(self, level, gear=False):
+        super().__init__(level, gear)
         self.shards = 0
 
     def runic_bulwark(self, tgt, dmg):
@@ -389,10 +364,10 @@ class StonewardenCorrupted(Corrupted, StonewardenMage):
             self.shards += sum(dmg.values()) - sum(out.values())
         return out
 
-    def spell_bonus_parts(self, ctx):
-        out = super().spell_bonus_parts(ctx)
+    def spell_bonus_damage(self):
+        out = super().spell_bonus_damage()
         if self.shards:
-            out = out + [(0, 0, self.shards, "force")]
+            out = out + [flat(self.shards, "force")]
             self.shards = 0
         return out
 
@@ -412,8 +387,8 @@ class HellboundCorrupted(Corrupted, HellboundMage):
     spells (d10s): +1.7, and it was never collected; the marked creature died first.)"""
     watches_damage = True
 
-    def __init__(self, level, patched=True):
-        super().__init__(level, patched)
+    def __init__(self, level, gear=False):
+        super().__init__(level, gear)
         self.debt = {}
 
     def mine(self, tgt):
@@ -454,7 +429,7 @@ class HellboundCorrupted(Corrupted, HellboundMage):
             tgt.remove(effect=m)
         if owed and not tgt.dead:
             self.uses += 1
-            deal(tgt, roll_damage([(owed, 10, 0, "necrotic")]), self, {"spell": True})
+            deal(tgt, roll_damage([Dice(owed, 10, "necrotic")]), self, Ctx(spell=True))
 
     def accrue(self, tgt):
         if self.evolved and not tgt.dead and self.mine(tgt):
@@ -469,7 +444,7 @@ class HellboundCorrupted(Corrupted, HellboundMage):
         return owed >= 4 or (owed and tgt.hp <= 5.5 * owed)
 
     def on_failed_save(self, tgt, ctx):
-        marked = self.mine(tgt) and ctx.get("spell")
+        marked = self.mine(tgt) and ctx.spell
         collect = marked and self.worth_collecting(tgt)
         super().on_failed_save(tgt, ctx)          # the mark's own damage; the base rule ends the mark
         if not marked or tgt.dead:
@@ -494,17 +469,13 @@ class SanguineCorrupted(Corrupted, SanguineMage):
     def bonus_after(self, plan):
         if not self.evolved:
             return super().bonus_after(plan)
-        if self.bonus_used:
-            return
-        for e in self.enemies():
-            m = e.get("soul_tether")
-            if m and m.source is self:
-                self.bonus_used = True
-                self.uses += 1
-                self.heal(deal(e, roll_damage([(self.rk, 6, 0, "necrotic")]), self, {"spell": True}))
-                if not e.dead:
-                    deal(e, roll_damage([(self.rk, 6, 0, "necrotic")]), self, {"spell": True})
-                return
+        e = self.tethered()
+        if not self.bonus_used and e:
+            self.bonus_used = True
+            self.uses += 1
+            self.heal(deal(e, roll_damage([Dice(self.rank, 6, "necrotic")]), self, Ctx(spell=True)))
+            if not e.dead:
+                deal(e, roll_damage([Dice(self.rank, 6, "necrotic")]), self, Ctx(spell=True))
 
     def on_kill(self, tgt):
         super().on_kill(tgt)
@@ -516,7 +487,7 @@ class SanguineCorrupted(Corrupted, SanguineMage):
                 nxt = min(near, key=lambda e: e.dist_to(tgt))
                 self.uses += 1
                 nxt.add("soul_tether", self, until=("start", self), skip=2)
-                deal(nxt, roll_damage([(2 * self.rk, 6, 0, "necrotic")]), self, {"spell": True})
+                deal(nxt, roll_damage([Dice(2 * self.rank, 6, "necrotic")]), self, Ctx(spell=True))
 
 
 class AetherCorrupted(Corrupted, AetherMage):
@@ -529,8 +500,8 @@ class AetherCorrupted(Corrupted, AetherMage):
 
     (Kit round 1 pulsed 2d8: +4.2 points in an open fight.)"""
 
-    def __init__(self, level, patched=True):
-        super().__init__(level, patched)
+    def __init__(self, level, gear=False):
+        super().__init__(level, gear)
         self.pulses = max(1, self.mod("int")) if self.evolved else 0
 
     def bonus_after(self, plan):
@@ -542,24 +513,24 @@ class AetherCorrupted(Corrupted, AetherMage):
                 self.pulses -= 1
                 self.bonus_used = True
                 self.uses += 1
-                n = (self.rk + 1) * (2 if e.caster else 1)
-                dmg = roll_damage([(n, 8, max(1, self.mod("int")), "force")])
-                ok = saving_throw(e, "con", self.dc, self, {"spell": True, "damage": True})
-                deal(e, {k: v // 2 for k, v in dmg.items()} if ok else dmg, self, {"spell": True})
+                n = (self.rank + 1) * (2 if e.caster else 1)
+                dmg = roll_damage([Dice(n, 8, "force", max(1, self.mod("int")))])
+                ok = saving_throw(e, "con", self.dc, self, Ctx(spell=True, damage=True))
+                deal(e, halved(dmg) if ok else dmg, self, Ctx(spell=True))
 
     def mirror(self, tgt, dmg, src, ctx):
-        if (self.evolved and self.reaction and not self.incapacitated() and ctx.get("spell")
+        if (self.evolved and self.reaction and not self.incapacitated() and ctx.spell
                 and self.enemy_source(src) and self.dist_to(tgt) <= 30):
             self.reaction = False
             self.uses += 1
-            deal(src, roll_damage([(self.level // 2, 6, 0, "force")]), self, {"spell": True})
+            deal(src, roll_damage([Dice(self.level // 2, 6, "force")]), self, Ctx(spell=True))
         return dmg
 
-    def react_to_damage(self, dmg, src, ctx):
+    def damage_reaction(self, dmg, src, ctx):
         return self.mirror(self, dmg, src, ctx)
 
-    def ward(self, tgt, dmg, src, ctx):
-        return self.mirror(tgt, dmg, src, ctx)
+    def ally_damage_reaction(self, ally, dmg, src, ctx):
+        return self.mirror(ally, dmg, src, ctx)
 
 
 class SanguineAegisCorrupted(Corrupted, SanguineAegis):
@@ -569,16 +540,14 @@ class SanguineAegisCorrupted(Corrupted, SanguineAegis):
 
     (Kit round 1: proficiency bonus once: +3.3 points in an open fight.)"""
 
-    def hit_extra(self, tgt, ctx):
-        pact = self.pact
-        out = super().hit_extra(tgt, ctx)
-        if self.evolved and ctx["kind"] == "melee" and ctx.get("weapon") and self.my_turn():
+    def bonus_damage(self, tgt, ctx):
+        out = super().bonus_damage(tgt, ctx)
+        if self.evolved and ctx.kind == "melee" and ctx.weapon and self.my_turn():
             if self.leeched_turn != self.turns:
                 self.uses += 1
-                out = out + [(0, 0, 2 * self.pb, "necrotic")]
-            spent = ctx.get("pact_n") or (pact if pact and not self.pact else 0)   # Patch 4 spends on the hit
-            if spent:
-                out = out + [(0, 0, spent, "necrotic")]   # d8s instead of d6s: +1 a die on average
+                out = out + [flat(2 * self.pb, "necrotic")]
+            if ctx.pact:
+                out = out + [flat(ctx.pact, "necrotic")]   # d8s instead of d6s: +1 a die on average
         return out
 
 
@@ -590,17 +559,17 @@ class BulwarkCorrupted(Corrupted, BulwarkAegis):
     (Kit round 1: Constitution + proficiency only: +2.0 points in an open fight.)"""
 
     def spite(self, tgt, dmg, src, ctx):
-        if (self.evolved and self.has("anchored") and ctx.get("attack") and ctx.get("kind") == "melee"
+        if (self.evolved and self.has("anchored") and ctx.attack and ctx.kind == "melee"
                 and self.enemy_source(src) and self.dist_to(tgt) <= 5):
             self.uses += 1
-            deal(src, roll_damage([(2, 6, self.mod("con") + self.pb, "thunder")]), self, {"magical": True})
+            deal(src, roll_damage([Dice(2, 6, "thunder", self.mod("con") + self.pb)]), self, Ctx(magical=True))
         return dmg
 
-    def react_to_damage(self, dmg, src, ctx):
-        return self.spite(self, super().react_to_damage(dmg, src, ctx), src, ctx)
+    def damage_reaction(self, dmg, src, ctx):
+        return self.spite(self, super().damage_reaction(dmg, src, ctx), src, ctx)
 
-    def ward(self, tgt, dmg, src, ctx):
-        return self.spite(tgt, super().ward(tgt, dmg, src, ctx), src, ctx)
+    def ally_damage_reaction(self, ally, dmg, src, ctx):
+        return self.spite(ally, super().ally_damage_reaction(ally, dmg, src, ctx), src, ctx)
 
 
 class WardenCorrupted(Corrupted, WardenAegis):
@@ -612,16 +581,16 @@ class WardenCorrupted(Corrupted, WardenAegis):
 
     def on_failed_save(self, tgt, ctx):
         super().on_failed_save(tgt, ctx)
-        if self.evolved and ctx.get("name") == "anchor" and not tgt.dead:
+        if self.evolved and ctx.name == "anchor" and not tgt.dead:
             self.uses += 1
-            deal(tgt, roll_damage([(self.rk, 6, 0, "force")]), self, {"magical": True})
+            deal(tgt, roll_damage([Dice(self.rank, 6, "force")]), self, Ctx(magical=True))
 
-    def after_hit(self, tgt, ctx, crit):
+    def on_hit(self, tgt, ctx, crit):
         before = self.shackles
-        super().after_hit(tgt, ctx, crit)
+        super().on_hit(tgt, ctx, crit)
         if self.evolved and self.shackles < before and not tgt.dead:
             self.uses += 1
-            deal(tgt, roll_damage([(self.rk, 4, 0, "force")]), self, {"magical": True})
+            deal(tgt, roll_damage([Dice(self.rank, 4, "force")]), self, Ctx(magical=True))
 
 
 class ArcherCorrupted(Corrupted, CrystalArcher):
@@ -631,18 +600,18 @@ class ArcherCorrupted(Corrupted, CrystalArcher):
     (Kit round 1: +1d8 on the target: +2.8 points in an open fight. Round 2,
     +2d8: +6.3.)"""
 
-    def hit_extra(self, tgt, ctx):
-        out = super().hit_extra(tgt, ctx)
-        if self.evolved and ctx.get("special"):
-            out = out + [(self.rk, 6, 0, "force")]
+    def bonus_damage(self, tgt, ctx):
+        out = super().bonus_damage(tgt, ctx)
+        if self.evolved and ctx.special:
+            out = out + [Dice(self.rank, 6, "force")]
         return out
 
-    def after_hit(self, tgt, ctx, crit):
-        super().after_hit(tgt, ctx, crit)
-        if self.evolved and ctx.get("special"):
+    def on_hit(self, tgt, ctx, crit):
+        super().on_hit(tgt, ctx, crit)
+        if self.evolved and ctx.special:
             self.uses += 1
             for e in [e for e in self.enemies() if e is not tgt and e.dist_to(tgt) <= 5]:
-                deal(e, roll_damage([(self.rk, 4, 0, "force")]), self, {"magical": True})
+                deal(e, roll_damage([Dice(self.rank, 4, "force")]), self, Ctx(magical=True))
 
 
 class GunmanCorrupted(Corrupted, Gunman):
@@ -652,17 +621,19 @@ class GunmanCorrupted(Corrupted, Gunman):
 
     (Kit round 1: +1d10: +3.5 points in an open fight.)"""
 
-    def hit_extra(self, tgt, ctx):
-        out = super().hit_extra(tgt, ctx)
-        if self.evolved and ctx.get("special"):
+    def bonus_damage(self, tgt, ctx):
+        out = super().bonus_damage(tgt, ctx)
+        if self.evolved and ctx.special:
             self.uses += 1
-            out = out + [(self.rk, 6, 0, "force")]
+            out = out + [Dice(self.rank, 6, "force")]
         return out
 
     def on_failed_save(self, tgt, ctx):
         super().on_failed_save(tgt, ctx)
-        if self.evolved and ctx == {"control": True} and self.level >= 7 and not tgt.dead and self.my_turn():
-            deal(tgt, roll_damage([(self.rk, 6, 0, "thunder")]), self, {"magical": True})
+        # Note: this also fires on Soulshot Barrage's stun save, not only Powder Disruption's.
+        if (self.evolved and ctx.name in ("powder disruption", "soulshot barrage") and self.level >= 7
+                and not tgt.dead and self.my_turn()):
+            deal(tgt, roll_damage([Dice(self.rank, 6, "thunder")]), self, Ctx(magical=True))
 
 
 EVOLVED = {}

@@ -68,15 +68,15 @@ oneshots-build: ## Export each one-shot module to oneshots/dist/<name>.html (DM-
 # --- arena (Monte Carlo power rankings for the subclasses) ---
 
 .PHONY: arena
-arena: ## Simulate the subclasses one-on-one and write arena/report.md (ARGS="--n 200" for a quick run)
+arena: ## Simulate the subclasses one-on-one and write arena/results/report.md (ARGS="--n 200" for a quick run)
 	uv run arena/run.py $(ARGS)
 
 .PHONY: arena-party
-arena-party: ## Simulate every four-subclass party and write arena/party_report.md (ARGS="--n 50" for a quick run)
+arena-party: ## Simulate every four-subclass party and write arena/results/party_report.md (ARGS="--n 50" for a quick run)
 	uv run arena/party.py $(ARGS)
 
 .PHONY: arena-evolution
-arena-evolution: ## Simulate the Ascendant/Corrupted evolution branches and write arena/evolution_report.md (ARGS="--n 4" for a quick run)
+arena-evolution: ## Simulate the Ascendant/Corrupted evolution branches and write arena/results/evolution_report.md (ARGS="--n 4" for a quick run)
 	uv run arena/evolve.py $(ARGS)
 
 # --- boss_brain (the boss brain and its research harness; needs Node 22.18+) ---

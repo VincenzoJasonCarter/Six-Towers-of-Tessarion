@@ -4,23 +4,22 @@ A Monte Carlo combat simulator for the eleven subclasses in
 `../lore-book/05-subclasses-skill.md`, at levels 3, 7, 10 and 15. It has
 two modes:
 
-- **One-on-one** (`run.py` → [report.md](report.md)). Every subclass against
-  benchmark foes and against each other, both as written now and as they
-  were before Patch 1 (`../balance-patch.md`).
-- **Party** (`party.py` → [party_report.md](party_report.md)). Every party of
+- **One-on-one** (`run.py` → [report.md](results/report.md)). Every subclass
+  against benchmark foes and against each other.
+- **Party** (`party.py` → [party_report.md](results/party_report.md)). Every party of
   four different subclasses (330 of them) against four kinds of encounter.
   It measures what each subclass is worth to a team, which is where support
   and control features earn their keep.
 
-Raw numbers go to `results.json` and `party_results.json`.
+A third mode, **evolution** (`evolve.py` → [evolution_report.md](results/evolution_report.md)),
+tests the draft Ascendant and Corrupted branches in `heroes/evolution.py`, which
+open at 6th level. For each subclass and branch, every party containing it
+fights the party encounters twice with the same seeds, once with that hero
+evolved, and the report gives the change in win rate (`make arena-evolution`;
+`--only gunman/ascendant` reruns one branch against the saved baseline).
 
-A third mode, **evolution** (`evolve.py` → [evolution_report.md](evolution_report.md)),
-tests the draft Ascendant and Corrupted branches in `evolution.py`, which open
-at 6th level. For each subclass and branch, every party containing it fights
-the party encounters twice with the same seeds, once with that hero evolved,
-and the report gives the change in win rate (`make arena-evolution`; `--only
-gunman/ascendant` reruns one branch against the saved baseline, `--uses 3`
-lets Corrupted heroes burn three powers a fight).
+Everything the runs write (reports, raw results, encounter tuning) goes to
+[`results/`](results/).
 
 ## Running it
 
@@ -36,7 +35,7 @@ uv run arena/party.py --recalibrate
 uv run arena/party.py --only gunman   # rerun just the parties with one subclass, after changing it
 uv run arena/party.py --size 6        # six-hero parties against six-creature encounters (party6_* files)
 uv run arena/party.py --size 6 --repeats --n 10   # the same subclass may appear more than once (party6r_* files)
-uv run arena/party.py --legacy        # the bots and arena from before the tactics fixes (party_legacy_* files)
+uv run arena/party.py --gear --only gunman   # Range with Tessarion's own weapons (party_gear_* files)
 uv run arena/run.py --report-only     # rebuild a report from its saved results
 ```
 
@@ -64,17 +63,15 @@ With this many parties and few fights each, a single party's win rate is
 noisy, so the best and worst lists flatter lucky parties. The per-subclass
 numbers are solid.
 
-`--legacy` turns off four fixes to the bots and the arena that undersold
-the Wizards in parties: area spells could only be centred on an enemy (so
-any ally fighting nearby blocked them), the whole back rank started on one
-spot, Skirmishers and Snipers always knew which hero had the fewest hit
-points, and Holds that Legendary Resistance ate used up the bot's two tries.
-They are switches in `TACTICS` in `engine.py`. Legacy runs write
-`*_legacy_*` files with their own encounter tuning; the report says which
-version produced it.
-The tuned foe sizes are kept in `calibration.json` and
-`party_calibration.json`, so results stay comparable between runs until you
-recalibrate.
+The tuned foe sizes are kept in `results/calibration.json` and
+`results/party_calibration.json`, so results stay comparable between runs
+until you recalibrate.
+
+The code only knows the current rules. To see what a rules change does,
+commit, make the change, rerun, and compare the reports with `git diff`.
+Older versions of the rules (before Patch 1 to 4, the 5e Fighter chassis, the
+bots before the tactics fixes) live in git history before the arena refactor
+of 15 October 2026.
 
 ## What it measures
 
@@ -161,19 +158,47 @@ recalibrate.
   lists each subclass's survival rate and share of damage taken, the best and
   worst parties, results by number of mages, and pair synergies.
 
-## Files
+## The code
 
-| File | What it holds |
-|---|---|
-| `engine.py` | Dice, conditions, attacks, saves, damage, concentration, movement, targeting and the turn loop |
-| `heroes.py` | The Wizard and Fighter chassis and the eleven subclasses, feature by feature, with the pre-patch rules behind `patched=False` |
-| `foes.py` | The benchmark archetypes, the party encounters, and the loader for the campaign's stat blocks |
-| `run.py` | One-on-one: calibration, experiments, `results.json` and `report.md` |
-| `party.py` | Party: calibration, all 330 parties, `party_results.json` and `party_report.md` |
+```
+arena/
+  engine/          the rules, independent of any subclass
+    dice.py          Dice(2, 6, "fire", 3) is 2d6+3 fire; d20 rolls; hit and save chances
+    context.py       Ctx: what an attack, save or damage packet is (spell? melee? a control effect?)
+    creature.py      Creature: effects, position, and every hook a feature can override
+    combat.py        attack(), saving_throw(), deal(): the three rules everything goes through
+    impact.py        crediting protection, control, enable and tanking (never rolls a die)
+    movement.py      walking the line, opportunity attacks, pushes
+    fight.py         Fight: formation, initiative, the turn loop
+  heroes/          the eleven subclasses, feature by feature
+    wizard.py        the Wizard chassis: slots, spell list, the spell-picking bot
+    crystal_mages.py Verdant, Warbound, Stonewarden, Hellbound, Sanguine, Aether
+    fighter.py       the martial chassis: one attack a turn, weapons, the melee bot
+    aegisbound.py    Sanguine, Bulwark, Warden
+    ranged.py        Crystal Archer, Gunman, their ammunition loadouts and Tessarion gear
+    evolution.py     the Ascendant and Corrupted branches (draft)
+  foes.py          benchmark archetypes, party encounters, the campaign's stat blocks
+  run.py           one-on-one: calibration, experiments, report
+  party.py         parties: calibration, every party, report
+  evolve.py        evolution branches: uplift per subclass and branch
+  results/         everything the runs write
+```
 
-To test a rules change, edit the subclass in `heroes.py`, run with
-`--recalibrate`, and compare the reports. To compare against the current
-rules instead, add the change behind a flag the way `patched` works.
+**How a feature plugs in.** A subclass is a class that overrides hooks on
+`Creature` (listed, grouped and commented at the bottom of
+`engine/creature.py`). The rules call them at fixed moments: `attack()` asks
+the attacker for `my_attack_adv` and `bonus_damage`, asks the target's allies
+for `ally_attacked` (Living Wall) and `ally_hit_reaction` (Null Field), then
+calls `on_hit`; `deal()` asks for `intercept`, `reduce_damage`, `resists`,
+`damage_reaction` and `ally_damage_reaction`; `saving_throw()` asks for the
+save's advantage, bonuses and rerolls. Effects on creatures are named strings
+(`"paralyzed"`, `"tethered"`, `"slow"`...); the table at the top of
+`engine/creature.py` says what each one does and who adds it. Zones on the
+line (Gravitic Anchor, Pact Nexus, Lockstep Field) are `Zone` subclasses with
+`on_enemy_turn_start` and `on_enemy_turn_end`.
+
+To test a rules change, edit the subclass, run with `--recalibrate`, and
+compare the reports.
 
 ## The arena
 
@@ -192,8 +217,7 @@ as half a win.
 The combatants are bots:
 
 - **Melee heroes** close in, dashing when they can't reach, and attack the
-  most hurt enemy in reach. (On the 5e chassis, `ONE_ATTACK = False`, they
-  use Action Surge on the first turn they can attack.)
+  most hurt enemy in reach.
 - **Guards** (Bulwark and Warden, when the party has a back rank) don't
   charge. They stand just in front of the most vulnerable ally and engage
   whatever comes for it.
@@ -211,47 +235,40 @@ The combatants are bots:
   Legendary Resistance shrugs off doesn't count, since the table hears about it.
 - Ammunition and other choices are also picked by expected value, from what
   the hero actually carries.
-- **Competent play** (`COMPETENT` in `heroes.py`): every subclass is meant to
-  be played at the same level, by someone who knows their kit but not what
-  the next fight holds. Range characters craft their special ammunition at a
-  rest, so they carry a fixed loadout (`LOADOUT`: the mix the bot chose when
+- **Competent play**: every subclass is meant to be played at the same
+  level, by someone who knows their kit but not what the next fight holds.
+  Range characters craft their special ammunition at a rest, so they carry a
+  fixed loadout (`LOADOUT` in `heroes/ranged.py`: the mix the bot chose when
   it could pick any kind at the moment it fired, over all four encounters)
   instead of the best kind for this enemy. The Warbound plays as described
-  below. Turning it off brings back the earlier bots; the old ammunition
-  choice was worth at most 2 to 3 points of win rate to a Range character's
-  party.
+  below.
 
 ## Builds and gear
 
-**One attack per turn** (`ONE_ATTACK` in `heroes.py`, on): Tessarion's class
-progression (the sheet linked from lore-book Ch.2) gives every class a single
-attack per turn at every level, and the Aegisbound and Range have none of the
-5e Fighter's Action Surge, Second Wind or Indomitable. Their damage grows only
-through their weapon, Resonance Rank and subclass features. Reports from
-before 12 October 2026 were run on the full 5e Fighter chassis (Extra Attack
-at 5th and 11th level, Action Surge, Second Wind, Indomitable), which
-overrated the Aegisbound and Range from 5th level; `ONE_ATTACK = False`
-rebuilds it.
+**One attack per turn**: Tessarion's class progression (the sheet linked
+from lore-book Ch.2) gives every class a single attack per turn at every
+level, and the Aegisbound and Range have none of the 5e Fighter's Action
+Surge, Second Wind or Indomitable. Their damage grows only through their
+weapon, Resonance Rank and subclass features. Reports from before 12 October
+2026 were run on the full 5e Fighter chassis, which overrated the Aegisbound
+and Range from 5th level.
 
-**Patch 4** (`PLATED` in `heroes.py`, on): every Aegisbound has a d12 hit die
-(about +1 HP a level), and from 5th level Reinforced Plating takes its
-proficiency bonus off the damage of each weapon attack that hits it, before
-resistance (`reduce_damage`, called from `deal` in `engine.py`). Spells and
-area effects aren't weapon attacks. The Warden's Shackle Strike (`TETHER`)
-shackles every creature it hits until the start of its next turn, and
-`attack_adv` gives a shackled creature disadvantage against anyone but the
-Warden (credited to the Warden as Control); the Peacekeeper and Gravewell
-riders keep the old proficiency-bonus uses. The Sanguine Aegis's Blood Lure
-(`BLOOD_LURE`, `lures` in `heroes.py`) gives an enemy within 10 feet of it
-disadvantage against anyone else while it has a Blood Charge (also credited
-as Control), and its Red Pact is spent as a hit lands instead of as a bonus
-action before the attack. Special arrows' and shots' effects, and Powder
-Disruption's silence, last until the start of the shooter's turn after next
-(`LASTING_AMMO`; `ARENA_LASTING_AMMO=0` turns it off). Resonant Shot
-(`RESONANT`, `resonant` on `Range`) adds 1d4 force per Resonance Rank to the
-first weapon hit on each of the shooter's turns: the Gunman's from 3rd level,
-the Crystal Archer's from 7th. The Sanguine Mage's Soul Tether is its own
-effect (`soul_tether`); until Patch 4 it shared the Warden's `tethered`, so a
+**Patch 4**: every Aegisbound has a d12 hit die (about +1 HP a level), and
+from 5th level Reinforced Plating takes its proficiency bonus off the damage
+of each weapon attack that hits it, before resistance (`Aegis.reduce_damage`).
+Spells and area effects aren't weapon attacks. The Warden's Shackle Strike
+shackles every creature it hits until the start of its next turn, and a
+shackled creature attacks anyone but the Warden at disadvantage (credited to
+the Warden as Control); the Peacekeeper and Gravewell riders keep the old
+proficiency-bonus uses. The Sanguine Aegis's Blood Lure (`lures`) gives an
+enemy within 10 feet of it disadvantage against anyone else while it has a
+Blood Charge (also credited as Control), and its Red Pact is spent as a hit
+lands instead of as a bonus action before the attack. Special arrows' and
+shots' effects, and Powder Disruption's silence, last until the start of the
+shooter's turn after next. Resonant Shot adds 1d4 force per Resonance Rank to
+the first weapon hit on each of the shooter's turns: the Gunman's from 3rd
+level, the Crystal Archer's from 7th. The Sanguine Mage's Soul Tether is its
+own effect (`soul_tether`); until Patch 4 it shared the Warden's, so a
 creature the mage had tethered also attacked anyone but the mage at
 disadvantage, which the lore never gave it (worth about 8 points of its
 party value).
@@ -266,7 +283,7 @@ increases into the main stat and then Constitution.
 | Weapon | Spells | Longsword | Longbow (Archer), musket 1d12, 40/120 ft (Gunman) |
 
 With `--gear` (`uv run arena/party.py --gear --only gunman`, then `--only
-archer`), the two Range subclasses carry Tessarion's own weapons from
+archer`; `heroes/ranged.py`), the two Range subclasses carry Tessarion's own weapons from
 `data/items.yaml` instead: Tier 1 at 3rd level, Tier 2 from 5th. The Gunman
 has the Matchlock Musket and Crude Handgun, then the Black-Powder Rifle
 (80/200 ft from Patch 4) and Heavy Handgun, and keeps its distance by its long

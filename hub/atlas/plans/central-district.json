@@ -5,38 +5,87 @@
  "country": "crownweave",
  "places": [
   {
+   "id": "loom-temple",
+   "name": "The Loom Temple",
+   "epithet": "The great ring of woven light",
+   "text": "At the city's heart, open to the sky at its apex, stands the temple that houses the great ring of woven light from which the Weave takes its name. Loomwardens pace its circumference, adjusting sigils and murmuring complex formulae. From here winds are redirected over Emberweave's dust, storms are delayed to spare the northern harvest, and the weather over Caer Veyn's harbor is kept, barely, within limits the harbormasters can tolerate. Guarded stairways climb from it to the Aerialring.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
    "id": "skyward-towers",
    "name": "The Skyward Towers",
    "epithet": "Three tall spires rooted firmly in stone",
-   "text": "The anchors of the floating Loom: they house the anchor-runes, lift-wards and harassed clerks whose task is to make sure the sky-bound part of Skyloom stays attached to the rest. From The Crown, one reaches the Loom by way of them.",
+   "text": "The anchors of Skyloom: they house the anchor-runes, lift-wards and harassed clerks whose task is to make sure the sky-bound part of Skyloom stays attached to the rest. From The Crown, one reaches the Aerialring by way of them.",
    "source": "Of Skyloom, the Loom Above"
   },
   {
-   "id": "loom-shadow",
-   "name": "The Loom's Shadow",
-   "epithet": "Shopkeepers set their clocks by it",
-   "text": "Every afternoon the shadow of the Loom, floating above, crosses the town end to end. Buildings here are low and broad so as not to foul the lift-wards, so nothing stands tall enough to be lit while the rest is dark.",
-   "source": "Of Skyloom, the Loom Above"
-  },
-  {
-   "id": "wardens-court",
-   "name": "The Warden's Court",
-   "epithet": "Where the Weave Warden holds court",
-   "text": "The seat of the Weave Warden of Skyloom, at the edge of the tower plazas.",
+   "id": "lift-plaza",
+   "name": "The Tower Plazas",
+   "epithet": "",
+   "text": "The plazas round the roots of the Skyward Towers, at the city's west end.",
    "source": "Of Skyloom, the Loom Above"
   },
   {
    "id": "lift-seal-office",
    "name": "The Lift-Seal Office",
    "epithet": "No seal, no lift",
-   "text": "Where lift-seals are issued: the permits without which nobody rides the Skyward Towers up to the Groundring.",
+   "text": "Where lift-seals are issued: the permits without which nobody rides the Skyward Towers up to the Aerialring.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "wardens-court",
+   "name": "The Warden's Court",
+   "epithet": "Where the Weave Warden holds court",
+   "text": "The seat of the Weave Warden of Skyloom, elected from among the senior Loomwardens, at the edge of the tower plazas.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "veil-court",
+   "name": "The Veil Court",
+   "epithet": "Open to the sky above and The Crown beyond",
+   "text": "A broad, reflective plaza at the city's eastern end. Here treaties concerning sky-lanes over the Union, the extension of weather wards over the other Weaves, and the limits of certain magical experiments are read aloud and bound.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "windspire-lift",
+   "name": "The Windspire Lift",
+   "epithet": "A discreet arch at the Court's edge",
+   "text": "An invisible column of rising air that carries those with the proper seals up to the Aerialring.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "skyward-gate-docks",
+   "name": "The Skyward Gate Docks",
+   "epithet": "Where skycraft sidle in along glowing mooring-rings",
+   "text": "Against the northern wall. Couriers from Northreach, diplomatic cutters out of Caer Veyn, and merchant vessels that prefer thin air to crowded roads all put in here. Heavier craft put down instead at Farwatch Landing on the coast.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "luminous-ward",
+   "name": "The Luminous Ward",
+   "epithet": "Light treated more as a guest than a resource",
+   "text": "A district of pale houses and glass-roofed courtyards spreading west and south. Mirrors, thin stone and cleverly angled panels (most of them fired in Midhurstnes) pull dawn and dusk deep into interior rooms. Wind-chimes and wire-songs hum between balconies, giving the whole ward a faint, constant music.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "stormwatch-edge",
+   "name": "Stormwatch Edge",
+   "epithet": "Many oaths are taken here; a few are not survived",
+   "text": "A simple stone terrace with a simple stone rail out from the eastern wall, looking toward The Crown's western wall and, beyond it, the slow, silent churning of the Everstorm that rings the heart of the Union.",
+   "source": "Of Skyloom, the Loom Above"
+  },
+  {
+   "id": "walls",
+   "name": "The Walls",
+   "epithet": "Low walls and open terraces",
+   "text": "The city's edges are ringed by low walls, towers under slate cones, and open terraces.",
    "source": "Of Skyloom, the Loom Above"
   },
   {
    "id": "candle-yards",
    "name": "The Loom Stores",
    "epithet": "Cheese, liquor, and a great many candles",
-   "text": "Where the Loom's own needs are gathered before being sent up: cheese, liquor, and a great many candles.",
+   "text": "Where the Aerialring's needs are gathered before being sent up: cheese, liquor, and a great many candles.",
    "source": "Of Skyloom, the Loom Above"
   },
   {
@@ -44,13 +93,6 @@
    "name": "The Cloudwine Distilleries",
    "epithet": "Drunk mostly by people who have just come down",
    "text": "Distilleries that make cloudwine, a clear, cold spirit.",
-   "source": "Of Skyloom, the Loom Above"
-  },
-  {
-   "id": "lift-plaza",
-   "name": "The Tower Plazas",
-   "epithet": "",
-   "text": "Central District's plazas cluster round the roots of the Skyward Towers.",
    "source": "Of Skyloom, the Loom Above"
   },
   {
@@ -66,6 +108,71 @@
    "epithet": "",
    "text": "West through Midhurstnes, Castfield and Clitford toward Cloudmoor Harbor.",
    "source": "Of Skyloom, the Loom Above"
+  }
+ ],
+ "overlays": [
+  {
+   "id": "aerialring",
+   "name": "Aerialring",
+   "epithet": "Floating above the Groundring, for the winged and the very trusted",
+   "places": [
+    {
+     "id": "aerialring",
+     "name": "The Aerialring",
+     "epithet": "It belongs to whatever has learned to trust the sky",
+     "text": "The higher, thinner loop over the Groundring: open galleries, high aeries and Sky Lanes, reserved mostly for the winged and the very trusted. It is reached by the Windspire Lift or through guarded stairways in the Loom Temple. Wing-guards enforce three simple rules: no reckless flight near docks, edges, or the Sky Lane beacons; no tampering with lift, gravity, or wind without proper sigils; and no duels over open Everstorm.",
+     "source": "Of Skyloom, the Loom Above"
+    },
+    {
+     "id": "halo-overlook",
+     "name": "The Halo Overlook",
+     "epithet": "For vows expected to outlive everyone present",
+     "text": "A circular platform of translucent stone at the Aerialring's exact centre, suspended directly above the Loom Temple's inner ring. From here one can look down through crystal at the Loom itself, and beyond that to the fields of the Shadowline, a faint pattern of roads and threads barely visible through spell-glass. It is used sparingly: for flight-rites, public auguries, and vows whose consequences are expected to outlive everyone present.",
+     "source": "Of Skyloom, the Loom Above"
+    },
+    {
+     "id": "temple-stairs",
+     "name": "The Temple Stairways",
+     "epithet": "Guarded",
+     "text": "The guarded stairways that climb from the Loom Temple below: with the Windspire Lift, the way up to the Aerialring.",
+     "source": "Of Skyloom, the Loom Above"
+    },
+    {
+     "id": "high-aeries",
+     "name": "The High Aeries",
+     "epithet": "On the western and eastern flanks",
+     "text": "Home to elves of the upper air, aarakocra scouts, harpies who have traded shriek for discipline, and certain tieflings and Sangrith bearing rune-bound wings.",
+     "source": "Of Skyloom, the Loom Above"
+    },
+    {
+     "id": "loft-market",
+     "name": "The Loft Market",
+     "epithet": "A compact cluster of stalls",
+     "text": "In the northern section: feathersteel harness and flight-cloaks (Castfield leather, Waringley wool), instruments that measure altitude, pressure, and cloud-depth, and small vials of carefully stored, highly unstable weather.",
+     "source": "Of Skyloom, the Loom Above"
+    },
+    {
+     "id": "windspire-lift",
+     "name": "The Windspire Lift",
+     "epithet": "No seal, no lift",
+     "text": "The invisible column of rising air from the arch at the Veil Court's edge comes up here, carrying those with the proper seals.",
+     "source": "Of Skyloom, the Loom Above"
+    },
+    {
+     "id": "dropway",
+     "name": "The Dropway",
+     "epithet": "When falling becomes flight, and when it does not",
+     "text": "To the south a clear shaft of air opens toward the hills below. Young fliers are taught here, under supervision, precisely when falling becomes flight and when it does not. Those who learn the lesson incorrectly are buried at Buneymouth.",
+     "source": "Of Skyloom, the Loom Above"
+    },
+    {
+     "id": "sky-lanes",
+     "name": "The Sky Lanes",
+     "epithet": "Paths in the air marked by dim rune-light",
+     "text": "The lanes along which winged patrols fly. The lamps that mark them over the countryside below are tended from the ground, by the candle-makers of Aillenestre and Fercelle.",
+     "source": "Of Skyloom, the Loom Above"
+    }
+   ]
   }
  ]
 }

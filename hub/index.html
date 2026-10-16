@@ -220,7 +220,7 @@
     <nav class="atlas-countries" id="atlasCountries" aria-label="Countries"></nav>
     <div class="atlas-body">
       <div class="atlas-map" id="atlasMap">
-        <svg id="atlasSvg" role="group" aria-label="Map of the Union of Crownweave. Drag to move, scroll or pinch to zoom, and choose a town for its entry."></svg>
+        <svg id="atlasSvg" class="no-under" role="group" aria-label="Map of the Union of Crownweave. Drag to move, scroll or pinch to zoom, and choose a town for its entry."></svg>
         <div class="atlas-zoom">
           <button type="button" data-zoom="in" aria-label="Zoom in">+</button>
           <button type="button" data-zoom="out" aria-label="Zoom out">−</button>
@@ -229,6 +229,7 @@
         <div class="atlas-plan" id="atlasPlan" hidden>
           <div class="plan-view" id="planView"></div>
           <button class="plan-close" id="planClose" type="button">← The map</button>
+          <div class="plan-overlays" id="planOverlays" role="group" aria-label="Show over the town" hidden></div>
           <div class="atlas-zoom">
             <button type="button" data-pzoom="in" aria-label="Zoom in">+</button>
             <button type="button" data-pzoom="out" aria-label="Zoom out">−</button>

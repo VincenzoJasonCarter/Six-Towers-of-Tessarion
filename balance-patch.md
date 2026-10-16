@@ -43,11 +43,11 @@ Magic resistance stays with the armor itself: it comes with Tier 3 Aegisbound ar
 > *Why Resonant Shot:* With one attack a turn, nothing in the Range's kit grew with its level: Marksman's Focus is a flat +2 and special ammunition is a few shots a rest. At 7th level a Gunman took about half as many hit points off the enemy as a mage did (97 a fight against 190). Resonant Shot is that growth. The Crystal Archer gets it at 7th level, not 3rd: at 3rd it already pulled its weight (+2), and with Resonant Shot from 3rd it overshot (+12).
 
 - **Resonant Shot** [new]: once on each of your turns, when you hit a creature with a ranged weapon attack, it takes an extra **1d4 force damage per Resonance Rank**. The **Gunman** has it from **3rd level** (part of Ballistic Training), the **Crystal Archer** from **7th level** (with Crystal Sight, whether or not it is in hyper-focus).
-- **Black-Powder Rifle** (Tier 2 Gunman weapon, Ch.7) [buff]: range **40/120 → 80/200**. A rifled barrel should reach further than the musket it replaces. Tested alone, it kept more Gunmen on their feet at 7th level (47% → 58% still standing at the end) and changed little from 10th, where the enemy reaches it anyway. With its Tier 2 guns the Gunman is +2 (`arena/party_gear_report.md`).
+- **Black-Powder Rifle** (Tier 2 Gunman weapon, Ch.7) [buff]: range **40/120 → 80/200**. A rifled barrel should reach further than the musket it replaces. Tested alone, it kept more Gunmen on their feet at 7th level (47% → 58% still standing at the end) and changed little from 10th, where the enemy reaches it anyway. With its Tier 2 guns the Gunman is +2 (`arena/results/party_gear_report.md`).
 
 > *Proving Grounds fix:* the arena gave Soul Tether and the Warden's new Shackle Strike the same effect, so a creature the Sanguine Mage had tethered also attacked anyone but the mage at disadvantage, which the lore never gave it. Fixed, the Sanguine Mage's party value falls from +17 to +8. Its rules don't change.
 
-**Party value** (win rate with the subclass minus without, averaged over 3rd, 7th, 10th and 15th level; every fight at full resources; `arena/party_report.md`):
+**Party value** (win rate with the subclass minus without, averaged over 3rd, 7th, 10th and 15th level; every fight at full resources; `arena/results/party_report.md`):
 
 | Subclass | Before | After | 3rd | 7th | 10th | 15th |
 |---|---:|---:|---:|---:|---:|---:|
@@ -70,7 +70,7 @@ The Sanguine Mage, which this patch doesn't touch, is still the strongest subcla
 
 ## Patch 3 — 2026-10-07
 
-Three changes, tested together in the Proving Grounds (`arena/party_report.md`, `arena/evolution_report.md`):
+Three changes, tested together in the Proving Grounds (`arena/results/party_report.md`, `arena/results/evolution_report.md`):
 
 1. **Resonance Rank:** subclass dice now grow as the subclass grows.
 2. **Subclass Evolution reworked:** Corrupted is now the subclass's own kit turned to raw damage for one fight at a time, and each subclass's two branches are matched in value.
@@ -205,7 +205,7 @@ Differences under about 1.5 points are noise. Sanguine Mage and Warden Aegis dri
 
 ### Subclass Evolution [new]
 
-> *Why:* After six Crystallizations a practitioner's body starts to form soulstone, and it has to settle one of two ways: contain the mana or pass it on (the lore is in *On Threshold Assimilation*, on the *Rites of Ascension* shelf). Every subclass now chooses a branch at 6th level. **Ascendant** gives support with no cost. **Corrupted** gives damage paid for with Assimilation. Both branches were tested in the Proving Grounds (`arena/evolution_report.md`): within each pillar, every subclass's Ascendant lands within 2 points of the others in party win rate, and so does every Corrupted.
+> *Why:* After six Crystallizations a practitioner's body starts to form soulstone, and it has to settle one of two ways: contain the mana or pass it on (the lore is in *On Threshold Assimilation*, on the *Rites of Ascension* shelf). Every subclass now chooses a branch at 6th level. **Ascendant** gives support with no cost. **Corrupted** gives damage paid for with Assimilation. Both branches were tested in the Proving Grounds (`arena/results/evolution_report.md`): within each pillar, every subclass's Ascendant lands within 2 points of the others in party win rate, and so does every Corrupted.
 
 **How it works**
 

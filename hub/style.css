@@ -543,6 +543,18 @@ html.in-tool .bar { touch-action: pan-x; }
   background: var(--panel); color: var(--ink); font: 14px var(--sans); cursor: pointer; box-shadow: 0 2px 6px rgb(0 0 0 / .2);
 }
 .plan-close:hover, .plan-close:focus-visible { color: var(--accent); border-color: var(--accent); outline: none; }
+/* what a plan can show over the town: the Aerialring over Central District */
+.plan-overlays { position: absolute; left: 12px; top: 54px; display: flex; flex-direction: column; gap: 4px; }
+.plan-overlays[hidden] { display: none; }
+.plan-overlays button {
+  padding: 5px 12px; border: 1px solid var(--rule); border-radius: 6px; text-align: left;
+  background: var(--panel); color: var(--ink); font: 13px var(--sans); cursor: pointer; box-shadow: 0 2px 6px rgb(0 0 0 / .2);
+}
+.plan-overlays button::before { content: "\25CB\00a0\00a0"; }
+.plan-overlays button[aria-pressed="true"]::before { content: "\25CF\00a0\00a0"; }
+.plan-overlays button:hover, .plan-overlays button:focus-visible { color: var(--accent); border-color: var(--accent); outline: none; }
+.plan-overlays button[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--panel); }
+.plan-view.aloft svg > text { opacity: .3; }  /* the town's own names, far below what floats over it */
 .atlas-plan-btn {
   margin-top: 6px; padding: 8px 16px; border: 1px solid var(--accent); border-radius: 6px;
   background: var(--accent); color: var(--panel); font: 600 14px var(--sans); cursor: pointer;
@@ -602,6 +614,9 @@ html.in-tool .bar { touch-action: pan-x; }
 .atlas-map > svg[data-zoom="tiny"] .plabel { font-size: 10.5px; letter-spacing: .08em; }
 .atlas-map > svg.no-roads .roads, .atlas-map > svg.no-rivers .rivers, .atlas-map > svg.no-borders .borders,
 .atlas-map > svg.no-names :is(.names, .tname) { display: none; }
+.atlas-map > svg.no-under .under { display: none; }  /* the Underweave, off until asked for */
+.atlas-map > svg .under-land { fill: #0c0b0a; stroke: #0c0b0a; stroke-width: 1.5; }
+.atlas-map > svg .under-label { font-size: 46px; font-weight: 700; fill: #5e574c; pointer-events: none; }
 .atlas-zoom { position: absolute; right: 12px; top: 12px; display: flex; flex-direction: column; gap: 6px; }
 .atlas-zoom button {
   width: 34px; height: 34px; padding: 0; border: 1px solid var(--rule); border-radius: 6px; cursor: pointer;

@@ -42,7 +42,17 @@ Every Crownweave town uses this. Places named in a town file should be places in
 
 A town that needs more than `SPEC` can describe can do either of these:
 
-- Add an `"extra"` function to `SPEC`. Central District's shadow of the Loom and Skyfall Reach's rain work this way.
-- Define `draw()` and draw the whole plan itself, as `thalvireth/nabireth.py` does.
+- Add an `"extra"` function to `SPEC`. Skyfall Reach's rain works this way.
+- Define `draw()` and draw the whole plan itself, as `thalvireth/nabireth.py` and `crownweave/central_district.py` do.
+
+## Overlays
+
+A plan can carry something that floats over the town, shown with a button at the plan's top left. Append it to the Plan's `overlays` in `draw()` or an `"extra"` function:
+
+```python
+p.overlays.append({"id": "aerialring", "name": "Aerialring", "epithet": ..., "svg": svg_text, "places": [...]})
+```
+
+The svg is drawn into the town's own plan, hidden until shown. While it is shown, the town's names dim and the card's key lists the overlay's places. Central District is drawn this way: the Groundring is the city itself (planned courtyard blocks round the Loom Temple, drawn by its own `draw()`), and the Aerialring floats over it, casting a shadow on the streets.
 
 Place everything where the lore-book says it is, and keep each entry to what the lore says, or to what the plan adds without contradicting it.
