@@ -355,6 +355,13 @@ function lookAt(x, y) {
   pupils.style.transform = `translate(${(x - fx) / dist * 3.6}px, ${(y - fy) / dist * 3.6}px)`;
 }
 
+// She blinks every five and a half seconds, one blink (.blinking) at a time
+// (see style.css), and not while a tool covers reception.
+setInterval(() => {
+  if (motion && currentView() === "desk") clerk.classList.add("blinking");
+}, 5500);
+clerk.addEventListener("animationend", e => { if (e.animationName === "blink") clerk.classList.remove("blinking"); });
+
 // With the pointer near her she watches it; further off, she glances at the
 // doorway it's over (not the ones right behind her).
 const NEARBY = 240;  // how near counts as near, in the svg's units

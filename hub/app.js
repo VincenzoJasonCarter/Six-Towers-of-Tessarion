@@ -645,6 +645,7 @@ function applyView(view, fadeIn) {
   if (live) frameFor(view);
   for (const [name, frame] of Object.entries(frames)) {
     frame.classList.toggle("off", name !== view || !live);
+    hold(frame);
   }
   if (live && frames[view].dataset.stale) {
     frames[view].src = app.url;
@@ -703,10 +704,29 @@ function frameFor(view) {
     frame.className = "frame off";
     frame.title = TOOLS[view].name;
     frame.src = status.apps[TOOLS[view].app].url;
+    frame.addEventListener("load", () => hold(frame));
     frames[view] = frame;
     $("#frames").append(frame);
   }
   return frames[view];
+}
+
+// A hidden tool's page still runs on this page's thread, and its endless
+// little animations (the keeper breathing, the bestiary's eyes) would cost a
+// frame's work every frame: while it is off they hold still. Only a page
+// served from here can be reached; one from elsewhere the browser throttles.
+const HOLD = "html.offstage *, html.offstage *::before, html.offstage *::after { animation-play-state: paused !important; }";
+function hold(frame) {
+  let doc;
+  try { doc = frame.contentDocument; } catch { return; }
+  if (!doc || !doc.head) return;
+  if (!doc.getElementById("hub-hold")) {
+    const style = doc.createElement("style");
+    style.id = "hub-hold";
+    style.textContent = HOLD;
+    doc.head.append(style);
+  }
+  doc.documentElement.classList.toggle("offstage", frame.classList.contains("off"));
 }
 
 // Load every running tool quietly in the background once reception is up,

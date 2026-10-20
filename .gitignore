@@ -11,3 +11,6 @@ wheels/
 
 # Library static site (make library-build)
 library/site/
+
+# Claude Code project notes (local only)
+CLAUDE.md

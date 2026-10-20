@@ -44,7 +44,11 @@ const mountOf = it => (typeOf(it) === "document" && it.model.framed) ? "wall" : 
 // A picture of each kind of exhibit, 120 x 120, in the colours its model gives.
 function art(it, align = "xMidYMid") {
   const m = it.model || {}, c = (k, d) => esc(m[k] || d);
-  const svg = (inner, cls = "") => `<svg class="art ${cls}" viewBox="0 0 120 120" preserveAspectRatio="${align} meet" aria-hidden="true">${inner}</svg>`;
+  const one = (inner, cls) => `<svg class="art ${cls}" viewBox="0 0 120 120" preserveAspectRatio="${align} meet" aria-hidden="true">${inner}</svg>`;
+  // A glowing (or pulsing) exhibit is drawn twice, the copy over it in its
+  // glow and fading in and out: a fade the GPU does, where an animated
+  // drop-shadow would be drawn afresh every frame.
+  const svg = (inner, cls = "") => cls === "glow" || cls === "pulse" ? one(inner, "") + one(inner, `aura ${cls}`) : one(inner, cls);
   const tower = (x, y, s, fill) => `<path transform="translate(${x} ${y}) scale(${s})" d="M-6 14 L-4 -8 L-7 -10 L-2 -12 L0 -18 L2 -12 L7 -10 L4 -8 L6 14Z" fill="${fill}"/>`;
   switch (typeOf(it)) {
     case "coin": return svg(`<circle cx="60" cy="62" r="32" fill="${c("metal", "#c9a24a")}" stroke="${c("rim", m.metal || "#a9843a")}" stroke-width="5"/>
@@ -265,6 +269,10 @@ $("#tabs").innerHTML = [["all", "All rooms"], ...WINGS.map(w => [w.id, plain(w.t
   .map(([id, label]) => `<button type="button" data-room="${esc(id)}" aria-pressed="${id === "all"}">${esc(label)}</button>`).join("");
 $("#plan").innerHTML = planSVG();
 $("#rooms").innerHTML = WINGS.map(roomHTML).join("");
+// A glow only pulses while it is on screen: off it, the browser would still
+// work out every frame of it (in the hub's frame, at least).
+const seen = new IntersectionObserver(es => es.forEach(e => e.target.classList.toggle("unseen", !e.isIntersecting)));
+document.querySelectorAll("#rooms .art.aura").forEach(el => seen.observe(el));
 
 function applyFilter() {
   const q = state.q.trim().toLowerCase();
