@@ -147,7 +147,6 @@ function renderFront() {
   const list = visible();
   const counts = Object.keys(KINDS).slice(1).map(k => `${entries.filter(e => e.kind === k).length} ${KINDS[k].toLowerCase()}`).join(" · ");
   let h = `<div class="front">${CAGE}<div class="intro">
-    <p class="tier">THREADMINT LIBRARY · ACCESS TIER: RESTRICTED</p>
     <span class="stamp" aria-hidden="true">Restricted</span>
     <h1>A Register of Hostile Things</h1>
     <p>Compiled from Watch reports, Loomwarden incident summaries, Crucible filings and the testimony of those who lived to give it.

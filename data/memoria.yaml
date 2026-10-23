@@ -5,8 +5,8 @@
 # rereads this file and reloads itself whenever it is saved.
 #
 # Structure
-#   memoria:  the museum's name and the line under it; the front page's
-#             tier line, title and intro
+#   memoria:  the museum's name (the top bar), and the front page's title
+#             and intro
 #   wings:    the rooms, in the order the directory lists them
 #     id, title, subtitle, intro (the wall text at the wing's entrance)
 #     kind:     rotunda (the domed hall in the middle, over the Meridian
@@ -37,8 +37,6 @@
 
 memoria:
   name: The Threadmint Memoria
-  subtitle: Objects of the History of Tessarion, Displayed for Public Instruction
-  tier: "Threadmint Library · Crownweave · Access tier: Public"
   title: The Memoria
   intro: >-
     The objects of Tessarion's history, kept on public display and arranged

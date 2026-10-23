@@ -26,7 +26,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
-    --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520; --redact: #e9e1d0;
+    --rule: #3a332a; --accent: #d9bb70; --accent-soft: #3a3020; --redact: #e9e1d0;
     --paper: #221e18; --paper-ink: #e6dccb; --paper-muted: #a0947f; --paper-rule: #3b342a;
     --wood: #4d311c; --wood-hi: #6b4629; --wood-back: #1b1109; --mark: #7d6320;
     --wall: #17211c; --wall-line: rgb(200 220 190 / .045); --wall-dot: rgb(214 190 120 / .09); --wall-edge: rgb(0 0 0 / .55);
@@ -34,7 +34,7 @@
 }
 :root[data-theme="dark"] {
   --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
-  --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520; --redact: #e9e1d0;
+  --rule: #3a332a; --accent: #d9bb70; --accent-soft: #3a3020; --redact: #e9e1d0;
   --paper: #221e18; --paper-ink: #e6dccb; --paper-muted: #a0947f; --paper-rule: #3b342a;
   --wood: #4d311c; --wood-hi: #6b4629; --wood-back: #1b1109; --mark: #7d6320;
   --wall: #17211c; --wall-line: rgb(200 220 190 / .045); --wall-dot: rgb(214 190 120 / .09); --wall-edge: rgb(0 0 0 / .55);
@@ -58,7 +58,9 @@ button, input { font: inherit; color: inherit; }
 }
 .brand { text-decoration: none; color: var(--ink); margin-right: auto; }
 .brand b { font: 700 26px/1 var(--display); letter-spacing: .01em; }
-.brand span { display: block; font-size: 13px; color: var(--muted); font-style: italic; }
+/* In the hub the hall is named by the hub's own bar, so its wordmark stands down. */
+.framed .top { justify-content: flex-end; }
+.framed .top .brand { display: none; }
 .search-box { position: relative; width: min(320px, 100%); }
 .search {
   width: 100%; padding: 7px 36px 7px 12px; border: 1px solid var(--rule);
@@ -78,7 +80,9 @@ button, input { font: inherit; color: inherit; }
   border: 1px solid var(--rule); background: var(--panel); color: var(--ink);
   border-radius: 6px; padding: 4px 11px; font: 13px var(--sans); cursor: pointer;
 }
-.btn:hover, .seg button:hover { border-color: var(--muted); }
+@media (hover: hover) and (pointer: fine) { .btn:hover, .seg button:hover { border-color: var(--muted); } }
+.btn, .seg button, .turn { transition: transform 120ms ease-out, border-color 150ms ease; }
+.btn:active, .seg button:active, .turn:active:not(:disabled) { transform: scale(.96); }
 .seg { display: inline-flex; }
 .seg button { border-radius: 0; margin-left: -1px; }
 .seg button:first-child { border-radius: 6px 0 0 6px; margin-left: 0; }
@@ -102,19 +106,45 @@ body.home {
     var(--wall);
 }
 body.home .top { background: color-mix(in srgb, var(--panel) 88%, transparent); backdrop-filter: blur(6px); }
-main { padding: 32px 40px 80px; }
+main { padding: 28px 40px 80px; }
 .front { max-width: 1240px; margin: 0 auto; }
-.intro { max-width: 760px; }
-.tier { font: 13px var(--sans); color: var(--muted); letter-spacing: .04em; }
-h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
-.controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin: 22px 0 18px; }
-.legend { display: flex; flex-wrap: wrap; gap: 6px; }
-.key {
-  display: inline-flex; align-items: center; gap: 7px; border: 1px solid var(--rule); background: var(--panel);
-  border-radius: 999px; padding: 3px 11px 3px 5px; font: 13px var(--sans); cursor: pointer; color: var(--ink);
+/* The title on the left, and on the right the book last read, to go back to. */
+.intro { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 20px 48px; }
+.intro-text { max-width: 680px; }
+.tier { margin: 0; font: 12.5px var(--sans); color: var(--muted); letter-spacing: .06em; }
+h1 { font: 700 44px/1.1 var(--display); margin: 6px 0 8px; }
+.lede { margin: 0 0 10px; font-size: 18.5px; line-height: 1.5; }
+.resume {
+  display: flex; align-items: center; gap: 14px; width: 300px; padding: 14px 18px 14px 14px;
+  border: 1px solid var(--rule); border-radius: 10px; background: var(--panel); color: var(--ink); text-decoration: none;
+  box-shadow: 0 14px 28px -20px rgb(0 0 0 / .55);
+  transition: transform 160ms ease-out, box-shadow 160ms ease-out, border-color 150ms ease;
 }
-.key i { width: 14px; height: 14px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgb(0 0 0 / .25); }
-.key.all { padding-left: 11px; }
+@media (hover: hover) and (pointer: fine) { .resume:hover { transform: translateY(-2px); border-color: var(--muted); box-shadow: 0 18px 32px -20px rgb(0 0 0 / .6); } }
+.resume:active { transform: scale(.98); }
+.resume:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+.resume-spine {  /* the book itself, a short length of its spine */
+  flex: none; width: 20px; height: 64px; border-radius: 2px 2px 1px 1px;
+  background: linear-gradient(90deg, rgb(0 0 0 / .4), rgb(255 255 255 / .16) 18%, transparent 45%, rgb(0 0 0 / .35)), var(--cloth);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / .3), inset 0 8px 0 -6px rgb(236 211 149 / .7), inset 0 -8px 0 -6px rgb(236 211 149 / .7);
+}
+.resume-text { display: flex; flex-direction: column; min-width: 0; flex: 1; }
+.resume small { font: 600 10.5px/1.3 var(--sans); letter-spacing: .14em; text-transform: uppercase; color: var(--muted); }
+.resume b { font: 700 22px/1.15 var(--display); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.resume-meta { font: 12.5px/1.4 var(--sans); color: var(--muted); }
+.resume-bar { display: block; height: 3px; margin-top: 7px; border-radius: 2px; background: var(--rule); overflow: hidden; }
+.resume-bar i { display: block; height: 100%; background: var(--cloth); border-radius: inherit; }
+.controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px 24px; margin: 20px 0 0; }
+.legend { display: flex; flex-wrap: wrap; gap: 5px; min-width: 0; }
+.key {
+  flex: none; display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--rule); background: var(--panel);
+  border-radius: 999px; padding: 2px 10px 2px 4px; font: 12.5px/1.5 var(--sans); cursor: pointer; color: var(--ink);
+  transition: border-color 150ms ease, transform 120ms ease-out;
+}
+@media (hover: hover) and (pointer: fine) { .key:hover { border-color: var(--muted); } }
+.key:active { transform: scale(.96); }
+.key i { width: 12px; height: 12px; border-radius: 50%; box-shadow: inset 0 0 0 1px rgb(0 0 0 / .25); }
+.key.all { padding-left: 10px; }
 .options { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; }
 .switch { display: flex; align-items: center; gap: 8px; font: 14px var(--sans); color: var(--muted); cursor: pointer; user-select: none; }
 .switch input { accent-color: var(--ink); width: 16px; height: 16px; margin: 0; }
@@ -126,7 +156,7 @@ h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
    on the plank above it. Inside a bay every spine is exactly --row tall
    including its headroom, so if the books wrap (narrow screens) each line
    lands on the next plank of the repeating gradient. */
-.bookcase { position: relative; margin-top: 30px; --rail: 32px; --stile: 14px; }
+.bookcase { position: relative; margin-top: 26px; --rail: 32px; --stile: 14px; }
 .crown {
   position: relative; height: 44px; margin: 0 -16px; border-radius: 4px 4px 0 0;
   background:
@@ -231,7 +261,8 @@ h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
 .spine.light .t { text-shadow: 0 1px 0 rgb(255 255 255 / .25); }
 .spine .no { position: absolute; bottom: calc(11px * var(--k)); font: 600 calc(10px * var(--k))/1 var(--sans); letter-spacing: .05em; text-align: center; }
 .spine .no small { display: block; margin-bottom: calc(2px * var(--k)); font-size: .78em; letter-spacing: .02em; opacity: .85; }
-.spine:hover, .spine:focus-visible { transform: translateY(-12px); outline: none; }
+@media (hover: hover) and (pointer: fine) { .spine:hover { transform: translateY(-12px); } }
+.spine:focus-visible { transform: translateY(-12px); outline: none; }
 .spine:focus-visible { box-shadow: 0 0 0 3px var(--panel), 0 0 0 5px var(--ink); }
 .spine.dim { opacity: .22; filter: saturate(.25); }
 .bookend {
@@ -273,13 +304,24 @@ h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
 .results { margin-bottom: 36px; max-width: 900px; }
 .results:empty { display: none; }
 .results h2 { font: 700 28px var(--display); margin: 0 0 10px; border-bottom: 1px solid var(--rule); padding-bottom: 4px; }
-.hits { list-style: none; margin: 0; padding: 0; }
-.hits a { display: block; padding: 10px 12px; border-radius: 8px; text-decoration: none; color: var(--ink); }
-.hits a:hover { background: var(--panel); }
-.hits b { font: 700 21px var(--display); }
-.hits small { font: 12.5px var(--sans); color: var(--muted); margin-left: 6px; }
-.hits span { display: block; font-size: 16px; color: var(--muted); }
-.hits i { display: inline-block; width: 10px; height: 18px; border-radius: 2px; margin-right: 8px; vertical-align: -2px; }
+.hits { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+/* Each found volume: its spine, title, shelfmark and how often it mentions the search, then the passage. */
+.hits a {
+  display: grid; grid-template-columns: 14px minmax(0, 1fr); column-gap: 14px; padding: 10px 12px; border-radius: 8px;
+  text-decoration: none; color: var(--ink); transition: background-color 150ms ease;
+}
+@media (hover: hover) and (pointer: fine) { .hits a:hover { background: var(--panel); } }
+.hits a:focus-visible { background: var(--panel); outline: 2px solid var(--ink); outline-offset: -2px; }
+.hits i {
+  grid-row: span 2; width: 14px; height: 44px; margin-top: 4px; border-radius: 2px 2px 1px 1px;
+  background: linear-gradient(90deg, rgb(0 0 0 / .4), rgb(255 255 255 / .16) 22%, transparent 50%, rgb(0 0 0 / .35)), var(--cloth);
+  box-shadow: inset 0 0 0 1px rgb(0 0 0 / .3);
+}
+.hit-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 10px; }
+.hits b { font: 700 21px/1.25 var(--display); }
+.hits small { font: 12.5px var(--sans); color: var(--muted); }
+.hits em { margin-left: auto; font: 600 11.5px var(--sans); font-style: normal; letter-spacing: .04em; color: var(--muted); white-space: nowrap; }
+.hit-text { display: block; font-size: 16px; line-height: 1.5; color: var(--muted); }
 .hits mark, .flow mark { background: var(--mark); color: inherit; border-radius: 2px; padding: 0 1px; }
 
 /* ---------- reader ---------- */
@@ -306,7 +348,13 @@ body.reading .top, body.reading main { display: none; }
 }
 .toc p { margin: 4px 16px 6px; font: 600 12px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .toc a { display: block; padding: 5px 16px; text-decoration: none; color: var(--ink); font: 16px/1.3 var(--serif); }
-.toc a:hover { background: var(--accent-soft); }
+@media (hover: hover) and (pointer: fine) { .toc a:hover { background: var(--accent-soft); } }
+.toc a:focus-visible { background: var(--accent-soft); outline: none; }
+/* the section being read (markToc in app.js) */
+.toc a[aria-current] { font-weight: 600; box-shadow: inset 3px 0 0 var(--cloth); background: color-mix(in srgb, var(--cloth) 10%, transparent); }
+/* How far through the book: a ribbon of its cloth along the foot of the bar. */
+.rprogress { position: absolute; left: 0; right: 0; bottom: -1px; height: 3px; pointer-events: none; }
+.rprogress i { display: block; height: 100%; background: var(--cloth); transform: scaleX(0); transform-origin: left; transition: transform 300ms ease-out; }
 .toc a.l3 { padding-left: 32px; font-size: 14.5px; color: var(--muted); }
 
 .stage { display: flex; align-items: center; justify-content: center; gap: 14px; padding: 22px 12px 6px; }
@@ -314,7 +362,7 @@ body.reading .top, body.reading main { display: none; }
   flex: none; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--rule);
   background: var(--panel); color: var(--ink); font: 26px/1 var(--serif); cursor: pointer; padding: 0 0 3px;
 }
-.turn:hover:not(:disabled) { border-color: var(--muted); }
+@media (hover: hover) and (pointer: fine) { .turn:hover:not(:disabled) { border-color: var(--muted); } }
 .turn:disabled { opacity: .3; cursor: default; }
 .book {
   --b: 14px; --tint: color-mix(in oklab, var(--cloth) 78%, black);
@@ -360,7 +408,22 @@ body.reading .top, body.reading main { display: none; }
   font-size: var(--fs); line-height: 1.5; color: var(--paper-ink); text-align: justify; hyphens: auto;
 }
 .scrub { display: flex; align-items: center; justify-content: center; gap: 12px; padding: 8px 16px 20px; font: 13px var(--sans); color: var(--muted); }
-.scrub input { width: min(420px, 50vw); accent-color: var(--tint-ui, var(--ink)); }
+/* The page slider: a thin rule, read so far in the book's cloth, and a round bookmark to drag. */
+.scrub input {
+  --p: 0%;
+  width: min(420px, 50vw); height: 22px; margin: 0; background: none; cursor: pointer;
+  -webkit-appearance: none; appearance: none;
+}
+.scrub input::-webkit-slider-runnable-track { height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--cloth) var(--p), var(--rule) var(--p)); }
+.scrub input::-moz-range-track { height: 4px; border-radius: 2px; background: var(--rule); }
+.scrub input::-moz-range-progress { height: 4px; border-radius: 2px; background: var(--cloth); }
+.scrub input::-webkit-slider-thumb {
+  -webkit-appearance: none; width: 16px; height: 16px; margin-top: -6px; border-radius: 50%;
+  background: var(--panel); border: 2px solid var(--cloth); box-shadow: 0 1px 3px rgb(0 0 0 / .3); transition: transform 120ms ease-out;
+}
+.scrub input::-moz-range-thumb { width: 12px; height: 12px; border-radius: 50%; background: var(--panel); border: 2px solid var(--cloth); box-shadow: 0 1px 3px rgb(0 0 0 / .3); }
+.scrub input:active::-webkit-slider-thumb { transform: scale(1.15); }
+.scrub input:focus-visible { outline: 2px solid var(--ink); outline-offset: 4px; border-radius: 4px; }
 .scrub .where { min-width: 150px; text-align: center; }
 .scrub .turn { display: none; width: 36px; height: 36px; font-size: 22px; }
 
@@ -428,7 +491,11 @@ body.scrollmode .stage { padding-bottom: 60px; }
 .flow .math { font-family: ui-monospace, Consolas, monospace; font-size: .85em; white-space: nowrap; }
 .flow .math.done { font-family: inherit; font-size: 1em; }
 .flow code { font-size: .85em; }
-.flow .redact { background: var(--redact); color: transparent; border-radius: 2px; user-select: none; }
+/* A long bar (the export has runs of 60+) breaks at the page edge like text instead of spilling onto the facing page. */
+.flow .redact {
+  background: var(--redact); color: transparent; border-radius: 2px; user-select: none;
+  word-break: break-all; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+}
 .flow .opening::first-letter { float: left; font: 700 3.3em/.8 var(--display); padding: .08em .1em 0 0; color: var(--tint); }
 .titlepage {
   height: var(--ph); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: .5em;
@@ -491,10 +558,24 @@ body.opening #reader { display: block; position: fixed; inset: 0; z-index: 40; o
 
 /* ---------- narrow screens ---------- */
 @media (max-width: 900px) {
-  main { padding: 20px 16px 60px; }
+  main { padding: 18px 16px 60px; }
   .top { padding: 10px 16px; position: static; }
+  .brand b { font-size: 23px; }
   .search-box { width: 100%; }
-  h1 { font-size: 36px; }
+  h1 { font-size: 34px; margin-bottom: 6px; }
+  .lede { font-size: 17px; }
+  .intro { grid-template-columns: 1fr; gap: 14px; }
+  .resume { width: auto; }
+  /* The subjects in one row that swipes sideways, rather than five rows of them. */
+  .controls { margin-top: 16px; }
+  .legend {
+    flex-wrap: nowrap; width: calc(100% + 32px); margin: 0 -16px; padding: 2px 16px; overflow-x: auto;
+    scrollbar-width: none; overscroll-behavior-x: contain;
+    mask-image: linear-gradient(90deg, transparent, #000 16px, #000 calc(100% - 24px), transparent);
+  }
+  .legend::-webkit-scrollbar { display: none; }
+  .hits a { padding: 10px 4px; column-gap: 12px; }
+  .hits em { margin-left: 0; }
   .bookcase { --rail: 30px; --stile: 9px; margin-top: 22px; }
   .crown { height: 36px; margin: 0 -8px; }
   .plinth { height: 30px; margin: 0 -4px; }
@@ -508,3 +589,39 @@ body.opening #reader { display: block; position: fixed; inset: 0; z-index: 40; o
   .scrub input { width: 40vw; }
   .scrub .where { min-width: 0; }
 }
+/* A phone's page is too narrow to justify without rivers between the words. */
+@media (max-width: 600px) {
+  .flow { text-align: left; }
+}
+
+/* ---------- the withdrawn shelf (seal.py) ----------
+   Once unsealed it hangs upside down beneath the plinth, in obsidian instead
+   of oak: the bookcase pushed through the floor and out the other side. */
+.tier .redact { background: var(--muted); color: transparent; border-radius: 2px; user-select: none; }
+.undercroft { margin-top: 2px; padding-bottom: 48px; }
+.bookcase.sealed {
+  --wood: #1f1b24; --wood-hi: #3d3547; --wood-back: #0b0a0d;
+  margin-top: 0; rotate: 180deg;
+}
+.bookcase.sealed .plinth::after { display: none; }
+.bookcase.sealed .spine { color: #d3cadf; }
+.bookcase.sealed .plate {
+  color: #ddd5e8;
+  background: linear-gradient(180deg, #554c62, #2e2935);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .14), 0 1px 2px rgb(0 0 0 / .6);
+}
+.bookcase.sealed .bookend { background: linear-gradient(90deg, #3d3547, #74698a 40%, #3d3547); }
+.front.rising .undercroft { transform-origin: 50% 0; animation: undercroft-sink 2.6s cubic-bezier(.25, .7, .2, 1) .6s both; }
+.front.rising > .bookcase { animation: bookcase-shudder .12s linear .5s 6; }
+@keyframes undercroft-sink { from { transform: scaleY(0); opacity: 0; } 40% { opacity: 1; } }
+@keyframes bookcase-shudder { 25% { translate: -2px 1px; } 75% { translate: 2px -1px; } }
+
+.notice {
+  position: fixed; inset: 0; z-index: 100; display: grid; place-content: center; gap: 10px;
+  padding: 16px; text-align: center; background: #060508; color: #ddd5e8;
+  animation: notice-in 1s ease both; transition: opacity 1.4s ease;
+}
+.notice p { margin: 0; font: italic 24px/1.4 var(--serif); }
+.notice .tier { font: 12px var(--sans); font-style: normal; letter-spacing: .2em; color: #8f86a0; }
+.notice.gone { opacity: 0; pointer-events: none; }
+@keyframes notice-in { from { opacity: 0; } }

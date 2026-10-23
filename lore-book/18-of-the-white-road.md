@@ -119,7 +119,7 @@ Halfway up the Road, on the fifth day out of Nabireth, the forest opens around a
 
 At the front of each hall, brokers change Crownsblood and foreign coin for jade-tally at the Curia’s rate, less the tenth. At the back, behind carved screens, the **contract-rooms** write chronoflow: a Daykeeper at every table, a broker on one side and a client on the other, and between them a ledger of rates by district and by lived year that changes, very slightly, every season. The largest Crownweave trading houses keep permanent factors in Koneleth, with rooms of their own behind the screens, and the elves of the Road call these rooms, without much affection, **the cartel benches**.
 
-The busiest broker in Koneleth is a tiefling, **Arnabar Cinnatrage**, who has worked the same table in the same hall for twenty-two outside years and will tell any client, unprompted, what each of their contracts will cost them in lived years, in jade-tally, and in “what the Cradle will say about it afterwards.” Arnabar keeps no permanent loyalties and many permanent accounts. A good deal of what the cartel benches know, they learned from Arnabar’s table, and a good deal of what the Curia knows about the cartel benches came the same way.
+The busiest broker in Koneleth is a tiefling who goes by **Candour**, as the tieflings of Emberfall go by the virtue they mean to be known for, and who has worked the same table in the same hall for twenty-two outside years and will tell any client, unprompted, what each of their contracts will cost them in lived years, in jade-tally, and in “what the Cradle will say about it afterwards.” Candour keeps no permanent loyalties and many permanent accounts. A good deal of what the cartel benches know, they learned from Candour’s table, and a good deal of what the Curia knows about the cartel benches came the same way.
 
 ---
 
@@ -177,7 +177,7 @@ On the Nabireth waterfront, three doors down from the Counting Pier, stands the 
 
 The ground floor is a long common room with the bar at one end and a great window over the Gulf at the other; the upper floor is rooms, and a gallery from which it is possible to hear most of what is said below. It takes its name, and much of its trade, from the wayeb, when every ship in the Gulf is waiting and every sailor in Nabireth is in its common room.
 
-The innkeeper, **Mariel Hostner**, is a human, a Crownweave mariner who came ashore at Nabireth for one night twenty-six years ago, missed the tide, and decided that she liked a town where the hours stayed put. She keeps outside time, a short temper and a long memory for ships: which came in, what they carried, who met them, and which of them were met by somebody the Daykeepers did not ask questions of. She does not sell this information. She does, occasionally, give it away.
+The innkeeper, **Hester Crane**, is a human, a Crownweave mariner who came ashore at Nabireth for one night twenty-six years ago, missed the tide, and decided that she liked a town where the hours stayed put. She keeps outside time, a short temper and a long memory for ships: which came in, what they carried, who met them, and which of them were met by somebody the Daykeepers did not ask questions of. She does not sell this information. She does, occasionally, give it away.
 
 ---
 
@@ -215,7 +215,7 @@ A village south of the Road where the Granary Road and three Strands meet, and t
 #### **The Exchange**
 
 **Koneleth** — *The Exchange Houses.*  
-A town of about seven thousand at the Road’s midpoint, built around the square of the Exchange Houses, where foreign coin is changed for jade-tally and chronoflow contracts are written and sealed. The cartel benches, the contract-rooms and Arnabar Cinnatrage’s table are all here, and so are most of the Road’s lawyers. The fifth Stone stands in the middle of its square.
+A town of about seven thousand at the Road’s midpoint, built around the square of the Exchange Houses, where foreign coin is changed for jade-tally and chronoflow contracts are written and sealed. The cartel benches, the contract-rooms and Candour’s table are all here, and so are most of the Road’s lawyers. The fifth Stone stands in the middle of its square.
 
 #### **The Upper Road**
 

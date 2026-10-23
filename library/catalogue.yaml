@@ -99,6 +99,7 @@ shelves:
       - of-the-structure-known-as-the-verdant-tower
       - artifacts-phenomenon
       - of-the-elderwood
+      - of-the-green-cradle
 
 # Shorter titles for spines where the full one will not fit. The full title
 # is still used everywhere else.
@@ -142,3 +143,4 @@ serials:
   of-the-structure-known-as-the-verdant-tower: TV-VT-001
   artifacts-phenomenon: TV-AR-001
   of-the-elderwood: TV-EW-001
+  of-the-green-cradle: TV-IX-001

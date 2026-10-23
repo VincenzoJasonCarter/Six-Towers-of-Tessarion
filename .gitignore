@@ -14,3 +14,6 @@ library/site/
 
 # Claude Code project notes (local only)
 CLAUDE.md
+
+# The library's withdrawn shelf, before library/seal.py encrypts it
+lore-vault/

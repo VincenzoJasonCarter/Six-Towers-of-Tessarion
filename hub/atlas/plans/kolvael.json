@@ -1,0 +1,83 @@
+{
+ "id": "kolvael",
+ "town": "Kolvael",
+ "epithet": "the Hundred Terraces",
+ "country": "thalvireth",
+ "places": [
+  {
+   "id": "hundred-terraces",
+   "name": "The Hundred Terraces",
+   "epithet": "Where the Cradle writes its names",
+   "text": "A great bowl of hillside north of the White Road, cut from the valley floor to the crest into steps: the largest and oldest field-works in the realm. There are in fact a hundred and sixty-two of them; the name was given when there were a hundred, before the Compact. Each terrace is held by one family line, and each line's house stands at the head of its own stair, so the town of nine thousand lives on the terraces themselves. Seen from the Root-Road, the fields move: green, then gold, then bare and sown, terrace by terrace, in the course of a few weeks.",
+   "source": "Of The Green Cradle"
+  },
+  {
+   "id": "old-walls",
+   "name": "The Old Walls",
+   "epithet": "A hand's span below the last name",
+   "text": "The retaining walls of the lowest terraces, the first cut. On each wall, at the head of the stair that climbs past it, the line cuts the name of each new head of the household, row on row. The oldest walls are cut so deep that the stone has been replaced twice, the old stones built into the base of the new. When a farmer has worked their full sixty lived years and been planted, their cord of green Count-beads is hung on a peg beside their name until it rots and the beads fall into the terrace.",
+   "source": "Of The Green Cradle"
+  },
+  {
+   "id": "keepers-stair",
+   "name": "The Keeper's Stair",
+   "epithet": "Where the Cradle stops, for an hour, to be heard",
+   "text": "Nine steps of pale stone at the foot of the Hundred Terraces, warded like the White Road, climbing to an open platform under a roof of grown wood: the only ground in the Cradle that keeps true time. The Ah K'in of the Cradle hears petitions here one sun in each season. A petitioner on the Stair is heard at true time; the queue at its foot waits at the Cradle's pace, so households send a child of ten or so to hold their place, and the child is often old enough to speak for the household by the time it is called.",
+   "source": "Of The Green Cradle"
+  },
+  {
+   "id": "great-stair",
+   "name": "The Great Stair",
+   "epithet": "From the Keeper to the moot",
+   "text": "The broadest of the stairs that climb the bowl, straight up from the Keeper's Stair to the uppermost terrace. Every terrace it passes has its oldest name-cuttings beside it, and on the long nights it is the first stair to be lit."
+  },
+  {
+   "id": "moot-terrace",
+   "name": "The Moot Terrace",
+   "epithet": "Very hard to stop",
+   "text": "The uppermost terrace, widened at the head of the Great Stair into the town's square. The moot of the Hundred Terraces meets here, every line's head together, every sun: it settles boundaries, water-rights, cistern-shares and marriages, talks for most of the sun, and sends up to the Keeper only what it cannot settle. It is where the Full Measure is argued loudest.",
+   "source": "Of The Green Cradle"
+  },
+  {
+   "id": "lamp-strings",
+   "name": "The Lamp-Strings",
+   "epithet": "The festival that never ends",
+   "text": "The sun crosses the Cradle once in six of its own days, so half of every sun is three sleeps of dark, and the Cradle works it by lamplight. The terraces are strung with the Quickening Wards' glyph-lamps from the valley floor to the crest, so that from the Road the hillside seems to be holding a festival that never ends.",
+   "source": "Of The Green Cradle"
+  },
+  {
+   "id": "chultuns",
+   "name": "The Chultun",
+   "epithet": "Wealth reckoned in terraces, then in cisterns",
+   "text": "Bottle-shaped cisterns cut into the rock beneath the terraces, filled through the Long Wet and drawn down a jar at a time through the Long Dry, each of which lasts three of the Cradle's years. A family that has lost its cistern has lost its terraces too, about two years later.",
+   "source": "Of The Green Cradle"
+  },
+  {
+   "id": "planting-field",
+   "name": "The Planting Field",
+   "epithet": "Where the Cradle feeds the tree",
+   "text": "The open soil either side of the great root, the Cradle's root-bed and the busiest in the realm. The dead are laid here without a stone or a name and left for the tree to take, nearly every sleep. Plantings are short and cheerful: the mourners come in their best clothes with marigolds and stay to eat. The first ear cut from every terrace at every harvest is planted here too, so that the tree eats first. The Field is very green, and orange with marigolds.",
+   "source": "Of The Green Cradle"
+  },
+  {
+   "id": "great-root",
+   "name": "The Great Root",
+   "epithet": "As thick as a house is tall",
+   "text": "A surface root of Ix'kaanil that comes up out of the hillside below the Hundred Terraces and runs south along the valley floor for the better part of a day's walk, going down again at last beside K'anvael. Children play on it all through the long day, and are not stopped.",
+   "source": "Of The Green Cradle"
+  },
+  {
+   "id": "daykeepers-house",
+   "name": "The Daykeepers' House",
+   "epithet": "Ledgers, harvests and names",
+   "text": "The hall by the Root-Road where the Daykeepers of the Hundred Terraces keep their Ledgers, witness marriages and plantings, and give the town's children their day-names at dawn: every child born in the same sun gets the same one, named all together."
+  },
+  {
+   "id": "root-road",
+   "name": "The Root-Road",
+   "epithet": "Round the Tower, district to district",
+   "text": "The road that circles the Tower and links the districts through Count-gates. Here it comes down from Wayebiel and the Deep Count, a day north, past the foot of the Hundred Terraces, and runs on south past the Planting Field to K'anvael and, three days off, Weneleth on the White Road. The Cradle's tithe-carts go up it.",
+   "source": "Of The Green Cradle"
+  }
+ ]
+}

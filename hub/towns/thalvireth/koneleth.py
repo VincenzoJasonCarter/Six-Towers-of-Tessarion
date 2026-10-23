@@ -150,7 +150,7 @@ def draw():
     for h in halls:
         p.landmark("exchange-houses", h)
     ax, ay = pt(-84, -112)
-    p.add("marks", f'<circle cx="{ax:.1f}" cy="{ay:.1f}" r="4.5" fill="#6e3b26" stroke="{INK}" stroke-width="1" data-place="arnabars-table" class="place"/>')
+    p.add("marks", f'<circle cx="{ax:.1f}" cy="{ay:.1f}" r="4.5" fill="#6e3b26" stroke="{INK}" stroke-width="1" data-place="candours-table" class="place"/>')
     sx, sy = pt(0, 0)
     p.add("marks", f'<circle cx="{sx:.1f}" cy="{sy:.1f}" r="26" fill="none" stroke="{INK}" stroke-width="1.2" stroke-dasharray="4 3" data-place="fifth-stone" class="place"/>')
     p.landmark("fifth-stone", stone, fill="#f7f3e6")
@@ -209,7 +209,7 @@ def draw():
     lab(0, -133, "EXCHANGE HOUSES", 13, "tp-lbl", "exchange-houses", spacing=2)
     lab(0, 140, "EXCHANGE HOUSES", 13, "tp-lbl", "exchange-houses", spacing=2)
     lab(-170, 0, "EXCHANGE HOUSES", 12, "tp-lbl", "exchange-houses", turn=-90, spacing=2)
-    lab(-84, -62, "Arnabar's table", 11, "tp-sub", "arnabars-table")
+    lab(-84, -62, "Candour's table", 11, "tp-sub", "candours-table")
     lab(-30, -255, "the Roll-House", 15, pid="roll-house")
     lab(176, 80, "The Tenth Part", 14, pid="tenth-part")
     lab(300, -125, "Balam Post", 14, pid="balam-post")
@@ -239,8 +239,8 @@ def draw():
             "The fifth of the Ten Stones, a squared pillar of the Road's pale rock twice a tall man's height, standing in the middle of the square: its number on the seaward face, that morning's sunrise hour on the landward. By custom, a contract witnessed at the foot of a Stone cannot later be disputed on the grounds that either party had lost track of the time. Elsewhere on the Road a broker walks a doubtful client out to the nearest Stone to sign. In Koneleth they only have to cross the square, and the paving round the Stone's foot is seldom empty.", BOOK)
     p.place("exchange-houses", "The Exchange Houses", "Where outside coin becomes inside time",
             "Six long halls of grown wood on pale stone footings, each the seat of a trading house licensed by the Curia, open from the first true hour to the last. At the front, brokers change Crownsblood and foreign coin for jade-tally at the Curia's rate, less the tenth. At the back, behind carved screens, the contract-rooms write chronoflow (ageing, keeping and waiting), a Daykeeper at every table. The largest Crownweave houses keep rooms of their own behind the screens, which the Road-elves call, without much affection, the cartel benches.", BOOK)
-    p.place("arnabars-table", "Arnabar Cinnatrage's Table", "What will the Cradle say about it afterwards?",
-            "The busiest table in Koneleth, in the same hall for twenty-two outside years. Arnabar, a tiefling, will tell any client unprompted what each contract will cost them in lived years, in jade-tally, and in what the Cradle will say about it afterwards. Arnabar keeps no permanent loyalties and many permanent accounts. A good deal of what the cartel benches know came from this table, and so did a good deal of what the Curia knows about the cartel benches.", BOOK)
+    p.place("candours-table", "Candour's Table", "What will the Cradle say about it afterwards?",
+            "The busiest table in Koneleth, in the same hall for twenty-two outside years. Candour, a tiefling, will tell any client unprompted what each contract will cost them in lived years, in jade-tally, and in what the Cradle will say about it afterwards. Candour keeps no permanent loyalties and many permanent accounts. A good deal of what the cartel benches know came from this table, and so did a good deal of what the Curia knows about the cartel benches.", BOOK)
     p.place("roll-house", "The Roll-House", "Every contract, on file",
             "The Daykeepers' hall behind the northern Exchange Houses. Every chronoflow contract written in Koneleth is copied here and the copy kept, with the Daykeepers of the Exchange who witnessed it. Among the files is the contract, still on file, for keeping an entire wedding cake. The Daykeepers lodge upstairs.")
     p.place("tenth-part", "The Tenth Part", "Named for the fee, and full of people complaining about it",

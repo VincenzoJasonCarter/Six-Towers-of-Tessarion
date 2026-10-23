@@ -26,7 +26,7 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
-    --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520;
+    --rule: #3a332a; --accent: #d9bb70; --accent-soft: #3a3020;
     --dm-bg: #211d17; --dm-edge: #4a4134; --stat-rule: #c9644c; --redact: #e9e1d0;
     --stone: #1b1d1a; --lamp: rgb(95 209 143 / .11); --vignette: rgb(0 0 0 / .6);
     --iron: #4a4640; --iron-hi: #857d72; --label: #201d18; --cell: #060806; --stamp: #e0654f;
@@ -34,7 +34,7 @@
 }
 :root[data-theme="dark"] {
   --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
-  --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520;
+  --rule: #3a332a; --accent: #d9bb70; --accent-soft: #3a3020;
   --dm-bg: #211d17; --dm-edge: #4a4134; --stat-rule: #c9644c; --redact: #e9e1d0;
   --stone: #1b1d1a; --lamp: rgb(95 209 143 / .11); --vignette: rgb(0 0 0 / .6);
   --iron: #4a4640; --iron-hi: #857d72; --label: #201d18; --cell: #060806; --stamp: #e0654f;
@@ -64,7 +64,9 @@ button, input { font: inherit; color: inherit; }
 }
 .brand { text-decoration: none; color: var(--ink); margin-right: auto; }
 .brand b { font: 700 26px/1 var(--display); letter-spacing: .01em; }
-.brand span { display: block; font-size: 13px; color: var(--muted); font-style: italic; }
+/* In the hub the hall is named by the hub's own bar, so its wordmark stands down. */
+.framed .top { justify-content: flex-end; }
+.framed .top .brand { display: none; }
 .search {
   width: min(320px, 100%); padding: 7px 12px; border: 1px solid var(--rule);
   border-radius: 6px; background: var(--bg); font: 15px var(--sans);
@@ -178,7 +180,7 @@ h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
 .avatar span {
   position: absolute; z-index: 3; left: 50%; bottom: 6%; translate: -50% 0;
   padding: .25em .6em .2em; border-radius: 2px; white-space: nowrap;
-  font: 700 7.6cqw/1 ui-monospace, "Cascadia Mono", Consolas, "Courier New", monospace; letter-spacing: .08em;
+  font: 700 8.6cqw/1 var(--display); font-variant-numeric: lining-nums tabular-nums; letter-spacing: .08em;
   color: #3a2a10; text-shadow: 0 1px 0 rgb(255 240 200 / .6), 0 -1px 0 rgb(60 40 10 / .35);
   background: linear-gradient(180deg, #f0d997, #d9bb70 45%, #a9843a);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), 0 2px 4px rgb(0 0 0 / .5);
@@ -197,7 +199,7 @@ h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
 .cage-eyes { transform-box: fill-box; transform-origin: center; animation: blink 5.5s -2s infinite; }
 @keyframes sway { from { transform: rotate(-1.6deg); } to { transform: rotate(1.6deg); } }
 .stamp {
-  position: absolute; right: 0; top: 34px; transform: rotate(-9deg);
+  position: absolute; right: 0; top: 4px; transform: rotate(-9deg);
   padding: 4px 14px 3px; border: 3px double var(--stamp); border-radius: 4px;
   font: 700 17px/1.2 var(--sans); letter-spacing: .28em; text-transform: uppercase; color: var(--stamp);
   opacity: .78; pointer-events: none;
@@ -218,7 +220,7 @@ body.still .card, body.still .avatar .eyes { transition: none; }
 .entry-head .avatar { width: 128px; flex: none; margin-top: 6px; }
 .kicker { font: 600 13px var(--sans); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin: 0; }
 .designation { margin: -2px 0 4px; font: 12px var(--sans); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-.designation b { font: 700 13px ui-monospace, "Cascadia Mono", Consolas, monospace; letter-spacing: .08em; color: var(--ink); }
+.designation b { font: 700 15px var(--display); font-variant-numeric: lining-nums tabular-nums; letter-spacing: .06em; color: var(--ink); }
 .aka { margin: 0 0 6px; color: var(--muted); }
 .meta { display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 18px; }
 .chip {

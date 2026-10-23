@@ -10,7 +10,8 @@ const TOOLS = {
   barracks: { app: "barracks", name: "The Barracks", url: "https://charasheet.rayy.dev/", leaves: true },
   memoria: { app: "memoria", name: "The Memoria" },
 };
-const STATE_TEXT = { ready: "Open", external: "Open", starting: "Lighting the lamps…", stopped: "Closed" };
+// An open hall needs no word under its name (its lamp is lit); only the others say why not.
+const STATE_TEXT = { ready: "", external: "", starting: "Lighting the lamps…", stopped: "Closed" };
 // Like the library's "Animate books": the hub's own setting, on unless it is
 // switched off here, whatever the system's reduce-motion preference says.
 let motion = stored("hub.animate") !== "off";
@@ -704,7 +705,7 @@ function frameFor(view) {
     frame.className = "frame off";
     frame.title = TOOLS[view].name;
     frame.src = status.apps[TOOLS[view].app].url;
-    frame.addEventListener("load", () => hold(frame));
+    frame.addEventListener("load", () => { frame.dataset.loaded = "1"; hold(frame); });
     frames[view] = frame;
     $("#frames").append(frame);
   }
@@ -729,19 +730,39 @@ function hold(frame) {
   doc.documentElement.classList.toggle("offstage", frame.classList.contains("off"));
 }
 
-// Load every running tool quietly in the background once reception is up,
-// so no walk has to wait for a page to load.
-let preloaded = false;
+// Load the running tools quietly in the background once reception is up, so
+// no walk has to wait for a page to load. One at a time, each once the page
+// is idle and the last has finished: all at once (the library's page alone is
+// over a megabyte) they held up reception's own first paint, and a walk begun
+// meanwhile stuttered. A hall pointed at or focused jumps the queue. On a
+// phone, or with Save-Data on, only the hall standing in the picker loads,
+// once it has stood there a moment (markHall); the rest wait to be asked for.
+const frugal = () => matchMedia("(max-width: 760px)").matches || !!navigator.connection?.saveData;
+const whenIdle = fn => "requestIdleCallback" in window ? requestIdleCallback(fn, { timeout: 4000 }) : setTimeout(fn, 300);
+function loadable(view) {
+  const tool = TOOLS[view], s = status && !tool.leaves && status.apps[tool.app].state;
+  return s === "ready" || s === "external";
+}
+// The tool's page, loading or loaded, if it can be had.
+const warm = view => loadable(view) ? frameFor(view) : null;
+const loaded = frame => frame.dataset.loaded ? Promise.resolve()
+  : new Promise(done => frame.addEventListener("load", done, { once: true }));
+
+let preloading = false;
 function preload() {
-  if (preloaded || !status || Object.values(status.apps).some(a => a.state === "starting")) return;
-  preloaded = true;
-  setTimeout(() => {
-    for (const [view, tool] of Object.entries(TOOLS)) {
-      if (tool.leaves) continue;
-      const s = status.apps[tool.app].state;
-      if (s === "ready" || s === "external") frameFor(view);
-    }
-  }, 800);
+  if (preloading || !status || Object.values(status.apps).some(a => a.state === "starting")) return;
+  preloading = true;
+  if (frugal()) return;
+  const next = () => {
+    const view = Object.keys(TOOLS).find(v => loadable(v) && !frames[v]);
+    if (view) whenIdle(() => loaded(warm(view)).then(next));
+  };
+  if (document.readyState === "complete") next();
+  else addEventListener("load", next, { once: true });
+}
+for (const link of document.querySelectorAll(".door[data-go], .bar .nav a[data-view]")) {
+  const view = link.dataset.go || link.dataset.view;
+  for (const type of ["pointerenter", "focus", "pointerdown"]) link.addEventListener(type, () => { if (TOOLS[view]) warm(view); });
 }
 
 function renderStatus() {
@@ -910,7 +931,7 @@ function walker(view) {
         if (!tunnelEl) {
           tunnelEl = document.createElement("div");
           tunnelEl.className = "tunnel";
-          tunnelEl.innerHTML = `<canvas></canvas><i class="lens"></i><i class="light"></i>`;
+          tunnelEl.innerHTML = `<canvas></canvas><i class="light"></i>`;
           document.body.append(tunnelEl);
         }
         tunnel = tunnelEl;
@@ -983,7 +1004,11 @@ function walkIn(view) {
     if (TOOLS[view].leaves) return leave(view, w);
     // Only now, with the camera stopped and the light filling the view, is the
     // tool switched on underneath (the GPU may need a moment for it), then
-    // the light fades into it.
+    // the light fades into it. A page not loaded yet (see preload) is sent
+    // for only now, too, so its loading never costs the walk a frame, and the
+    // light holds until it has come (or for a few seconds at most).
+    const frame = warm(view);
+    if (frame) await Promise.race([loaded(frame), new Promise(done => setTimeout(done, 6000))]);
     applyView(view, false);
     await settled();
     await w.fadeTunnel(1, 0);
@@ -1061,99 +1086,6 @@ async function walk(view, moves) {
     w.leaveHall();
     walking = false;
     render();
-    light();  // in case the window changed size mid-walk
-  }
-}
-
-// ---------- reception's lighting ----------
-// The hall has no light of its own: it is lit by what is in it, each doorway's
-// corridor and a sconce between each pair of doorways. light() measures the
-// doorways and lays that out. The lightmap is a canvas of shade (--shade) over
-// the room with the light cut out of it where it reaches; the bloom puts the
-// light itself on top (a pool on the floor in front of each doorway, a halo
-// round each sconce). The desk, nearest of all, has its candle instead
-// (style.css). On narrow screens the hall isn't a room and none of this shows.
-// Nothing here blends: plain transparency is all a walk can afford to zoom.
-
-const SPILL = { library: "#ffd9a0", market: "#ffcf8f", bestiary: "#9fe8c4", barracks: "#ffb27a", memoria: "#fff1d6" };
-
-function light() {
-  if (walking || matchMedia("(max-width: 760px)").matches) return;
-  const hall = $("#hall").getBoundingClientRect();
-  if (!hall.width) return;
-  const px = n => `${Math.round(n)}px`;
-  const arches = [...document.querySelectorAll(".door")].map(door => {
-    const r = door.querySelector(".arch").getBoundingClientRect();
-    return { view: door.dataset.go, x: r.left - hall.left, y: r.top - hall.top, w: r.width, h: r.height };
-  });
-  // Soft light needs few pixels: the map is drawn at half size and stretched.
-  // It is drawn on a canvas but shown as an image: a canvas is a layer of its
-  // own, which would make the hall costly to zoom on a walk.
-  const map = document.createElement("canvas"), ctx = map.getContext("2d"), res = .5;
-  map.width = Math.ceil(hall.width * res);
-  map.height = Math.ceil(hall.height * res);
-  ctx.scale(res, res);
-  ctx.fillStyle = getComputedStyle($("#lightmap")).getPropertyValue("--shade");
-  ctx.fillRect(0, 0, hall.width, hall.height);
-  // An oval of light: with stops [offset, how much] it takes that much of the
-  // shade away (or, given a colour, lays that much of the colour on).
-  const pool = (x, y, rx, ry, stops, colour) => {
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.scale(rx, ry);
-    const g = ctx.createRadialGradient(0, 0, 0, 0, 0, 1);
-    for (const [o, a] of stops) g.addColorStop(o, rgba(colour || "#000000", a));
-    ctx.fillStyle = g;
-    ctx.fillRect(-1, -1, 2, 2);
-    ctx.restore();
-  };
-  const sconceAt = [];
-  for (let i = 1; i < arches.length; i++) {
-    const l = arches[i - 1], r = arches[i];
-    sconceAt.push({ x: (l.x + l.w + r.x) / 2, y: r.y + r.h * .05, gap: r.x + r.w / 2 - (l.x + l.w / 2) });
-  }
-  ctx.globalCompositeOperation = "destination-out";
-  for (const a of arches) {
-    const cx = a.x + a.w / 2, base = a.y + a.h;
-    pool(cx, base - a.h * .36, a.w * .64, a.h * .66, [[0, 1], [.7, 1], [1, 0]]);  // the doorway, lit from inside
-    pool(cx, base, a.w * .95, hall.height * .2, [[0, .85], [1, 0]]);  // its light out across the floor
-    pool(cx, a.y - a.h * .07, a.w * .34, a.h * .08, [[0, .55], [.5, .55], [1, 0]]);  // the plaque over it, catching the sconces
-  }
-  for (const s of sconceAt) pool(s.x, s.y + s.gap * .1, s.gap * .42, s.gap * .66, [[0, 1], [.25, .85], [1, 0]]);
-  ctx.globalCompositeOperation = "source-over";
-  // The light's colour: each doorway's on the floor before it, the sconces' warm.
-  for (const a of arches) pool(a.x + a.w / 2, a.y + a.h, a.w * .9, hall.height * .18, [[0, .14], [1, 0]], SPILL[a.view]);
-  for (const s of sconceAt) pool(s.x, s.y + s.gap * .1, s.gap * .42, s.gap * .66, [[0, .12], [1, 0]], "#ffb060");
-  map.toBlob(blob => {
-    if (!blob) return;
-    const img = $("#lightmap"), old = img.src;
-    img.src = URL.createObjectURL(blob);
-    if (old.startsWith("blob:")) URL.revokeObjectURL(old);
-  });
-
-  const bloom = [], sconces = [];
-  for (const a of arches) {
-    const cx = a.x + a.w / 2, base = a.y + a.h, tint = SPILL[a.view];
-    bloom.push(`<i class="spill" data-for="${a.view}" style="left:${px(cx)};top:${px(base)};width:${px(a.w * 1.5)};height:${px(hall.height * .34)};--c:${tint}"></i>`);
-  }
-  // A sconce where each pair of arches part.
-  for (const { x, y, gap } of sconceAt) {
-    sconces.push(`<span class="sconce" style="left:${px(x)};top:${px(y)}"></span>`);
-    bloom.push(`<i class="halo" style="left:${px(x)};top:${px(y)};width:${px(gap * .9)};height:${px(gap * 1.1)}"></i>`);
-  }
-  $("#bloom").innerHTML = bloom.join("");
-  $("#sconces").innerHTML = sconces.join("");
-}
-
-// Relaid whenever the hall or a doorway changes size (the plaques' font arriving, say).
-const relight = new ResizeObserver(light);
-relight.observe($("#hall"));
-document.querySelectorAll(".arch").forEach(a => relight.observe(a));
-matchMedia("(prefers-color-scheme: dark)").addEventListener("change", light);
-// A doorway pointed at (or focused) throws more light out onto the floor.
-for (const door of document.querySelectorAll(".door")) {
-  for (const [type, on] of [["pointerenter", true], ["pointerleave", false], ["focus", true], ["blur", false]]) {
-    door.addEventListener(type, () => $(`.spill[data-for="${door.dataset.go}"]`)?.classList.toggle("lit", on));
   }
 }
 
@@ -1173,9 +1105,14 @@ for (const [i, door] of doorList.entries()) {
   dot.addEventListener("click", () => pickHall(i));
   $(".pick-dots").append(dot);
 }
+let standing = null;
 function markHall() {
   const i = hallShown();
   $(".pick-dots").querySelectorAll("button").forEach((b, j) => b.setAttribute("aria-current", i === j));
+  // The hall left standing a moment is likely the one wanted: on a phone,
+  // where nothing preloads (see preload), its page starts loading.
+  clearTimeout(standing);
+  standing = setTimeout(() => { if (frugal() && doorList[i]) whenIdle(() => warm(doorList[i].dataset.go)); }, 700);
 }
 $(".pick.prev").addEventListener("click", () => pickHall(hallShown() - 1));
 $(".pick.next").addEventListener("click", () => pickHall(hallShown() + 1));
@@ -1292,7 +1229,7 @@ $("#patchnotes").addEventListener("click", ev => { if (ev.target === ev.currentT
 
 let atlas = null;  // the country on show: its <id>.json
 let atlasIndex = [];  // index.json
-const atlasCache = {};  // id -> its <id>.json, once fetched
+const atlasCache = {};  // id -> its <id>.json, once asked for (a promise of it)
 const atlasView = { x: 0, y: 0, w: 1, h: 1 };
 const SVGNS = "http://www.w3.org/2000/svg";
 const KIND = { capital: "City", city: "City", town: "Town", village: "Village", hamlet: "Hamlet", fort: "Fort",
@@ -1590,8 +1527,23 @@ function showPlace(id) {
   $("#atlas").addEventListener("close", () => { if (plan) closePlan(); });
 }
 
-function openAtlas() {
-  if (!atlas) return;
+// A country's own file (its towns, roads and entries: tens of kilobytes) is
+// only fetched once the map is wanted: pointed at, or opened.
+function fetchCountry(id) {
+  atlasCache[id] ||= fetch(`atlas/${id}.json`)
+    .then(res => res.ok ? res.json() : Promise.reject(new Error(`atlas/${id}.json: ${res.status}`)))
+    .catch(e => { delete atlasCache[id]; throw e; });
+  return atlasCache[id];
+}
+
+async function openAtlas() {
+  if (!atlasIndex.length) return;
+  if (!atlas) {
+    try { atlas = await fetchCountry(atlasIndex[0].id); } catch { return; }
+    $("#atlasHead").textContent = atlas.title;
+    atlasCountries();
+  }
+  if ($("#atlas").open) return;
   if (!$("#atlasSvg").firstChild) { drawAtlas(); atlasLegend(); }
   $("#atlas").showModal();
   requestAnimationFrame(fitAtlas);
@@ -1604,14 +1556,7 @@ function atlasCountries() {
 }
 async function showCountry(id) {
   if (atlas && atlas.id === id) return;
-  try {
-    if (!atlasCache[id]) {
-      const res = await fetch(`atlas/${id}.json`);
-      if (!res.ok) return;
-      atlasCache[id] = await res.json();
-    }
-  } catch { return; }
-  atlas = atlasCache[id];
+  try { atlas = await fetchCountry(id); } catch { return; }
   if (plan) { plan = null; $("#atlasPlan").hidden = true; $("#planView").replaceChildren(); }
   $("#atlasHead").textContent = atlas.title;
   for (const b of $("#atlasCountries").querySelectorAll("button")) b.setAttribute("aria-pressed", b.dataset.country === id);
@@ -1624,11 +1569,8 @@ async function loadAtlas() {
     const res = await fetch("atlas/index.json");
     if (!res.ok) return;
     atlasIndex = await res.json();
-    const first = atlasIndex[0].id, page = await fetch(`atlas/${first}.json`);
-    if (!page.ok) return;
-    atlas = atlasCache[first] = await page.json();
-    $("#atlasHead").textContent = atlas.title;
-    atlasCountries();
+    if (!atlasIndex.length) return;
+    $('[data-atlas="count"]').textContent = atlasIndex.length === 1 ? "One country" : `${atlasIndex.length} countries`;
     $("#mapstand").hidden = false;
     dispatchEvent(new Event("atlas"));
   } catch { /* no map drawn yet (uv run hub/atlas.py); the easel stays away */ }
@@ -1709,6 +1651,8 @@ async function loadAtlas() {
     if (b) showCountry(b.dataset.country);
   });
   $("#mapstand").addEventListener("click", openAtlas);
+  for (const type of ["pointerenter", "focus"])
+    $("#mapstand").addEventListener(type, () => atlasIndex.length && fetchCountry(atlasIndex[0].id).catch(() => {}));
   $("#atlasClose").addEventListener("click", () => $("#atlas").close());
   $("#atlas").addEventListener("click", ev => { if (ev.target === ev.currentTarget) ev.currentTarget.close(); });
 }

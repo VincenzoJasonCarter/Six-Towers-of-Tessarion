@@ -53,6 +53,111 @@ const words = () => state.q.toLowerCase().split(/\s+/).filter(w => w.length > 1)
 const matches = b => words().every(w => b._hay.includes(w));
 const inShelf = b => !state.shelf || b.shelf === state.shelf || shelfOf(b).part_of === state.shelf;
 
+/* ---------- the withdrawn shelf ----------
+   DATA.sealed is lore-vault/, encrypted by seal.py under a key derived from a
+   sequence of words. Clicking those words in the books, in order, unseals it.
+   Nothing on the page knows the words: once n have been heard, each click
+   tries the last n, and a wrong guess simply fails to decrypt. */
+const SEAL = DATA.sealed || null;
+const normWord = s => s.normalize("NFKC").toLowerCase().replace(/[^\p{L}\p{N}]+/gu, "");  // = word() in seal.py
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+let unsealed = false;
+const heard = [];
+let trying = Promise.resolve();
+
+async function openSeal(phrase) {
+  if (!SEAL || !(window.crypto && crypto.subtle)) return null;
+  try {
+    const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(phrase), "PBKDF2", false, ["deriveKey"]);
+    const key = await crypto.subtle.deriveKey(
+      { name: "PBKDF2", hash: "SHA-256", salt: unb64(SEAL.salt), iterations: SEAL.iterations },
+      base, { name: "AES-GCM", length: 256 }, false, ["decrypt"]);
+    const plain = await crypto.subtle.decrypt({ name: "AES-GCM", iv: unb64(SEAL.iv) }, key, unb64(SEAL.data));
+    return JSON.parse(new TextDecoder().decode(plain));
+  } catch (_) { return null; }
+}
+
+function unseal({ shelf, books: more }) {
+  if (unsealed) return;
+  unsealed = true;
+  const s = { ...shelf, sealed: true };
+  shelves.push(s);
+  shelfById[s.id] = s;
+  more.forEach(b => { b._hay = (b.title + " " + b.text).toLowerCase(); books.push(b); bySlug[b.slug] = b; });
+}
+
+// The word under the pointer, or "" when the click is not on one.
+function wordAt(x, y) {
+  let node, off;
+  if (document.caretPositionFromPoint) {
+    const p = document.caretPositionFromPoint(x, y);
+    if (p) { node = p.offsetNode; off = p.offset; }
+  } else if (document.caretRangeFromPoint) {
+    const r = document.caretRangeFromPoint(x, y);
+    if (r) { node = r.startContainer; off = r.startOffset; }
+  }
+  if (!node || node.nodeType !== Node.TEXT_NODE || node.parentElement.closest(".redact")) return "";
+  const t = node.data, inWord = c => /[\p{L}\p{N}'’-]/u.test(c);
+  let a = off, z = off;
+  while (a > 0 && inWord(t[a - 1])) a--;
+  while (z < t.length && inWord(t[z])) z++;
+  if (a === z) return "";
+  // The caret lands on the nearest text even from a margin, so check the word is really under the pointer.
+  const range = document.createRange();
+  range.setStart(node, a);
+  range.setEnd(node, z);
+  const hit = [...range.getClientRects()].some(r => x >= r.left - 1 && x <= r.right + 1 && y >= r.top - 1 && y <= r.bottom + 1);
+  return hit ? normWord(t.slice(a, z)) : "";
+}
+
+document.addEventListener("click", ev => {
+  // ev.detail > 1 is the second click of a double-click: one word, not two.
+  if (!SEAL || unsealed || !R || ev.button !== 0 || ev.detail > 1) return;
+  const t = ev.target;
+  if (!t.closest("#reader .viewport") || t.closest("a, button, .titlepage, .finis")) return;
+  const w = wordAt(ev.clientX, ev.clientY);
+  if (!w) return;
+  heard.push(w);
+  if (heard.length > SEAL.n) heard.shift();
+  if (heard.length < SEAL.n) return;
+  const phrase = heard.join(" ");
+  trying = trying.then(async () => {
+    if (unsealed) return;
+    const found = await openSeal(phrase);
+    if (!found || unsealed) return;
+    storage("library.unsealed", phrase);
+    unseal(found);
+    reveal();
+  });
+});
+
+// The lights go out, a notice is read, and the library comes back with the
+// withdrawn shelf hanging beneath it.
+function reveal() {
+  const ov = document.createElement("div");
+  ov.className = "notice";
+  ov.setAttribute("role", "alert");
+  ov.innerHTML = `<p class="tier">THREADMINT LIBRARY · CIVIC NOTICE</p>
+    <p>A withdrawn level is now open to you.</p>
+    <p class="tier">Further inquiry is unnecessary.</p>`;
+  document.body.append(ov);
+  setTimeout(() => {
+    state.rising = motionOK();
+    const shown = () => {
+      state.rising = false;
+      const u = $(".undercroft");
+      if (u) u.scrollIntoView({ block: "center" });
+      ov.classList.add("gone");
+      setTimeout(() => ov.remove(), 1400);
+    };
+    abortPull();
+    R = null;
+    if (!location.hash.slice(1)) { showLibrary(); shown(); return; }
+    window.addEventListener("hashchange", () => setTimeout(shown), { once: true });
+    location.hash = "";
+  }, 2800);
+}
+
 /* ---------- the library ---------- */
 // Thicker books for longer chapters; heights vary a little, like a real shelf.
 const spineSize = b => ({ w: Math.round(clamp(30 + Math.sqrt(b.words) * .6, 36, 76)), h: 196 + hash(b.slug) % 36 });
@@ -115,8 +220,8 @@ function bookcase(label, list, id, i, colour) {
 }
 
 function bookcases() {
-  if (state.arrange === "order") return bookcase("The Complete Lore, in Chapter Order", books, "all", 3);
-  return shelves.filter(s => !parentOf(s)).map(g => {
+  if (state.arrange === "order") return bookcase("The Complete Lore, in Chapter Order", books.filter(b => !b.sealed), "all", 3);
+  return shelves.filter(s => !parentOf(s) && !s.sealed).map(g => {
     const ids = new Set(shelves.filter(s => s === g || s.part_of === g.id).map(s => s.id));
     return { g, list: books.filter(b => ids.has(b.shelf)) };
   }).filter(x => x.list.length).map(({ g, list }, i) => bookcase(g.plank || g.name, list, g.id, i, g.colour)).join("");
@@ -124,7 +229,7 @@ function bookcases() {
 
 function legend() {
   const used = new Set(books.map(b => b.shelf));
-  const keys = shelves.filter(s => used.has(s.id) || shelves.some(c => c.part_of === s.id && used.has(c.id)));
+  const keys = shelves.filter(s => !s.sealed && (used.has(s.id) || shelves.some(c => c.part_of === s.id && used.has(c.id))));
   return `<button type="button" class="key all" data-shelf="" aria-pressed="${!state.shelf}">All subjects</button>` +
     keys.map(s => `<button type="button" class="key" data-shelf="${esc(s.id)}" aria-pressed="${state.shelf === s.id}" title="${esc(s.blurb || "")}"><i style="background:${esc(s.colour)}"></i>${esc(s.name)}</button>`).join("");
 }
@@ -138,13 +243,32 @@ function snippet(b, ws) {
   return (a ? "…" : "") + esc(b.text.slice(a, z)).replace(re, "<mark>$&</mark>") + (z < b.text.length ? "…" : "");
 }
 
+// How often a volume mentions the words searched for, all of them together.
+function mentions(b, ws) {
+  const re = new RegExp(ws.map(reEsc).join("|"), "g");
+  return (b._hay.match(re) || []).length;
+}
+
 function results() {
   const ws = words();
   if (!ws.length) return "";
-  const hits = books.filter(b => inShelf(b) && matches(b));
+  const hits = books.filter(b => inShelf(b) && matches(b)).map(b => ({ b, n: mentions(b, ws) }));
   if (!hits.length) return `<p class="empty">No volume mentions “${esc(state.q)}”.</p>`;
-  return `<h2>Found in ${plural(hits.length, "volume")}</h2><ul class="hits">` + hits.map(b =>
-    `<li><a href="#${esc(b.slug)}"><i style="background:${esc(shelfOf(b).colour)}"></i><b>${esc(b.title)}</b><small>${esc(b.serial)} · ${esc(shelfOf(b).name)}</small><span>${snippet(b, ws)}</span></a></li>`).join("") + "</ul>";
+  return `<h2>Found in ${plural(hits.length, "volume")}</h2><ul class="hits">` + hits.map(({ b, n }) =>
+    `<li><a href="#${esc(b.slug)}" style="--cloth:${esc(shelfOf(b).colour)}"><i aria-hidden="true"></i><span class="hit-head"><b>${esc(b.title)}</b><small>${esc(b.serial)} · ${esc(shelfOf(b).name)}</small><em>${plural(n, "mention")}</em></span><span class="hit-text">${snippet(b, ws)}</span></a></li>`).join("") + "</ul>";
+}
+
+// The book last opened here, to go back to: how far through it, from save().
+function resumeCard() {
+  const b = bySlug[storage("library.last") || ""];
+  if (!b) return "";
+  const p = clamp(+storage("library.progress." + b.slug) || 0, 0, 1);
+  const read = p >= .99 ? "Finished" : p < .01 ? "Just begun" : `${Math.round(p * 100)}% read`;
+  return `<a class="resume" href="#${esc(b.slug)}" style="--cloth:${esc(shelfOf(b).colour)}">
+    <span class="resume-spine" aria-hidden="true"></span>
+    <span class="resume-text"><small>Continue reading</small><b>${esc(b.title)}</b>
+      <span class="resume-meta">${esc(b.serial)} · ${read}</span>
+      <span class="resume-bar" aria-hidden="true"><i style="width:${(p * 100).toFixed(1)}%"></i></span></span></a>`;
 }
 
 function banners() {
@@ -154,16 +278,27 @@ function banners() {
   return h;
 }
 
+// The withdrawn shelf hangs upside down beneath the plinth: the bookcase
+// pushed through the floor and out the other side.
+function undercroft() {
+  const s = shelves.find(x => x.sealed);
+  if (!s) return "";
+  return `<div class="undercroft"><div class="bookcase sealed"><div class="crown"></div>
+    <div class="cases subject">${bookcase(s.name, books.filter(b => b.shelf === s.id), s.id, 1, "#8d7fa8")}</div><div class="plinth"></div></div></div>`;
+}
+
 function renderFront() {
-  const subjects = new Set(books.map(b => (parentOf(shelfOf(b)) || shelfOf(b)).id)).size;
-  return banners() + `<div class="front">
+  const open = books.filter(b => !b.sealed);
+  const subjects = new Set(open.map(b => (parentOf(shelfOf(b)) || shelfOf(b)).id)).size;
+  return banners() + `<div class="front${state.rising ? " rising" : ""}">
     <div class="results" id="results">${results()}</div>
     <div class="intro">
-      <p class="tier">THREADMINT LIBRARY · CROWNWEAVE · ACCESS TIER: PUBLIC</p>
-      <h1>The Lore of Tessarion</h1>
-      <p>Every volume of the lore-book, shelved by subject. A book's binding tells you what it concerns; the key below names each cloth.
-      The Weaves of Crownweave share their mother city's shelf, and each carries a band of Crownweave gold at the head of its spine. Take a volume down to read it.</p>
-      <p class="tier">${plural(books.length, "volume")} · ${plural(subjects, "shelf", "shelves")}</p>
+      <div class="intro-text">
+        <h1>The Lore of Tessarion</h1>
+        <p class="lede">Every volume of the lore-book, shelved by subject: a book's cloth tells you what it concerns, and the Weaves carry a band of Crownweave gold. Take one down to read it.</p>
+        <p class="tier">${plural(open.length, "volume")} · ${plural(subjects, "shelf", "shelves")} · Access: ${unsealed ? `<span class="redact">████████</span>` : "public"}</p>
+      </div>
+      ${resumeCard()}
     </div>
     <div class="controls">
       <div class="legend" role="group" aria-label="Highlight a subject">${legend()}</div>
@@ -176,6 +311,7 @@ function renderFront() {
       </div>
     </div>
     <div class="bookcase"><div class="crown"></div><div class="cases ${state.arrange}">${bookcases()}</div><div class="plinth"></div></div>
+    ${undercroft()}
   </div>`;
 }
 
@@ -198,7 +334,7 @@ const titlePage = b => `<section class="titlepage">
 const EXPLATE = `<div class="explate"><small>Ex Libris</small><b>Threadmint Library</b>Crownweave</div>`;
 
 function readerHTML(b) {
-  const i = books.indexOf(b), next = books[i + 1];
+  const next = books.slice(books.indexOf(b) + 1).find(x => !x.sealed === !b.sealed);
   const where = whereOf(b);
   const body = b.words ? b.html : `<p class="unwritten">The pages of this volume are still blank. Its account has yet to be set down.</p>`;
   return `<div class="rbar">
@@ -217,6 +353,7 @@ function readerHTML(b) {
         </div>
       </div>
       <nav class="toc" hidden aria-label="Contents"></nav>
+      <div class="rprogress" aria-hidden="true"><i></i></div>
     </div>
     <div class="stage">
       <button type="button" class="turn" data-go="-1" aria-label="Previous page">‹</button>
@@ -417,7 +554,7 @@ function layout(target) {
   flow.style.transform = "none";
   R.cols = (colOf($(".end-mark", flow)) ?? 0) + 1;
   R.spreads = Math.max(1, Math.ceil(R.cols / n));
-  R.headCols = R.heads.map(h => [colOf(h) ?? 0, h.textContent.trim()]);
+  R.headCols = R.heads.map(h => [colOf(h) ?? 0, h.textContent.trim(), h.id]);
   R.laidOut = true;
   const col = target ? colOf(target) : 0;
   go(Math.floor((col ?? 0) / n), true);
@@ -593,11 +730,46 @@ function sectionAt(c) {
   return name;
 }
 
+// How far through the book the reader is, 0 to 1: the spread showing, or in
+// scroll mode how far down the page.
+function progress() {
+  if (!R || !R.laidOut) return 0;
+  if (state.mode === "scroll") {
+    const room = document.documentElement.scrollHeight - innerHeight;
+    return room > 0 ? clamp(window.scrollY / room, 0, 1) : 1;
+  }
+  return R.spreads > 1 ? R.spread / (R.spreads - 1) : 1;
+}
+function showProgress() {
+  const bar = $(".rprogress i");
+  if (bar) bar.style.transform = `scaleX(${progress().toFixed(4)})`;
+}
+
+// The section being read, marked in the contents (and scrolled into sight there).
+function markToc() {
+  let id = "";
+  if (state.mode === "scroll") {
+    const top = $(".rbar").getBoundingClientRect().bottom + 8;
+    for (const h of R.heads) { if (h.getBoundingClientRect().top <= top) id = h.id; else break; }
+  } else {
+    const last = R.spread * R.n + R.n - 1;
+    for (const [hc, , hid] of R.headCols || []) { if (hc <= last) id = hid; else break; }
+  }
+  let current = null;
+  $(".toc").querySelectorAll("a[data-to]").forEach(a => {
+    const on = a.dataset.to === id;
+    a.toggleAttribute("aria-current", on);
+    if (on) current = a;
+  });
+  current?.scrollIntoView({ block: "nearest" });
+}
+
 function updateChrome() {
   if (!R) return;
   const scroll = state.mode === "scroll";
   document.querySelectorAll(".turn[data-go='-1']").forEach(b => { b.disabled = scroll || R.spread <= 0; });
   document.querySelectorAll(".turn[data-go='1']").forEach(b => { b.disabled = scroll || R.spread >= R.spreads - 1; });
+  showProgress();
   if (scroll) return;
   const cols = R.n === 2 ? [R.spread * 2, R.spread * 2 + 1] : [R.spread];
   const sheets = R.n === 2 ? [$(".sheet.l"), $(".sheet.r")] : [$(".sheet.r")];
@@ -614,12 +786,16 @@ function updateChrome() {
   const range = $(".scrub input");
   range.max = R.spreads - 1;
   range.value = R.spread;
+  range.style.setProperty("--p", `${(R.spreads > 1 ? R.spread / (R.spreads - 1) : 1) * 100}%`);
 }
 
 function save() {
   if (!R || !R.laidOut) return;
   const a = currentAnchor();
   if (a) storage("library.at." + R.b.slug, String([...R.flow.children].indexOf(a)));
+  // For the library's "Continue reading": which book, and how far through.
+  storage("library.last", R.b.slug);
+  storage("library.progress." + R.b.slug, progress().toFixed(3));
 }
 
 let relayoutTimer = 0;
@@ -902,6 +1078,7 @@ document.addEventListener("click", ev => {
   if (act === "toc") {
     toc.hidden = !toc.hidden;
     $("[data-act='toc']").setAttribute("aria-expanded", !toc.hidden);
+    if (!toc.hidden) markToc();
     return;
   }
   if (!toc.hidden && !t.closest(".toc")) { toc.hidden = true; $("[data-act='toc']").setAttribute("aria-expanded", "false"); }
@@ -980,11 +1157,21 @@ window.addEventListener("resize", () => {
   clearTimeout(resizeTimer);
   resizeTimer = setTimeout(() => { if (R && state.mode === "pages") layout(); }, 120);
 });
+let progressFrame = 0;
 window.addEventListener("scroll", () => {
   if (!R || state.mode !== "scroll") return;
+  if (!progressFrame) progressFrame = requestAnimationFrame(() => { progressFrame = 0; showProgress(); });
   clearTimeout(scrollTimer);
   scrollTimer = setTimeout(save, 250);
 }, { passive: true });
+
+// "/" goes to the search box from the shelves, as on most sites with one.
+document.addEventListener("keydown", ev => {
+  if (R || ev.key !== "/" || ev.ctrlKey || ev.metaKey || ev.altKey || ev.target.closest("input, textarea, select")) return;
+  ev.preventDefault();
+  qBox.focus();
+  qBox.select();
+});
 if (document.fonts) document.fonts.ready.then(() => { if (R) layout(); });
 
 // Live mode: reload when a chapter / catalogue / template changes, keeping
@@ -998,8 +1185,14 @@ if (place) {
   state.q = qBox.value = place.q || "";
   state.shelf = shelfById[place.shelf] ? place.shelf : null;
 }
-render();
-if (place && !R) window.scrollTo(0, place.y || 0);
+// A browser that unsealed the shelf before opens it again before the first render.
+const remembered = SEAL && storage("library.unsealed");
+(remembered ? openSeal(remembered) : Promise.resolve(null)).then(found => {
+  if (found) unseal(found);
+  else if (remembered) try { localStorage.removeItem("library.unsealed"); } catch (_) {}
+  render();
+  if (place && !R) window.scrollTo(0, place.y || 0);
+});
 
 if (LIVE) {
   setInterval(async () => {

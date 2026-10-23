@@ -85,7 +85,7 @@ const WORK = bag([
   ["flat", "Quiet. Someone tried to return a book to the Bestiary. It came back with teeth marks."],
   ["flat", "I stamped four hundred forms this morning. Three of them were forms requesting more forms."],
   ["frown", "The Bestiary's restless. It's always restless, but today it's restless in a new direction."],
-  ["smile", "Fine, honestly. The candle and I have an understanding. It doesn't go out; I don't complain."],
+  ["smile", "Fine, honestly. The bell and I have an understanding. Nobody rings it six times; I don't confiscate it."],
 ]);
 
 const HALLS = {
@@ -127,7 +127,7 @@ function menu() {
     asked.has("who") ? ["How's work?", "work"] : ["Who are you?", "who"],
     ["What's back there?", "halls"],
     ["Any new notices?", "notice"],
-    ...(atlas ? [["What's that map on the easel?", "map"]] : []),
+    ...(atlasIndex.length ? [["What's that map on the desk?", "map"]] : []),
     ["Heard anything interesting?", "gossip"],
     ["Tell me about Tessarion.", "lore"],
     ["Can I see the restricted section?", "restricted"],

@@ -29,6 +29,10 @@ library: ## Serve the lore library live at http://127.0.0.1:8767/ (reloads on ch
 library-build: ## Export a static site to library/site/ (ARGS="--single-file" for one library.html)
 	uv run library/build.py $(ARGS)
 
+.PHONY: library-seal
+library-seal: ## Encrypt lore-vault/ (gitignored) into library/sealed.json, the withdrawn shelf
+	uv run library/seal.py
+
 # --- market (the Threadmint Market: every item at its price, with its recipe, from data/items.yaml) ---
 
 .PHONY: market

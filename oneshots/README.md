@@ -41,8 +41,9 @@ Add `modules/<name>.md`. The page takes:
 - every `## Heading` as a section, listed in the contents rail;
 - `> quotes` as read-aloud boxes. Tables scroll sideways on narrow screens.
 
-Name new NPCs the campaign's way: cross-blend two related words of three or
-more syllables into a first and last name (Remedy × Rosary → Remary Rosedy).
+Name new NPCs in the style of where they come from: plain Crownweave names for
+humans of the Union (Tam Rooke, Agnes Marlowe), birth-name plus day-name for the
+elves of Thal'vireth.
 
 ## Files
 

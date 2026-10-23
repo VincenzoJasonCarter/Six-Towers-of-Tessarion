@@ -1,0 +1,7 @@
+/* Cormorant Garamond and EB Garamond, the latin cut Google Fonts serves, kept
+   here so the page asks no other site for them before its first paint. Both
+   are variable fonts, so one file covers every weight. On the public website
+   the halls use these too (web/build.py), so a visitor downloads them once. */
+@font-face { font-family: "Cormorant Garamond"; font-weight: 300 700; font-display: swap; src: url("cormorant-garamond.woff2") format("woff2"); }
+@font-face { font-family: "EB Garamond"; font-weight: 400 800; font-display: swap; src: url("eb-garamond.woff2") format("woff2"); }
+@font-face { font-family: "EB Garamond"; font-style: italic; font-weight: 400 800; font-display: swap; src: url("eb-garamond-italic.woff2") format("woff2"); }

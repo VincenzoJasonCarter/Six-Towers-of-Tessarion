@@ -68,16 +68,20 @@ switched off there, whatever the system's reduce-motion setting says.
 - **← / →**, Page Up / Page Down, the space bar, the side arrows or the
   slider turn pages (the slider jumps without flipping). On a phone, swipe or
   tap the edge of the page.
-- **Contents** jumps to any heading. **Scroll** switches to one long page
+- **Contents** jumps to any heading, and marks the section you're in. **Scroll** switches to one long page
   (better for looking things up at the table). **A− / A+** change the text
   size. The page remembers all three.
-- Each book remembers where you stopped reading.
+- A ribbon of the book's cloth along the foot of the reader bar shows how
+  far through it you are.
+- Each book remembers where you stopped reading, and the library page offers
+  the last one you had open under **Continue reading**, with how much of it you've read.
 - Esc goes back to the shelves.
 - Links: `#thalvireth` opens a book, `#thalvireth/overview` opens it at a
   heading.
 
 On the shelves, the colour key highlights one subject, **In chapter order**
-lines every book up in chapter order (1–25), and search matches the full text of every volume.
+lines every book up in chapter order (1–25), and search (**/** to jump to it) matches the full text of every volume,
+saying how often each one mentions what you searched for.
 Opening a book from the search results highlights the matches, and **Next ↓**
 steps through them.
 
@@ -95,6 +99,27 @@ bay and gets a band of Crownweave's colour at the top of each spine.
 book its serial (shelfmark), e.g. `TV-EW-001`, which the library shows on the
 spine, the cover, the title page and the reader bar instead of a volume number.
 A book without one shows as `UC-<chapter>` and the build warns about it.
+
+## The withdrawn shelf
+
+A shelf that is not on the site until a reader finds it. Its chapters live
+in `../lore-vault/` (kept out of git), named like the lore-book's, with
+`vault.yaml` giving the shelf, the serials and the **key**: a sequence of
+words. A reader who clicks those words in the library's books, in order
+(any book, any page), sees a civic notice. The library then comes back with
+an obsidian bookcase hanging upside down beneath the plinth. The browser
+remembers it was unsealed.
+
+```
+make library-seal             # or: uv run library/seal.py
+```
+
+That encrypts the vault into `sealed.json` (AES-GCM, with the key derived from
+the words by PBKDF2). The live server and both exports carry only that file.
+Neither the words nor the text appear anywhere on the site or in git, so
+reading the page source gives nothing away. Run it again after editing the
+vault, and commit `sealed.json`. Changing the key locks out every browser that
+unsealed the shelf with the old one.
 
 ## What it fixes up from the Google Docs export
 
@@ -119,5 +144,7 @@ template.html    page markup; core.py fills in the data
 style.css        page styles
 app.js           the bookcase and the book reader
 site/            static export output (index.html + images/), not committed
+seal.py          encrypts ../lore-vault/ into sealed.json (the withdrawn shelf)
+sealed.json      the withdrawn shelf, encrypted; committed
 library.html     --single-file output (styles, script and images inlined)
 ```

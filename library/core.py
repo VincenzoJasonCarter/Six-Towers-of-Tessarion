@@ -16,6 +16,7 @@ CATALOGUE = HERE / "catalogue.yaml"
 TEMPLATE = HERE / "template.html"
 STYLE = HERE / "style.css"
 SCRIPT = HERE / "app.js"
+SEALED = HERE / "sealed.json"  # the withdrawn shelf, encrypted (see seal.py)
 # serve.py serves these next to the page; the static export inlines them.
 ASSETS = {"/style.css": (STYLE, "text/css; charset=utf-8"), "/app.js": (SCRIPT, "text/javascript; charset=utf-8")}
 STYLE_LINK = '<link rel="stylesheet" href="style.css">'
@@ -140,6 +141,8 @@ def load():
     for s in shelves:
         s.pop("books", None)
     payload = {"books": books, "shelves": shelves, "warnings": warnings, "version": version()}
+    if SEALED.exists():
+        payload["sealed"] = json.loads(SEALED.read_text(encoding="utf-8"))
     return payload, {ref: pool[ref] for ref in used if ref in pool}
 
 
@@ -205,7 +208,7 @@ def compress_images(pool):
 
 def version():
     """Changes whenever a chapter, the catalogue or the page's files change."""
-    paths = sorted(SOURCE.glob("*.md")) + [CATALOGUE, TEMPLATE, STYLE, SCRIPT]
+    paths = sorted(SOURCE.glob("*.md")) + [CATALOGUE, TEMPLATE, STYLE, SCRIPT, SEALED]
     return "|".join(f"{p.name}:{p.stat().st_mtime_ns}" for p in paths if p.exists())
 
 

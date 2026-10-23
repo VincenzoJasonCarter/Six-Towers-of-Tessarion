@@ -1,0 +1,2601 @@
+{
+ "url": "http://127.0.0.1:8766/",
+ "at": "2026-10-23T02:49:17.408Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 5,
+   "filled": [
+    0.57,
+    0.61,
+    0.75,
+    0.47,
+    0.47
+   ],
+   "motion": {
+    "elements": 28,
+    "css": 28,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 3613,
+     "screens": 4,
+     "words": 396,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "A Register of Hostile Things",
+     "words": 5,
+     "chars": 28,
+     "lines": 1,
+     "size": 44,
+     "vw": 3.1,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 97,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "A Register of Hostile Things",
+     "words": 5,
+     "lines": 1,
+     "size": 44,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "A Register of Hostile Things",
+      "words": 5,
+      "chars": 28,
+      "lines": 1,
+      "size": 44,
+      "vw": 3.1,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.53,
+      "top": 97,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "system-ui",
+       "share": 0.56,
+       "mono": false
+      },
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.34,
+       "mono": false
+      },
+      {
+       "family": "EB Garamond",
+       "share": 0.1,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      12,
+      13,
+      14,
+      17,
+      18,
+      19,
+      20,
+      21,
+      26,
+      44
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": {
+      "font": "EB Garamond",
+      "size": 18,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 84,
+     "max": {
+      "size": 44,
+      "vw": 3.1,
+      "font": "Cormorant Garamond",
+      "text": "A Register of Hostile Things"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0.07,
+     "centerShare": 0.01,
+     "smallText": 33
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#1b1d1a",
+     "bodyBgHsl": {
+      "h": 100,
+      "s": 0.05,
+      "l": 0.11
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#a39884",
+       "share": 0.51
+      },
+      {
+       "color": "#e9e1d0",
+       "share": 0.32
+      },
+      {
+       "color": "#3a2a10",
+       "share": 0.12
+      },
+      {
+       "color": "#d9bb70",
+       "share": 0.05
+      },
+      {
+       "color": "#e0654f",
+       "share": 0
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 68,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "span → rgba(255, 255, 255, 0.5) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px ",
+      "a.card → rgb(74, 70, 64) 0px 0px 0px 5px, rgb(20, 18, 15) 0px 0px 0px 6px, rgba(0, 0, 0, ",
+      "span → rgba(255, 255, 255, 0.5) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.5) 0px 2px 4px 0",
+      "a.card → rgb(74, 70, 64) 0px 0px 0px 5px, rgb(20, 18, 15) 0px 0px 0px 6px, rgba(0, 0, 0, "
+     ],
+     "gradients": 50,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.avatar.creature → radial-gradient(55% 40% at 50% 42%, rgba(195, 136, 34, 0.3), rgba(0, 0, 0, 0) 70%), radial-gradient(90% 50% at",
+      "div.body → radial-gradient(circle at 7px 7px, rgb(133, 125, 114) 0px, rgb(133, 125, 114) 2px, rgba(0, 0, 0, 0) 2.6px), ra",
+      "div.avatar.creature → radial-gradient(55% 40% at 45% 55%, rgba(195, 136, 34, 0.3), rgba(0, 0, 0, 0) 70%), radial-gradient(90% 50% at",
+      "div.body → radial-gradient(circle at 7px 7px, rgb(133, 125, 114) 0px, rgb(133, 125, 114) 2px, rgba(0, 0, 0, 0) 2.6px), ra"
+     ],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "header.top 1425px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 32,
+     "cardRows": [
+      {
+       "count": 8,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 433
+      },
+      {
+       "count": 8,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 1268
+      },
+      {
+       "count": 15,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 2062
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": true,
+     "height": 61,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "cormorant garamond",
+     "eb garamond"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 3613,
+    "margins": {
+     "left": 113,
+     "right": 156
+    },
+    "sections": [
+     {
+      "sel": "div.cards",
+      "tag": "div",
+      "top": 433,
+      "height": 733,
+      "words": 80,
+      "media": 0,
+      "middle": 100,
+      "heading": null,
+      "left": 133,
+      "right": 160,
+      "textLeft": 133,
+      "textRight": 160,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.cards",
+      "tag": "div",
+      "top": 1268,
+      "height": 693,
+      "words": 82,
+      "media": 0,
+      "middle": 104,
+      "heading": null,
+      "left": 133,
+      "right": 150,
+      "textLeft": 133,
+      "textRight": 150,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.cards",
+      "tag": "div",
+      "top": 2062,
+      "height": 1047,
+      "words": 149,
+      "media": 0,
+      "middle": 70,
+      "heading": null,
+      "left": 133,
+      "right": 150,
+      "textLeft": 133,
+      "textRight": 150,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.cards",
+      "tag": "div",
+      "top": 3211,
+      "height": 322,
+      "words": 13,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": 133,
+      "right": 1119,
+      "textLeft": 133,
+      "textRight": 1119,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "A Register of Hostile Things",
+      "size": 44,
+      "top": 97,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 129,
+      "n": 4
+     },
+     {
+      "x": 113,
+      "n": 3
+     }
+    ],
+    "leftBlocks": 7,
+    "bodySize": 13,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.21,
+    "voidBox": {
+     "x": 300,
+     "y": 360,
+     "w": 1140,
+     "h": 240
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": true,
+    "ground": "#1b1d1a",
+    "sidebar": null,
+    "topbar": {
+     "h": 61
+    },
+    "canvas": {
+     "left": 113,
+     "right": 150
+    },
+    "hero": {
+     "text": "A Register of Hostile Things",
+     "words": 5,
+     "chars": 28,
+     "lines": 1,
+     "size": 44,
+     "vw": 3.1,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 97,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 32,
+     "firstScreen": 8,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 76,
+       "at": 1090,
+       "panel": "PoI-CRW-8667"
+      },
+      {
+       "gap": 63,
+       "at": 702,
+       "panel": "CRW-8715"
+      },
+      {
+       "gap": 63,
+       "at": 702,
+       "panel": "CRW-2688"
+      },
+      {
+       "gap": 59,
+       "at": 1107,
+       "panel": "PoI-CRW-3884"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 55,
+     "radii": [
+      [
+       5,
+       32
+      ],
+      [
+       0,
+       23
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 96,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgb(74, 70, 64) 0px 0px 0px 5px",
+      "rgb(20, 18, 15) 0px 0px 0px 6px",
+      "rgba(0, 0, 0, 0.45) 0px 12px 24px -6px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.06,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      17,
+      18,
+      19,
+      20,
+      21,
+      26,
+      44
+     ]
+    },
+    "title": {
+     "text": "A Register of Hostile Things",
+     "size": 44,
+     "top": 97
+    },
+    "colourShare": 0.013
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 9,
+   "filled": [
+    0.6,
+    0.82,
+    0.77,
+    0.82,
+    0.82,
+    0.76,
+    0.88,
+    0.42,
+    0.35
+   ],
+   "motion": {
+    "elements": 26,
+    "css": 26,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 8328,
+     "screens": 8.1,
+     "words": 396,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "A Register of Hostile Things",
+     "words": 5,
+     "chars": 28,
+     "lines": 1,
+     "size": 36,
+     "vw": 4.7,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 191,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "A Register of Hostile Things",
+     "words": 5,
+     "lines": 1,
+     "size": 36,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "The Threadmint Bestiary",
+      "words": 3,
+      "chars": 23,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.01,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.35,
+      "top": 10,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "A Register of Hostile Things",
+      "words": 5,
+      "chars": 28,
+      "lines": 1,
+      "size": 36,
+      "vw": 4.7,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.94,
+      "top": 191,
+      "tag": "h1",
+      "kind": "heading"
+     },
+     {
+      "text": "CRW-8715",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 518,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "CRW-2688",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 518,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "CRW-5223",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 966,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "CRW-9305",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 966,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "CRW-6762",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 1413,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "CRW-2029",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 1413,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "PoI-CRW-3884",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 1879,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "PoI-CRW-8667",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 1879,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "SKL-1413",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 2388,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "SKL-3135",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 2388,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "SKL-6477",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 2836,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "SKL-7349",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 2836,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "SKL-3787",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 3283,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "SKL-5668",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 3283,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "SKL-1533",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 3731,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "SKL-3589",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 3731,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "NRH-3476",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 4262,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "NRH-1494",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 4262,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "NRH-5006",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 4710,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "NRH-6598",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 4710,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "NRH-6048",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 5157,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "NRH-9807",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 5157,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "NRH-6882",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 5605,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "NRH-4179",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 5605,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "PoI-NRH-6635",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 6052,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "PoI-NRH-1560",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 6052,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "PoI-NRH-4320",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 6478,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "PoI-NRH-1352",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 6478,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "PoI-NRH-9887",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 6904,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "PoI-NRH-8830",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "right",
+      "widthRatio": 0.45,
+      "top": 6904,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "PoI-NRH-4418",
+      "words": 1,
+      "chars": 12,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 7329,
+      "tag": "div",
+      "kind": "heading"
+     },
+     {
+      "text": "THV-3767",
+      "words": 1,
+      "chars": 8,
+      "lines": 1,
+      "size": 29.7,
+      "vw": 3.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.08,
+      "leading": 1,
+      "upper": true,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.45,
+      "top": 7839,
+      "tag": "div",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 34,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 1,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "system-ui",
+       "share": 0.56,
+       "mono": false
+      },
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.34,
+       "mono": false
+      },
+      {
+       "family": "EB Garamond",
+       "share": 0.1,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      12,
+      13,
+      14,
+      17,
+      18,
+      21,
+      26,
+      30,
+      36
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "EB Garamond",
+      "size": 18,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 80,
+     "max": {
+      "size": 36,
+      "vw": 4.7,
+      "font": "Cormorant Garamond",
+      "text": "A Register of Hostile Things"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 1,
+     "microLabelShare": 0.004,
+     "microSamples": [
+      "Restricted"
+     ],
+     "upperShare": 0.07,
+     "centerShare": 0.01,
+     "smallText": 33
+    },
+    "eyebrows": [
+     {
+      "text": "Restricted",
+      "above": "A Register of Hostile Things",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 152
+     },
+     {
+      "text": "Minion",
+      "above": "CRW-5223",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 917
+     },
+     {
+      "text": "Elite",
+      "above": "CRW-9305",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 917
+     },
+     {
+      "text": "Obstacle",
+      "above": "CRW-6762",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 1364
+     },
+     {
+      "text": "Rumoured",
+      "above": "CRW-2029",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 1364
+     },
+     {
+      "text": "Rumoured",
+      "above": "PoI-CRW-3884",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 1830
+     },
+     {
+      "text": "Rumoured",
+      "above": "PoI-CRW-8667",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 1830
+     },
+     {
+      "text": "Hazard unit",
+      "above": "SKL-6477",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 2787
+     },
+     {
+      "text": "Minion",
+      "above": "SKL-7349",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 2787
+     },
+     {
+      "text": "Boss",
+      "above": "SKL-3787",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 3234
+     },
+     {
+      "text": "Elite",
+      "above": "SKL-5668",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 3234
+     },
+     {
+      "text": "Minion",
+      "above": "SKL-1533",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 3682
+     },
+     {
+      "text": "Minion",
+      "above": "SKL-3589",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 3682
+     },
+     {
+      "text": "Brute",
+      "above": "NRH-5006",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 4661
+     },
+     {
+      "text": "Minion",
+      "above": "NRH-6598",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 4661
+     },
+     {
+      "text": "Encounter hazard",
+      "above": "NRH-6048",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 5108
+     },
+     {
+      "text": "Minion",
+      "above": "NRH-9807",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 5108
+     },
+     {
+      "text": "Elite",
+      "above": "NRH-6882",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 5556
+     },
+     {
+      "text": "Legendary",
+      "above": "NRH-4179",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 5556
+     },
+     {
+      "text": "Boss",
+      "above": "PoI-NRH-6635",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 6003
+     },
+     {
+      "text": "Elite",
+      "above": "PoI-NRH-1560",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": true,
+      "size": 11.5,
+      "top": 6003
+     },
+     {
+      "text": "Individual — High Forge-Lord of Northreach",
+      "above": "PoI-NRH-4320",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12.5,
+      "top": 6430
+     },
+     {
+      "text": "Faction — Lord Nessa’s executioners",
+      "above": "PoI-NRH-1352",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12.5,
+      "top": 6430
+     },
+     {
+      "text": "Individual — Red Cattle negotiator",
+      "above": "PoI-NRH-9887",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12.5,
+      "top": 6856
+     },
+     {
+      "text": "Faction — Lord Nessa’s pursuit troops",
+      "above": "PoI-NRH-8830",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 12.5,
+      "top": 6856
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#1b1d1a",
+     "bodyBgHsl": {
+      "h": 100,
+      "s": 0.05,
+      "l": 0.11
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#a39884",
+       "share": 0.51
+      },
+      {
+       "color": "#e9e1d0",
+       "share": 0.32
+      },
+      {
+       "color": "#3a2a10",
+       "share": 0.12
+      },
+      {
+       "color": "#d9bb70",
+       "share": 0.05
+      },
+      {
+       "color": "#e0654f",
+       "share": 0
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 68,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "span → rgba(255, 255, 255, 0.5) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px ",
+      "a.card → rgb(74, 70, 64) 0px 0px 0px 5px, rgb(20, 18, 15) 0px 0px 0px 6px, rgba(0, 0, 0, ",
+      "span → rgba(255, 255, 255, 0.5) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.5) 0px 2px 4px 0",
+      "a.card → rgb(74, 70, 64) 0px 0px 0px 5px, rgb(20, 18, 15) 0px 0px 0px 6px, rgba(0, 0, 0, "
+     ],
+     "gradients": 64,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.avatar.creature → radial-gradient(55% 40% at 50% 42%, rgba(195, 136, 34, 0.3), rgba(0, 0, 0, 0) 70%), radial-gradient(90% 50% at",
+      "div.body → radial-gradient(circle at 7px 7px, rgb(133, 125, 114) 0px, rgb(133, 125, 114) 2px, rgba(0, 0, 0, 0) 2.6px), ra",
+      "div.avatar.creature → radial-gradient(55% 40% at 45% 55%, rgba(195, 136, 34, 0.3), rgba(0, 0, 0, 0) 70%), radial-gradient(90% 50% at",
+      "div.body → radial-gradient(circle at 7px 7px, rgb(133, 125, 114) 0px, rgb(133, 125, 114) 2px, rgba(0, 0, 0, 0) 2.6px), ra"
+     ],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "header.top 753px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 32,
+     "cardRows": [
+      {
+       "count": 8,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 518
+      },
+      {
+       "count": 8,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 2388
+      },
+      {
+       "count": 15,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 4262
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": false,
+     "height": 129,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "cormorant garamond",
+     "eb garamond"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 8328,
+    "margins": {
+     "left": 16,
+     "right": 70
+    },
+    "sections": [
+     {
+      "sel": "header.top",
+      "tag": "header",
+      "top": 0,
+      "height": 129,
+      "words": 7,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The Threadmint Bestiary",
+       "size": 26,
+       "tag": "b"
+      },
+      "left": 16,
+      "right": 31,
+      "textLeft": 16,
+      "textRight": 486,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "main#main",
+      "tag": "main",
+      "top": 129,
+      "height": 8199,
+      "words": 395,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "A Register of Hostile Things",
+       "size": 36,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 48,
+      "textLeft": 16,
+      "textRight": 48,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [
+     {
+      "top": 936,
+      "height": 308
+     },
+     {
+      "top": 1384,
+      "height": 308
+     },
+     {
+      "top": 1848,
+      "height": 308
+     },
+     {
+      "top": 2804,
+      "height": 312
+     },
+     {
+      "top": 3252,
+      "height": 308
+     },
+     {
+      "top": 3700,
+      "height": 308
+     },
+     {
+      "top": 4680,
+      "height": 308
+     },
+     {
+      "top": 5128,
+      "height": 308
+     },
+     {
+      "top": 5576,
+      "height": 308
+     },
+     {
+      "top": 6024,
+      "height": 308
+     },
+     {
+      "top": 6448,
+      "height": 308
+     },
+     {
+      "top": 7300,
+      "height": 308
+     }
+    ],
+    "h1s": [
+     {
+      "text": "A Register of Hostile Things",
+      "size": 36,
+      "top": 191,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 32,
+      "n": 4
+     },
+     {
+      "x": 16,
+      "n": 3
+     }
+    ],
+    "leftBlocks": 7,
+    "bodySize": 13,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": true,
+    "ground": "#1b1d1a",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 16,
+     "right": 57
+    },
+    "hero": {
+     "text": "A Register of Hostile Things",
+     "words": 5,
+     "chars": 28,
+     "lines": 1,
+     "size": 36,
+     "vw": 4.7,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 191,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 32,
+     "firstScreen": 4,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 55,
+     "radii": [
+      [
+       5,
+       32
+      ],
+      [
+       0,
+       23
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 96,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgb(74, 70, 64) 0px 0px 0px 5px",
+      "rgb(20, 18, 15) 0px 0px 0px 6px",
+      "rgba(0, 0, 0, 0.45) 0px 12px 24px -6px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.06,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      17,
+      18,
+      21,
+      26,
+      30,
+      36
+     ]
+    },
+    "title": {
+     "text": "A Register of Hostile Things",
+     "size": 36,
+     "top": 191
+    },
+    "colourShare": 0.029
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 8,
+   "filled": [
+    0.73,
+    0.87,
+    0.78,
+    0.78,
+    0.88,
+    0.88,
+    0.48,
+    0.39
+   ],
+   "motion": {
+    "elements": 26,
+    "css": 26,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 6002,
+     "screens": 7.1,
+     "words": 396,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 1,
+     "sections": 0,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "A Register of Hostile Things",
+     "words": 5,
+     "chars": 28,
+     "lines": 2,
+     "size": 36,
+     "vw": 9.2,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 191,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "A Register of Hostile Things",
+     "words": 5,
+     "lines": 2,
+     "size": 36,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "The Threadmint Bestiary",
+      "words": 3,
+      "chars": 23,
+      "lines": 1,
+      "size": 26,
+      "vw": 6.7,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.01,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.68,
+      "top": 10,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "A Register of Hostile Things",
+      "words": 5,
+      "chars": 28,
+      "lines": 2,
+      "size": 36,
+      "vw": 9.2,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 191,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 2,
+     "maxLines": 2,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "system-ui",
+       "share": 0.56,
+       "mono": false
+      },
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.34,
+       "mono": false
+      },
+      {
+       "family": "EB Garamond",
+       "share": 0.1,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      12,
+      13,
+      14,
+      17,
+      18,
+      21,
+      26,
+      36
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "EB Garamond",
+      "size": 18,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 40,
+     "max": {
+      "size": 36,
+      "vw": 9.2,
+      "font": "Cormorant Garamond",
+      "text": "A Register of Hostile Things"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 1,
+     "microLabelShare": 0.004,
+     "microSamples": [
+      "Restricted"
+     ],
+     "upperShare": 0.07,
+     "centerShare": 0.01,
+     "smallText": 33
+    },
+    "eyebrows": [
+     {
+      "text": "Restricted",
+      "above": "A Register of Hostile Things",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 152
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#1b1d1a",
+     "bodyBgHsl": {
+      "h": 100,
+      "s": 0.05,
+      "l": 0.11
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#a39884",
+       "share": 0.51
+      },
+      {
+       "color": "#e9e1d0",
+       "share": 0.32
+      },
+      {
+       "color": "#3a2a10",
+       "share": 0.12
+      },
+      {
+       "color": "#d9bb70",
+       "share": 0.05
+      },
+      {
+       "color": "#e0654f",
+       "share": 0
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 59,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "span → rgba(255, 255, 255, 0.5) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px ",
+      "a.card → rgb(74, 70, 64) 0px 0px 0px 5px, rgb(20, 18, 15) 0px 0px 0px 6px, rgba(0, 0, 0, ",
+      "span → rgba(255, 255, 255, 0.5) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.5) 0px 2px 4px 0",
+      "a.card → rgb(74, 70, 64) 0px 0px 0px 5px, rgb(20, 18, 15) 0px 0px 0px 6px, rgba(0, 0, 0, "
+     ],
+     "gradients": 64,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.avatar.creature → radial-gradient(55% 40% at 50% 42%, rgba(195, 136, 34, 0.3), rgba(0, 0, 0, 0) 70%), radial-gradient(90% 50% at",
+      "div.body → radial-gradient(circle at 7px 7px, rgb(133, 125, 114) 0px, rgb(133, 125, 114) 2px, rgba(0, 0, 0, 0) 2.6px), ra",
+      "div.avatar.creature → radial-gradient(55% 40% at 45% 55%, rgba(195, 136, 34, 0.3), rgba(0, 0, 0, 0) 70%), radial-gradient(90% 50% at",
+      "div.body → radial-gradient(circle at 7px 7px, rgb(133, 125, 114) 0px, rgb(133, 125, 114) 2px, rgba(0, 0, 0, 0) 2.6px), ra"
+     ],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "header.top 390px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 32,
+     "cardRows": [
+      {
+       "count": 8,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 644
+      },
+      {
+       "count": 8,
+       "iconTopped": true,
+       "rounded": false,
+       "top": 1915
+      },
+      {
+       "count": 15,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 3205
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": false,
+     "height": 129,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "cormorant garamond",
+     "eb garamond"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 6002,
+    "margins": {
+     "left": 16,
+     "right": 37
+    },
+    "sections": [
+     {
+      "sel": "header.top",
+      "tag": "header",
+      "top": 0,
+      "height": 129,
+      "words": 7,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The Threadmint Bestiary",
+       "size": 26,
+       "tag": "b"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 108,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "main#main",
+      "tag": "main",
+      "top": 129,
+      "height": 5873,
+      "words": 395,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "A Register of Hostile Things",
+       "size": 36,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 25,
+      "textLeft": 16,
+      "textRight": 25,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "A Register of Hostile Things",
+      "size": 36,
+      "top": 191,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 32,
+      "n": 4
+     },
+     {
+      "x": 16,
+      "n": 3
+     }
+    ],
+    "leftBlocks": 7,
+    "bodySize": 13,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": true,
+    "ground": "#1b1d1a",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 16,
+     "right": 25
+    },
+    "hero": {
+     "text": "A Register of Hostile Things",
+     "words": 5,
+     "chars": 28,
+     "lines": 2,
+     "size": 36,
+     "vw": 9.2,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 191,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 32,
+     "firstScreen": 2,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 51,
+       "at": 4684,
+       "panel": "PoI-NRH-1560"
+      },
+      {
+       "gap": 44,
+       "at": 3738,
+       "panel": "NRH-6598"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 55,
+     "radii": [
+      [
+       5,
+       32
+      ],
+      [
+       0,
+       23
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 96,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgb(74, 70, 64) 0px 0px 0px 5px",
+      "rgb(20, 18, 15) 0px 0px 0px 6px",
+      "rgba(0, 0, 0, 0.45) 0px 12px 24px -6px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.06,
+     "tiny": 0,
+     "tinySamples": [],
+     "sizes": [
+      12,
+      13,
+      14,
+      17,
+      18,
+      21,
+      26,
+      36
+     ]
+    },
+    "title": {
+     "text": "A Register of Hostile Things",
+     "size": 36,
+     "top": 191
+    },
+    "colourShare": 0.028
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "gradient",
+   "width": 1440,
+   "message": "50 gradient fill(s): div.avatar.creature → radial-gradient(55% 40% at 50% 42%, rgba(195, 136, 34, 0.3), rgba(0, 0, 0, 0) 70%), radial-gradient(90% 50% at | div.body → radial-gradient(circle at 7px 7px, rgb(133, 125, 114) 0px, rgb(133, 125, 114) 2px, rgba(0, 0, 0, 0) 2.6px), ra | div.avatar.creature → radial-gradient(55% 40% at 45% 55%, rgba(195, 136, 34, 0.3), rgba(0, 0, 0, 0) 70%), radial-gradient(90% 50% at",
+   "fix": "Use a flat colour or a real image. The only gradient allowed by default is a neutral scrim over a photo for legibility.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "text-shadow",
+   "width": 1440,
+   "message": "32 text-shadow(s).",
+   "fix": "Remove; fix legibility with a scrim or a different crop.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "font-count",
+   "width": 1440,
+   "message": "3 typefaces in use (system-ui, Cormorant Garamond, EB Garamond).",
+   "fix": "Two at most.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "heavy-shadow",
+   "width": 1440,
+   "message": "96 panel shadow(s) heavy enough to read as floating: rgb(74, 70, 64) 0px 0px 0px 5px | rgb(20, 18, 15) 0px 0px 0px 6px | rgba(0, 0, 0, 0.45) 0px 12px 24px -6px",
+   "fix": "Panels sit on the ground: separate them with a fill one step from the ground or a quiet 1px border. A shadow, if any, is under 8% black with a small blur. Real overlays (menus, dialogs, popovers) may float.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "below-fold",
+   "width": 1440,
+   "message": "Only 8 of 32 blocks start on the first 1440px screen.",
+   "fix": "Every block the brief names shows its header and first rows on the first desktop screen: size the headline block to its question, cap long lists with \"View all\", and put time-sensitive blocks before long tables."
+  },
+  {
+   "level": "WARN",
+   "id": "panel-void",
+   "width": 1440,
+   "message": "4 card(s) hold a blank band inside: 76px in \"PoI-CRW-8667\", 63px in \"CRW-8715\", 63px in \"CRW-2688\".",
+   "fix": "A card stretches to its neighbour only when it has content to fill. Keep a legend or a note directly under its chart (only an action or a total may sit at a stretched card's foot), let a short card keep its own height (align-items: start), and let a filtered block shrink to its rows."
+  },
+  {
+   "level": "WARN",
+   "id": "app-title-size",
+   "width": 1440,
+   "message": "The h1 is 44px (\"A Register of Hostile Things\").",
+   "fix": "An app screen is not a landing page: the title is 18-32px (20-24px on a phone).",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "micro-label",
+   "width": 768,
+   "message": "1 tiny uppercase letter-spaced label(s): \"Restricted\"",
+   "fix": "Prefer sentence case at body size.",
+   "alsoAt": [
+    390
+   ]
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\bestiary\\desktop-fold.jpg",
+   "pages": [
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\bestiary\\desktop-page-01.jpg",
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\bestiary\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\bestiary\\tablet-fold.jpg",
+   "pages": [
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\bestiary\\tablet-page-01.jpg",
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\bestiary\\tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\bestiary\\mobile-fold.jpg",
+   "pages": [
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\bestiary\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

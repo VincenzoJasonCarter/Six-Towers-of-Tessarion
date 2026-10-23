@@ -45,6 +45,8 @@ PAGE_FILES = {
 # the maps on the easel, one per country (hub/atlas.py): atlas/index.json, atlas/<id>.json, atlas/<id>.webp
 ATLAS_FILE = re.compile(r"^/atlas/((?:plans/)?[a-z0-9-]+\.(json|webp|svg))$")  # and the town plans (hub/plans.py)
 ATLAS_TYPES = {"json": "application/json; charset=utf-8", "webp": "image/webp", "svg": "image/svg+xml"}
+FONT_FILE = re.compile(r"^/fonts/([a-z0-9-]+\.(woff2|css))$")
+FONT_TYPES = {"woff2": "font/woff2", "css": "text/css; charset=utf-8"}
 
 # Same commands as the Makefile targets, minus the browser tab each one opens:
 # name -> (port, script, the path its page is at).
@@ -162,6 +164,8 @@ def make_handler(hub):
                 self._send(200, (HERE / filename).read_bytes(), content_type)
             elif (m := ATLAS_FILE.match(path)) and (HERE / "atlas" / m[1]).is_file():
                 self._send(200, (HERE / "atlas" / m[1]).read_bytes(), ATLAS_TYPES[m[2]])
+            elif (m := FONT_FILE.match(path)) and (HERE / "fonts" / m[1]).is_file():
+                self._send(200, (HERE / "fonts" / m[1]).read_bytes(), FONT_TYPES[m[2]])
             elif path == "/api/status":
                 self._json(200, hub.status())
             else:

@@ -1,0 +1,1361 @@
+{
+ "url": "http://127.0.0.1:8760/",
+ "at": "2026-10-23T02:58:14.091Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.82
+   ],
+   "motion": {
+    "elements": 10,
+    "css": 10,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 900,
+     "screens": 1,
+     "words": 81,
+     "img": 6,
+     "video": 0,
+     "canvas": 8,
+     "svg": 7,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 5,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "54e790c1-cde3-4ba7-a193-93d46a785e34",
+      "013424c9-af7b-41ce-9a30-57ec22b39701",
+      "1f7e0cfa-1dd7-43e9-b69b-2d2a1710da6e",
+      "854ec5b5-10f5-4f0b-b983-e57079deab21",
+      "78e08cfa-83f5-4d17-817e-c20bd40e7754"
+     ],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Six Towers of Tessarion",
+     "words": 4,
+     "chars": 23,
+     "lines": 1,
+     "size": 46,
+     "vw": 3.2,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.05,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.4,
+     "top": 738,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Six Towers of Tessarion",
+     "words": 4,
+     "lines": 1,
+     "size": 46,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "Six Towers of Tessarion",
+      "words": 4,
+      "chars": 23,
+      "lines": 1,
+      "size": 46,
+      "vw": 3.2,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.4,
+      "top": 738,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 1,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "EB Garamond",
+       "share": 0.58,
+       "mono": false
+      },
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.22,
+       "mono": false
+      },
+      {
+       "family": "system-ui",
+       "share": 0.2,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      13,
+      14,
+      15,
+      17,
+      21,
+      22,
+      23,
+      46
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "EB Garamond",
+      "size": 17,
+      "leading": 1.45,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 68,
+     "max": {
+      "size": 46,
+      "vw": 3.2,
+      "font": "Cormorant Garamond",
+      "text": "Six Towers of Tessarion"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.7,
+     "smallText": 1
+    },
+    "eyebrows": [
+     {
+      "text": "Please ring for service",
+      "above": "Six Towers of Tessarion",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 655
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#15120e",
+     "bodyBgHsl": {
+      "h": 34,
+      "s": 0.2,
+      "l": 0.07
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#e9e1d0",
+       "share": 0.44
+      },
+      {
+       "color": "#e3d2b0",
+       "share": 0.25
+      },
+      {
+       "color": "#a39884",
+       "share": 0.09
+      },
+      {
+       "color": "#bfa983",
+       "share": 0.09
+      },
+      {
+       "color": "#efd89a",
+       "share": 0.08
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 2,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "span.tent → rgba(0, 0, 0, 0.3) 0px 1px 3px 0px",
+      "img → rgba(0, 0, 0, 0.45) 0px 0px 0px 1px"
+     ],
+     "gradients": 2,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.wall → linear-gradient(rgb(58, 48, 37), rgb(37, 30, 23))",
+      "div.front → linear-gradient(rgb(77, 49, 28), rgb(31, 19, 10))"
+     ],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "header.bar 1440px"
+     ],
+     "outlinedBoxes": 1,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 6,
+     "boxRadius": 50,
+     "squareMedia": 0,
+     "roundedMedia": 13,
+     "mediaRadius": 50,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.09
+     },
+     {
+      "type": "canvas",
+      "ratio": 0.09
+     },
+     {
+      "type": "img",
+      "ratio": 0.09
+     },
+     {
+      "type": "canvas",
+      "ratio": 0.09
+     }
+    ],
+    "nav": {
+     "links": 7,
+     "fixed": true,
+     "height": 52,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "cormorant garamond",
+     "eb garamond"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 900,
+    "margins": {
+     "left": 58,
+     "right": 58
+    },
+    "sections": [
+     {
+      "sel": "div.wall",
+      "tag": "div",
+      "top": 52,
+      "height": 848,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.desk",
+      "tag": "div",
+      "top": 671,
+      "height": 229,
+      "words": 39,
+      "media": 0,
+      "middle": 307,
+      "heading": {
+       "text": "Six Towers of Tessarion",
+       "size": 46,
+       "tag": "h1"
+      },
+      "left": 58,
+      "right": 58,
+      "textLeft": 109,
+      "textRight": 77,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Six Towers of Tessarion",
+      "size": 46,
+      "top": 738,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [],
+    "leftBlocks": 0,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0.07,
+    "voidBox": {
+     "x": 0,
+     "y": 840,
+     "w": 1440,
+     "h": 60
+    }
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 1,
+   "filled": [
+    0.86
+   ],
+   "motion": {
+    "elements": 18,
+    "css": 18,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1024,
+     "screens": 1,
+     "words": 81,
+     "img": 6,
+     "video": 0,
+     "canvas": 8,
+     "svg": 7,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 5,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "2eb9284d-ac2b-4e25-81d7-0cc2fd4a20ab",
+      "09220d68-fc06-4b06-a773-2400c67c8d65",
+      "0c5476e8-9cf9-4e79-9bd0-79b25783801e",
+      "243efccb-df4a-4637-93b2-f6689f88bd88",
+      "a814f021-8a4f-46e8-8c0e-370256f31949"
+     ],
+     "blendText": 0,
+     "sideScrollers": 1,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Six Towers of Tessarion",
+     "words": 4,
+     "chars": 23,
+     "lines": 1,
+     "size": 28,
+     "vw": 3.6,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.05,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.4,
+     "top": 845,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Six Towers of Tessarion",
+     "words": 4,
+     "lines": 1,
+     "size": 28,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "Six Towers of Tessarion",
+      "words": 4,
+      "chars": 23,
+      "lines": 1,
+      "size": 28,
+      "vw": 3.6,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.4,
+      "top": 845,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 1,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "EB Garamond",
+       "share": 0.58,
+       "mono": false
+      },
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.22,
+       "mono": false
+      },
+      {
+       "family": "system-ui",
+       "share": 0.2,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      13,
+      14,
+      15,
+      16,
+      19,
+      21,
+      23,
+      28
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "EB Garamond",
+      "size": 15.5,
+      "leading": 1.45,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 40,
+     "max": {
+      "size": 28,
+      "vw": 3.6,
+      "font": "Cormorant Garamond",
+      "text": "Six Towers of Tessarion"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.7,
+     "smallText": 1
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#15120e",
+     "bodyBgHsl": {
+      "h": 34,
+      "s": 0.2,
+      "l": 0.07
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#e9e1d0",
+       "share": 0.44
+      },
+      {
+       "color": "#e3d2b0",
+       "share": 0.25
+      },
+      {
+       "color": "#a39884",
+       "share": 0.09
+      },
+      {
+       "color": "#bfa983",
+       "share": 0.09
+      },
+      {
+       "color": "#efd89a",
+       "share": 0.08
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 8,
+     "height": 78,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Guild notices Patch 4 12 Oct 2026",
+      "Map room The Union 6 countries"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 1,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "span.tent → rgba(0, 0, 0, 0.3) 0px 1px 3px 0px"
+     ],
+     "gradients": 2,
+     "scrims": 0,
+     "gradientSamples": [
+      "div.wall → linear-gradient(rgb(58, 48, 37), rgb(37, 30, 23))",
+      "div.front → linear-gradient(rgb(77, 49, 28), rgb(31, 19, 10))"
+     ],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "header.bar 768px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.1
+     },
+     {
+      "type": "canvas",
+      "ratio": 0.1
+     },
+     {
+      "type": "img",
+      "ratio": 0.09
+     },
+     {
+      "type": "canvas",
+      "ratio": 0.09
+     }
+    ],
+    "nav": {
+     "links": 7,
+     "fixed": true,
+     "height": 52,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "cormorant garamond",
+     "eb garamond"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1024,
+    "margins": {
+     "left": 31,
+     "right": 31
+    },
+    "sections": [
+     {
+      "sel": "div.wall",
+      "tag": "div",
+      "top": 52,
+      "height": 972,
+      "words": 0,
+      "media": 0,
+      "middle": 0,
+      "heading": null,
+      "left": null,
+      "right": null,
+      "textLeft": null,
+      "textRight": null,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.desk",
+      "tag": "div",
+      "top": 762,
+      "height": 262,
+      "words": 39,
+      "media": 0,
+      "middle": 91,
+      "heading": {
+       "text": "Six Towers of Tessarion",
+       "size": 28,
+       "tag": "h1"
+      },
+      "left": 31,
+      "right": 31,
+      "textLeft": 78,
+      "textRight": 44,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Six Towers of Tessarion",
+      "size": 28,
+      "top": 845,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [],
+    "leftBlocks": 0,
+    "bodySize": 16,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    1,
+    1
+   ],
+   "motion": {
+    "elements": 10,
+    "css": 10,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 928,
+     "screens": 1.1,
+     "words": 80,
+     "img": 6,
+     "video": 0,
+     "canvas": 8,
+     "svg": 7,
+     "sections": 2,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 5,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [
+      "ce4eb4de-1087-4fc5-bf3a-5c5b0dde5b85",
+      "aef54e2b-1381-4993-a4cd-5ee19c33d741",
+      "25ca3bfa-b4d0-4f41-8d10-ba1200bcc95f",
+      "7a1f9d4e-881d-4ade-acbf-d01b98f76107",
+      "ba2fef2e-160d-4a9b-9e5a-85660921d732"
+     ],
+     "blendText": 0,
+     "sideScrollers": 2,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "Six Towers of Tessarion",
+     "words": 4,
+     "chars": 23,
+     "lines": 1,
+     "size": 28,
+     "vw": 7.2,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.05,
+     "upper": false,
+     "italic": false,
+     "mono": false,
+     "align": "center",
+     "position": "center",
+     "widthRatio": 0.92,
+     "top": 701,
+     "tag": "h1",
+     "kind": "heading"
+    },
+    "h1": {
+     "text": "Six Towers of Tessarion",
+     "words": 4,
+     "lines": 1,
+     "size": 28,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "The Library",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 23,
+      "vw": 5.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.01,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.28,
+      "top": 80,
+      "tag": "b",
+      "kind": "heading"
+     },
+     {
+      "text": "The Market",
+      "words": 2,
+      "chars": 10,
+      "lines": 1,
+      "size": 23,
+      "vw": 5.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.01,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.28,
+      "top": 80,
+      "tag": "b",
+      "kind": "heading"
+     },
+     {
+      "text": "The Barracks",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 23,
+      "vw": 5.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.01,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.32,
+      "top": 80,
+      "tag": "b",
+      "kind": "heading"
+     },
+     {
+      "text": "The Memoria",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 23,
+      "vw": 5.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.01,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.33,
+      "top": 80,
+      "tag": "b",
+      "kind": "heading"
+     },
+     {
+      "text": "The Bestiary",
+      "words": 2,
+      "chars": 12,
+      "lines": 1,
+      "size": 23,
+      "vw": 5.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.01,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "right",
+      "widthRatio": 0.3,
+      "top": 80,
+      "tag": "b",
+      "kind": "heading"
+     },
+     {
+      "text": "Six Towers of Tessarion",
+      "words": 4,
+      "chars": 23,
+      "lines": 1,
+      "size": 28,
+      "vw": 7.2,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.05,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "center",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 701,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 6,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 6,
+     "medianWords": 2,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "EB Garamond",
+       "share": 0.59,
+       "mono": false
+      },
+      {
+       "family": "system-ui",
+       "share": 0.2,
+       "mono": false
+      },
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.2,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      13,
+      15,
+      17,
+      18,
+      23,
+      28
+     ],
+     "sizeCount": 6,
+     "notLoaded": [],
+     "body": {
+      "font": "EB Garamond",
+      "size": 17,
+      "leading": 1.45,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 42,
+     "max": {
+      "size": 28,
+      "vw": 7.2,
+      "font": "Cormorant Garamond",
+      "text": "Six Towers of Tessarion"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 0,
+     "microLabelShare": 0,
+     "microSamples": [],
+     "upperShare": 0,
+     "centerShare": 0.71,
+     "smallText": 1
+    },
+    "eyebrows": [
+     {
+      "text": "Please ring for service",
+      "above": "Six Towers of Tessarion",
+      "upper": false,
+      "tracked": false,
+      "mono": false,
+      "pill": false,
+      "size": 13,
+      "top": 651
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#15120e",
+     "bodyBgHsl": {
+      "h": 34,
+      "s": 0.2,
+      "l": 0.07
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#e9e1d0",
+       "share": 0.43
+      },
+      {
+       "color": "#e3d2b0",
+       "share": 0.26
+      },
+      {
+       "color": "#a39884",
+       "share": 0.09
+      },
+      {
+       "color": "#bfa983",
+       "share": 0.09
+      },
+      {
+       "color": "#efd89a",
+       "share": 0.08
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 2,
+     "inHero": 2,
+     "radius": 8,
+     "height": 76,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": [
+      "Guild notices Patch 4 12 Oct 2026",
+      "Map room The Union 6 countries"
+     ]
+    },
+    "surfaces": {
+     "shadowStatic": 3,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "button.pick.prev → rgba(0, 0, 0, 0.15) 0px 2px 8px 0px",
+      "button.pick.next → rgba(0, 0, 0, 0.15) 0px 2px 8px 0px",
+      "span.tent → rgba(0, 0, 0, 0.3) 0px 1px 3px 0px"
+     ],
+     "gradients": 2,
+     "scrims": 0,
+     "gradientSamples": [
+      "div#hall.hall → linear-gradient(rgb(58, 48, 37), rgb(37, 30, 23))",
+      "div.front → linear-gradient(rgb(77, 49, 28), rgb(31, 19, 10))"
+     ],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "header.bar 390px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 5,
+     "boxRadius": 50,
+     "squareMedia": 0,
+     "roundedMedia": 13,
+     "mediaRadius": 50,
+     "textShadow": 0,
+     "cardRows": []
+    },
+    "heroMedia": [
+     {
+      "type": "img",
+      "ratio": 0.24
+     },
+     {
+      "type": "canvas",
+      "ratio": 0.24
+     }
+    ],
+    "nav": {
+     "links": 6,
+     "fixed": true,
+     "height": 52,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "cormorant garamond",
+     "eb garamond"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 928,
+    "margins": {
+     "left": 14,
+     "right": 12
+    },
+    "sections": [
+     {
+      "sel": "div.hallpick",
+      "tag": "div",
+      "top": 64,
+      "height": 443,
+      "words": 31,
+      "media": 13,
+      "middle": 1306,
+      "heading": {
+       "text": "The Library",
+       "size": 23,
+       "tag": "b"
+      },
+      "left": 12,
+      "right": 0,
+      "textLeft": 129,
+      "textRight": -1443,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.desk",
+      "tag": "div",
+      "top": 667,
+      "height": 262,
+      "words": 39,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "Six Towers of Tessarion",
+       "size": 28,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 60,
+      "textRight": 46,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "Six Towers of Tessarion",
+      "size": 28,
+      "top": 701,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [
+     {
+      "text": "Reception",
+      "side": "left",
+      "px": 14
+     },
+     {
+      "text": "Animate",
+      "side": "right",
+      "px": 12
+     }
+    ],
+    "edges": [],
+    "leftBlocks": 0,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": null,
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "eyebrow",
+   "width": 1440,
+   "message": "1 eyebrow/kicker label(s) above headings: \"Please ring for service\" above \"Six Towers of Tessarion\"",
+   "fix": "Delete them. If the label carried real information, fold it into the headline or the supporting sentence.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "gradient",
+   "width": 1440,
+   "message": "2 gradient fill(s): div.wall → linear-gradient(rgb(58, 48, 37), rgb(37, 30, 23)) | div.front → linear-gradient(rgb(77, 49, 28), rgb(31, 19, 10))",
+   "fix": "Use a flat colour or a real image. The only gradient allowed by default is a neutral scrim over a photo for legibility.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "shadow",
+   "width": 1440,
+   "message": "2 box-shadow(s) on elements at rest: span.tent → rgba(0, 0, 0, 0.3) 0px 1px 3px 0px | img → rgba(0, 0, 0, 0.45) 0px 0px 0px 1px",
+   "fix": "Remove. Separate surfaces with a tone step or space. Shadows are for things that really float (menus, dialogs, sticky bars).",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "hairline",
+   "width": 1440,
+   "message": "1 thin rule(s)/divider line(s): header.bar 1440px",
+   "fix": "Delete. Separate with space, a tone change, or scale. Lines are only for real tables and form fields.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "outlined-box",
+   "width": 1440,
+   "message": "1 box(es) drawn with a 1px outline.",
+   "fix": "Prefer a filled surface or no box."
+  },
+  {
+   "level": "WARN",
+   "id": "font-count",
+   "width": 1440,
+   "message": "3 typefaces in use (EB Garamond, Cormorant Garamond, system-ui).",
+   "fix": "Two at most.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "first-action",
+   "width": 1440,
+   "message": "No visible button in the first screen.",
+   "fix": "Give the one primary action a real button in the first screen (a filled or solid-bordered control, 44px or taller), not only a link in the navigation."
+  },
+  {
+   "level": "WARN",
+   "id": "no-footage",
+   "width": 1440,
+   "message": "No video anywhere on the page.",
+   "fix": "Look for one honest clip with scripts/assets.mjs --video (the place, the material, the process) and use it as a muted loop with a poster frame. Defend its absence only if no clip fits the subject."
+  },
+  {
+   "level": "WARN",
+   "id": "small-text",
+   "width": 1440,
+   "message": "1 text block(s) under 13px.",
+   "fix": "Nothing meant to be read goes below 13px.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "focal-point",
+   "width": 1440,
+   "message": "The first screen has no dominant element: the largest type is 46px (3.2vw) and no single picture holds a third of the viewport.",
+   "fix": "Make one thing lead: the headline at display size, or one large picture. A grid of many small pictures is not one thing; in blind tests jurors marked a first screen without a headline down every time. On the strongest studied sites the largest type has a median of 8.4vw.",
+   "alsoAt": [
+    768
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "still-page",
+   "width": 1440,
+   "message": "Little motion: 10 element(s) moved while the page loaded and scrolled.",
+   "fix": "Give every section an entrance for its parts (not one fade of the whole block) and add one moving picture: a looping clip or a slow move on a photograph."
+  },
+  {
+   "level": "WARN",
+   "id": "body-size",
+   "width": 768,
+   "message": "Body text is 15.5px.",
+   "fix": "Body copy 16–20px."
+  },
+  {
+   "level": "WARN",
+   "id": "side-scroll",
+   "width": 768,
+   "message": "1 row(s) scroll sideways with content past their edge.",
+   "fix": "Jurors and most visitors read a row cut at the edge as clipped, not as scrollable. Wrap it onto more lines, or end it inside the grid.",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "small-title",
+   "width": 768,
+   "message": "The h1 is 28px (\"Six Towers of Tessarion\").",
+   "fix": "Set the title at display size, or make the large text of the first screen the h1."
+  },
+  {
+   "level": "WARN",
+   "id": "edge-text",
+   "width": 390,
+   "message": "2 text block(s) sit 12–15px from the phone's edge: \"Reception\" (14px); \"Animate\" (12px)",
+   "fix": "The page margin is 16–20px on a phone; the header and the corner labels sit on it too."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\hub-r2\\desktop-fold.jpg",
+   "pages": [
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\hub-r2\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\hub-r2\\tablet-fold.jpg",
+   "pages": [
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\hub-r2\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\hub-r2\\mobile-fold.jpg",
+   "pages": [
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\hub-r2\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

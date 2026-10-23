@@ -1,0 +1,2062 @@
+{
+ "url": "http://127.0.0.1:8769/",
+ "at": "2026-10-23T02:36:58.618Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 7,
+   "filled": [
+    0.5,
+    0.5,
+    0.55,
+    0.63,
+    0.55,
+    0.56,
+    0.47
+   ],
+   "motion": {
+    "elements": 5,
+    "css": 5,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 5543,
+     "screens": 6.2,
+     "words": 1065,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 38,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "The Memoria",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 44,
+     "vw": 3.1,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 129,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "The Memoria",
+     "words": 2,
+     "lines": 1,
+     "size": 44,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "The Memoria",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 44,
+      "vw": 3.1,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.53,
+      "top": 129,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "EB Garamond",
+       "share": 0.46,
+       "mono": false
+      },
+      {
+       "family": "system-ui",
+       "share": 0.36,
+       "mono": false
+      },
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.14,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.04,
+       "mono": false
+      }
+     ],
+     "familyCount": 4,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      17,
+      18,
+      20,
+      21,
+      26,
+      44
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": {
+      "font": "EB Garamond",
+      "size": 16.5,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 84,
+     "max": {
+      "size": 44,
+      "vw": 3.1,
+      "font": "Cormorant Garamond",
+      "text": "The Memoria"
+     },
+     "monoShare": 0.04,
+     "monoProseShare": 0.04,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [
+      "TM-R-01",
+      "TM-R-02",
+      "TM-R-03",
+      "TM-R-04",
+      "TM-R-05",
+      "TM-R-06"
+     ],
+     "microLabels": 1,
+     "microLabelShare": 0.003,
+     "microSamples": [
+      "Plan of the Memoria"
+     ],
+     "upperShare": 0.05,
+     "centerShare": 0.02,
+     "smallText": 56
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#221d17",
+     "bodyBgHsl": {
+      "h": 33,
+      "s": 0.19,
+      "l": 0.11
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#e9e1d0",
+       "share": 0.48
+      },
+      {
+       "color": "#a39884",
+       "share": 0.44
+      },
+      {
+       "color": "#3a2a10",
+       "share": 0.05
+      },
+      {
+       "color": "#e0826c",
+       "share": 0.02
+      },
+      {
+       "color": "#20242a",
+       "share": 0.01
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 56,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "svg#plan → rgb(217, 187, 112) 0px 0px 0px 6px, rgb(169, 132, 58) 0px 0px 0px 7px, rgb(18, 1",
+      "span → rgba(255, 255, 255, 0.5) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px ",
+      "button.vitrine.m-centre → rgb(18, 13, 8) 0px 0px 0px 5px, rgba(0, 0, 0, 0.6) 0px 0px 0px 6px, rgb(74, 51, ",
+      "span.stand → rgba(0, 0, 0, 0.6) 0px 6px 8px -3px"
+     ],
+     "gradients": 105,
+     "scrims": 42,
+     "gradientSamples": [
+      "svg#plan → radial-gradient(circle at 50% 42%, rgb(247, 239, 217), rgb(230, 214, 176) 70%, rgb(205, 184, 136))",
+      "span.case → radial-gradient(50% 60% at 50% -4%, color(srgb 1 0.941176 0.823529 / 0.6), rgba(0, 0, 0, 0) 72%), linear-gradi",
+      "span.spot → linear-gradient(rgba(255, 246, 222, 0.55), rgba(255, 246, 222, 0.12) 75%, rgba(0, 0, 0, 0))",
+      "span.case → radial-gradient(50% 60% at 50% -4%, color(srgb 1 0.941176 0.823529 / 0.6), rgba(0, 0, 0, 0) 72%), linear-gradi"
+     ],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "header.top 1425px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 7,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 683
+      },
+      {
+       "count": 12,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 1645
+      },
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 2830
+      },
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 3412
+      },
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 3994
+      },
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 4549
+      },
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 5113
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": true,
+     "height": 76,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "cormorant garamond",
+     "eb garamond"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 5543,
+    "margins": {
+     "left": 113,
+     "right": 142
+    },
+    "sections": [
+     {
+      "sel": "div.hero",
+      "tag": "div",
+      "top": 108,
+      "height": 343,
+      "words": 103,
+      "media": 1,
+      "middle": 61,
+      "heading": {
+       "text": "The Memoria",
+       "size": 44,
+       "tag": "h1"
+      },
+      "left": 113,
+      "right": 238,
+      "textLeft": 113,
+      "textRight": 300,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-rotunda.room.kind-rotunda",
+      "tag": "section",
+      "top": 507,
+      "height": 880,
+      "words": 150,
+      "media": 3,
+      "middle": 28,
+      "heading": {
+       "text": "The Rotunda",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 113,
+      "right": 134,
+      "textLeft": 113,
+      "textRight": 159,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-absences.room.kind-crypt",
+      "tag": "section",
+      "top": 1443,
+      "height": 1155,
+      "words": 155,
+      "media": 1,
+      "middle": 57,
+      "heading": {
+       "text": "The Hall of Absences",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 113,
+      "right": 168,
+      "textLeft": 113,
+      "textRight": 168,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-thalvireth.room.kind-wing",
+      "tag": "section",
+      "top": 2654,
+      "height": 526,
+      "words": 144,
+      "media": 1,
+      "middle": 28,
+      "heading": {
+       "text": "The West Wing",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 113,
+      "right": 134,
+      "textLeft": 113,
+      "textRight": 150,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-iron-hordes.room.kind-wing",
+      "tag": "section",
+      "top": 3236,
+      "height": 526,
+      "words": 134,
+      "media": 1,
+      "middle": 28,
+      "heading": {
+       "text": "The South Wing",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 113,
+      "right": 134,
+      "textLeft": 113,
+      "textRight": 161,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-khazrund.room.kind-wing",
+      "tag": "section",
+      "top": 3818,
+      "height": 526,
+      "words": 136,
+      "media": 5,
+      "middle": 28,
+      "heading": {
+       "text": "The North-East Wing",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 113,
+      "right": 134,
+      "textLeft": 113,
+      "textRight": 148,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-emberfall.room.kind-wing",
+      "tag": "section",
+      "top": 4399,
+      "height": 482,
+      "words": 107,
+      "media": 1,
+      "middle": 28,
+      "heading": {
+       "text": "The East Wing",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 113,
+      "right": 134,
+      "textLeft": 113,
+      "textRight": 181,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-obsidian-crown.room.kind-wing",
+      "tag": "section",
+      "top": 4937,
+      "height": 526,
+      "words": 102,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The North Wing",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 113,
+      "right": 588,
+      "textLeft": 113,
+      "textRight": 588,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "The Memoria",
+      "size": 44,
+      "top": 129,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 113,
+      "n": 13
+     },
+     {
+      "x": 129,
+      "n": 7
+     }
+    ],
+    "leftBlocks": 20,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.08,
+    "voidBox": {
+     "x": 900,
+     "y": 480,
+     "w": 540,
+     "h": 180
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": true,
+    "ground": "#221d17",
+    "sidebar": null,
+    "topbar": {
+     "h": 76
+    },
+    "canvas": {
+     "left": 113,
+     "right": 134
+    },
+    "hero": {
+     "text": "The Memoria",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 44,
+     "vw": 3.1,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 129,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 1,
+    "layout": {
+     "panels": 42,
+     "firstScreen": 5,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 45,
+       "at": 1309,
+       "panel": "TM-R-06"
+      },
+      {
+       "gap": 45,
+       "at": 3102,
+       "panel": "TM-W-01"
+      },
+      {
+       "gap": 45,
+       "at": 3102,
+       "panel": "TM-W-03"
+      },
+      {
+       "gap": 45,
+       "at": 3102,
+       "panel": "TM-W-04"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 42,
+     "radii": [
+      [
+       5,
+       42
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 126,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgb(18, 13, 8) 0px 0px 0px 5px",
+      "rgba(0, 0, 0, 0.6) 0px 0px 0px 6px",
+      "rgba(0, 0, 0, 0.5) 0px 14px 26px -8px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 10,
+    "placeholders": [],
+    "type": {
+     "under13": 0.11,
+     "tiny": 6,
+     "tinySamples": [
+      "Thal'vireth 4px",
+      "Iron Hordes 4px",
+      "Khazrund 4px",
+      "Emberfall 4px"
+     ],
+     "sizes": [
+      3,
+      4,
+      11,
+      12,
+      13,
+      14,
+      17,
+      18,
+      20,
+      21,
+      26,
+      44
+     ]
+    },
+    "title": {
+     "text": "The Memoria",
+     "size": 44,
+     "top": 129
+    },
+    "colourShare": 0.036
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 8,
+   "filled": [
+    0.44,
+    0.57,
+    0.68,
+    0.63,
+    0.68,
+    0.56,
+    0.54,
+    0.62
+   ],
+   "motion": {
+    "elements": 5,
+    "css": 5,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 7771,
+     "screens": 7.6,
+     "words": 1065,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 38,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "The Memoria",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 44,
+     "vw": 5.7,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 442,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "The Memoria",
+     "words": 2,
+     "lines": 1,
+     "size": 44,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "The Threadmint Memoria",
+      "words": 3,
+      "chars": 22,
+      "lines": 1,
+      "size": 26,
+      "vw": 3.4,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.01,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.36,
+      "top": 9,
+      "tag": "b",
+      "kind": "heading"
+     },
+     {
+      "text": "The Memoria",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 44,
+      "vw": 5.7,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.86,
+      "top": 442,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 2,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "EB Garamond",
+       "share": 0.46,
+       "mono": false
+      },
+      {
+       "family": "system-ui",
+       "share": 0.36,
+       "mono": false
+      },
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.14,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.04,
+       "mono": false
+      }
+     ],
+     "familyCount": 4,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      17,
+      18,
+      20,
+      21,
+      26,
+      44
+     ],
+     "sizeCount": 10,
+     "notLoaded": [],
+     "body": {
+      "font": "EB Garamond",
+      "size": 16.5,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 73,
+     "max": {
+      "size": 44,
+      "vw": 5.7,
+      "font": "Cormorant Garamond",
+      "text": "The Memoria"
+     },
+     "monoShare": 0.04,
+     "monoProseShare": 0.04,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [
+      "TM-R-01",
+      "TM-R-02",
+      "TM-R-03",
+      "TM-R-04",
+      "TM-R-05",
+      "TM-R-06"
+     ],
+     "microLabels": 1,
+     "microLabelShare": 0.003,
+     "microSamples": [
+      "Plan of the Memoria"
+     ],
+     "upperShare": 0.05,
+     "centerShare": 0.02,
+     "smallText": 56
+    },
+    "eyebrows": [
+     {
+      "text": "Plan of the Memoria",
+      "above": "The Memoria",
+      "upper": true,
+      "tracked": true,
+      "mono": false,
+      "pill": false,
+      "size": 11,
+      "top": 398
+     }
+    ],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#221d17",
+     "bodyBgHsl": {
+      "h": 33,
+      "s": 0.19,
+      "l": 0.11
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#e9e1d0",
+       "share": 0.48
+      },
+      {
+       "color": "#a39884",
+       "share": 0.44
+      },
+      {
+       "color": "#3a2a10",
+       "share": 0.05
+      },
+      {
+       "color": "#e0826c",
+       "share": 0.02
+      },
+      {
+       "color": "#20242a",
+       "share": 0.01
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 56,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "svg#plan → rgb(217, 187, 112) 0px 0px 0px 6px, rgb(169, 132, 58) 0px 0px 0px 7px, rgb(18, 1",
+      "span → rgba(255, 255, 255, 0.5) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px ",
+      "button.vitrine.m-centre → rgb(18, 13, 8) 0px 0px 0px 5px, rgba(0, 0, 0, 0.6) 0px 0px 0px 6px, rgb(74, 51, ",
+      "span.stand → rgba(0, 0, 0, 0.6) 0px 6px 8px -3px"
+     ],
+     "gradients": 127,
+     "scrims": 42,
+     "gradientSamples": [
+      "svg#plan → radial-gradient(circle at 50% 42%, rgb(247, 239, 217), rgb(230, 214, 176) 70%, rgb(205, 184, 136))",
+      "span.case → radial-gradient(50% 60% at 50% -4%, color(srgb 1 0.941176 0.823529 / 0.6), rgba(0, 0, 0, 0) 72%), linear-gradi",
+      "span.spot → linear-gradient(rgba(255, 246, 222, 0.55), rgba(255, 246, 222, 0.12) 75%, rgba(0, 0, 0, 0))",
+      "span.body → radial-gradient(circle at 7px 7px, rgb(169, 132, 58) 0px, rgb(169, 132, 58) 2px, rgba(0, 0, 0, 0) 2.6px), radi"
+     ],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "header.top 753px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 7,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 941
+      },
+      {
+       "count": 12,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 2229
+      },
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 3734
+      },
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 4638
+      },
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 5585
+      },
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 6462
+      },
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 7360
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": true,
+     "height": 108,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "cormorant garamond",
+     "eb garamond"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 7771,
+    "margins": {
+     "left": 48,
+     "right": 66
+    },
+    "sections": [
+     {
+      "sel": "div.hero",
+      "tag": "div",
+      "top": 140,
+      "height": 569,
+      "words": 103,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "The Memoria",
+       "size": 44,
+       "tag": "h1"
+      },
+      "left": 48,
+      "right": 78,
+      "textLeft": 48,
+      "textRight": 78,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-rotunda.room.kind-rotunda",
+      "tag": "section",
+      "top": 765,
+      "height": 1206,
+      "words": 150,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "The Rotunda",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 60,
+      "textLeft": 48,
+      "textRight": 60,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-absences.room.kind-crypt",
+      "tag": "section",
+      "top": 2027,
+      "height": 1449,
+      "words": 155,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The Hall of Absences",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 77,
+      "textLeft": 48,
+      "textRight": 77,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-thalvireth.room.kind-wing",
+      "tag": "section",
+      "top": 3532,
+      "height": 874,
+      "words": 144,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "The West Wing",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 66,
+      "textLeft": 48,
+      "textRight": 66,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-iron-hordes.room.kind-wing",
+      "tag": "section",
+      "top": 4462,
+      "height": 865,
+      "words": 134,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The South Wing",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 69,
+      "textLeft": 48,
+      "textRight": 88,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-khazrund.room.kind-wing",
+      "tag": "section",
+      "top": 5383,
+      "height": 874,
+      "words": 136,
+      "media": 4,
+      "middle": 0,
+      "heading": {
+       "text": "The North-East Wing",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 47,
+      "textLeft": 48,
+      "textRight": 47,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-emberfall.room.kind-wing",
+      "tag": "section",
+      "top": 6313,
+      "height": 816,
+      "words": 107,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The East Wing",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 11,
+      "textLeft": 48,
+      "textRight": 11,
+      "fullBleed": false,
+      "footer": false,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     },
+     {
+      "sel": "section#room-obsidian-crown.room.kind-wing",
+      "tag": "section",
+      "top": 7184,
+      "height": 506,
+      "words": 102,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The North Wing",
+       "size": 21,
+       "tag": "h2"
+      },
+      "left": 48,
+      "right": 36,
+      "textLeft": 48,
+      "textRight": 36,
+      "fullBleed": false,
+      "footer": true,
+      "hero": false,
+      "continues": true,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "The Memoria",
+      "size": 44,
+      "top": 442,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [
+     {
+      "text": "On loan from the harbormasters of Caer Veyn",
+      "side": "right",
+      "px": 11
+     }
+    ],
+    "edges": [
+     {
+      "x": 48,
+      "n": 13
+     },
+     {
+      "x": 64,
+      "n": 7
+     }
+    ],
+    "leftBlocks": 20,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": true,
+    "ground": "#221d17",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 48,
+     "right": 63
+    },
+    "hero": {
+     "text": "The Memoria",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 44,
+     "vw": 5.7,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 442,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 1,
+    "layout": {
+     "panels": 42,
+     "firstScreen": 3,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 45,
+       "at": 1193,
+       "panel": "TM-R-01"
+      },
+      {
+       "gap": 45,
+       "at": 6715,
+       "panel": "TM-E-01"
+      },
+      {
+       "gap": 45,
+       "at": 6715,
+       "panel": "TM-E-02"
+      },
+      {
+       "gap": 45,
+       "at": 7613,
+       "panel": "TM-N-02"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 42,
+     "radii": [
+      [
+       5,
+       42
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 126,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgb(18, 13, 8) 0px 0px 0px 5px",
+      "rgba(0, 0, 0, 0.6) 0px 0px 0px 6px",
+      "rgba(0, 0, 0, 0.5) 0px 14px 26px -8px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 10,
+    "placeholders": [],
+    "type": {
+     "under13": 0.11,
+     "tiny": 6,
+     "tinySamples": [
+      "Thal'vireth 4px",
+      "Iron Hordes 4px",
+      "Khazrund 4px",
+      "Emberfall 4px"
+     ],
+     "sizes": [
+      3,
+      4,
+      11,
+      12,
+      13,
+      14,
+      17,
+      18,
+      20,
+      21,
+      26,
+      44
+     ]
+    },
+    "title": {
+     "text": "The Memoria",
+     "size": 44,
+     "top": 442
+    },
+    "colourShare": 0.035
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 12,
+   "filled": [
+    0.65,
+    0.64,
+    0.62,
+    0.75,
+    0.72,
+    0.67,
+    0.53,
+    0.75,
+    0.59,
+    0.62,
+    0.62,
+    0.64
+   ],
+   "motion": {
+    "elements": 5,
+    "css": 5,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 10329,
+     "screens": 12.2,
+     "words": 1065,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 38,
+     "sections": 7,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "The Memoria",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 34,
+     "vw": 8.7,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 208,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "The Memoria",
+     "words": 2,
+     "lines": 1,
+     "size": 34,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "The Threadmint Memoria",
+      "words": 3,
+      "chars": 22,
+      "lines": 1,
+      "size": 26,
+      "vw": 6.7,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.01,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.71,
+      "top": 7,
+      "tag": "b",
+      "kind": "heading"
+     },
+     {
+      "text": "The Memoria",
+      "words": 2,
+      "chars": 11,
+      "lines": 1,
+      "size": 34,
+      "vw": 8.7,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 208,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 2,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "EB Garamond",
+       "share": 0.46,
+       "mono": false
+      },
+      {
+       "family": "system-ui",
+       "share": 0.36,
+       "mono": false
+      },
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.14,
+       "mono": false
+      },
+      {
+       "family": "ui-monospace",
+       "share": 0.04,
+       "mono": false
+      }
+     ],
+     "familyCount": 4,
+     "sizes": [
+      11,
+      12,
+      13,
+      14,
+      17,
+      18,
+      21,
+      26,
+      34
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "EB Garamond",
+      "size": 16.5,
+      "leading": 1.6,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 40,
+     "max": {
+      "size": 34,
+      "vw": 8.7,
+      "font": "Cormorant Garamond",
+      "text": "The Memoria"
+     },
+     "monoShare": 0.04,
+     "monoProseShare": 0.04,
+     "monoFamilies": [
+      "ui-monospace"
+     ],
+     "monoSamples": [
+      "TM-R-01",
+      "TM-R-02",
+      "TM-R-03",
+      "TM-R-04",
+      "TM-R-05",
+      "TM-R-06"
+     ],
+     "microLabels": 1,
+     "microLabelShare": 0.003,
+     "microSamples": [
+      "Plan of the Memoria"
+     ],
+     "upperShare": 0.05,
+     "centerShare": 0.02,
+     "smallText": 56
+    },
+    "eyebrows": [],
+    "numbered": [],
+    "color": {
+     "bodyBg": "#221d17",
+     "bodyBgHsl": {
+      "h": 33,
+      "s": 0.19,
+      "l": 0.11
+     },
+     "dark": true,
+     "sectionBgs": [],
+     "textColors": [
+      {
+       "color": "#e9e1d0",
+       "share": 0.48
+      },
+      {
+       "color": "#a39884",
+       "share": 0.44
+      },
+      {
+       "color": "#3a2a10",
+       "share": 0.05
+      },
+      {
+       "color": "#e0826c",
+       "share": 0.02
+      },
+      {
+       "color": "#20242a",
+       "share": 0.01
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 50,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "svg#plan → rgb(217, 187, 112) 0px 0px 0px 6px, rgb(169, 132, 58) 0px 0px 0px 7px, rgb(18, 1",
+      "span → rgba(255, 255, 255, 0.5) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px ",
+      "button.vitrine.m-centre → rgb(18, 13, 8) 0px 0px 0px 5px, rgba(0, 0, 0, 0.6) 0px 0px 0px 6px, rgb(74, 51, ",
+      "button.vitrine.m-case → rgb(18, 13, 8) 0px 0px 0px 5px, rgba(0, 0, 0, 0.6) 0px 0px 0px 6px, rgb(74, 51, "
+     ],
+     "gradients": 129,
+     "scrims": 42,
+     "gradientSamples": [
+      "svg#plan → radial-gradient(circle at 50% 42%, rgb(247, 239, 217), rgb(230, 214, 176) 70%, rgb(205, 184, 136))",
+      "span.case → radial-gradient(50% 60% at 50% -4%, color(srgb 1 0.941176 0.823529 / 0.6), rgba(0, 0, 0, 0) 72%), linear-gradi",
+      "span.spot → linear-gradient(rgba(255, 246, 222, 0.55), rgba(255, 246, 222, 0.12) 75%, rgba(0, 0, 0, 0))",
+      "span.body → radial-gradient(circle at 7px 7px, rgb(169, 132, 58) 0px, rgb(169, 132, 58) 2px, rgba(0, 0, 0, 0) 2.6px), radi"
+     ],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "header.top 390px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 0,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 0,
+     "cardRows": [
+      {
+       "count": 7,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 1213
+      },
+      {
+       "count": 12,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 2785
+      },
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 4752
+      },
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 6018
+      },
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 7265
+      },
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 8480
+      },
+      {
+       "count": 3,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 9652
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": false,
+     "height": 150,
+     "floatingPill": false,
+     "blur": false
+    },
+    "fontsLoaded": [
+     "cormorant garamond",
+     "eb garamond"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 10329,
+    "margins": {
+     "left": 16,
+     "right": 21
+    },
+    "sections": [
+     {
+      "sel": "header.top",
+      "tag": "header",
+      "top": 0,
+      "height": 150,
+      "words": 15,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The Threadmint Memoria",
+       "size": 26,
+       "tag": "b"
+      },
+      "left": 16,
+      "right": 16,
+      "textLeft": 16,
+      "textRight": 53,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "main#main",
+      "tag": "main",
+      "top": 150,
+      "height": 10179,
+      "words": 1031,
+      "media": 1,
+      "middle": 0,
+      "heading": {
+       "text": "The Memoria",
+       "size": 34,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 0,
+      "textLeft": 16,
+      "textRight": -98,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "The Memoria",
+      "size": 34,
+      "top": 208,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 16,
+      "n": 13
+     },
+     {
+      "x": 32,
+      "n": 7
+     }
+    ],
+    "leftBlocks": 20,
+    "bodySize": 17,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": true,
+    "ground": "#221d17",
+    "sidebar": null,
+    "topbar": null,
+    "canvas": {
+     "left": 16,
+     "right": 16
+    },
+    "hero": {
+     "text": "The Memoria",
+     "words": 2,
+     "chars": 11,
+     "lines": 1,
+     "size": 34,
+     "vw": 8.7,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 208,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 42,
+     "firstScreen": 0,
+     "ragged": [],
+     "voids": [
+      {
+       "gap": 42,
+       "at": 8985,
+       "panel": "TM-E-04"
+      }
+     ]
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 42,
+     "radii": [
+      [
+       5,
+       42
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 126,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgb(18, 13, 8) 0px 0px 0px 5px",
+      "rgba(0, 0, 0, 0.6) 0px 0px 0px 6px",
+      "rgba(0, 0, 0, 0.5) 0px 14px 26px -8px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 9,
+    "placeholders": [],
+    "type": {
+     "under13": 0.11,
+     "tiny": 6,
+     "tinySamples": [
+      "Thal'vireth 4px",
+      "Iron Hordes 4px",
+      "Khazrund 4px",
+      "Emberfall 4px"
+     ],
+     "sizes": [
+      3,
+      4,
+      11,
+      12,
+      13,
+      14,
+      17,
+      18,
+      21,
+      26,
+      34
+     ]
+    },
+    "title": {
+     "text": "The Memoria",
+     "size": 34,
+     "top": 208
+    },
+    "colourShare": 0.042
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "WARN",
+   "id": "micro-label",
+   "width": 1440,
+   "message": "1 tiny uppercase letter-spaced label(s): \"Plan of the Memoria\"",
+   "fix": "Prefer sentence case at body size.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "gradient",
+   "width": 1440,
+   "message": "105 gradient fill(s): svg#plan → radial-gradient(circle at 50% 42%, rgb(247, 239, 217), rgb(230, 214, 176) 70%, rgb(205, 184, 136)) | span.case → radial-gradient(50% 60% at 50% -4%, color(srgb 1 0.941176 0.823529 / 0.6), rgba(0, 0, 0, 0) 72%), linear-gradi | span.spot → linear-gradient(rgba(255, 246, 222, 0.55), rgba(255, 246, 222, 0.12) 75%, rgba(0, 0, 0, 0))",
+   "fix": "Use a flat colour or a real image. The only gradient allowed by default is a neutral scrim over a photo for legibility.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "palette-terracotta",
+   "width": 1440,
+   "message": "Terracotta / rust-orange accent (text #e0826c).",
+   "fix": "Use the accent from the drawn palette.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "font-count",
+   "width": 1440,
+   "message": "4 typefaces in use (EB Garamond, system-ui, Cormorant Garamond, ui-monospace).",
+   "fix": "Two at most: one display, one text. Often one is enough.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "heavy-shadow",
+   "width": 1440,
+   "message": "126 panel shadow(s) heavy enough to read as floating: rgb(18, 13, 8) 0px 0px 0px 5px | rgba(0, 0, 0, 0.6) 0px 0px 0px 6px | rgba(0, 0, 0, 0.5) 0px 14px 26px -8px",
+   "fix": "Panels sit on the ground: separate them with a fill one step from the ground or a quiet 1px border. A shadow, if any, is under 8% black with a small blur. Real overlays (menus, dialogs, popovers) may float.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "rainbow-chart",
+   "width": 1440,
+   "message": "The charts use 10 different hues.",
+   "fix": "One hue for the series that matters, a neutral for the rest, and at most four series colours in total; status colours only for status.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "tiny-text",
+   "width": 1440,
+   "message": "6 text blocks under 11px: Thal'vireth 4px, Iron Hordes 4px, Khazrund 4px, Emberfall 4px.",
+   "fix": "Nothing below 11px; secondary text 12px, data 13–14px.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "below-fold",
+   "width": 1440,
+   "message": "Only 5 of 42 blocks start on the first 1440px screen.",
+   "fix": "Every block the brief names shows its header and first rows on the first desktop screen: size the headline block to its question, cap long lists with \"View all\", and put time-sensitive blocks before long tables."
+  },
+  {
+   "level": "WARN",
+   "id": "panel-void",
+   "width": 1440,
+   "message": "4 card(s) hold a blank band inside: 45px in \"TM-R-06\", 45px in \"TM-W-01\", 45px in \"TM-W-03\".",
+   "fix": "A card stretches to its neighbour only when it has content to fill. Keep a legend or a note directly under its chart (only an action or a total may sit at a stretched card's foot), let a short card keep its own height (align-items: start), and let a filtered block shrink to its rows."
+  },
+  {
+   "level": "WARN",
+   "id": "app-title-size",
+   "width": 1440,
+   "message": "The h1 is 44px (\"The Memoria\").",
+   "fix": "An app screen is not a landing page: the title is 18-32px (20-24px on a phone).",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "edge-text",
+   "width": 768,
+   "message": "1 text block(s) sit within 16px of the screen edge: \"On loan from the harbormasters\" (11px from the right)",
+   "fix": "Keep text inside the page margin (16–32px or more). Only display type deliberately bled past the edge may touch it."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\before\\memoria\\desktop-fold.jpg",
+   "pages": [
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\before\\memoria\\desktop-page-01.jpg",
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\before\\memoria\\desktop-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\before\\memoria\\tablet-fold.jpg",
+   "pages": [
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\before\\memoria\\tablet-page-01.jpg",
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\before\\memoria\\tablet-page-02.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\before\\memoria\\mobile-fold.jpg",
+   "pages": [
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\before\\memoria\\mobile-page-01.jpg",
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\before\\memoria\\mobile-page-02.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

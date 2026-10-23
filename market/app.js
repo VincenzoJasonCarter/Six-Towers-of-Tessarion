@@ -126,15 +126,13 @@ function chips(name, options, current) {
 function card(item) {
   const priced = item.market_value != null;
   const tier = tierOf(item);
+  // One line of the Guild's posted price list: the item, what it is, and its price, large, at the right.
+  const what = [kindOf(item), item.stat].filter(Boolean).join(" · ");
   return `<article class="item${priced ? "" : " unpriced"}" data-tier="${tier || 0}">
     <a class="item-link" href="#${esc(item.id)}" data-open="${esc(item.id)}">
       ${picture(item)}
-      <span class="tag-body">
-        <small class="cat">${tier ? `<i class="tier-pill">T${tier}</i>` : ""}${esc(kindOf(item))}</small>
-        <b>${esc(item.name)}</b>
-        ${item.stat ? `<span class="stat">${esc(item.stat)}</span>` : ""}
-      </span>
-      <span class="price">${priced ? `<i class="coin" aria-hidden="true"></i>${esc(cb(item.market_value))}` : "Not stocked"}</span>
+      <span class="tag-body"><b>${esc(item.name)}</b>${what ? `<span class="stat">${esc(what)}</span>` : ""}</span>
+      <span class="price">${priced ? `<i class="coin" aria-hidden="true"></i>${esc(num(item.market_value))}<small>CB</small>` : "Not stocked"}</span>
     </a>
     ${priced ? `<button class="add" type="button" data-add="${esc(item.id)}" aria-label="Add ${esc(item.name)} to the tally" title="Add to the tally">+</button>` : ""}
   </article>`;
@@ -148,7 +146,6 @@ function aisle(s, here) {
   return `<section class="aisle" id="aisle-${esc(s.id)}" data-aisle-of="${esc(s.id)}" aria-labelledby="aisle-${esc(s.id)}-name">
     <div class="cabinet">
       <header class="cabinet-head">
-        <p class="aisle-no">Aisle ${s.n}</p>
         <h2 id="aisle-${esc(s.id)}-name"><span>${esc(s.name)}</span></h2>
         ${s.blurb ? `<p class="blurb">${esc(s.blurb)}</p>` : ""}
       </header>

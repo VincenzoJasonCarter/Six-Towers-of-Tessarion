@@ -16,6 +16,7 @@ country in COUNTRIES (the page has a selector for them):
     <id>.webp        the country's land and sea, shaded, as one picture
     <id>.json        everything drawn over it: borders, rivers, roads,
                      towns (with their gazetteer entries) and labels
+    easel.webp       the first country's picture, small, for the easel in reception
 
 Rebuild after editing the map or a country's gazetteer in the lore-book
 (12-16 for Crownweave, 17, 18 and 25 for Thal'vireth).
@@ -64,8 +65,8 @@ COUNTRIES = [
         "terms": {"seat": "Seat of a district", "border": "District border", "fort": "Fort or drum-tower", "whole": "The whole realm", "beyond": "Beyond Thal'vireth"},
         "special": {"Ix'kaanil": "The Tower, and seat of the High Priestess"},
         # a district's own book first, then the realm's gazetteer (only that section: the rest names towns in passing)
-        "lore": {"18-of-the-white-road.md": "Of The White Road", "25-of-the-elderwood.md": "Of The Elderwood", "17-thalvireth.md": "Thal’Vireth"},
-        "section": {"18-of-the-white-road.md": "From the Sea to the Steps", "25-of-the-elderwood.md": "Along the Edge", "17-thalvireth.md": "Gazetteer of the Western Reach"},
+        "lore": {"18-of-the-white-road.md": "Of The White Road", "26-of-the-green-cradle.md": "Of The Green Cradle", "25-of-the-elderwood.md": "Of The Elderwood", "17-thalvireth.md": "Thal’Vireth"},
+        "section": {"18-of-the-white-road.md": "From the Sea to the Steps", "26-of-the-green-cradle.md": "The Terraces and the Strands", "25-of-the-elderwood.md": "Along the Edge", "17-thalvireth.md": "Gazetteer of the Western Reach"},
     },
     {
         "id": "obsidian", "state": 1, "name": "Obsidian Crown", "title": "The Obsidian Crown",
@@ -230,9 +231,18 @@ def main():
         draw(d, P, G, bnd, vor, src, country)
         index.append({"id": country["id"], "name": country["name"], "title": country["title"]})
     (OUT / "index.json").write_text(json.dumps(index, ensure_ascii=False, indent=1), encoding="utf-8")
-    keep = {f"{c['id']}.{ext}" for c in COUNTRIES for ext in ("json", "webp")} | {"index.json"}
+    easel(COUNTRIES[0]["id"])
+    keep = {f"{c['id']}.{ext}" for c in COUNTRIES for ext in ("json", "webp")} | {"index.json", "easel.webp"}
     for old in OUT.iterdir():  # a country taken off the list, or the old single-map files
         if old.is_file() and old.name not in keep: old.unlink()
+
+
+def easel(cid):
+    """The first country's picture, small enough for the easel in reception (a few
+    hundred pixels across, where the map itself is a few thousand)."""
+    im = Image.open(OUT / f"{cid}.webp")
+    im.thumbnail((480, 480), Image.LANCZOS)
+    im.save(OUT / "easel.webp", quality=80, method=6)
 
 
 def draw(d, P, G, bnd, vor, src, country):

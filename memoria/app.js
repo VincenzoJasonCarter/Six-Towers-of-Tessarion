@@ -92,9 +92,19 @@ function art(it, align = "xMidYMid") {
 
 /* ================= the cases ================= */
 
+// A room's section is painted in its own wall colour, so walking down the page
+// goes from room to room; its words take a dark or light ink to suit the wall.
+const lightness = hex => {
+  const n = parseInt(String(hex).slice(1, 7), 16);
+  return Number.isNaN(n) ? 0 : (.2126 * (n >> 16) + .7152 * (n >> 8 & 255) + .0722 * (n & 255)) / 255;
+};
 const roomVars = w => {
   const C = (w && w.colours) || {};
-  return `--wall:${esc(C.wall || "#55504a")};--trim:${esc(C.trim || "#c9a24a")};--light:${esc(C.light || "#fff0d2")}`;
+  const wall = C.wall || "#55504a", trim = C.trim || "#c9a24a";
+  const ink = lightness(wall) > .5
+    ? `--room-ink:#2a241d;--room-muted:#5f5444;--room-link:#6e5216`
+    : `--room-ink:#f1e8d6;--room-muted:color-mix(in srgb, #f1e8d6 66%, ${wall});--room-link:color-mix(in srgb, ${trim} 55%, #fff)`;
+  return esc(`--wall:${wall};--trim:${trim};--light:${C.light || "#fff0d2"};${ink}`);
 };
 const firstSentence = s => plain(String(s || "").split(/\.\s/)[0]);
 const doorLabel = g => plain((g.subtitle || g.title).replace(/\s+and\s+the\s+.*$/i, ""));
@@ -133,9 +143,10 @@ function roomHTML(w) {
   const lede = String(w.intro || "").split(/\n+/).map(p => p.trim()).filter(Boolean)[0] || "";
   const where = (w.kind || "wing") === "wing" && typeof w.bearing === "number" ? ` · to the ${compass(w.bearing)} of the Rotunda` : "";
   return `<section class="room kind-${esc(w.kind || "wing")}" id="room-${esc(w.id)}" data-room="${esc(w.id)}" style="${roomVars(w)}">
-    <h2><span>${rich(w.title)}</span></h2>
-    <p class="room-sub">${rich(w.subtitle || "")}${where}</p>
-    <p class="room-text">${rich(lede)} <button type="button" class="link" data-wall="${esc(w.id)}">Read the wall text ›</button></p>
+    <header class="room-head">
+      <div><h2>${rich(w.title)}</h2><p class="room-sub">${rich(w.subtitle || "")}${where}</p></div>
+      <p class="room-text">${rich(lede)} <button type="button" class="link" data-wall="${esc(w.id)}">Read the wall text ›</button></p>
+    </header>
     <div class="cases">${ordered.map(it => vitrine(it, it === CENTRE)).join("")}${w.kind === "crypt" ? (w.dates || []).map(undated).join("") : ""}</div>
   </section>`;
 }
@@ -260,12 +271,11 @@ function planSVG() {
 
 const M = DATA.memoria || {};
 $("#brand-name").textContent = M.name || "The Threadmint Memoria";
-$("#brand-sub").textContent = M.subtitle || "";
-$("#tier").textContent = M.tier || "";
 $("#title").textContent = M.title || M.name || "The Memoria";
 $("#intro").innerHTML = paras(M.intro);
 $("#count").textContent = `${ITEMS.length} exhibits · ${WINGS.length} rooms`;
-$("#tabs").innerHTML = [["all", "All rooms"], ...WINGS.map(w => [w.id, plain(w.title)])]
+// Each room's chip drops the title's leading "The", so the seven fit on one row.
+$("#tabs").innerHTML = [["all", "All rooms"], ...WINGS.map(w => [w.id, plain(w.title).replace(/^The /, "")])]
   .map(([id, label]) => `<button type="button" data-room="${esc(id)}" aria-pressed="${id === "all"}">${esc(label)}</button>`).join("");
 $("#plan").innerHTML = planSVG();
 $("#rooms").innerHTML = WINGS.map(roomHTML).join("");

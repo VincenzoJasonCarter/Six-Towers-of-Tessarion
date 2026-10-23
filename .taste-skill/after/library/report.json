@@ -1,0 +1,1687 @@
+{
+ "url": "http://127.0.0.1:8767/",
+ "at": "2026-10-23T02:48:35.294Z",
+ "allow": [],
+ "viewports": [
+  {
+   "width": 1440,
+   "height": 900,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.66,
+    0.79
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "page": {
+     "height": 1377,
+     "screens": 1.5,
+     "words": 201,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 5,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "The Lore of Tessarion",
+     "words": 4,
+     "chars": 21,
+     "lines": 1,
+     "size": 44,
+     "vw": 3.1,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 95,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "The Lore of Tessarion",
+     "words": 4,
+     "lines": 1,
+     "size": 44,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "The Lore of Tessarion",
+      "words": 4,
+      "chars": 21,
+      "lines": 1,
+      "size": 44,
+      "vw": 3.1,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.47,
+      "top": 95,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "system-ui",
+       "share": 0.47,
+       "mono": false
+      },
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.38,
+       "mono": false
+      },
+      {
+       "family": "EB Garamond",
+       "share": 0.15,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      8,
+      10,
+      11,
+      13,
+      14,
+      16,
+      19,
+      26,
+      44
+     ],
+     "sizeCount": 9,
+     "notLoaded": [],
+     "body": {
+      "font": "EB Garamond",
+      "size": 18.5,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 74,
+     "max": {
+      "size": 44,
+      "vw": 3.1,
+      "font": "Cormorant Garamond",
+      "text": "The Lore of Tessarion"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 5,
+     "microLabelShare": 0.089,
+     "microSamples": [
+      "The World & the Towers",
+      "Rites of Ascension",
+      "The Soulforge & the Market",
+      "Crownweave & the Weaves",
+      "Thal'vireth"
+     ],
+     "upperShare": 0.21,
+     "centerShare": 0.68,
+     "smallText": 9
+    },
+    "eyebrows": [],
+    "numbered": [
+     {
+      "text": "001",
+      "size": 10,
+      "top": 638
+     },
+     {
+      "text": "001",
+      "size": 10,
+      "top": 638
+     },
+     {
+      "text": "001",
+      "size": 10,
+      "top": 638
+     },
+     {
+      "text": "002",
+      "size": 10,
+      "top": 638
+     },
+     {
+      "text": "001",
+      "size": 10,
+      "top": 638
+     },
+     {
+      "text": "001",
+      "size": 10,
+      "top": 638
+     },
+     {
+      "text": "001",
+      "size": 10,
+      "top": 638
+     },
+     {
+      "text": "002",
+      "size": 10,
+      "top": 638
+     },
+     {
+      "text": "002",
+      "size": 10,
+      "top": 638
+     },
+     {
+      "text": "001",
+      "size": 10,
+      "top": 920
+     },
+     {
+      "text": "001",
+      "size": 10,
+      "top": 920
+     },
+     {
+      "text": "002",
+      "size": 10,
+      "top": 920
+     }
+    ],
+    "color": {
+     "bodyBg": "#17211c",
+     "bodyBgHsl": {
+      "h": 150,
+      "s": 0.18,
+      "l": 0.11
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#4d311c",
+       "top": 387,
+       "hsl": {
+        "h": 26,
+        "s": 0.47,
+        "l": 0.21
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#ecd395",
+       "share": 0.49
+      },
+      {
+       "color": "#e9e1d0",
+       "share": 0.32
+      },
+      {
+       "color": "#3a2a10",
+       "share": 0.09
+      },
+      {
+       "color": "#a39884",
+       "share": 0.05
+      },
+      {
+       "color": "#2a1d08",
+       "share": 0.04
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 37,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "div.crown → rgba(0, 0, 0, 0.55) 0px 6px 8px -2px, rgba(0, 0, 0, 0.35) 0px 0px 0px 1px inset",
+      "section.case → rgba(0, 0, 0, 0.75) 0px 16px 18px -10px inset, rgba(0, 0, 0, 0.65) 12px 0px 16px",
+      "span.plate → rgba(255, 255, 255, 0.5) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px ",
+      "a.spine → rgba(0, 0, 0, 0.32) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.6) 3px 0px 5px -2px"
+     ],
+     "gradients": 7,
+     "scrims": 6,
+     "gradientSamples": [
+      "div.crown → linear-gradient(rgba(255, 255, 255, 0.16), rgba(0, 0, 0, 0) 6px), linear-gradient(rgba(0, 0, 0, 0) 12px, rgba(",
+      "div.row → repeating-linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 250px, rgb(107, 70, 41) 250px, rgb(77, 49, 28",
+      "div.row → repeating-linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 250px, rgb(107, 70, 41) 250px, rgb(77, 49, 28",
+      "div.row → repeating-linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 250px, rgb(107, 70, 41) 250px, rgb(77, 49, 28"
+     ],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "header.top 1440px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 26,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": true,
+     "height": 61,
+     "floatingPill": false,
+     "blur": true
+    },
+    "fontsLoaded": [
+     "cormorant garamond",
+     "eb garamond"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "pageH": 1377,
+    "margins": {
+     "left": 100,
+     "right": 136
+    },
+    "sections": [
+     {
+      "sel": "div.intro",
+      "tag": "div",
+      "top": 89,
+      "height": 144,
+      "words": 40,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The Lore of Tessarion",
+       "size": 44,
+       "tag": "h1"
+      },
+      "left": 100,
+      "right": 674,
+      "textLeft": 100,
+      "textRight": 674,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.bookcase",
+      "tag": "div",
+      "top": 343,
+      "height": 954,
+      "words": 127,
+      "media": 0,
+      "middle": 112,
+      "heading": null,
+      "left": 144,
+      "right": 136,
+      "textLeft": 144,
+      "textRight": 326,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "The Lore of Tessarion",
+      "size": 44,
+      "top": 95,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 100,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 2,
+    "bodySize": 19,
+    "stage": false,
+    "explains": true,
+    "slivers": [],
+    "voidShare": 0.07,
+    "voidBox": {
+     "x": 1320,
+     "y": 120,
+     "w": 120,
+     "h": 780
+    }
+   },
+   "app": {
+    "viewport": {
+     "w": 1440,
+     "h": 900
+    },
+    "dark": true,
+    "ground": "#17211c",
+    "sidebar": null,
+    "topbar": {
+     "h": 61
+    },
+    "canvas": {
+     "left": 100,
+     "right": 136
+    },
+    "hero": {
+     "text": "The Lore of Tessarion",
+     "words": 4,
+     "chars": 21,
+     "lines": 1,
+     "size": 44,
+     "vw": 3.1,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 95,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 6,
+     "radii": [
+      [
+       0,
+       6
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 5,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgb(107, 70, 41) 0px 4px 0px 0px",
+      "rgb(107, 70, 41) 0px 4px 0px 0px",
+      "rgb(107, 70, 41) 0px 4px 0px 0px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.28,
+     "tiny": 52,
+     "tinySamples": [
+      "TS-PR 8px",
+      "001 10px",
+      "TS-CO 8px",
+      "001 10px"
+     ],
+     "sizes": [
+      8,
+      10,
+      11,
+      13,
+      14,
+      16,
+      19,
+      26,
+      44
+     ]
+    },
+    "title": {
+     "text": "The Lore of Tessarion",
+     "size": 44,
+     "top": 95
+    },
+    "colourShare": 0.103
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 768,
+   "height": 1024,
+   "load": "load",
+   "screens": 2,
+   "filled": [
+    0.81,
+    0.82
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "page": {
+     "height": 1222,
+     "screens": 1.2,
+     "words": 201,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 5,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "The Lore of Tessarion",
+     "words": 4,
+     "chars": 21,
+     "lines": 1,
+     "size": 34,
+     "vw": 4.4,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 120,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "The Lore of Tessarion",
+     "words": 4,
+     "lines": 1,
+     "size": 34,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "The Lore of Tessarion",
+      "words": 4,
+      "chars": 21,
+      "lines": 1,
+      "size": 34,
+      "vw": 4.4,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.89,
+      "top": 120,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 1,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": null,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "system-ui",
+       "share": 0.47,
+       "mono": false
+      },
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.38,
+       "mono": false
+      },
+      {
+       "family": "EB Garamond",
+       "share": 0.15,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      7,
+      8,
+      11,
+      13,
+      14,
+      17,
+      23,
+      34
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "EB Garamond",
+      "size": 17,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 80,
+     "max": {
+      "size": 34,
+      "vw": 4.4,
+      "font": "Cormorant Garamond",
+      "text": "The Lore of Tessarion"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 5,
+     "microLabelShare": 0.089,
+     "microSamples": [
+      "The World & the Towers",
+      "Rites of Ascension",
+      "The Soulforge & the Market",
+      "Crownweave & the Weaves",
+      "Thal'vireth"
+     ],
+     "upperShare": 0.21,
+     "centerShare": 0.68,
+     "smallText": 9
+    },
+    "eyebrows": [],
+    "numbered": [
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 598
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 598
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 598
+     },
+     {
+      "text": "002",
+      "size": 8.4,
+      "top": 598
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 598
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 598
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 598
+     },
+     {
+      "text": "002",
+      "size": 8.4,
+      "top": 598
+     },
+     {
+      "text": "002",
+      "size": 8.4,
+      "top": 598
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 840
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 840
+     },
+     {
+      "text": "002",
+      "size": 8.4,
+      "top": 840
+     }
+    ],
+    "color": {
+     "bodyBg": "#17211c",
+     "bodyBgHsl": {
+      "h": 150,
+      "s": 0.18,
+      "l": 0.11
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#4d311c",
+       "top": 382,
+       "hsl": {
+        "h": 26,
+        "s": 0.47,
+        "l": 0.21
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#ecd395",
+       "share": 0.49
+      },
+      {
+       "color": "#e9e1d0",
+       "share": 0.32
+      },
+      {
+       "color": "#3a2a10",
+       "share": 0.09
+      },
+      {
+       "color": "#a39884",
+       "share": 0.05
+      },
+      {
+       "color": "#2a1d08",
+       "share": 0.04
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 37,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "div.crown → rgba(0, 0, 0, 0.55) 0px 6px 8px -2px, rgba(0, 0, 0, 0.35) 0px 0px 0px 1px inset",
+      "section.case → rgba(0, 0, 0, 0.75) 0px 16px 18px -10px inset, rgba(0, 0, 0, 0.65) 12px 0px 16px",
+      "span.plate → rgba(255, 255, 255, 0.5) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px ",
+      "a.spine → rgba(0, 0, 0, 0.32) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.6) 3px 0px 5px -2px"
+     ],
+     "gradients": 7,
+     "scrims": 6,
+     "gradientSamples": [
+      "div.crown → linear-gradient(rgba(255, 255, 255, 0.16), rgba(0, 0, 0, 0) 6px), linear-gradient(rgba(0, 0, 0, 0) 12px, rgba(",
+      "div.row → repeating-linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 212px, rgb(107, 70, 41) 212px, rgb(77, 49, 28",
+      "div.row → repeating-linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 212px, rgb(107, 70, 41) 212px, rgb(77, 49, 28",
+      "div.row → repeating-linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 212px, rgb(107, 70, 41) 212px, rgb(77, 49, 28"
+     ],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "header.top 768px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 26,
+     "cardRows": []
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": false,
+     "height": 96,
+     "floatingPill": false,
+     "blur": true
+    },
+    "fontsLoaded": [
+     "cormorant garamond",
+     "eb garamond"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "pageH": 1222,
+    "margins": {
+     "left": 16,
+     "right": 64
+    },
+    "sections": [
+     {
+      "sel": "div.intro",
+      "tag": "div",
+      "top": 114,
+      "height": 126,
+      "words": 40,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The Lore of Tessarion",
+       "size": 34,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 115,
+      "textLeft": 16,
+      "textRight": 115,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.bookcase",
+      "tag": "div",
+      "top": 346,
+      "height": 816,
+      "words": 127,
+      "media": 0,
+      "middle": 37,
+      "heading": null,
+      "left": 49,
+      "right": 97,
+      "textLeft": 49,
+      "textRight": 97,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "The Lore of Tessarion",
+      "size": 34,
+      "top": 120,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 16,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 2,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 768,
+     "h": 1024
+    },
+    "dark": true,
+    "ground": "#17211c",
+    "sidebar": null,
+    "topbar": {
+     "h": 96
+    },
+    "canvas": {
+     "left": 16,
+     "right": -344
+    },
+    "hero": {
+     "text": "The Lore of Tessarion",
+     "words": 4,
+     "chars": 21,
+     "lines": 1,
+     "size": 34,
+     "vw": 4.4,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 120,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 6,
+     "radii": [
+      [
+       0,
+       6
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 5,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgb(107, 70, 41) 0px 4px 0px 0px",
+      "rgb(107, 70, 41) 0px 4px 0px 0px",
+      "rgb(107, 70, 41) 0px 4px 0px 0px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.28,
+     "tiny": 52,
+     "tinySamples": [
+      "TS-PR 7px",
+      "001 8px",
+      "TS-CO 7px",
+      "001 8px"
+     ],
+     "sizes": [
+      7,
+      8,
+      11,
+      13,
+      14,
+      17,
+      23,
+      34
+     ]
+    },
+    "title": {
+     "text": "The Lore of Tessarion",
+     "size": 34,
+     "top": 120
+    },
+    "colourShare": 0.149
+   },
+   "consoleErrors": []
+  },
+  {
+   "width": 390,
+   "height": 844,
+   "load": "load",
+   "screens": 3,
+   "filled": [
+    0.86,
+    0.92,
+    0.86
+   ],
+   "motion": {
+    "elements": 0,
+    "css": 0,
+    "transitions": 0,
+    "scripted": 0,
+    "videos": 0,
+    "playingVideos": 0
+   },
+   "metrics": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "page": {
+     "height": 2217,
+     "screens": 2.6,
+     "words": 201,
+     "img": 0,
+     "video": 0,
+     "canvas": 0,
+     "svg": 5,
+     "sections": 5,
+     "horizontalOverflow": 0,
+     "overflowCulprits": [],
+     "uiFragments": 0,
+     "uiAbuse": false,
+     "realPictures": 0,
+     "videoCount": 0,
+     "uiPictures": 0,
+     "pictureSamples": [],
+     "blendText": 0,
+     "sideScrollers": 0,
+     "brokenImages": [],
+     "emoji": [],
+     "videosNoPoster": 0
+    },
+    "hero": {
+     "text": "The Lore of Tessarion",
+     "words": 4,
+     "chars": 21,
+     "lines": 1,
+     "size": 34,
+     "vw": 8.7,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 120,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "h1": {
+     "text": "The Lore of Tessarion",
+     "words": 4,
+     "lines": 1,
+     "size": 34,
+     "font": "Cormorant Garamond"
+    },
+    "headings": [
+     {
+      "text": "The Threadmint Library",
+      "words": 3,
+      "chars": 22,
+      "lines": 1,
+      "size": 23,
+      "vw": 5.9,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0.01,
+      "leading": 1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "left",
+      "widthRatio": 0.59,
+      "top": 10,
+      "tag": "a",
+      "kind": "heading"
+     },
+     {
+      "text": "The Lore of Tessarion",
+      "words": 4,
+      "chars": 21,
+      "lines": 1,
+      "size": 34,
+      "vw": 8.7,
+      "font": "Cormorant Garamond",
+      "weight": 700,
+      "tracking": 0,
+      "leading": 1.1,
+      "upper": false,
+      "italic": false,
+      "mono": false,
+      "align": "left",
+      "position": "center",
+      "widthRatio": 0.92,
+      "top": 120,
+      "tag": "h1",
+      "kind": "heading"
+     }
+    ],
+    "headingSummary": {
+     "count": 2,
+     "maxLines": 1,
+     "over2Lines": 0,
+     "statements": 0,
+     "centered": 0,
+     "medianWords": 3,
+     "mixedFontHeadings": 0
+    },
+    "type": {
+     "families": [
+      {
+       "family": "system-ui",
+       "share": 0.47,
+       "mono": false
+      },
+      {
+       "family": "Cormorant Garamond",
+       "share": 0.38,
+       "mono": false
+      },
+      {
+       "family": "EB Garamond",
+       "share": 0.15,
+       "mono": false
+      }
+     ],
+     "familyCount": 3,
+     "sizes": [
+      7,
+      8,
+      11,
+      13,
+      14,
+      17,
+      23,
+      34
+     ],
+     "sizeCount": 8,
+     "notLoaded": [],
+     "body": {
+      "font": "EB Garamond",
+      "size": 17,
+      "leading": 1.5,
+      "weight": 400,
+      "tracking": 0,
+      "contrast": null
+     },
+     "measureChars": 42,
+     "max": {
+      "size": 34,
+      "vw": 8.7,
+      "font": "Cormorant Garamond",
+      "text": "The Lore of Tessarion"
+     },
+     "monoShare": 0,
+     "monoProseShare": 0,
+     "monoFamilies": [],
+     "monoSamples": [],
+     "microLabels": 5,
+     "microLabelShare": 0.089,
+     "microSamples": [
+      "The World & the Towers",
+      "Rites of Ascension",
+      "The Soulforge & the Market",
+      "Crownweave & the Weaves",
+      "Thal'vireth"
+     ],
+     "upperShare": 0.21,
+     "centerShare": 0.68,
+     "smallText": 9
+    },
+    "eyebrows": [],
+    "numbered": [
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 649
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 649
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 649
+     },
+     {
+      "text": "002",
+      "size": 8.4,
+      "top": 649
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 891
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 891
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 891
+     },
+     {
+      "text": "002",
+      "size": 8.4,
+      "top": 891
+     },
+     {
+      "text": "002",
+      "size": 8.4,
+      "top": 891
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 1133
+     },
+     {
+      "text": "001",
+      "size": 8.4,
+      "top": 1133
+     },
+     {
+      "text": "002",
+      "size": 8.4,
+      "top": 1133
+     }
+    ],
+    "color": {
+     "bodyBg": "#17211c",
+     "bodyBgHsl": {
+      "h": 150,
+      "s": 0.18,
+      "l": 0.11
+     },
+     "dark": true,
+     "sectionBgs": [
+      {
+       "color": "#4d311c",
+       "top": 433,
+       "hsl": {
+        "h": 26,
+        "s": 0.47,
+        "l": 0.21
+       }
+      },
+      {
+       "color": "#1b1109",
+       "top": 1189,
+       "hsl": {
+        "h": 27,
+        "s": 0.5,
+        "l": 0.07
+       }
+      }
+     ],
+     "textColors": [
+      {
+       "color": "#ecd395",
+       "share": 0.49
+      },
+      {
+       "color": "#e9e1d0",
+       "share": 0.32
+      },
+      {
+       "color": "#3a2a10",
+       "share": 0.09
+      },
+      {
+       "color": "#a39884",
+       "share": 0.05
+      },
+      {
+       "color": "#2a1d08",
+       "share": 0.04
+      }
+     ],
+     "button": null,
+     "lowContrast": []
+    },
+    "buttons": {
+     "count": 0,
+     "inHero": 0,
+     "withShadow": 0,
+     "withGradient": 0,
+     "mono": 0,
+     "upper": 0,
+     "heroLabels": []
+    },
+    "surfaces": {
+     "shadowStatic": 37,
+     "shadowOverlay": 0,
+     "shadowSamples": [
+      "div.crown → rgba(0, 0, 0, 0.55) 0px 6px 8px -2px, rgba(0, 0, 0, 0.35) 0px 0px 0px 1px inset",
+      "section.case → rgba(0, 0, 0, 0.75) 0px 16px 18px -10px inset, rgba(0, 0, 0, 0.65) 12px 0px 16px",
+      "span.plate → rgba(255, 255, 255, 0.5) 0px 1px 0px 0px inset, rgba(0, 0, 0, 0.2) 0px -1px 0px ",
+      "a.spine → rgba(0, 0, 0, 0.32) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.6) 3px 0px 5px -2px"
+     ],
+     "gradients": 7,
+     "scrims": 31,
+     "gradientSamples": [
+      "div.crown → linear-gradient(rgba(255, 255, 255, 0.16), rgba(0, 0, 0, 0) 6px), linear-gradient(rgba(0, 0, 0, 0) 12px, rgba(",
+      "div.row → repeating-linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 212px, rgb(107, 70, 41) 212px, rgb(77, 49, 28",
+      "div.row → repeating-linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 212px, rgb(107, 70, 41) 212px, rgb(77, 49, 28",
+      "div.row → repeating-linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 212px, rgb(107, 70, 41) 212px, rgb(77, 49, 28"
+     ],
+     "gradientText": 0,
+     "hairlines": 1,
+     "hairlineSamples": [
+      "header.top 390px"
+     ],
+     "outlinedBoxes": 0,
+     "dashed": 0,
+     "blurred": 1,
+     "roundedBoxes": 0,
+     "boxRadius": 0,
+     "squareMedia": 0,
+     "roundedMedia": 0,
+     "mediaRadius": 0,
+     "textShadow": 26,
+     "cardRows": [
+      {
+       "count": 5,
+       "iconTopped": false,
+       "rounded": false,
+       "top": 463
+      }
+     ]
+    },
+    "heroMedia": [],
+    "nav": {
+     "links": 1,
+     "fixed": false,
+     "height": 96,
+     "floatingPill": false,
+     "blur": true
+    },
+    "fontsLoaded": [
+     "cormorant garamond",
+     "eb garamond"
+    ]
+   },
+   "layout": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "pageH": 2217,
+    "margins": {
+     "left": 16,
+     "right": 41
+    },
+    "sections": [
+     {
+      "sel": "div.intro",
+      "tag": "div",
+      "top": 114,
+      "height": 177,
+      "words": 40,
+      "media": 0,
+      "middle": 0,
+      "heading": {
+       "text": "The Lore of Tessarion",
+       "size": 34,
+       "tag": "h1"
+      },
+      "left": 16,
+      "right": 23,
+      "textLeft": 16,
+      "textRight": 23,
+      "fullBleed": false,
+      "footer": false,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     },
+     {
+      "sel": "div.bookcase",
+      "tag": "div",
+      "top": 397,
+      "height": 1760,
+      "words": 127,
+      "media": 0,
+      "middle": 6,
+      "heading": null,
+      "left": 47,
+      "right": 87,
+      "textLeft": 47,
+      "textRight": 87,
+      "fullBleed": false,
+      "footer": true,
+      "hero": true,
+      "continues": false,
+      "pinned": false
+     }
+    ],
+    "gaps": [],
+    "h1s": [
+     {
+      "text": "The Lore of Tessarion",
+      "size": 34,
+      "top": 120,
+      "firstScreen": true
+     }
+    ],
+    "edgeText": [],
+    "edges": [
+     {
+      "x": 16,
+      "n": 2
+     }
+    ],
+    "leftBlocks": 2,
+    "bodySize": 17,
+    "stage": false,
+    "explains": false,
+    "slivers": [],
+    "voidShare": 0,
+    "voidBox": null
+   },
+   "app": {
+    "viewport": {
+     "w": 390,
+     "h": 844
+    },
+    "dark": true,
+    "ground": "#17211c",
+    "sidebar": null,
+    "topbar": {
+     "h": 96
+    },
+    "canvas": {
+     "left": 16,
+     "right": -722
+    },
+    "hero": {
+     "text": "The Lore of Tessarion",
+     "words": 4,
+     "chars": 21,
+     "lines": 1,
+     "size": 34,
+     "vw": 8.7,
+     "font": "Cormorant Garamond",
+     "weight": 700,
+     "tracking": 0,
+     "leading": 1.1,
+     "top": 120,
+     "tag": "h1",
+     "kind": "heading",
+     "align": "left",
+     "position": "left"
+    },
+    "charts": 0,
+    "layout": {
+     "panels": 1,
+     "firstScreen": 1,
+     "ragged": [],
+     "voids": []
+    },
+    "tiles": 0,
+    "panels": {
+     "count": 6,
+     "radii": [
+      [
+       0,
+       6
+      ]
+     ],
+     "heavyBorders": 0,
+     "borderSamples": [],
+     "heavyShadows": 5,
+     "softShadows": 0,
+     "shadowSamples": [
+      "rgb(107, 70, 41) 0px 4px 0px 0px",
+      "rgb(107, 70, 41) 0px 4px 0px 0px",
+      "rgb(107, 70, 41) 0px 4px 0px 0px"
+     ],
+     "glass": 0
+    },
+    "chips": {
+     "count": 0,
+     "hues": 0,
+     "samples": []
+    },
+    "numbers": {
+     "cells": 0,
+     "leftAligned": 0,
+     "figures": 0,
+     "tabularShare": null,
+     "kpiMax": null
+    },
+    "rows": null,
+    "chartHues": 0,
+    "placeholders": [],
+    "type": {
+     "under13": 0.28,
+     "tiny": 52,
+     "tinySamples": [
+      "TS-PR 7px",
+      "001 8px",
+      "TS-CO 7px",
+      "001 8px"
+     ],
+     "sizes": [
+      7,
+      8,
+      11,
+      13,
+      14,
+      17,
+      23,
+      34
+     ]
+    },
+    "title": {
+     "text": "The Lore of Tessarion",
+     "size": 34,
+     "top": 120
+    },
+    "colourShare": 0.064
+   },
+   "consoleErrors": []
+  }
+ ],
+ "findings": [
+  {
+   "level": "FAIL",
+   "id": "micro-label",
+   "width": 1440,
+   "message": "5 tiny uppercase letter-spaced labels (e.g. \"The World & the Towers\", \"Rites of Ascension\", \"The Soulforge & the Market\", \"Crownweave & the Weaves\").",
+   "fix": "Use sentence-case text at a readable size, or delete the label.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "gradient",
+   "width": 1440,
+   "message": "7 gradient fill(s): div.crown → linear-gradient(rgba(255, 255, 255, 0.16), rgba(0, 0, 0, 0) 6px), linear-gradient(rgba(0, 0, 0, 0) 12px, rgba( | div.row → repeating-linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 250px, rgb(107, 70, 41) 250px, rgb(77, 49, 28 | div.row → repeating-linear-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 250px, rgb(107, 70, 41) 250px, rgb(77, 49, 28",
+   "fix": "Use a flat colour or a real image. The only gradient allowed by default is a neutral scrim over a photo for legibility.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "text-shadow",
+   "width": 1440,
+   "message": "26 text-shadow(s).",
+   "fix": "Remove; fix legibility with a scrim or a different crop.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "font-count",
+   "width": 1440,
+   "message": "3 typefaces in use (system-ui, Cormorant Garamond, EB Garamond).",
+   "fix": "Two at most.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "heavy-shadow",
+   "width": 1440,
+   "message": "5 panel shadow(s) heavy enough to read as floating: rgb(107, 70, 41) 0px 4px 0px 0px | rgb(107, 70, 41) 0px 4px 0px 0px | rgb(107, 70, 41) 0px 4px 0px 0px",
+   "fix": "Panels sit on the ground: separate them with a fill one step from the ground or a quiet 1px border. A shadow, if any, is under 8% black with a small blur. Real overlays (menus, dialogs, popovers) may float.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "FAIL",
+   "id": "tiny-text",
+   "width": 1440,
+   "message": "52 text blocks under 11px: TS-PR 8px, 001 10px, TS-CO 8px, 001 10px.",
+   "fix": "Nothing below 11px; secondary text 12px, data 13–14px.",
+   "alsoAt": [
+    768,
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "app-title-size",
+   "width": 1440,
+   "message": "The h1 is 44px (\"The Lore of Tessarion\").",
+   "fix": "An app screen is not a landing page: the title is 18-32px (20-24px on a phone).",
+   "alsoAt": [
+    390
+   ]
+  },
+  {
+   "level": "WARN",
+   "id": "colour-sprawl",
+   "width": 768,
+   "message": "15% of the first screen is strongly coloured.",
+   "fix": "Keep the screen neutral and spend colour on data and status: the studied screens sit near 3%, and only tinted styles reach 10–15%, as pale tints rather than saturated fills."
+  }
+ ],
+ "images": [
+  {
+   "viewport": "desktop",
+   "width": 1440,
+   "fold": "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\library\\desktop-fold.jpg",
+   "pages": [
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\library\\desktop-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "tablet",
+   "width": 768,
+   "fold": "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\library\\tablet-fold.jpg",
+   "pages": [
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\library\\tablet-page-01.jpg"
+   ],
+   "film": []
+  },
+  {
+   "viewport": "mobile",
+   "width": 390,
+   "fold": "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\library\\mobile-fold.jpg",
+   "pages": [
+    "D:\\Six Towers of Tessarion - DND Campaign\\six-towers-of-tessarion\\.taste-skill\\after\\library\\mobile-page-01.jpg"
+   ],
+   "film": []
+  }
+ ]
+}

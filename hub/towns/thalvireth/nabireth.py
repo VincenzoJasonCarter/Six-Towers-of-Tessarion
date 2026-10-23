@@ -227,7 +227,7 @@ def draw():
     p.place("keepers-shed", "The Keepers' Shed", "The one door customs does not open",
             "A locked shed at the far end of the customs yard. Cargo consigned by name to an Ah K'in passes customs unopened, as a courtesy to the Keepers of the Count, and waits here until its consignee's people come down the Road to collect it. The Daykeepers keep the key, keep a list of what goes in, and are not paid to wonder why.")
     p.place("long-tide", "The Long Tide", "Drink your days slowly. You only get the one kind here.",
-            "A two-storey inn of grown wood three doors down from the Counting Pier, with a ship's figurehead over its door: where Crownweave sailors drink, factors meet their contacts, and anyone who wants to know what is happening on the Road goes first. Its innkeeper, Mariel Hostner, came ashore for one night twenty-six years ago and missed the tide.", book)
+            "A two-storey inn of grown wood three doors down from the Counting Pier, with a ship's figurehead over its door: where Crownweave sailors drink, factors meet their contacts, and anyone who wants to know what is happening on the Road goes first. Its innkeeper, Hester Crane, came ashore for one night twenty-six years ago and missed the tide.", book)
     p.place("gate-tower", "The Gate-Tower", "Where the White Road begins",
             "A square tower of the Road's pale stone at the top of the rise, and the town's one gate. The Balam detachment of the Landing keeps it, and the yard behind it, and from its roof a watch on both the Road and the Gulf. Past it the White Road runs west, dead straight, ten days to the Canopy Steps.", book)
     p.place("bearers-yard", "The Bearers' Yard", "Where the slow procession is hired",

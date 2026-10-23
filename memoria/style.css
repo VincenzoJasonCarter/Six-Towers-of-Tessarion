@@ -25,27 +25,27 @@
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
-    --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520; --redact: #e9e1d0;
+    --rule: #3a332a; --accent: #d9bb70; --accent-soft: #3a3020; --redact: #e9e1d0;
     --plaster: #221d17; --lamp: rgb(255 214 150 / .1); --vignette: rgb(0 0 0 / .55);
     --label: #201c17; --frame: #120d08; --frame-hi: #4a3322;
   }
 }
 :root[data-theme="dark"] {
   --bg: #15120e; --panel: #1d1a15; --ink: #e9e1d0; --muted: #a39884;
-  --rule: #3a332a; --accent: #e0826c; --accent-soft: #3b2520; --redact: #e9e1d0;
+  --rule: #3a332a; --accent: #d9bb70; --accent-soft: #3a3020; --redact: #e9e1d0;
   --plaster: #221d17; --lamp: rgb(255 214 150 / .1); --vignette: rgb(0 0 0 / .55);
   --label: #201c17; --frame: #120d08; --frame-hi: #4a3322;
 }
 
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
-/* The gallery wall: plaster in raised panels, lit from above, darker toward the edges. */
+/* The gallery wall: plaster in panels one shade deeper, lit from above, darker toward the edges. */
 body {
   margin: 0; color: var(--ink); font: 18px/1.6 var(--serif);
   background:
     radial-gradient(ellipse 120% 90% at 50% 30%, transparent 55%, var(--vignette)) fixed,
     radial-gradient(ellipse 70% 520px at 50% 0, var(--lamp), transparent 75%),
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='360'%3E%3Crect x='22' y='22' width='256' height='316' rx='2' fill='%23000' fill-opacity='.025'/%3E%3Crect x='22' y='22' width='256' height='316' rx='2' fill='none' stroke='%23000' stroke-opacity='.11' stroke-width='2'/%3E%3Crect x='25.5' y='25.5' width='249' height='309' fill='none' stroke='%23fff' stroke-opacity='.16'/%3E%3Crect x='34' y='34' width='232' height='292' fill='none' stroke='%23000' stroke-opacity='.05'/%3E%3C/svg%3E") 0 0 / 300px 360px,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='360'%3E%3Crect x='22' y='22' width='256' height='316' rx='2' fill='%23000' fill-opacity='.07'/%3E%3C/svg%3E") 0 0 / 300px 360px,
     var(--plaster);
 }
 body.reading { overflow: hidden; }
@@ -61,7 +61,9 @@ button, input { font: inherit; color: inherit; }
 }
 .brand { text-decoration: none; color: var(--ink); margin-right: auto; }
 .brand b { font: 700 26px/1 var(--display); letter-spacing: .01em; }
-.brand span { display: block; font-size: 13px; color: var(--muted); font-style: italic; }
+/* In the hub the hall is named by the hub's own bar, so its wordmark stands down. */
+.framed .top { justify-content: flex-end; }
+.framed .top .brand { display: none; }
 .search {
   width: min(320px, 100%); padding: 7px 12px; border: 1px solid var(--rule);
   border-radius: 6px; background: var(--bg); font: 15px var(--sans);
@@ -78,9 +80,9 @@ main { padding: 32px 48px 80px; min-width: 0; }
 
 /* ---------- the front: intro and the plan ---------- */
 .hero { display: flex; align-items: flex-start; gap: 40px; }
-.intro { flex: 1; max-width: 760px; }
-.tier { margin: 0; font: 13px var(--sans); color: var(--muted); letter-spacing: .04em; text-transform: uppercase; }
-#count { text-transform: none; margin-top: 10px; }
+.intro { flex: 1; min-width: 0; }
+.intro > :not(.tabs) { max-width: 760px; }
+.tier { margin: 10px 0 0; font: 13px var(--sans); color: var(--muted); letter-spacing: .04em; }
 h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
 #intro p { margin: 0 0 .6em; }
 .tabs { display: flex; flex-wrap: wrap; gap: 6px; padding: 12px 0 0; }
@@ -100,7 +102,7 @@ h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
   box-shadow: 0 0 0 6px var(--brass), 0 0 0 7px var(--brass-lo), 0 0 0 11px var(--frame), 0 16px 30px rgb(0 0 0 / .35),
     inset 0 0 26px rgb(90 60 20 / .35);
 }
-.plan figcaption { margin-top: 18px; font: 600 11px var(--sans); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); }
+.plan figcaption { margin-top: 14px; font: italic 15px var(--serif); color: var(--muted); }
 .p-room { cursor: pointer; }
 .p-room rect, .p-room circle { stroke-width: .9; transition: filter .2s; }
 .p-room:hover rect, .p-room:hover > circle, .p-room.on rect, .p-room.on > circle { filter: brightness(1.25) drop-shadow(0 0 1.5px #fff8); }
@@ -114,24 +116,21 @@ h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
 .p-north path { fill: #8c2f23; }
 .p-north text { font: 700 4px var(--sans); fill: #8c2f23; }
 
-/* ---------- a room: its name on a brass plate bolted to a rail in its colour ---------- */
-.room { margin-top: 56px; }
-.room h2 { display: flex; align-items: center; gap: 14px; margin: 0 0 8px; font: 700 21px/1 var(--display); }
-.room h2 span {
-  padding: 6px 16px 5px; border-radius: 3px; color: var(--brass-ink); letter-spacing: .03em; white-space: nowrap;
-  background: linear-gradient(180deg, var(--brass-hi), var(--brass) 45%, var(--brass-lo));
-  box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), inset 0 -1px 0 rgb(0 0 0 / .2), 0 2px 5px rgb(0 0 0 / .35);
+/* ---------- a room: the full width of the page in its own wall colour ---------- */
+/* Each room is a field of its wall colour from edge to edge (the spread shadow
+   carries the colour past the column; the clip keeps it off the rooms above and
+   below), so the page is walked room by room. Its name leads, its wall text beside it. */
+.room {
+  margin: 0; padding: 72px 0 88px; color: var(--room-ink);
+  background: var(--wall); box-shadow: 0 0 0 100vmax var(--wall); clip-path: inset(0 -100vmax);
+  scroll-margin-top: 64px;
 }
-.room h2::after {
-  content: ""; flex: 1; height: 9px; border-radius: 2px;
-  background:
-    radial-gradient(circle, color-mix(in srgb, var(--trim) 50%, #fff) 0 1.6px, transparent 2.2px) 0 50% / 36px 9px repeat-x,
-    linear-gradient(180deg, color-mix(in srgb, var(--trim) 70%, #fff), var(--trim) 45%, color-mix(in srgb, var(--trim) 45%, #000));
-  box-shadow: 0 2px 4px rgb(0 0 0 / .3);
-}
-.kind-crypt h2 span { color: #20242a; background: linear-gradient(180deg, #eef1f4, #b8c0c9 45%, #7d8792); }
-.room-sub { margin: 0 0 4px; font-style: italic; color: var(--muted); }
-.room-text { max-width: 760px; margin: 0 0 24px; font-size: 16.5px; }
+#rooms { margin-top: 64px; }
+.room-head { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 12px 56px; align-items: end; margin-bottom: 36px; }
+.room h2 { margin: 0 0 6px; font: 700 clamp(36px, 4.2vw, 58px)/1 var(--display); letter-spacing: -.01em; color: var(--room-ink); }
+.room-sub { margin: 0; font-style: italic; color: var(--room-muted); }
+.room-text { max-width: 640px; margin: 0; font-size: 17px; color: var(--room-ink); }
+.room .room-head .link { color: var(--room-link); }
 .link { border: 0; padding: 0; background: none; color: var(--accent); cursor: pointer; text-align: left; font: inherit; }
 .link:hover, .link:focus-visible { text-decoration: underline; outline: none; }
 
@@ -203,7 +202,7 @@ h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
 
 .tag { /* the accession number, on a brass tag at the foot of the case */
   position: absolute; z-index: 5; left: 50%; bottom: 4.5%; translate: -50% 0; padding: 1px 9px 2px; border-radius: 3px;
-  font: 700 12.5px/1.4 ui-monospace, Consolas, "Courier New", monospace; letter-spacing: .06em; color: var(--brass-ink); white-space: nowrap;
+  font: 700 14px/1.3 var(--display); font-variant-numeric: lining-nums tabular-nums; letter-spacing: .06em; color: var(--brass-ink); white-space: nowrap;
   background: linear-gradient(180deg, var(--brass-hi), var(--brass) 50%, var(--brass-lo));
   box-shadow: inset 0 1px 0 rgb(255 255 255 / .5), 0 2px 4px rgb(0 0 0 / .5);
 }
@@ -219,11 +218,11 @@ h1 { font: 700 44px/1.1 var(--display); margin: 4px 0 8px; }
     radial-gradient(circle at calc(100% - 7px) calc(100% - 7px), var(--brass-lo) 0 2px, transparent 2.6px);
 }
 .vitrine .body b { font: 700 20px/1.15 var(--display); }
-.vitrine .body small { font: 12.5px/1.4 var(--sans); color: var(--muted); }
+.vitrine .body small { font: 14px/1.4 var(--sans); color: var(--muted); }
 .chip {
   align-self: flex-start; max-width: 100%; margin-top: auto; padding: 1px 8px; border-radius: 999px; border: 1px solid var(--rule);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-  font: 11.5px/1.5 var(--sans); color: var(--muted);
+  font: 12.5px/1.5 var(--sans); color: var(--muted);
 }
 .undated .body b { color: var(--muted); font-style: italic; font-weight: 600; }
 .empty-search { padding: 40px 0; text-align: center; color: var(--muted); font-style: italic; }
@@ -284,6 +283,7 @@ body.still .vitrine, body.still .art { transition: none; }
 /* ---------- narrow screens ---------- */
 @media (max-width: 860px) {
   .hero { flex-direction: column-reverse; align-items: stretch; gap: 8px; }
+  .room-head { grid-template-columns: minmax(0, 1fr); }
   .plan { width: 220px; align-self: center; }
 }
 @media (max-width: 640px) {
@@ -294,6 +294,8 @@ body.still .vitrine, body.still .art { transition: none; }
   .hero { flex-direction: column; gap: 18px; }
   .plan { width: 190px; }
   h1 { font-size: 34px; }
+  .room { padding: 48px 0 60px; }
+  #rooms { margin-top: 40px; }
   .cases { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 20px; }
   .vitrine .body b { font-size: 17px; }
   .reveal { padding: 10px; }

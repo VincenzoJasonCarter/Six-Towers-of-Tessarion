@@ -25,12 +25,14 @@ or
 uv run hub/serve.py
 ```
 
-The desk opens at http://127.0.0.1:8760/ on a reception hall: a desk in
-front and five corridors behind it, one per tool (the Library's bookshelves,
+The desk opens at http://127.0.0.1:8760/ on a reception hall: a quiet room,
+a plain plaster wall with five doorways in it and a band of desk across the
+front. Through each doorway is a corridor, one per tool (the Library's bookshelves,
 the Market's stalls under striped awnings, the Barracks' bunks right behind
-the clerk, the Memoria's marble gallery, the Bestiary's dark stone). The lamp on each corridor's plaque shows whether
-that tool is running. The hall has no light of its own: it is lit by the corridors,
-a sconce between each pair of doorways and the candle on the desk. Click a corridor and you walk into it: the camera
+the clerk, the Memoria's marble gallery, the Bestiary's dark stone); they are
+the only pictures in the room. The lamp under each doorway's name shows whether
+that tool is running. On the desk are the guild notices (left), the title, and
+the map (right). Click a corridor and you walk into it: the camera
 crosses reception, passes through the doorway and goes down the corridor
 (redrawn in perspective as it moves) towards the light at the far end, which
 opens onto the tool. Go back to Reception (the bar along the top, or the
@@ -57,8 +59,8 @@ Everything she says is written out in `clerk.js`, so adding lines is a
 matter of adding to the lists there (the comment at the top explains the
 format). She doesn't use an AI model and needs no network.
 
-The **Animate** switch in the bar turns off the walks and the moving lamps
-and eyes. Like the library's **Animate books**, it is remembered in the
+The **Animate** switch in the bar turns off the walks, the corridors' lamps
+and eyes, and Hessa's. Like the library's **Animate books**, it is remembered in the
 browser and is on unless switched off there, whatever the system's
 reduce-motion setting says.
 
@@ -66,6 +68,14 @@ It starts the tools on their usual ports (library 8767, Market 8770,
 bestiary 8766, Memoria 8769). The Barracks isn't started: it is its own site.
 A tool keeps its place while you look at the other. **Open in its own tab**
 opens the current tool without the desk around it.
+
+The tools' pages load in the background once reception is up, one at a
+time while the page is idle, so a walk rarely has to wait for one (a hall
+pointed at goes first). On a phone, or with Save-Data on, only the hall
+standing in the picker loads; any other is sent for at the end of its
+walk, and the light at the end of the corridor holds until it has come.
+On the public website the lamps under the doorways' names are left off:
+every hall is always open there.
 
 If one of those tools is already running, say from `make library`, the
 desk uses that server and doesn't start a second one. Ctrl+C stops the desk
@@ -76,11 +86,11 @@ Options: `--port 9000`, `--no-browser`. Requires `uv` on PATH.
 
 ## The notice board
 
-A board of Guild Notices stands on the floor left of the desk, with
-`balance-patch.md` (at the repo root) pinned to it. Click it and the patch
+The Guild Notices card lies on the desk, left of the title, with
+`balance-patch.md` (at the repo root) behind it. Click it and the patch
 notes open over the hall. The first `## ` heading in that file names the
 newest patch (`## Patch 2 — 2026-11-01`, say). Until that patch has been
-opened in a browser, the board's wax seal glows there and Hessa points it
+opened in a browser, the card's wax seal glows there and Hessa points it
 out. So to announce a balance change, add a new patch at the top of the
 file. The page renders the file itself, with just enough markdown for patch
 notes: headings, paragraphs, lists, tables, block quotes and rules. Write
@@ -90,8 +100,8 @@ list item, a table cell) and it shows as a coloured badge with an arrow:
 
 ## The map on the easel
 
-An easel stands on the floor right of the desk, the notice board's twin, with
-a framed map of the Union of Crownweave on it. Click it (or ask Hessa about
+The Map Room card lies on the desk right of the title, the notices' twin, with
+a small picture of the Union of Crownweave on it. Click it (or ask Hessa about
 it) and the map opens over the hall. Along its top are the countries:
 Crownweave, Thal'vireth, the Obsidian Crown, Khazrund, Emberfall and the Iron
 Hordes, each with a map of its own, so none of them is squeezed in beside the
@@ -117,7 +127,8 @@ or `uv run hub/atlas.py` (`--map "map/<file>.map"` for another save). It
 writes `atlas/index.json` (the countries, in order) and, for each country,
 `atlas/<id>.webp` (the land and sea, shaded) and `atlas/<id>.json`
 (everything drawn over it, and the words the page uses for that country:
-its title, its introduction, what a province seat is called). The countries,
+its title, its introduction, what a province seat is called), and
+`atlas/easel.webp`, the first country's picture made small for the easel. The countries,
 their chapters and those words are listed in `COUNTRIES` at the top of
 `atlas.py`. Rerun it after changing the map or a gazetteer, and commit the
 files: the public website copies them as they are. It reports any town of a
@@ -165,5 +176,9 @@ clerk.js     the clerk's conversation: every line, the replies, and when she say
 plans.py     the town-plan toolkit; draws every town in towns/ (needs uv)
 towns/       one file per town plan, by country
 atlas.py     draws the map on the easel from map/*.map and the lore-book (needs uv)
-atlas/       its output: index.json, and <country>.webp and <country>.json for each country
+atlas/       its output: index.json, easel.webp, and <country>.webp and <country>.json for each country
+fonts/       Cormorant Garamond and EB Garamond (SIL Open Font License), the latin cut
+             Google Fonts serves, and fonts.css declaring them, so the page asks no
+             other site for them. On the public website the halls use them too, and
+             they are cached for a year: give a replacement font a new name.
 ```

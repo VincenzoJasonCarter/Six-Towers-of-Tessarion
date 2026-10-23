@@ -10,8 +10,8 @@ Usage, from the repo root:
 
 dist/ is the hub's reception page at the root (index.html, style.css, app.js,
 clerk.js from hub/, with the page marked data-hosted so it needs no hub
-server, balance-patch.md for its notice board and atlas/ for the map on its
-easel, as last drawn by hub/atlas.py), library/ (the output of library/build.py), market/
+server, balance-patch.md for its notice board, atlas/ for the map on its
+easel, as last drawn by hub/atlas.py, and fonts/, which every page uses), library/ (the output of library/build.py), market/
 (market.html as its index.html), bestiary/
 (bestiary.html as its index.html, plus bestiary/images/ if there is one) and
 barracks/ (just items.json, the output of barracks/build.py: the hub loads the
@@ -29,6 +29,23 @@ HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent
 HUB = ROOT / "hub"
 DIST = ROOT / "dist"
+
+# The fonts every page here asks Google for, which hub/fonts/ holds. On the
+# website each hall's page is pointed at those instead, the same files the
+# hub uses, so a visitor downloads them once and asks no other site for them.
+GOOGLE_FONTS = ('<link rel="preconnect" href="https://fonts.googleapis.com">\n'
+                '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
+                '<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700'
+                '&family=EB+Garamond:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">\n')
+OUR_FONTS = '<link rel="stylesheet" href="../fonts/fonts.css">\n'
+
+
+def share_fonts(page):
+    html = page.read_text(encoding="utf-8")
+    if GOOGLE_FONTS in html:
+        page.write_text(html.replace(GOOGLE_FONTS, OUR_FONTS), encoding="utf-8")
+    elif "fonts.googleapis.com" in html:
+        print(f"note: {page.relative_to(DIST)} asks Google for other fonts than hub/fonts/ has; left as it is")
 
 
 def run(script):
@@ -66,6 +83,9 @@ def main():
     (DIST / "index.html").write_text(page.replace("<body>", "<body data-hosted>", 1), encoding="utf-8")
     for name in ("style.css", "app.js", "clerk.js"):
         shutil.copy(HUB / name, DIST / name)
+    shutil.copytree(HUB / "fonts", DIST / "fonts")
+    for hall in ("library", "market", "bestiary", "memoria"):
+        share_fonts(DIST / hall / "index.html")
     shutil.copy(ROOT / "balance-patch.md", DIST / "balance-patch.md")  # pinned to the hub's notice board
     if (HUB / "atlas").is_dir():  # the map on the hub's easel (hub/atlas.py)
         shutil.copytree(HUB / "atlas", DIST / "atlas")

@@ -10,6 +10,10 @@
       "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
     },
     {
+      "source": "/fonts/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
       "source": "/barracks/items.json",
       "headers": [{ "key": "Access-Control-Allow-Origin", "value": "*" }]
     }
