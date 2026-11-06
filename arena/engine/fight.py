@@ -81,6 +81,10 @@ class Fight:
         c.reaction = True
         c.bonus_used = False
         c.moved = 0
+        down = c.get("prone")
+        if down and not c.incapacitated() and c.speed_now() > 0:
+            c.remove(effect=down)   # standing up costs half its speed this turn
+            c.add("slow", down.source, until=("end", c), value=c.base_speed // 2)
         c.turns += 1
         c.hit_this_turn = False
         c.acted = False

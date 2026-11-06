@@ -36,9 +36,22 @@ def move_to(c, goal, budget, provoke=True, stop_short=0):
                         break
             if c.dead or c.speed_now() == 0:
                 break
-        c.x = new
+        old, c.x = c.x, new
         spent += cost
         moved += 5
+        if c.fight:
+            for z in list(c.fight.zones):
+                if z.owner.side != c.side and z.covers(new) and not z.covers(old):
+                    z.on_enemy_enter(c)
+            if c.dead or c.speed_now() == 0:
+                break
+            down = c.get("prone")
+            if down:
+                # Knocked down on the way: stand up for half its speed, if it has that left.
+                if spent + c.base_speed // 2 > budget:
+                    break
+                c.remove(effect=down)
+                spent += c.base_speed // 2
     c.moved += moved
     if moved:
         for e in c.enemies():

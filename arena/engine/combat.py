@@ -65,6 +65,18 @@ def attack_adv(att, tgt, ctx, why=None):
                 dis = True
                 note("dis", h, "control")
                 break
+    down = tgt.get("prone")
+    if down:
+        if att.dist_to(tgt) <= 5:
+            adv = True
+            note("adv", down.source, "enable")
+        else:
+            dis = True
+            note("dis", None, None)
+    down = att.get("prone")
+    if down:
+        dis = True
+        note("dis", down.source, "control")
     fear = att.get("frightened")
     if fear and fear.source and not fear.source.dead and att.can_see(fear.source):
         dis = True
@@ -113,6 +125,12 @@ def attack(att, tgt, *, bonus, parts, kind, spell=False, level=0, magical=False,
         return False, False
     att.acted = True
     ctx = replace(ctx or Ctx(), kind=kind, spell=spell, level=level, magical=magical or spell, weapon=weapon)
+
+    # 0. The target's reaction may send the attack at someone else (Not My Department).
+    if tgt.reaction and not tgt.incapacitated():
+        other = tgt.redirect_attack(att, ctx, bonus, parts)
+        if other is not None:
+            tgt = other
 
     # 1. Advantage and disadvantage, noting who caused them.
     why = [("dis", None, None)] if dis else []

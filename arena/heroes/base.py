@@ -62,6 +62,8 @@ class Hero(Creature):
         foes = self.enemies()
         if not foes:
             return None
+        if self.style == "melee":
+            foes = [e for e in foes if not e.has("aloft")] or foes   # up on a ceiling, out of reach
         if self.guard and self.ward_ally():
             ward = self.ward_ally()
             return min(foes, key=lambda e: (e.dist_to(ward), e.hp))

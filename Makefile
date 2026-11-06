@@ -83,6 +83,10 @@ arena-party: ## Simulate every four-subclass party and write arena/results/party
 arena-evolution: ## Simulate the Ascendant/Corrupted evolution branches and write arena/results/evolution_report.md (ARGS="--n 4" for a quick run)
 	uv run arena/evolve.py $(ARGS)
 
+.PHONY: arena-workings
+arena-workings: ## Simulate the Crystal Mages with and without the Common Workings and write arena/results/workings_report.md (ARGS="--n 4" for a quick run)
+	uv run arena/workings.py $(ARGS)
+
 # --- boss_brain (the boss brain and its research harness; needs Node 22.18+) ---
 
 .PHONY: boss-brain-test

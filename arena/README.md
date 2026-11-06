@@ -18,6 +18,19 @@ fights the party encounters twice with the same seeds, once with that hero
 evolved, and the report gives the change in win rate (`make arena-evolution`;
 `--only gunman/ascendant` reruns one branch against the saved baseline).
 
+A fourth mode, **Common Workings** (`workings.py` → [workings_report.md](results/workings_report.md)),
+tests the Aether Hall's general spells (`../lore-book/27-common-workings.md`,
+modelled in `heroes/workings.py`). For each Crystal Mage and each
+environment, every party containing it fights the party encounters twice with
+the same seeds, once as written and once with that mage also knowing every
+working, and the report gives the change in win rate (`make arena-workings`).
+Most workings need something in the room, so it runs twice: **bare** (floor,
+walls and ceiling) and **furnished** (also loose objects, liquid, a rug and
+something hanging). Afterwards `--without overtime,"red tape"` reruns the bare
+case with one working left out at a time, which shows what each one adds. The
+docstring at the top of `heroes/workings.py` says how each working is read
+on the line and which aren't modelled.
+
 Everything the runs write (reports, raw results, encounter tuning) goes to
 [`results/`](results/).
 
@@ -177,10 +190,12 @@ arena/
     aegisbound.py    Sanguine, Bulwark, Warden
     ranged.py        Crystal Archer, Gunman, their ammunition loadouts and Tessarion gear
     evolution.py     the Ascendant and Corrupted branches (draft)
+    workings.py      the Common Workings, as a mixin any Crystal Mage can take
   foes.py          benchmark archetypes, party encounters, the campaign's stat blocks
   run.py           one-on-one: calibration, experiments, report
   party.py         parties: calibration, every party, report
   evolve.py        evolution branches: uplift per subclass and branch
+  workings.py      the Common Workings: uplift per mage, environment and working
   results/         everything the runs write
 ```
 
@@ -389,7 +404,8 @@ Where the text left a choice or room for interpretation, the simulator does this
 
 - The Aegisbound's shared "magic-resistant armor" trait (the lore gives no
   numbers).
-- *Counterspell*, *misty step*, healing allies, death saves, prone, cover,
+- *Counterspell*, *misty step*, healing allies (except the Common Workings'
+  Overtime), death saves, cover, prone (except from the Common Workings),
   flying, feats, consumables, and magic items beyond the +N weapon or focus.
 - Real map geometry: the line lets area spells and guards work roughly as
   they would, but flanking, chokepoints and shaping a blast around allies

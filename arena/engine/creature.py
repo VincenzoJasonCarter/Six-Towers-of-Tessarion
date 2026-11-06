@@ -26,6 +26,8 @@ Effects are named. The names the engine itself checks:
 | cage            | (on the Warden) a dome: spells from outside must beat value  | Mana Cage                 |
 | no_heal         | can't regain HP                                              | Prismatic shot            |
 | dot             | takes value=(dice, source) at the end of its turn, once       | Vitriolic Sphere          |
+| prone           | attacked at advantage within 5 ft, at disadvantage from farther; attacks at disadvantage; stands at the start of its turn for half its speed | Common Workings (heroes/workings.py) |
+| aloft           | fallen up onto a ceiling (value: the zone): out of melee reach | Which Way Is Down        |
 | inspired, spotted, spotted_dmg | see heroes/evolution.py                       | evolutions                |
 
 Subclasses add their own names (booming, hexed, shadow_mark, soul_tether,
@@ -80,6 +82,9 @@ class Zone:
 
     def on_enemy_turn_end(self, c):
         """An enemy of the owner ends its turn inside."""
+
+    def on_enemy_enter(self, c):
+        """An enemy of the owner steps into it while moving (movement.move_to)."""
 
 
 class Creature:
@@ -328,6 +333,7 @@ class Creature:
     def on_enemy_moved(self, mover): pass
 
     # ----- when I'm attacked or damaged
+    def redirect_attack(self, att, ctx, bonus, parts): return None  # before the roll: who it goes at instead
     def hit_reaction(self, att, ctx, total, ac): return 0  # my reaction to a hit: AC it adds (shield)
     def blocks_magic_missile(self): return False          # spends shield if it does
     def shield_ready(self): return False
