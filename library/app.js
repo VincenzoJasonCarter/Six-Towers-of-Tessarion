@@ -220,8 +220,8 @@ function bookcase(label, list, id, i, colour) {
 }
 
 function bookcases() {
-  if (state.arrange === "order") return bookcase("The Complete Lore, in Chapter Order", books.filter(b => !b.sealed), "all", 3);
-  return shelves.filter(s => !parentOf(s) && !s.sealed).map(g => {
+  if (state.arrange === "order") return bookcase("The Complete Lore, in Chapter Order", books.filter(b => !b.sealed && !b.lectern), "all", 3);
+  return shelves.filter(s => !parentOf(s) && !s.sealed && !s.lectern).map(g => {
     const ids = new Set(shelves.filter(s => s === g || s.part_of === g.id).map(s => s.id));
     return { g, list: books.filter(b => ids.has(b.shelf)) };
   }).filter(x => x.list.length).map(({ g, list }, i) => bookcase(g.plank || g.name, list, g.id, i, g.colour)).join("");
@@ -229,7 +229,7 @@ function bookcases() {
 
 function legend() {
   const used = new Set(books.map(b => b.shelf));
-  const keys = shelves.filter(s => !s.sealed && (used.has(s.id) || shelves.some(c => c.part_of === s.id && used.has(c.id))));
+  const keys = shelves.filter(s => !s.sealed && !s.lectern && (used.has(s.id) || shelves.some(c => c.part_of === s.id && used.has(c.id))));
   return `<button type="button" class="key all" data-shelf="" aria-pressed="${!state.shelf}">All subjects</button>` +
     keys.map(s => `<button type="button" class="key" data-shelf="${esc(s.id)}" aria-pressed="${state.shelf === s.id}" title="${esc(s.blurb || "")}"><i style="background:${esc(s.colour)}"></i>${esc(s.name)}</button>`).join("");
 }
@@ -287,9 +287,47 @@ function undercroft() {
     <div class="cases subject">${bookcase(s.name, books.filter(b => b.shelf === s.id), s.id, 1, "#8d7fa8")}</div><div class="plinth"></div></div></div>`;
 }
 
+// The book on the lectern (catalogue.yaml: lectern) lies open in front of the
+// bookcase instead of standing on a shelf. It dims with the spines when a
+// subject is picked or a search leaves it out.
+function lectern() {
+  const b = books.find(x => x.lectern && !x.sealed);
+  if (!b) return "";
+  const where = shelfOf(b).name, dim = state.shelf || !matches(b);
+  return `<a class="lectern${dim ? " dim" : ""}" href="#${esc(b.slug)}" data-slug="${esc(b.slug)}"
+    title="${esc(`${b.title} (${b.serial}, ${where})`)}" aria-label="${esc(`${b.serial}: ${b.title}. ${where}.`)}">
+    <svg viewBox="0 0 240 262" width="240" height="262" aria-hidden="true">
+      <defs><radialGradient id="lt-glow"><stop offset="0" class="g0"/><stop offset="1" class="g1"/></radialGradient></defs>
+      <ellipse cx="120" cy="255" rx="94" ry="7" class="lt-shadow"/>
+      <path d="M50 253h140l-10-15H60z" class="wd"/><rect x="74" y="230" width="92" height="9" rx="2" class="w"/>
+      <rect x="104" y="122" width="32" height="110" class="w"/><rect x="104" y="122" width="6" height="110" class="wh"/>
+      <rect x="128" y="122" width="8" height="110" class="wd"/><rect x="118" y="132" width="2" height="92" class="wd"/>
+      <rect x="96" y="114" width="48" height="10" rx="2" class="wh"/>
+      <path d="M24 114h192l-16-48H40z" class="w"/><path d="M40 66h160l2 5H38z" class="wh"/>
+      <ellipse cx="120" cy="78" rx="96" ry="40" fill="url(#lt-glow)" class="lt-glow"/>
+      <g class="lt-book">
+        <path d="M42 108h156l-10-38H52z" class="lt-leather"/>
+        <path d="M48 106q36-7 72 0 36-7 72 0v-3q-36-7-72 0-36-7-72 0z" class="lt-edge"/>
+        <path d="M48 103q36-7 72 0V72q-30-9-63-2z" class="lt-page"/>
+        <path d="M192 103q-36-7-72 0V72q30-9 63-2z" class="lt-page2"/>
+        <path d="M113 101.6q4 .6 7 1.4V72q-3-1.6-7-2z" class="lt-gutter"/>
+        <path d="M66 75h30" class="lt-red"/>
+        <path d="M63 80h46M62 85h47M60 90h28M59 95h48M58 100h38" class="lt-ink"/>
+        <rect x="128" y="77" width="46" height="9" class="lt-box"/>
+        <path d="M128 91h48M128 95.5h44M128 100h26" class="lt-ink"/>
+        <path d="M150 74q4-3 8 0t8 0 8 0" class="lt-blue"/>
+      </g>
+      <path d="M30 106h180l2 8H28z" class="wh"/><path d="M24 114h192v7H24z" class="wd"/>
+      <path d="M124 105h6l1 37-4-6-4 7z" class="lt-ribbon"/>
+      <g class="motes"><circle cx="96" cy="60" r="1.6"/><circle cx="132" cy="54" r="1.2"/><circle cx="114" cy="46" r="1.8"/>
+        <circle cx="150" cy="62" r="1"/><circle cx="82" cy="52" r="1.1"/></g>
+    </svg>
+    <span class="plate">${esc(b.title)}</span></a>`;
+}
+
 function renderFront() {
   const open = books.filter(b => !b.sealed);
-  const subjects = new Set(open.map(b => (parentOf(shelfOf(b)) || shelfOf(b)).id)).size;
+  const subjects = new Set(open.filter(b => !b.lectern).map(b => (parentOf(shelfOf(b)) || shelfOf(b)).id)).size;
   return banners() + `<div class="front${state.rising ? " rising" : ""}">
     <div class="results" id="results">${results()}</div>
     <div class="intro">
@@ -299,6 +337,7 @@ function renderFront() {
         <p class="tier">${plural(open.length, "volume")} · ${plural(subjects, "shelf", "shelves")} · Access: ${unsealed ? `<span class="redact">████████</span>` : "public"}</p>
       </div>
       ${resumeCard()}
+      ${lectern()}
     </div>
     <div class="controls">
       <div class="legend" role="group" aria-label="Highlight a subject">${legend()}</div>
@@ -323,7 +362,7 @@ function whereOf(b) {
   return parent ? `${s.name} · ${parent.name}` : s.name;
 }
 
-const titlePage = b => `<section class="titlepage">
+const titlePage = b => b.lectern ? grimoireTitle(b) : `<section class="titlepage">
     <div class="lib">Threadmint Library · ${esc(b.serial)}</div>
     <div class="orn"></div>
     <div class="bt">${esc(b.title)}</div>
@@ -331,10 +370,110 @@ const titlePage = b => `<section class="titlepage">
     <div class="sub">${esc(whereOf(b))}</div>
   </section>`;
 
+// The lectern's book is a second-hand copy of an Aether Hall issue: its
+// earlier owners have signed the title page and crossed themselves out.
+const grimoireTitle = b => `<section class="titlepage grim">
+    ${sigil("Aether Hall", 7, "seal")}
+    <div class="lib">Aether Hall · Primer of Issue · ${esc(b.serial)}</div>
+    <div class="bt">${esc(b.title)}</div>
+    <div class="sub">${esc(shelfOf(b).subtitle || whereOf(b))}</div>
+    <div class="orn"></div>
+    <div class="owners"><small>This copy belongs to</small>
+      <s>Maren Hollis, Groundring</s><s>Osk</s><s>P. Vell (lent it, never got it back)</s><span>the Threadmint Library</span></div>
+    <span class="stamp">Issued</span>
+  </section>`;
+
 const EXPLATE = `<div class="explate"><small>Ex Libris</small><b>Threadmint Library</b>Crownweave</div>`;
+const explate = b => (b && b.lectern
+  ? `<div class="explate"><small>Reference copy</small><b>Threadmint Library</b>Not to be cast from. Ask at the desk.</div>`
+  : EXPLATE);
+// The grimoire's binding: brass corners, a clasp strap, and the edges of the
+// page block either side, which grow and shrink as the reader gets through it.
+const FITTINGS = `<i class="stack l"></i><i class="stack r"></i>
+  <i class="brass tl"></i><i class="brass tr"></i><i class="brass bl"></i><i class="brass br"></i><i class="clasp"></i>`;
+
+/* Every working in the grimoire is drawn with its circle, made from its name:
+   a ring of runes spelling it, a star with more points the higher its level,
+   and the mark of its school in the middle. The same name always draws the
+   same circle. */
+const RUNES = [
+  "M0-3V3M0-1L2-3", "M-1.5-3V3M-1.5-1.5L1.5 0L-1.5 1.5", "M-2 3L0-3L2 3", "M-2-3V3M-2-3L2-1M-2 0L2 2",
+  "M0-3V3M-2-1L0 1L2-1", "M-2-3L2 3M2-3L-2 3", "M-2-3V3M2-3V3M-2-1L2 1", "M0-3V3M-2-3L0-1L2-3",
+  "M-2 0L0-3L2 0L0 3Z", "M-1.5-3V3M-1.5-3L1.5-1.5L-1.5 0L1.5 3", "M-2-3V3L2-3V3", "M1.5-3L-1.5 0L1.5 3",
+  "M-1.5-3L1.5 0L-1.5 3", "M0-3V3M-2-1L0-3L2-1", "M-1.6 0a1.6 1.6 0 1 0 3.2 0a1.6 1.6 0 1 0-3.2 0", "M-2 3V-3L0-1L2-3V3",
+];
+const SCHOOLS = {
+  transmutation: "M0-8L7 5H-7ZM-4.6 1H4.6",
+  illusion: "M3-7A7 7 0 1 0 3 7A5.4 5.4 0 1 1 3-7Z",
+  conjuration: "M-5 8V-2A5 5 0 0 1 5-2V8ZM-8 8H8M2 3h.1",
+  abjuration: "M0-8L7-5V1C7 5 3 7 0 8C-3 7-7 5-7 1V-5Z",
+  divination: "M-8 0Q0-7 8 0Q0 7-8 0ZM-2.4 0a2.4 2.4 0 1 0 4.8 0a2.4 2.4 0 1 0-4.8 0",
+  enchantment: "M0 7C-9 1-6-7 0-3C6-7 9 1 0 7Z",
+  evocation: "M2-8L-4 1H1L-2 8L5-2H0Z",
+  necromancy: "M0-8V8M-5-3H5",
+};
+function roman(n) {
+  let out = "";
+  for (const [v, s] of [[10, "X"], [9, "IX"], [5, "V"], [4, "IV"], [1, "I"]]) for (; n >= v; n -= v) out += s;
+  return out;
+}
+function hashOf(s) {
+  let h = 2166136261;
+  for (const ch of s) h = Math.imul(h ^ ch.codePointAt(0), 16777619);
+  return h >>> 0;
+}
+// points: the star's points (3 for a cantrip up to 7); kind: "seal" for the
+// title page, "struck" for a withdrawn working, else the school's name.
+function sigil(name, points, kind) {
+  const h = hashOf(name), letters = name.toUpperCase().replace(/[^A-Z]/g, "");
+  const n = Math.max(10, Math.min(18, letters.length + 4)), rot = (h % 360) * Math.PI / 180;
+  const runes = [];
+  for (let i = 0; i < n; i++) {
+    const a = rot + i * 2 * Math.PI / n, ch = letters.charCodeAt(i % letters.length) || 65;
+    const x = 50 + 41.5 * Math.sin(a), y = 50 - 41.5 * Math.cos(a);
+    runes.push(`<path d="${RUNES[(ch + i * 7) % RUNES.length]}" transform="translate(${x.toFixed(1)} ${y.toFixed(1)}) rotate(${(a * 180 / Math.PI).toFixed(0)}) scale(1.35)"/>`);
+  }
+  // A star polygon {points/step}: a triangle for a cantrip, a pentagram, a
+  // hexagram (two triangles), a heptagram.
+  const step = points < 5 ? 1 : Math.floor((points - 1) / 2), vs = [], dots = [];
+  for (let i = 0; i < points; i++) {
+    const a = rot + i * 2 * Math.PI / points;
+    vs.push([50 + 34 * Math.sin(a), 50 - 34 * Math.cos(a)]);
+    dots.push(`<circle cx="${vs[i][0].toFixed(1)}" cy="${vs[i][1].toFixed(1)}" r="1.9"/>`);
+  }
+  let star = "";
+  if (points === 6) {
+    star = [0, 1].map(k => "M" + [0, 2, 4].map(i => vs[(i + k) % 6].map(v => v.toFixed(1)).join(" ")).join("L") + "Z").join("");
+  } else {
+    star = "M" + Array.from({ length: points }, (_, i) => vs[(i * step) % points].map(v => v.toFixed(1)).join(" ")).join("L") + "Z";
+  }
+  const glyph = kind === "seal"
+    ? `<path class="sg-glyph" d="${SCHOOLS.divination}" transform="translate(50 50) scale(1.15)"/>`
+    : `<path class="sg-glyph" d="${SCHOOLS[kind] || SCHOOLS.transmutation}" transform="translate(50 50) scale(1.05)"/>`;
+  const ticks = Array.from({ length: 24 }, (_, i) => {
+    const a = i * Math.PI / 12, r1 = i % 2 ? 34.6 : 33.4;
+    return `M${(50 + r1 * Math.sin(a)).toFixed(1)} ${(50 - r1 * Math.cos(a)).toFixed(1)}L${(50 + 36 * Math.sin(a)).toFixed(1)} ${(50 - 36 * Math.cos(a)).toFixed(1)}`;
+  }).join("");
+  const struck = kind === "struck"
+    ? `<path class="sg-struck" d="M8 30Q30 22 52 34T94 30M6 52Q28 40 50 54T96 48M8 72Q32 60 52 74T92 68M18 16L84 86M86 14L16 88"/>` : "";
+  return `<svg class="sigil ${kind}" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+    <circle class="sg-ring" cx="50" cy="50" r="47.5"/><circle class="sg-ring" cx="50" cy="50" r="36"/>
+    <g class="sg-runes">${runes.join("")}</g>
+    <path class="sg-ticks" d="${ticks}"/>
+    <path class="sg-star" d="${star}"/><g class="sg-dots">${dots.join("")}</g>
+    <circle class="sg-ring" cx="50" cy="50" r="14.5"/>${glyph}${struck}</svg>`;
+}
+
+// The little pictures beside each line of a working's particulars.
+const STAT_ICONS = {
+  "casting time": "M4 2h8M4 14h8M5 2q0 4 3 6q3 2 3 6M11 2q0 4-3 6q-3 2-3 6",
+  range: "M2 8h11M9 4.5L13 8L9 11.5M2 5v6",
+  components: "M4.5 6h7l1.8 7.5H2.7ZM6 6q2-3.5 4 0M6.5 9.5h3",
+  duration: "M6 7h4v7H6ZM8 7V5M8 1.5q1.6 1.6 0 3q-1.6-1.4 0-3",
+};
 
 function readerHTML(b) {
-  const next = books.slice(books.indexOf(b) + 1).find(x => !x.sealed === !b.sealed);
+  const next = b.lectern ? null : books.slice(books.indexOf(b) + 1).find(x => !x.sealed === !b.sealed && !x.lectern);
   const where = whereOf(b);
   const body = b.words ? b.html : `<p class="unwritten">The pages of this volume are still blank. Its account has yet to be set down.</p>`;
   return `<div class="rbar">
@@ -358,7 +497,7 @@ function readerHTML(b) {
     <div class="stage">
       <button type="button" class="turn" data-go="-1" aria-label="Previous page">‹</button>
       <div class="book">
-        <div class="sheet l"><span class="rh"></span><span class="folio"></span>${EXPLATE}</div>
+        <div class="sheet l"><span class="rh"></span><span class="folio"></span>${explate(b)}</div>
         <div class="sheet r"><span class="rh"></span><span class="folio"></span></div>
         <div class="viewport"><div class="flow">
           <div class="endspacer"></div>
@@ -368,6 +507,7 @@ function readerHTML(b) {
             ${next ? `<a href="#${esc(next.slug)}">Next: ${esc(next.serial)}, ${esc(next.title)} →</a>` : `<a href="#">Return to the library</a>`}</div>
           <div class="end-mark"></div>
         </div></div>
+        ${b.lectern ? FITTINGS : ""}
       </div>
       <button type="button" class="turn" data-go="1" aria-label="Next page">›</button>
     </div>
@@ -422,6 +562,8 @@ function prepare(flow) {
     }
   });
 
+  if (R.b.lectern) dressGrimoire(flow);
+
   // Drop cap on the first real paragraph.
   const first = [...flow.children].find(el => el.tagName === "P" && el.textContent.trim().length > 140 && /^[A-Za-z]/.test(el.textContent.trim()));
   if (first) first.classList.add("opening");
@@ -431,6 +573,80 @@ function prepare(flow) {
     else ensureKatex().then(() => { if (R && R.flow === flow) { typeset(flow); relayoutSoon(); } }, () => {});
   }
   R.marks = highlight(flow);
+}
+
+/* The grimoire's conventions, from the markdown of its chapter:
+     *School line*                 under a spell's heading -> .school
+     **Casting Time:** ...\        the stat lines           -> .stats box
+     **At Higher Levels.** / **Cantrip Upgrade.**           -> .upcast
+     ***Margin.*** *"note"*        an earlier owner's note  -> .scrawl, in handwriting
+     **[WITHDRAWN ...]**           alone in a paragraph     -> a rubber stamp
+   Then each working's heading and school line go into one header with its
+   circle (sigil), the stat lines become a grid with a picture for each, and
+   the first paragraph of its text gets an illuminated initial, red and blue
+   by turns. */
+function dressGrimoire(flow) {
+  flow.querySelectorAll(":scope > p").forEach(p => {
+    const first = p.firstElementChild;
+    if (!first || p.firstChild !== first) return;
+    const lead = first.textContent.trim();
+    if (first.tagName === "STRONG" && /^Casting Time:/.test(lead)) p.classList.add("stats");
+    else if (first.tagName === "STRONG" && /^(Cantrip Upgrade|At Higher Levels)\./.test(lead)) p.classList.add("upcast");
+    else if (lead === "Margin." && first.querySelector("em, strong")) {
+      first.remove();
+      p.classList.add("scrawl");
+      const note = p.querySelector("em");
+      if (note) note.textContent = note.textContent.trim().replace(/^["“]|["”]$/g, "");
+    } else if (first.tagName === "STRONG" && p.childNodes.length === 1 && /^\[.+\]$/.test(lead)) {
+      p.className = "stamp-line";
+      p.innerHTML = `<span class="stamp">${esc(lead.slice(1, -1))}</span>`;
+    } else if (first.tagName === "EM" && p.children.length === 1 && p.textContent.trim() === lead && p.previousElementSibling?.tagName === "H3") {
+      p.classList.add("school");
+    }
+  });
+
+  // Set here, not by CSS counters or :nth-of-type, which a turning page would
+  // get wrong: its text is a copy of just that page (pageText), and they would
+  // count from there, so a note's tilt or a chapter's number would snap when
+  // the page lands.
+  flow.querySelectorAll(":scope > p.scrawl").forEach((p, i) => p.classList.toggle("alt", i % 2 === 1));
+  flow.querySelectorAll(":scope > h2").forEach((h, i) => { h.dataset.liber = roman(i + 1); });
+
+  let k = 0;
+  flow.querySelectorAll(":scope > h3").forEach(h => {
+    const school = h.nextElementSibling?.classList.contains("school") ? h.nextElementSibling : null;
+    const line = (school?.textContent || "").toLowerCase();
+    const level = /cantrip/.test(line) ? 0 : +(line.match(/(\d)(st|nd|rd|th)-level/)?.[1] || 1);
+    const kind = /█/.test(line) ? "struck" : Object.keys(SCHOOLS).find(s => line.includes(s)) || "transmutation";
+    const head = document.createElement("div");
+    head.className = "spellhead";
+    head.innerHTML = sigil(h.textContent.trim(), [3, 5, 6, 7][level] || 7, kind);
+    h.before(head);
+    const words = document.createElement("div");
+    words.className = "sh-words";
+    words.append(h);
+    if (school) words.append(school);
+    head.append(words);
+
+    let el = head.nextElementSibling;
+    if (el?.classList.contains("stats")) {
+      const box = document.createElement("div");
+      box.className = "stats";
+      box.innerHTML = el.innerHTML.split(/<br\s*\/?>/i).map(part => {
+        const m = part.trim().match(/^<strong>([^<]+?):?<\/strong>:?\s*([\s\S]*)$/);
+        if (!m) return "";
+        const key = m[1].replace(/:$/, "").trim(), icon = STAT_ICONS[key.toLowerCase()] || STAT_ICONS.range;
+        const plain = m[2].replace(/<[^>]+>/g, "");
+        return `<div class="st${plain.length > 30 ? " wide" : ""}"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="${icon}"/></svg>
+          <span class="k">${esc(key)}</span><span class="v">${m[2]}</span></div>`;
+      }).join("");
+      el.replaceWith(box);
+      el = box.nextElementSibling;
+    }
+    if (el?.tagName === "P" && !el.className && /^[A-Za-z]/.test(el.textContent.trim())) {
+      el.classList.add("incipit", k++ % 2 ? "lapis" : "rubric");
+    }
+  });
 }
 
 let katexLoading = null;
@@ -511,7 +727,10 @@ function currentAnchor() {
 
 function layout(target) {
   if (!R) return;
-  if (target === undefined) target = currentAnchor();
+  // A relayout keeps the page being read, or until the reader turns a page,
+  // the place the book was opened at (R.pin): fonts that arrive late reflow
+  // the text, and the page showing may then begin somewhere else.
+  if (target === undefined) target = R.pin || currentAnchor();
   const book = $(".book"), flow = R.flow;
   const scroll = state.mode === "scroll";
   document.body.classList.toggle("scrollmode", scroll);
@@ -529,10 +748,12 @@ function layout(target) {
     return;
   }
 
-  const narrow = innerWidth < 700;
-  const B = narrow ? 8 : 14, O = narrow ? 20 : 46, I = 34, HEAD = narrow ? 34 : 46, FOOT = narrow ? 34 : 44;
+  const narrow = innerWidth < 700, g = !!R.b.lectern;  // the grimoire: thicker boards, a framed page
+  const B = g ? (narrow ? 13 : 26) : (narrow ? 8 : 14), O = narrow ? (g ? 24 : 20) : (g ? 52 : 46), I = g ? 38 : 34;
+  const HEAD = g ? (narrow ? 42 : 58) : (narrow ? 34 : 46), FOOT = g ? (narrow ? 40 : 54) : (narrow ? 34 : 44);
   const stage = $(".stage");
-  const availW = stage.clientWidth - (innerWidth <= 900 ? 12 : 2 * 58 + 12);
+  // (beside the grimoire the turn buttons stand further off, clear of its clasp: .stage gap)
+  const availW = stage.clientWidth - (innerWidth <= 900 ? 12 : 2 * (g ? 86 : 58) + 12);
   const availH = innerHeight - $(".rbar").offsetHeight - $(".scrub").offsetHeight - (narrow ? 16 : 40);
   const n = availW >= 880 ? 2 : 1;
   const ph = Math.round(clamp(availH - 2 * B - HEAD - FOOT, 300, 920));
@@ -540,7 +761,7 @@ function layout(target) {
   const pw = Math.floor(Math.max(200, Math.min(fit, ph * .74, state.fs * 34)));
   const gap = n === 2 ? 2 * I : 2 * O;
   const sw = n === 2 ? O + pw + I : O + pw + O;
-  const vars = { "--b": B, "--o": O, "--head": HEAD, "--foot": FOOT, "--pw": pw, "--ph": ph, "--gap": gap, "--vw": n * pw + (n - 1) * gap, "--sw": sw };
+  const vars = { "--b": B, "--o": O, "--i": I, "--head": HEAD, "--foot": FOOT, "--pw": pw, "--ph": ph, "--gap": gap, "--vw": n * pw + (n - 1) * gap, "--sw": sw };
   book.removeAttribute("style");
   for (const [k, v] of Object.entries(vars)) book.style.setProperty(k, v + "px");
   book.style.setProperty("--n", n);
@@ -564,6 +785,7 @@ function go(s, instant) {
   if (!R) return;
   if (state.mode === "scroll") return;
   endFlip();  // a page still turning lands at once
+  if (!instant) R.pin = null;
   const from = R.spread;
   R.spread = clamp(s, 0, R.spreads - 1);
   R.flow.style.transform = `translateX(${-R.spread * R.n * R.stride}px)`;
@@ -621,7 +843,7 @@ function face(col, side) {
     // the back of the only page in one-page mode
   } else if (R.n === 2 && side === "l" && col === 0) {
     el.classList.add("endpaper");
-    el.innerHTML = EXPLATE;
+    el.innerHTML = explate(R.b);
   } else {
     const front = col <= R.titleCol, blank = col >= R.cols;
     const rh = front || blank ? "" : (R.n === 2 && side === "l" ? R.b.title : sectionAt(col));
@@ -771,6 +993,7 @@ function updateChrome() {
   document.querySelectorAll(".turn[data-go='1']").forEach(b => { b.disabled = scroll || R.spread >= R.spreads - 1; });
   showProgress();
   if (scroll) return;
+  if (R.b.lectern) $(".book").style.setProperty("--done", progress().toFixed(3));
   const cols = R.n === 2 ? [R.spread * 2, R.spread * 2 + 1] : [R.spread];
   const sheets = R.n === 2 ? [$(".sheet.l"), $(".sheet.r")] : [$(".sheet.r")];
   $(".sheet.l").classList.toggle("endpaper", R.n === 2 && R.spread === 0);
@@ -825,13 +1048,14 @@ function nextHit() {
 
 // hidden: lay the reader out invisibly under the library (see pullOut).
 function openBook(b, section, hidden) {
-  const s = shelfOf(b);
+  const s = shelfOf(b), fresh = !R || R.b !== b;
   if (!hidden) {
     document.body.classList.remove("home", "opening");
     document.body.classList.add("reading");
   }
   const reader = $("#reader");
   reader.style.setProperty("--cloth", s.colour);
+  reader.classList.toggle("grimoire", !!b.lectern);
   reader.innerHTML = readerHTML(b);
   R = { b, flow: $(".flow", reader), n: 1, stride: 1, cols: 1, spreads: 1, spread: 0, titleCol: 0, heads: [], marks: [], laidOut: false };
   prepare(R.flow);
@@ -850,7 +1074,15 @@ function openBook(b, section, hidden) {
     if (at !== null) target = R.flow.children[+at] || null;
   }
   if (!hidden) window.scrollTo(0, 0);
+  R.pin = target;
   layout(target);
+  // The grimoire has no spine to pull off a shelf: it is lifted off the lectern.
+  // Translate only: pagination measures the page on screen (colOf), and a
+  // scale would skew any relayout that lands mid-animation (a font arriving).
+  if (b.lectern && fresh && !hidden && motionOK()) {
+    $(".book").animate([{ opacity: 0, transform: "translateY(40px)" }, { opacity: 1, transform: "none" }],
+      { duration: 560, easing: "cubic-bezier(.2, .7, .3, 1)" });
+  }
 }
 
 /* ---------- taking a book off the shelf ----------
@@ -1031,14 +1263,14 @@ function refreshFront() {
 
 window.addEventListener("hashchange", () => {
   abortPull();
-  if (R && R.laidOut && !hashBook() && motionOK() && document.body.classList.contains("reading")) {
+  if (R && R.laidOut && !R.b.lectern && !hashBook() && motionOK() && document.body.classList.contains("reading")) {
     putBack(R.b);
     return;
   }
   const wasReading = !!R;
   render();
   if (!R && wasReading && lastBook) {
-    const sp = document.querySelector(`.spine[data-slug="${CSS.escape(lastBook)}"]`);
+    const sp = document.querySelector(`#main [data-slug="${CSS.escape(lastBook)}"]`);  // a spine, or the lectern
     if (sp) { sp.scrollIntoView({ block: "center" }); sp.focus({ preventScroll: true }); }
   }
 });
@@ -1160,6 +1392,7 @@ window.addEventListener("resize", () => {
 let progressFrame = 0;
 window.addEventListener("scroll", () => {
   if (!R || state.mode !== "scroll") return;
+  R.pin = null;  // from here the page being read is wherever the reader has scrolled to
   if (!progressFrame) progressFrame = requestAnimationFrame(() => { progressFrame = 0; showProgress(); });
   clearTimeout(scrollTimer);
   scrollTimer = setTimeout(save, 250);
@@ -1172,7 +1405,12 @@ document.addEventListener("keydown", ev => {
   qBox.focus();
   qBox.select();
 });
-if (document.fonts) document.fonts.ready.then(() => { if (R) layout(); });
+if (document.fonts) {
+  document.fonts.ready.then(() => { if (R) layout(); });
+  // Some faces (the grimoire's) are only fetched when a book first uses them,
+  // after the page's fonts were ready, and they change where the pages break.
+  document.fonts.addEventListener("loadingdone", () => { if (R) relayoutSoon(); });
+}
 
 // Live mode: reload when a chapter / catalogue / template changes, keeping
 // the search, highlighted subject and scroll position across the reload.

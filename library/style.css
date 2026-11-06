@@ -108,8 +108,9 @@ body.home {
 body.home .top { background: color-mix(in srgb, var(--panel) 88%, transparent); backdrop-filter: blur(6px); }
 main { padding: 28px 40px 80px; }
 .front { max-width: 1240px; margin: 0 auto; }
-/* The title on the left, and on the right the book last read, to go back to. */
-.intro { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 20px 48px; }
+/* The title on the left; on the right the book last read, to go back to, and
+   the lectern standing in front of the bookcase. */
+.intro { display: grid; grid-template-columns: minmax(0, 1fr); grid-auto-flow: column; grid-auto-columns: auto; align-items: end; gap: 20px 40px; }
 .intro-text { max-width: 680px; }
 .tier { margin: 0; font: 12.5px var(--sans); color: var(--muted); letter-spacing: .06em; }
 h1 { font: 700 44px/1.1 var(--display); margin: 6px 0 8px; }
@@ -564,8 +565,10 @@ body.opening #reader { display: block; position: fixed; inset: 0; z-index: 40; o
   .search-box { width: 100%; }
   h1 { font-size: 34px; margin-bottom: 6px; }
   .lede { font-size: 17px; }
-  .intro { grid-template-columns: 1fr; gap: 14px; }
+  .intro { grid-template-columns: 1fr; grid-auto-flow: row; gap: 14px; }
   .resume { width: auto; }
+  .lectern { justify-self: center; width: 170px; margin: 4px 0 -4px; }
+  #reader.grimoire .clasp { display: none; }
   /* The subjects in one row that swipes sideways, rather than five rows of them. */
   .controls { margin-top: 16px; }
   .legend {
@@ -625,3 +628,349 @@ body.opening #reader { display: block; position: fixed; inset: 0; z-index: 40; o
 .notice .tier { font: 12px var(--sans); font-style: normal; letter-spacing: .2em; color: #8f86a0; }
 .notice.gone { opacity: 0; pointer-events: none; }
 @keyframes notice-in { from { opacity: 0; } }
+
+/* ---------- the lectern (catalogue.yaml: lectern) ----------
+   One book is not shelved: it lies open on a lectern in front of the
+   bookcase, faintly lit by its own workings. */
+.lectern {
+  position: relative; display: block; justify-self: end; width: 200px; line-height: 0;
+  margin-bottom: -10px; text-decoration: none; transition: opacity .25s, filter .25s;
+}
+.lectern svg { display: block; width: 100%; height: auto; overflow: visible; }
+.lectern .w { fill: var(--wood); }
+.lectern .wh { fill: var(--wood-hi); }
+.lectern .wd { fill: color-mix(in srgb, var(--wood) 58%, black); }
+.lectern .lt-shadow { fill: rgb(0 0 0 / .3); }
+.lectern .lt-leather { fill: #3b2216; }
+.lectern .lt-page { fill: #efe3c3; }
+.lectern .lt-page2 { fill: #f6ecd2; }
+.lectern .lt-edge { fill: #d4c296; }
+.lectern .lt-gutter { fill: rgb(60 40 10 / .16); }
+.lectern .lt-ink { fill: none; stroke: #6b5c46; stroke-width: 1.1; opacity: .65; }
+.lectern .lt-red { fill: none; stroke: #8c2f23; stroke-width: 1.8; }
+.lectern .lt-blue { fill: none; stroke: #2f4f8f; stroke-width: 1.1; }
+.lectern .lt-box { fill: rgb(140 47 35 / .06); stroke: #8c2f23; stroke-width: .9; }
+.lectern .lt-ribbon { fill: #8c2f23; }
+.lectern .g0 { stop-color: rgb(255 240 200 / .5); }
+.lectern .g1 { stop-color: rgb(255 240 200 / 0); }
+.lectern .lt-glow { opacity: .55; transition: opacity 300ms ease; }
+.lectern .motes { fill: #fff3c8; }
+.lectern .lt-book { transition: transform 260ms cubic-bezier(.2, .7, .3, 1); }
+.lectern .plate { position: absolute; left: 50%; top: 66%; transform: translate(-50%, -50%); padding: 5px 10px; font-size: 9.5px; }
+@media (hover: hover) and (pointer: fine) {
+  .lectern:hover .lt-book { transform: translateY(-4px); }
+  .lectern:hover .lt-glow { opacity: 1; }
+}
+.lectern:active .lt-book { transform: translateY(-2px); }
+.lectern:focus-visible { outline: 2px solid var(--ink); outline-offset: 6px; border-radius: 6px; }
+.lectern.dim { opacity: .25; filter: saturate(.25); }
+.lectern .motes circle { opacity: 0; }
+@media (prefers-reduced-motion: no-preference) {
+  .lectern .motes circle { animation: mote 4.6s ease-in-out infinite; }
+  .lectern .motes circle:nth-child(2) { animation-delay: -1s; }
+  .lectern .motes circle:nth-child(3) { animation-delay: -2.1s; }
+  .lectern .motes circle:nth-child(4) { animation-delay: -3s; }
+  .lectern .motes circle:nth-child(5) { animation-delay: -3.8s; }
+}
+@media (prefers-reduced-motion: reduce) { .lectern .motes circle { opacity: .6; } }
+@keyframes mote { 0% { transform: translateY(10px); opacity: 0; } 35% { opacity: .9; } 100% { transform: translateY(-24px); opacity: 0; } }
+
+/* ---------- the grimoire: the lectern's book, read in its own binding ----------
+   Not a library book: a spellbook lying open on a dark desk by candlelight.
+   A thick tooled-leather tome with brass corners and a clasp, whose page block
+   shows at the edges (thicker on the left the further in you are), and
+   parchment pages, each in an inked frame. Every working has its circle (see
+   sigil() in app.js), a blackletter name, its particulars with a picture for
+   each, and an illuminated initial; the chapters open on a new page. The
+   scene is dark and the pages parchment in either theme. See dressGrimoire()
+   in app.js for how the chapter's markdown maps onto all this. */
+#reader.grimoire {
+  /* the controls (rbar, contents, turns, slider) take these over */
+  --bg: #140d08; --panel: #22170f; --ink: #efe2c6; --muted: #b9a37f; --rule: rgb(212 170 100 / .28);
+  --accent: #e2bb6a; --accent-soft: rgb(226 187 106 / .14); --mark: #d9ad4a;
+  /* the pages */
+  --paper: #ecdcb3; --paper-ink: #2a1a0d; --paper-muted: #7a5f3e; --paper-rule: #cdb487; --redact: #24160c;
+  --rubric: #9a2818; --lapis: #23468c; --gilt: #a9802f; --frame: rgb(92 52 22 / .55); --frame-soft: rgb(92 52 22 / .3);
+  --scrawl: #2f4475; --stamp: #a3271b;
+  --fell: "IM Fell English", var(--display);
+  --goth: "Grenze Gotisch", "IM Fell English", var(--display);
+  --hand: "Caveat", "Segoe Print", cursive;
+  --initial: "Cinzel Decorative", "IM Fell English", serif;
+  --sk: 11px;  /* the most of the page block that shows at one edge */
+  position: relative; min-height: 100vh; color: var(--ink); color-scheme: dark;
+  background:
+    radial-gradient(ellipse 120% 90% at 50% 45%, transparent 40%, rgb(0 0 0 / .62)),
+    repeating-linear-gradient(91deg, rgb(255 230 200 / .022) 0 2px, transparent 2px 11px),
+    repeating-linear-gradient(89.4deg, rgb(0 0 0 / .16) 0 1px, transparent 1px 37px),
+    repeating-linear-gradient(90.6deg, rgb(255 210 160 / .03) 0 1px, transparent 1px 53px),
+    linear-gradient(180deg, #26180e, #150d08);
+  background-attachment: fixed;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) #reader.grimoire { --paper: #d9c69b; --paper-rule: #b9a074; }
+}
+:root[data-theme="dark"] #reader.grimoire { --paper: #d9c69b; --paper-rule: #b9a074; }
+body.reading:has(#reader.grimoire) { background: #140d08; }
+/* Candlelight from the upper left, guttering a little. */
+#reader.grimoire::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none;
+  background: radial-gradient(900px 640px at 14% 4%, rgb(255 172 84 / .2), transparent 68%);
+}
+@media (prefers-reduced-motion: no-preference) {
+  #reader.grimoire::before { animation: candle 7s ease-in-out infinite; }
+}
+@keyframes candle { 0%, 100% { opacity: 1; } 18% { opacity: .82; } 22% { opacity: .95; } 47% { opacity: .78; } 70% { opacity: .92; } }
+#reader.grimoire > .stage, #reader.grimoire > .scrub { position: relative; }
+#reader.grimoire .rbar { background: rgb(20 13 8 / .88); border-bottom-color: rgb(212 170 100 / .2); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+#reader.grimoire .rtitle b { font: 700 23px/1.05 var(--goth); letter-spacing: .01em; }
+#reader.grimoire .rtitle .sw { width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fff6dc 0 12%, #e7c36d 30%, #7c5418 100%); box-shadow: 0 0 10px rgb(255 190 90 / .55); }
+#reader.grimoire .rprogress i { background: var(--accent); }
+#reader.grimoire .toc a { font-family: var(--fell); }
+#reader.grimoire .toc a[aria-current] { box-shadow: inset 3px 0 0 var(--accent); background: var(--accent-soft); }
+#reader.grimoire .turn { font-family: var(--fell); color: var(--accent); }
+#reader.grimoire .scrub { color: var(--muted); font-family: var(--fell); font-size: 15px; }
+#reader.grimoire .scrub input::-webkit-slider-runnable-track { background: linear-gradient(90deg, var(--accent) var(--p), var(--rule) var(--p)); }
+#reader.grimoire .scrub input::-moz-range-progress { background: var(--accent); }
+#reader.grimoire .scrub input::-webkit-slider-thumb { border-color: var(--accent); }
+#reader.grimoire .scrub input::-moz-range-thumb { border-color: var(--accent); }
+
+/* The boards: tooled leather, two gilt lines round the edge, the fold of the spine. */
+#reader.grimoire .book {
+  --tint: var(--rubric);
+  --sl: calc(2px + (var(--sk) - 2px) * var(--done, 0));
+  --sr: calc(2px + (var(--sk) - 2px) * (1 - var(--done, 0)));
+  border-radius: 8px 12px 12px 8px;
+  background:
+    radial-gradient(130% 100% at 28% 8%, rgb(255 215 160 / .13), transparent 55%),
+    linear-gradient(90deg, transparent calc(50% - 14px), rgb(0 0 0 / .5) 50%, transparent calc(50% + 14px)),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.55' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 .9 -.32'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    var(--cloth);
+  box-shadow:
+    inset 0 0 0 1px rgb(0 0 0 / .65), inset 0 0 0 6px rgb(0 0 0 / .2), inset 0 0 0 7px rgb(214 176 98 / .5),
+    inset 0 0 0 9px rgb(0 0 0 / .1), inset 0 0 0 10px rgb(214 176 98 / .28),
+    0 44px 70px -24px rgb(0 0 0 / .85), 0 10px 22px rgb(0 0 0 / .5);
+}
+#reader.grimoire .book.single {
+  background:
+    radial-gradient(130% 100% at 28% 8%, rgb(255 215 160 / .13), transparent 55%),
+    linear-gradient(90deg, rgb(0 0 0 / .45), transparent 10px),
+    var(--cloth);
+}
+/* The page block's edges: the sides from the stacks, the foot from the sheets' shadows. */
+#reader .stack { display: none; }
+#reader.grimoire .stack {
+  display: block; position: absolute; top: calc(var(--b) + 2px); bottom: calc(var(--b) - 5px); pointer-events: none;
+  background: repeating-linear-gradient(90deg, #efe1bb 0 1px, #c9b182 1px 1.7px);
+  box-shadow: 0 1px 3px rgb(0 0 0 / .4); transition: width 300ms ease-out, left 300ms ease-out, right 300ms ease-out;
+}
+#reader.grimoire .stack.l { left: calc(var(--b) - var(--sl)); width: var(--sl); border-radius: 4px 0 0 4px; }
+#reader.grimoire .stack.r { right: calc(var(--b) - var(--sr)); width: var(--sr); border-radius: 0 4px 4px 0; }
+#reader.grimoire .book.single .stack.l, #reader.grimoire .book.scroll .stack { display: none; }
+
+/* Parchment: grain, mottling, edges darkened by hands and years, and an inked frame. */
+#reader.grimoire .sheet {
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .36  0 0 0 0 .22  0 0 0 0 .08  0 0 0 .5 -.16'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --mottle: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='520' height='520'%3E%3Cfilter id='m' x='0' y='0' width='100%25' height='100%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.011' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5  0 0 0 0 .3  0 0 0 0 .1  .95 0 0 0 -.42'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+  --burn: radial-gradient(ellipse 85% 78% at 50% 50%, transparent 58%, rgb(120 66 18 / .26));
+  box-shadow: 0 2px 0 -.5px #dccb9f, 0 4px 0 -1px #b9a172, 0 5px 3px -1px rgb(0 0 0 / .35);
+}
+#reader.grimoire .sheet.l {
+  background: linear-gradient(270deg, rgb(70 36 6 / .3), rgb(70 36 6 / .08) 18px, transparent 44px),
+    var(--burn), var(--mottle), var(--grain), var(--paper);
+}
+#reader.grimoire .sheet.r, #reader.grimoire .book.single .strip .sheet.l {
+  background: linear-gradient(90deg, rgb(70 36 6 / .3), rgb(70 36 6 / .08) 18px, transparent 44px),
+    var(--burn), var(--mottle), var(--grain), var(--paper);
+}
+#reader.grimoire .book.single .sheet.r { background: var(--burn), var(--mottle), var(--grain), var(--paper); }
+#reader.grimoire .sheet:not(.endpaper)::before, #reader.grimoire .sheet:not(.endpaper)::after {
+  content: ""; position: absolute; pointer-events: none;
+  --ft: calc(var(--head) * .24); --fb: calc(var(--foot) * .26);
+  --fo: calc(var(--o) * .4); --fi: calc(var(--i) * .45);
+  top: var(--ft); bottom: var(--fb); left: var(--fo); right: var(--fi);
+}
+#reader.grimoire .sheet.r:not(.endpaper)::before, #reader.grimoire .sheet.r:not(.endpaper)::after { left: var(--fi); right: var(--fo); }
+#reader.grimoire .book.single .sheet:not(.endpaper)::before, #reader.grimoire .book.single .sheet:not(.endpaper)::after { left: var(--fo); right: var(--fo); }
+#reader.grimoire .sheet:not(.endpaper)::before {
+  border: 1.5px solid var(--frame); outline: 1px solid var(--frame-soft); outline-offset: -6px; border-radius: 2px;
+}
+/* a four-pointed rosette at each corner of the frame */
+#reader.grimoire .sheet:not(.endpaper)::after {
+  --r: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-8 -8 16 16'%3E%3Cpath d='M0-7.5L1.8-1.8L7.5 0L1.8 1.8L0 7.5L-1.8 1.8L-7.5 0L-1.8-1.8Z' fill='%23862a17'/%3E%3Ccircle r='1.6' fill='%23ecdcb3'/%3E%3C/svg%3E");
+  margin: -7px; background: var(--r) left top / 14px no-repeat, var(--r) right top / 14px no-repeat, var(--r) left bottom / 14px no-repeat, var(--r) right bottom / 14px no-repeat;
+}
+#reader.grimoire .sheet .rh {
+  top: calc(var(--head) * .44); font: 400 11.5px/1.2 var(--fell); letter-spacing: .26em; text-transform: uppercase; color: var(--rubric);
+}
+#reader.grimoire .sheet .folio { bottom: calc(var(--foot) * .48); font: 15px/1 var(--fell); color: var(--paper-muted); }
+#reader.grimoire .sheet .folio:not(:empty)::before { content: "~ "; color: var(--rubric); }
+#reader.grimoire .sheet .folio:not(:empty)::after { content: " ~"; color: var(--rubric); }
+
+/* The endpaper: marbled, with the library's plate stuck on. */
+#reader.grimoire .sheet.l.endpaper {
+  background:
+    linear-gradient(270deg, rgb(0 0 0 / .4), transparent 36px),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='560' height='820' preserveAspectRatio='none'%3E%3Cfilter id='w' color-interpolation-filters='sRGB' x='-30%25' y='-30%25' width='160%25' height='160%25'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.004 .008' numOctaves='2' seed='9' result='t'/%3E%3CfeTurbulence type='turbulence' baseFrequency='.009 .028' numOctaves='3' seed='3' result='v'/%3E%3CfeDisplacementMap in='v' in2='t' scale='120' xChannelSelector='R' yChannelSelector='G'/%3E%3CfeColorMatrix values='1.8 0 0 0 0  1.8 0 0 0 0  1.8 0 0 0 0  0 0 0 0 1'/%3E%3CfeComponentTransfer%3E%3CfeFuncR type='table' tableValues='.07 .08 .1 .13 .55 .16 .11 .78 .12 .09'/%3E%3CfeFuncG type='table' tableValues='.1 .12 .15 .2 .16 .24 .16 .6 .17 .12'/%3E%3CfeFuncB type='table' tableValues='.18 .21 .27 .36 .12 .38 .27 .3 .3 .2'/%3E%3C/feComponentTransfer%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23w)'/%3E%3C/svg%3E") center / cover no-repeat,
+    #1c2440;
+  box-shadow: none;
+}
+#reader.grimoire .sheet.endpaper .explate {
+  background: var(--grain, none), #f1e4c0; color: #3a2614; border-color: #9c7f4c; outline-color: #9c7f4c;
+  box-shadow: 0 2px 6px rgb(0 0 0 / .4); transform: translate(-50%, -50%) rotate(-1.2deg);
+}
+#reader.grimoire .explate b { font: 700 26px/1.1 var(--goth); }
+
+/* Scroll mode: one long sheet of the same parchment. */
+#reader.grimoire .book.scroll { background: none; box-shadow: none; }
+#reader.grimoire .book.scroll .viewport {
+  background: radial-gradient(ellipse 100% 100% at 50% 50%, transparent 70%, rgb(120 66 18 / .22)), var(--paper);
+  box-shadow: 0 30px 60px -20px rgb(0 0 0 / .8);
+}
+#reader.grimoire .book.scroll::after { display: none; }
+
+/* The ribbon, hanging from the head of the spine past the tail. */
+#reader.grimoire .book:not(.single):not(.scroll)::after {
+  content: ""; position: absolute; z-index: 4; left: calc(50% + 10px); bottom: -22px; width: 12px; height: 52px; pointer-events: none;
+  background: linear-gradient(90deg, #5e150d, #a3271b 50%, #5e150d);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 82%, 0 100%);
+  filter: drop-shadow(0 2px 2px rgb(0 0 0 / .5));
+}
+#reader.grimoire .stage { padding-bottom: 30px; }
+@media (min-width: 901px) { #reader.grimoire .stage { gap: 42px; } }
+/* Brass corner pieces, riveted on, and a clasp strap off the fore-edge. */
+#reader .brass, #reader .clasp { display: none; }
+#reader.grimoire .brass {
+  display: block; position: absolute; z-index: 5; width: 46px; height: 46px; pointer-events: none;
+  background:
+    radial-gradient(circle at 11px 11px, #fff6d6 0 1.3px, #7a5a20 2px 3px, transparent 3.4px),
+    radial-gradient(circle at 30px 7px, #fff6d6 0 .9px, #7a5a20 1.4px 2px, transparent 2.4px),
+    radial-gradient(circle at 7px 30px, #fff6d6 0 .9px, #7a5a20 1.4px 2px, transparent 2.4px),
+    linear-gradient(135deg, #f6e3a8, var(--brass) 34%, var(--brass-lo) 70%, #6e5220);
+  clip-path: path("M0 0H44Q37 4 33 9Q25 12 22 22Q12 25 9 33Q4 37 0 44Z");
+  filter: drop-shadow(0 1px 1px rgb(0 0 0 / .5));
+}
+#reader.grimoire .brass.tl { left: -3px; top: -3px; }
+#reader.grimoire .brass.tr { right: -3px; top: -3px; transform: scaleX(-1); }
+#reader.grimoire .brass.bl { left: -3px; bottom: -3px; transform: scaleY(-1); }
+#reader.grimoire .brass.br { right: -3px; bottom: -3px; transform: scale(-1); }
+#reader.grimoire .book.scroll .brass { display: none; }
+#reader.grimoire .clasp {
+  display: block; position: absolute; z-index: 1; right: -26px; top: calc(50% - 34px); width: 30px; height: 68px; pointer-events: none;
+  border-radius: 0 8px 8px 0;
+  background:
+    radial-gradient(circle at 18px 50%, #fff6d6 0 1.6px, #6e5220 2.2px 3.8px, transparent 4.2px),
+    linear-gradient(90deg, transparent 0 8px, #6e5220 8px 9px, #f2dc9c 9px 25px, #6e5220 25px 26px, transparent 26px) 0 50% / 100% 32px no-repeat,
+    linear-gradient(180deg, color-mix(in srgb, var(--cloth) 75%, white), var(--cloth) 40%, color-mix(in srgb, var(--cloth) 70%, black));
+  box-shadow: 3px 3px 6px rgb(0 0 0 / .45), inset 0 0 0 1px rgb(0 0 0 / .45);
+}
+#reader.grimoire .book.scroll .clasp, #reader.grimoire .book.single .clasp { display: none; }
+
+/* ---- inside the grimoire ---- */
+#reader.grimoire .flow { font-family: var(--fell); line-height: 1.46; }
+#reader.grimoire .flow strong { font-weight: 400; color: var(--rubric); }
+#reader.grimoire .flow ul { list-style: none; padding-left: 1.2em; }
+#reader.grimoire .flow li { position: relative; }
+#reader.grimoire .flow li::before { content: "✦"; position: absolute; left: -1.1em; top: .12em; font-size: .72em; color: var(--rubric); }
+#reader.grimoire .flow hr::after { content: "❦"; color: var(--rubric); font-size: 1.3em; }
+#reader.grimoire .flow:not(.flat) hr:has(+ h2) { display: none; }
+/* Each chapter opens a new page, under its number and a flourish. */
+#reader.grimoire .flow:not(.flat) h2 { break-before: column; }
+/* but not on a turning page: its text is one page already, and the break would push the rest off it */
+#reader.grimoire .fview > .flow:not(.flat) > h2 { break-before: auto; }
+#reader.grimoire .flow h2 {
+  margin: .6em 0 1em; padding: 0; border: 0; text-align: center;
+  font: 700 2.15em/1 var(--goth); color: var(--paper-ink);
+}
+#reader.grimoire .flow h2::before {
+  content: "Liber " attr(data-liber); display: block; margin-bottom: .5em;
+  font: 400 .34em/1.4 var(--fell); letter-spacing: .34em; text-transform: uppercase; color: var(--rubric);
+}
+#reader.grimoire .flow h2::after {
+  content: ""; display: block; width: 7.2em; height: .4em; margin: .4em auto 0; background: var(--rubric);
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 16'%3E%3Cpath d='M6 8H82M118 8H194M82 8q9-8 18 0q9 8 18 0M82 8q9 8 18 0q9-8 18 0' fill='none' stroke='black' stroke-width='1.4'/%3E%3Cpath d='M100 2.5L104.5 8L100 13.5L95.5 8Z'/%3E%3Ccircle cx='5' cy='8' r='2.2'/%3E%3Ccircle cx='195' cy='8' r='2.2'/%3E%3C/svg%3E") center / contain no-repeat;
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 16'%3E%3Cpath d='M6 8H82M118 8H194M82 8q9-8 18 0q9 8 18 0M82 8q9 8 18 0q9-8 18 0' fill='none' stroke='black' stroke-width='1.4'/%3E%3Cpath d='M100 2.5L104.5 8L100 13.5L95.5 8Z'/%3E%3Ccircle cx='5' cy='8' r='2.2'/%3E%3Ccircle cx='195' cy='8' r='2.2'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+#reader.grimoire .flow h2 + p { text-align: center; font-style: italic; color: var(--paper-muted); }
+/* A working's head: its circle, its name in blackletter, its school in red. */
+#reader.grimoire .flow .spellhead {
+  display: grid; grid-template-columns: 3.7em minmax(0, 1fr); align-items: center; column-gap: .75em;
+  margin: 1.3em 0 .55em; break-inside: avoid; break-after: avoid;
+}
+#reader.grimoire .flow h2 + .spellhead { margin-top: .4em; }
+#reader.grimoire .flow .spellhead h3 { margin: 0; font: 700 1.55em/1 var(--goth); color: var(--paper-ink); }
+#reader.grimoire .flow .spellhead .school { margin: .2em 0 0; font: italic .95em/1.2 var(--fell); color: var(--rubric); }
+#reader.grimoire .sigil { display: block; width: 3.7em; height: 3.7em; overflow: visible; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+#reader.grimoire .sg-ring { stroke: var(--paper-ink); stroke-width: 1.1; opacity: .72; }
+#reader.grimoire .sg-runes { stroke: var(--paper-ink); stroke-width: .8; opacity: .8; }
+#reader.grimoire .sg-ticks { stroke: var(--paper-ink); stroke-width: .7; opacity: .45; }
+#reader.grimoire .sg-star { stroke: var(--rubric); stroke-width: 1.4; }
+#reader.grimoire .sg-dots { fill: var(--rubric); }
+#reader.grimoire .sg-glyph { stroke: var(--lapis); stroke-width: 1.5; }
+#reader.grimoire .sigil.struck .sg-struck { stroke: var(--paper-ink); stroke-width: 6; opacity: .88; }
+/* Its particulars, each by a little picture. */
+#reader.grimoire .flow .stats {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .5em 1.1em;
+  margin: 0 0 .9em; padding: .6em .15em; break-inside: avoid; text-align: left; hyphens: none;
+  font-size: .86em; line-height: 1.22;
+  border-top: 1px solid color-mix(in srgb, var(--rubric) 55%, transparent);
+  border-bottom: 1px solid color-mix(in srgb, var(--rubric) 55%, transparent);
+}
+#reader.grimoire .st { display: grid; grid-template-columns: 1.4em minmax(0, 1fr); column-gap: .45em; align-items: start; }
+#reader.grimoire .st.wide { grid-column: 1 / -1; }
+#reader.grimoire .st svg { grid-row: 1 / span 2; width: 1.4em; height: 1.4em; margin-top: .05em; fill: none; stroke: var(--rubric); stroke-width: 1.15; stroke-linecap: round; stroke-linejoin: round; }
+#reader.grimoire .st .k { font: 400 .72em/1.3 var(--fell); letter-spacing: .16em; text-transform: uppercase; color: var(--rubric); }
+#reader.grimoire .st .v { color: var(--paper-ink); }
+/* Illuminated initials, red and blue by turns, in a gilt square. */
+#reader.grimoire .flow :is(.incipit, .opening)::first-letter {
+  float: left; margin: .1em .2em 0 0; padding: .14em .16em .1em;
+  font: 700 2.5em/.82 var(--initial); color: #f6dd92; text-shadow: 0 1px 0 rgb(0 0 0 / .35);
+  background: radial-gradient(circle at 30% 25%, rgb(255 255 255 / .18), transparent 60%), var(--rubric);
+  border: 3px double #c99a3e;
+}
+#reader.grimoire .flow .incipit.lapis::first-letter { background-color: var(--lapis); background-image: radial-gradient(circle at 30% 25%, rgb(255 255 255 / .18), transparent 60%); }
+#reader.grimoire .flow .opening::first-letter { font-size: 3.1em; }
+#reader.grimoire .flow .upcast strong { font: 400 .78em var(--fell); letter-spacing: .14em; text-transform: uppercase; }
+#reader.grimoire .flow .upcast strong::before { content: "❧ "; letter-spacing: 0; font-size: 1.25em; }
+/* An earlier owner's note, written in in iron-gall ink. */
+#reader.grimoire .flow .scrawl {
+  break-inside: avoid; margin: .1em 0 1.1em 1.4em; text-align: left; hyphens: none;
+  font: 600 1.24em/1.1 var(--hand); color: var(--scrawl); opacity: .92;
+  transform: rotate(-1.4deg); transform-origin: left center;
+}
+#reader.grimoire .flow p.scrawl.alt { transform: rotate(1deg); margin-left: 2.6em; }
+#reader.grimoire .flow .scrawl em { font-style: normal; }
+#reader.grimoire .stamp-line { text-align: center; margin: .9em 0 1em; break-inside: avoid; }
+#reader.grimoire .stamp {
+  display: inline-block; padding: .3em .7em; border: 3px double var(--stamp); border-radius: 4px;
+  color: var(--stamp); font: 700 .78em/1.25 var(--sans); letter-spacing: .16em; text-transform: uppercase; text-align: center;
+  transform: rotate(-4deg); opacity: .85;
+  -webkit-mask-image: repeating-linear-gradient(115deg, #000 0 3px, rgb(0 0 0 / .6) 3px 4px, #000 4px 9px);
+  mask-image: repeating-linear-gradient(115deg, #000 0 3px, rgb(0 0 0 / .6) 3px 4px, #000 4px 9px);
+}
+#reader.grimoire .finis { font-family: var(--fell); }
+#reader.grimoire .finis .orn, #reader.grimoire .finis .orn::after { background: var(--rubric); }
+#reader.grimoire .finis a { font: italic 1em var(--fell); color: var(--rubric); }
+/* The title page: the Aether Hall's seal, signed by every owner it has had. */
+#reader.grimoire .titlepage { position: relative; gap: .4em; }
+#reader.grimoire .titlepage .sigil.seal { width: min(7.5em, calc(var(--ph) * .26)); height: min(7.5em, calc(var(--ph) * .26)); margin-bottom: .5em; }
+#reader.grimoire .titlepage .lib { font: 400 .7em/1.4 var(--fell); letter-spacing: .26em; color: var(--rubric); }
+#reader.grimoire .titlepage .bt { font: 700 2.7em/1 var(--goth); color: var(--paper-ink); margin: .15em 0 .1em; }
+#reader.grimoire .titlepage .sub { max-width: 20em; font-family: var(--fell); }
+.titlepage.grim .owners {
+  display: flex; flex-direction: column; align-items: center; margin-top: .3em;
+  font: 500 1.08em/1.12 var(--hand); color: var(--scrawl);
+}
+.titlepage.grim .owners small { font: 400 .62em/1.6 var(--fell); letter-spacing: .24em; text-transform: uppercase; color: var(--paper-muted); }
+.titlepage.grim .owners s { opacity: .8; text-decoration-thickness: 1.5px; }
+.titlepage.grim .owners span { margin-top: .25em; font: italic .8em/1.3 var(--fell); color: var(--paper-ink); }
+.titlepage.grim > .stamp { position: absolute; right: 7%; bottom: 6%; transform: rotate(-12deg); }
+.titlepage.grim::after {  /* a ring from somebody's cup */
+  content: ""; position: absolute; left: 3%; bottom: 9%; width: 5.4em; height: 5.4em; border-radius: 50%; pointer-events: none;
+  border: .32em solid rgb(110 62 20 / .12); box-shadow: inset 0 0 .4em rgb(110 62 20 / .14);
+}
+@media (max-width: 900px) {
+  #reader.grimoire { --sk: 6px; }
+  #reader.grimoire .brass { width: 30px; height: 30px; clip-path: path("M0 0H29Q24 3 21 6Q16 8 14 14Q8 16 6 21Q3 24 0 29Z");
+    background: radial-gradient(circle at 7px 7px, #fff6d6 0 1px, #7a5a20 1.5px 2.2px, transparent 2.6px), linear-gradient(135deg, #f6e3a8, var(--brass) 34%, var(--brass-lo) 70%, #6e5220); }
+  #reader.grimoire .rtitle b { font-size: 20px; }
+}

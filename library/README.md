@@ -100,6 +100,43 @@ book its serial (shelfmark), e.g. `TV-EW-001`, which the library shows on the
 spine, the cover, the title page and the reader bar instead of a volume number.
 A book without one shows as `UC-<chapter>` and the build warns about it.
 
+## The lectern
+
+One book is not shelved. `lectern:` in `catalogue.yaml` names a chapter
+that lies open on a lectern in front of the bookcase, beside the title,
+instead (now `27-common-workings.md`, the spellbook). Click the lectern to
+read it. It is not dressed as a library book but as a spellbook lying open
+on a dark desk by candlelight:
+
+- **The book:** a thick tooled-leather tome with brass corners, a clasp and
+  a ribbon. The edges of its page block show either side and shift from
+  right to left as you read.
+- **The pages:** marbled endpapers, then parchment pages in an inked frame.
+- **Each working** gets its own magic circle, drawn from its name (see
+  `sigil()` in `app.js`): a ring of runes, a star with more points the
+  higher its level, and its school's mark in the middle. Its name is in
+  blackletter, its particulars sit beside small pictures, and its first
+  paragraph opens on an illuminated initial, red and blue by turns.
+- **Each chapter** (`##`) starts a new page under "Liber I", "Liber II" and
+  so on.
+
+It isn't counted as a shelf, isn't in the colour key, and isn't anybody's
+"Next" book. Search, Continue reading and `#common-workings` links work as
+for any other book.
+
+Its chapter is plain markdown with a few conventions, which the reader dresses up:
+
+```
+### Spell Name                         -> its circle is drawn from this name
+*1st-level transmutation*              -> the school line; the level and school pick the star and mark
+**Casting Time:** 1 action\            -> the stat block (end each line with \)
+**Range:** Touch\
+...
+**At Higher Levels.** ...              -> (or **Cantrip Upgrade.**) picked out
+***Margin.*** *"an owner's note"*      -> handwritten in the margin, quotes dropped
+**[WITHDRAWN BY ORDER OF ...]**        -> a rubber stamp, when alone in its paragraph
+```
+
 ## The withdrawn shelf
 
 A shelf that is not on the site until a reader finds it. Its chapters live
@@ -139,7 +176,7 @@ unsealed the shelf with the old one.
 serve.py         live server (stdlib http.server)
 build.py         static export: library/site/ (or library.html with --single-file)
 core.py          shared: reads the lore-book and catalogue, renders markdown
-catalogue.yaml   shelves, colours, spine titles
+catalogue.yaml   shelves, colours, spine titles, serials, the lectern
 template.html    page markup; core.py fills in the data
 style.css        page styles
 app.js           the bookcase and the book reader

@@ -94,13 +94,19 @@ def _text(fragment):
 def _catalogue():
     doc = yaml.safe_load(CATALOGUE.read_text(encoding="utf-8")) or {}
     shelves = [dict(s) for s in doc.get("shelves") or []]
-    return shelves, doc.get("spine_titles") or {}, doc.get("serials") or {}
+    return shelves, doc.get("spine_titles") or {}, doc.get("serials") or {}, doc.get("lectern")
 
 
 def load():
     """Return (payload for the page, image pool {ref: data URI})."""
-    shelves, spine_titles, serials = _catalogue()
+    shelves, spine_titles, serials, lectern = _catalogue()
     shelf_of = {slug: s["id"] for s in shelves for slug in s.get("books") or []}
+    if lectern:
+        # The lectern is a shelf of one that the page draws as a lectern.
+        shelf_of[lectern["book"]] = "lectern"
+        shelves.append({"id": "lectern", "lectern": True, "name": lectern.get("name", "On the Lectern"),
+                        "blurb": lectern.get("blurb", ""), "colour": lectern.get("colour", "#4a2a1c"),
+                        "subtitle": lectern.get("subtitle", "")})
     ids = {s["id"] for s in shelves}
     warnings = [f"catalogue.yaml: shelf {s['id']} is part_of unknown shelf {s['part_of']}"
                 for s in shelves if s.get("part_of") and s["part_of"] not in ids]
@@ -125,6 +131,8 @@ def load():
             "spine": spine_titles.get(slug, title), "shelf": shelf_of.get(slug, UNCATALOGUED["id"]),
             "words": len(text.split()), "html": page, "text": text,
         })
+        if books[-1]["shelf"] == "lectern":
+            books[-1]["lectern"] = True
 
     found = {b["slug"] for b in books}
     warnings += [f"catalogue.yaml lists {slug}, but lore-book/ has no such chapter"

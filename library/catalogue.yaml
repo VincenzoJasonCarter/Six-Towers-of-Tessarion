@@ -101,6 +101,20 @@ shelves:
       - of-the-elderwood
       - of-the-green-cradle
 
+# The book on the lectern: not shelved with the others, but lying open on a
+# lectern in front of the bookcase, and read in its own binding (a second-hand
+# grimoire: leather and brass, ledger-ruled pages, margin notes, stamps).
+#   book      the chapter's name, as for a shelf
+#   name      where the library says it is ("On the Lectern")
+#   colour    the leather, used wherever the library shows a book's cloth
+#   subtitle  the line under the title on its title page
+lectern:
+  book: common-workings
+  name: On the Lectern
+  blurb: The Aether Hall's primer of general workings, for every crystal that glows.
+  colour: "#4a2a1c"
+  subtitle: A primer of the general workings, for every crystal that glows
+
 # Shorter titles for spines where the full one will not fit. The full title
 # is still used everywhere else.
 spine_titles:
@@ -114,7 +128,7 @@ spine_titles:
 
 # Each book's serial (its shelfmark), shown wherever the library names a book.
 # Collection - subject - number: TS Tessarion at large, AS Rites of Ascension,
-# SF the Soulforge, CW Crownweave, TV Thal'vireth. Books that print their own
+# SF the Soulforge, CW Crownweave, TV Thal'vireth, AH the Aether Hall's issue. Books that print their own
 # shelfmark (the Compendium excerpts) keep it. Shelves still stand in chapter
 # order; the serial is only the name on the spine.
 serials:
@@ -144,3 +158,4 @@ serials:
   artifacts-phenomenon: TV-AR-001
   of-the-elderwood: TV-EW-001
   of-the-green-cradle: TV-IX-001
+  common-workings: AH-PR-001
